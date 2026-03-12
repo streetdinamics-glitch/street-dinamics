@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from '../../lib/translations';
 
-const SD_LOGO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect width='120' height='40' fill='%23000' rx='2'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='28' font-weight='bold' fill='%23ff6600'%3ESD%3C/text%3E%3C/svg%3E";
+const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
-export default function Navbar({ onScrollTo }) {
+export default function Navbar({ onScrollTo, lang, onLangSwitch }) {
+  const t = useTranslation(lang);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
 
@@ -15,10 +18,10 @@ export default function Navbar({ onScrollTo }) {
   }, []);
 
   const navItems = [
-    { label: 'Events', id: 'events' },
-    { label: '🎫 Tokens', id: 'tokens' },
-    { label: '🎯 Bet', id: 'gamification' },
-    { label: '🔗 Social', id: 'social' },
+    { label: t('nav_events'), id: 'events' },
+    { label: t('nav_tokens'), id: 'tokens' },
+    { label: t('nav_bet'), id: 'gamification' },
+    { label: t('nav_social'), id: 'social' },
   ];
 
   return (
@@ -29,8 +32,8 @@ export default function Navbar({ onScrollTo }) {
         
         <img
           src={SD_LOGO}
-          alt="SD"
-          className="h-[38px] cursor-pointer drop-shadow-[0_0_8px_rgba(255,100,0,0.8)] hover:drop-shadow-[0_0_16px_rgba(255,150,0,1)] transition-all"
+          alt="Street Dinamics"
+          className="h-[42px] w-[42px] object-cover rounded-md cursor-pointer drop-shadow-[0_0_12px_rgba(255,100,0,0.9)] hover:drop-shadow-[0_0_20px_rgba(255,150,0,1)] transition-all"
           onClick={() => onScrollTo?.('hero')}
         />
 
@@ -48,23 +51,27 @@ export default function Navbar({ onScrollTo }) {
               {item.label}
             </button>
           ))}
+          <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
         </div>
 
-        <button
-          className="md:hidden flex flex-col gap-1 p-1.5 border border-fire-3/20 bg-transparent"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={18} className="text-fire-3" /> : <Menu size={18} className="text-fire-3" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
+          <button
+            className="flex flex-col gap-1 p-1.5 border border-fire-3/20 bg-transparent"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={18} className="text-fire-3" /> : <Menu size={18} className="text-fire-3" />}
+          </button>
+        </div>
       </nav>
 
       {/* HUD Bar */}
       <div className="fixed top-[58px] left-0 right-0 z-[199] h-[22px] bg-[rgba(4,2,10,0.85)] border-b border-fire-3/10 flex items-center px-4 md:px-9 gap-6 font-mono text-[9px] tracking-[2px] text-fire-3/30 uppercase">
         <div className="flex items-center gap-1.5">
           <div className="w-1 h-1 rounded-full bg-fire-3" style={{ animation: 'blink 2s ease-in-out infinite' }} />
-          <span className="text-fire-3">System Online</span>
+          <span className="text-fire-3">{t('hud_system')}</span>
         </div>
-        <span className="hidden sm:inline">AI Secretary: Active</span>
+        <span className="hidden sm:inline">{t('hud_ai')}</span>
         <span className="ml-auto text-fire-4/40">{time}</span>
       </div>
 

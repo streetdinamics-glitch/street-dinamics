@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '../../lib/translations';
 
-const SD_LOGO_LARGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 460 120'%3E%3Crect width='460' height='120' fill='none'/%3E%3Ctext x='30' y='95' font-family='monospace' font-size='90' font-weight='900' fill='%23ff6600' style='filter:drop-shadow(0 0 20px rgba(255,100,0,0.8))'%3ESTREET%3C/text%3E%3Ctext x='30' y='115' font-family='monospace' font-size='14' letter-spacing='12' fill='%23664422'%3EDINAMICS%3C/text%3E%3C/svg%3E";
+const SD_LOGO_LARGE = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
-export default function HeroSection({ onScrollTo }) {
+export default function HeroSection({ onScrollTo, lang }) {
+  const t = useTranslation(lang);
   return (
     <section id="hero" className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-5 pt-[90px] pb-[60px] overflow-hidden">
       {/* Hex pattern */}
@@ -16,7 +18,7 @@ export default function HeroSection({ onScrollTo }) {
         transition={{ delay: 0.2, duration: 0.8 }}
         className="font-mono text-xs tracking-[7px] uppercase text-fire-3/40 mb-6"
       >
-        // Italy's Street Sports Circuit //
+        {t('hero_eyebrow')}
       </motion.p>
 
       {/* Logo */}
@@ -30,8 +32,8 @@ export default function HeroSection({ onScrollTo }) {
         <img
           src={SD_LOGO_LARGE}
           alt="Street Dinamics"
-          className="w-[min(460px,78vw)] h-auto"
-          style={{ animation: 'logo-pulse 4s ease-in-out infinite' }}
+          className="w-[min(380px,70vw)] h-auto rounded-2xl"
+          style={{ animation: 'logo-pulse 4s ease-in-out infinite', filter: 'drop-shadow(0 0 30px rgba(255,100,0,0.8))' }}
         />
       </motion.div>
 
@@ -42,7 +44,7 @@ export default function HeroSection({ onScrollTo }) {
         transition={{ delay: 1.1, duration: 0.8 }}
         className="font-orbitron text-[clamp(13px,1.8vw,16px)] font-normal tracking-[6px] uppercase text-fire-3/30 mb-12"
       >
-        Tournaments · Scouting · Community · 13–30
+        {t('hero_tagline')}
       </motion.p>
 
       {/* CTAs */}
@@ -56,25 +58,25 @@ export default function HeroSection({ onScrollTo }) {
           onClick={() => onScrollTo?.('events')}
           className="btn-fire text-[clamp(11px,1.5vw,13px)] tracking-[3px] px-8 py-3.5"
         >
-          JOIN AS ATHLETE
+          {t('hero_cta_athlete')}
         </button>
         <button
           onClick={() => onScrollTo?.('events')}
           className="btn-ghost text-[clamp(11px,1.5vw,13px)] tracking-[3px] px-8 py-3.5"
         >
-          WATCH AS SPECTATOR
+          {t('hero_cta_spectator')}
         </button>
         <button
           onClick={() => onScrollTo?.('tokens')}
           className="btn-ghost text-[clamp(11px,1.5vw,13px)] tracking-[3px] px-8 py-3.5"
         >
-          🎫 GET ATHLETE TOKENS
+          {t('hero_cta_tokens')}
         </button>
       </motion.div>
 
       {/* Scroll hint */}
       <p className="absolute bottom-7 left-1/2 -translate-x-1/2 font-mono text-[9px] tracking-[5px] uppercase text-fire-3/25" style={{ animation: 'breathe 2.5s ease-in-out infinite' }}>
-        ↓ SCROLL FOR EVENTS
+        {t('hero_scroll')}
       </p>
     </section>
   );
