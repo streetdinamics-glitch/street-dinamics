@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from '../translations';
 
-export default function RegistrationModal({ event, type, onClose, onSuccess }) {
+export default function RegistrationModal({ event, type, onClose, onSuccess, lang }) {
+  const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
@@ -11,10 +13,12 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
   });
   const [contractAccepted, setContractAccepted] = useState(false);
   const [signed, setSigned] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);
+  const fileInputRef = useRef(null);
 
-  const totalSteps = type === 'athlete' ? 3 : 3;
+  const totalSteps = 3;
 
   const createReg = useMutation({
     mutationFn: (data) => base44.entities.Registration.create(data),
@@ -26,7 +30,28 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
 
   const handleChange = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
 
-  const canProceedStep1 = form.first_name && form.last_name && form.email && form.phone;
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      alert('File too large. Max 5MB.');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      handleChange('id_document', file_url);
+    } catch (err) {
+      alert('Upload failed. Try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const canProceedStep1 = form.first_name && form.last_name && form.email && form.phone && form.id_document;
   const canProceedStep2 = contractAccepted;
   const canProceedStep3 = signed;
 
@@ -82,16 +107,16 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
         <div className="absolute top-0 left-0 right-0 fire-line" />
         <div className="absolute top-0 right-0 w-[22px] h-[22px] bg-gradient-to-bl from-fire-5 to-fire-2" style={{ clipPath: 'polygon(100% 0,100% 100%,0 0)' }} />
 
-        <button onClick={onClose} className="absolute top-3 right-4 font-mono text-xs tracking-[2px] text-fire-3/30 hover:text-fire-3 cursor-pointer bg-transparent border-none">✕ CLOSE</button>
+        <button onClick={onClose} className="absolute top-3 right-4 font-mono text-xs tracking-[2px] text-fire-3/30 hover:text-fire-3 cursor-pointer bg-transparent border-none">{t('reg_close')}</button>
 
         {/* Step indicator */}
         <div className="flex items-center mb-5 gap-0">
-          {Array.from({ length: totalSteps }).map((_, i) => (
+          {[t('reg_step_info'), t('reg_step_contract'), t('reg_step_signature')].map((label, i) => (
             <div key={i} className={`flex-1 text-center pb-2.5 relative font-mono text-[9px] tracking-[2px] ${step > i + 1 ? 'text-fire-4' : step === i + 1 ? 'text-fire-5' : 'text-fire-3/25'}`}>
               <div className={`w-[22px] h-[22px] rounded-full border mx-auto mb-1 flex items-center justify-center font-orbitron text-[9px] font-bold transition-all ${step === i + 1 ? 'border-fire-3 text-fire-5 bg-fire-3/10 shadow-[0_0_10px_rgba(255,100,0,0.35)]' : step > i + 1 ? 'border-fire-4 text-fire-5 bg-fire-3/15' : 'border-fire-3/25 text-fire-3/25'}`}>
                 {i + 1}
               </div>
-              <span>{['INFO', 'CONTRACT', 'SIGN'][i]}</span>
+              <span>{label}</span>
             </div>
           ))}
         </div>
@@ -100,45 +125,62 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
         {step === 1 && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">
-              {type === 'athlete' ? 'JOIN THE ARENA' : 'JOIN THE CROWD'}
+              {type === 'athlete' ? t('reg_athlete_title').toUpperCase() : t('reg_spectator_title').toUpperCase()}
             </h2>
             <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">
-              {type === 'athlete' ? 'Athlete Registration' : 'Spectator Registration'}
+              {event?.title}
             </p>
-            <div className="bg-fire-3/5 border border-fire-3/15 p-2.5 mb-4 text-sm font-semibold text-fire-4/60">
-              Event: <strong className="text-fire-3">{event?.title}</strong> — {event?.location}
-            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
               <div>
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">First Name</label>
-                <input className="cyber-input" value={form.first_name} onChange={e => handleChange('first_name', e.target.value)} placeholder="Marco" />
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_first_name')}</label>
+                <input className="cyber-input" value={form.first_name} onChange={e => handleChange('first_name', e.target.value)} />
               </div>
               <div>
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Last Name</label>
-                <input className="cyber-input" value={form.last_name} onChange={e => handleChange('last_name', e.target.value)} placeholder="Rossi" />
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_last_name')}</label>
+                <input className="cyber-input" value={form.last_name} onChange={e => handleChange('last_name', e.target.value)} />
               </div>
             </div>
             <div className="mb-3">
-              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Email</label>
-              <input className="cyber-input" type="email" value={form.email} onChange={e => handleChange('email', e.target.value)} placeholder="marco@gmail.com" />
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_email')}</label>
+              <input className="cyber-input" type="email" value={form.email} onChange={e => handleChange('email', e.target.value)} />
             </div>
             <div className="mb-3">
-              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Phone</label>
-              <input className="cyber-input" type="tel" value={form.phone} onChange={e => handleChange('phone', e.target.value)} placeholder="+39 333 000 0000" />
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_phone')}</label>
+              <input className="cyber-input" type="tel" value={form.phone} onChange={e => handleChange('phone', e.target.value)} />
             </div>
             {type === 'athlete' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                 <div>
-                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Date of Birth</label>
+                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_dob')}</label>
                   <input className="cyber-input" type="date" value={form.date_of_birth} onChange={e => handleChange('date_of_birth', e.target.value)} />
                 </div>
                 <div>
-                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Sport</label>
-                  <input className="cyber-input" value={form.sport} onChange={e => handleChange('sport', e.target.value)} placeholder="Basketball, Futsal..." />
+                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_sport')}</label>
+                  <input className="cyber-input" value={form.sport} onChange={e => handleChange('sport', e.target.value)} />
                 </div>
               </div>
             )}
+
+            {/* Document upload */}
+            <div className="mb-4">
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_id_upload')}</label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,.pdf"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="btn-ghost w-full text-[11px] py-2.5 px-3 flex items-center justify-center gap-2 disabled:opacity-40"
+              >
+                {uploading ? '⏳ Uploading...' : form.id_document ? '✓ Document Uploaded' : '📎 Choose File'}
+              </button>
+              <p className="font-mono text-[9px] tracking-[1px] text-fire-3/30 mt-1">{t('reg_id_hint')}</p>
+            </div>
 
             <div className="flex gap-2.5 mt-4">
               <button
@@ -146,7 +188,7 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
                 onClick={() => setStep(2)}
                 className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                NEXT: CONTRACT →
+                {t('reg_next')} →
               </button>
             </div>
           </div>
@@ -155,8 +197,8 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
         {/* Step 2: Contract */}
         {step === 2 && (
           <div className="animate-[fadeUp_0.35s_ease]">
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">CONTRACT</h2>
-            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Read carefully — legally binding</p>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">{t('reg_contract_title').toUpperCase()}</h2>
+            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Legally Binding</p>
 
             <div className="bg-black/50 border border-fire-3/10 p-4 mb-4 max-h-[260px] overflow-y-auto font-mono text-[13px] leading-loose text-fire-4/35 scrollbar-thin">
               <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">CONTRATTO DI PARTECIPAZIONE</h5>
@@ -178,14 +220,14 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
             <label className="flex items-start gap-2.5 cursor-pointer mb-4">
               <input type="checkbox" checked={contractAccepted} onChange={e => setContractAccepted(e.target.checked)} className="w-4 h-4 mt-0.5 accent-fire-3 flex-shrink-0" />
               <span className="text-sm text-fire-3/30 leading-snug">
-                I have read and <strong className="text-fire-3">fully accept</strong> all terms, privacy policy, and disclaimer above.
+                {t('reg_contract_accept')}
               </span>
             </label>
 
             <div className="flex gap-2.5">
-              <button onClick={() => setStep(1)} className="btn-ghost py-3.5 px-5 text-[13px]">← BACK</button>
+              <button onClick={() => setStep(1)} className="btn-ghost py-3.5 px-5 text-[13px]">← {t('reg_back')}</button>
               <button disabled={!canProceedStep2} onClick={() => setStep(3)} className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed">
-                NEXT: SIGN →
+                {t('reg_next')} →
               </button>
             </div>
           </div>
@@ -194,13 +236,13 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
         {/* Step 3: Signature */}
         {step === 3 && (
           <div className="animate-[fadeUp_0.35s_ease]">
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">SIGN HERE</h2>
-            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Digital signature — legally binding</p>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">{t('reg_signature_title').toUpperCase()}</h2>
+            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">{t('reg_signature_hint')}</p>
 
             <div className="mb-4">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30">✍ Your Signature</span>
-                <button onClick={clearSig} className="font-mono text-[11px] tracking-[2px] text-fire-3/40 hover:text-fire-3 bg-transparent border-none cursor-pointer">Clear</button>
+                <span className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30">✍ {t('reg_signature_title')}</span>
+                <button onClick={clearSig} className="font-mono text-[11px] tracking-[2px] text-fire-3/40 hover:text-fire-3 bg-transparent border-none cursor-pointer">{t('reg_signature_clear')}</button>
               </div>
               <canvas
                 ref={canvasRef}
@@ -215,17 +257,16 @@ export default function RegistrationModal({ event, type, onClose, onSuccess }) {
                 onTouchMove={draw}
                 onTouchEnd={endDraw}
               />
-              <p className="font-mono text-[11px] tracking-[1px] text-fire-3/30 text-center mt-1">Draw with finger or mouse · eIDAS compliant</p>
             </div>
 
             <div className="flex gap-2.5">
-              <button onClick={() => setStep(2)} className="btn-ghost py-3.5 px-5 text-[13px]">← BACK</button>
+              <button onClick={() => setStep(2)} className="btn-ghost py-3.5 px-5 text-[13px]">← {t('reg_back')}</button>
               <button
                 disabled={!canProceedStep3 || createReg.isPending}
                 onClick={handleSubmit}
                 className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                {createReg.isPending ? 'PROCESSING...' : '✓ COMPLETE REGISTRATION'}
+                {createReg.isPending ? t('reg_submitting') : `✓ ${t('reg_submit')}`}
               </button>
             </div>
           </div>
