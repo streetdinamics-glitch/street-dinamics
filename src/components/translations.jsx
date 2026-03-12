@@ -57,6 +57,8 @@ export const translations = {
     reg_submit: 'Submit Registration',
     reg_submitting: 'Processing...',
     reg_close: '✕ CLOSE',
+    reg_upload_error: 'Upload failed. Please try again.',
+    reg_upload_size: 'File too large. Maximum 5MB allowed.',
     
     // Success Modal
     success_athlete_title: 'ATHLETE REGISTERED',
@@ -176,6 +178,8 @@ export const translations = {
     reg_submit: 'Invia Registrazione',
     reg_submitting: 'Elaborazione...',
     reg_close: '✕ CHIUDI',
+    reg_upload_error: 'Caricamento fallito. Riprova.',
+    reg_upload_size: 'File troppo grande. Massimo 5MB.',
     
     // Success Modal
     success_athlete_title: 'ATLETA REGISTRATO',

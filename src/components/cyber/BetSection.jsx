@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from '../../components/translations';
+import { useTranslation } from '../translations';
 
 export default function BetSection({ hasToken, onScrollToTokens, onScrollToSocial, lang }) {
   const t = useTranslation(lang);

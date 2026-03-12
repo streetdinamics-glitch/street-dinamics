@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { useTranslation } from '../../components/translations';
+import { useTranslation } from '../translations';
 
 export default function EventCard({ event, index, onRegisterAthlete, onRegisterSpectator, lang }) {
   const t = useTranslation(lang);

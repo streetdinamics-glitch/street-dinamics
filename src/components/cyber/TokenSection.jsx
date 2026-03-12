@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from '../../components/translations';
+import { useTranslation } from '../translations';
 
 export default function TokenSection({ lang, onScrollToSocial }) {
   const t = useTranslation(lang);
