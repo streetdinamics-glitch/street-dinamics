@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTranslation } from '../translations';
+import { useTranslation } from '../../components/translations';
 
 export default function RegistrationModal({ event, type, onClose, onSuccess, lang }) {
   const t = useTranslation(lang);

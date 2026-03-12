@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTranslation } from '../translations';
+import { useTranslation } from '../../components/translations';
 
 export default function SuccessModal({ registration, onClose, lang }) {
   const t = useTranslation(lang);

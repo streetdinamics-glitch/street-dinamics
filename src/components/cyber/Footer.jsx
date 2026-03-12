@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from '../translations';
+import { useTranslation } from '../../components/translations';
 
 export default function Footer({ lang }) {
   const t = useTranslation(lang);

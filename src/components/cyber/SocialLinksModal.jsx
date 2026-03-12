@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from '../translations';
+import { useTranslation } from '../../components/translations';
 
 const links = [
   { icon: '📸', label: 'social_instagram', url: 'https://instagram.com/streetdinamics' },

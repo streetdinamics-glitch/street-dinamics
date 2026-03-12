@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from '../translations';
+import { useTranslation } from '../../components/translations';
 
 export default function FlowSteps({ lang }) {
   const t = useTranslation(lang);
