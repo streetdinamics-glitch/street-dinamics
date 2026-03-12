@@ -1,31 +1,36 @@
 import React from 'react';
+import { useTranslation } from '../translations';
 
-export default function SponsorSection() {
+export default function SponsorSection({ lang }) {
+  const t = useTranslation(lang);
+
   return (
-    <section id="sponsors" className="section-container">
-      <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">// PARTNERSHIP & VISIBILITY //</p>
-      <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-14 font-black">PARTNER WITH US</h2>
+    <section id="sponsor" className="section-container">
+      <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">{t('sponsor_subtitle')}</p>
+      <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-14 font-black">{t('sponsor_title')}</h2>
 
-      <div className="max-w-[600px] mx-auto bg-black/45 border border-fire-3/20 p-8 md:p-10 text-center relative overflow-hidden clip-cyber">
+      <div className="max-w-[860px] mx-auto bg-gradient-to-br from-[rgba(10,4,18,0.97)] to-[rgba(4,2,8,0.99)] border border-fire-3/18 clip-cyber p-8 md:p-10 relative">
         <div className="absolute top-0 left-0 right-0 fire-line" />
-        <div className="absolute top-0 right-0 w-5 h-5 bg-gradient-to-bl from-fire-5 to-fire-2" style={{ clipPath: 'polygon(100% 0,100% 100%,0 0)' }} />
+        <div className="absolute top-0 right-0 w-[18px] h-[18px] bg-gradient-to-bl from-fire-5 to-fire-2" style={{ clipPath: 'polygon(100% 0,100% 100%,0 0)' }} />
 
-        <span className="text-4xl mb-3.5 block">📩</span>
-        <div className="font-orbitron font-black text-[clamp(18px,3vw,26px)] tracking-[3px] uppercase text-fire-gradient mb-2.5">
-          Interested in Sponsoring Street Dinamics?
+        <p className="font-rajdhani text-lg text-fire-4/60 leading-relaxed mb-5">
+          {t('sponsor_value')}
+        </p>
+
+        <div className="font-mono text-sm text-fire-3/40 mb-5 tracking-[1px]">
+          {t('sponsor_demo')}
         </div>
-        <div className="font-rajdhani text-[17px] text-fire-4/45 leading-relaxed mb-7">
-          Put your brand in front of Italy's street sports community. Live events, streaming audiences, and a passionate 13–30 demographic.
+
+        <div className="flex items-center gap-2 mb-4">
+          <span className="font-mono text-sm text-fire-3/30">→</span>
+          <a href={`mailto:${t('sponsor_cta')}`} className="font-orbitron font-bold text-base text-fire-4 hover:text-fire-5 transition-colors no-underline">
+            {t('sponsor_cta')}
+          </a>
         </div>
-        <a
-          href="mailto:info@streetdinamics.it"
-          className="inline-flex items-center gap-2.5 font-orbitron font-bold text-[13px] tracking-[2px] uppercase text-fire-4 border border-fire-3/35 py-3.5 px-7 transition-all hover:bg-fire-3/10 hover:border-fire-3 hover:text-fire-5 hover:shadow-[0_0_28px_rgba(255,100,0,0.2)] no-underline clip-btn"
-        >
-          📧 info@streetdinamics.it
-        </a>
-        <div className="font-mono text-[9px] tracking-[3px] text-fire-3/25 uppercase mt-4">
-          Reply within 48h · Full brochure + packages sent on request
-        </div>
+
+        <p className="font-mono text-xs text-fire-3/25 tracking-[1px] leading-loose">
+          {t('sponsor_note')}
+        </p>
       </div>
     </section>
   );

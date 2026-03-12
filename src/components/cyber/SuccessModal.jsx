@@ -1,49 +1,54 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '../translations';
 
-export default function SuccessModal({ registration, onClose }) {
-  const isAthlete = registration?.type === 'athlete';
+export default function SuccessModal({ registration, onClose, lang }) {
+  const t = useTranslation(lang);
+  const isAthlete = registration.type === 'athlete';
 
   return (
-    <div className="fixed inset-0 z-[500] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center p-5">
       <motion.div
-        initial={{ scale: 0.96, opacity: 0, y: 24 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-[500px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 text-center"
+        initial={{ opacity: 0, scale: 0.85, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="relative bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border clip-cyber p-8 md:p-10 max-w-[500px] w-full text-center"
+        style={{ borderColor: isAthlete ? 'rgba(255,80,0,0.3)' : 'rgba(0,255,238,0.25)' }}
       >
         <div className="absolute top-0 left-0 right-0 fire-line" />
+        <div className="absolute top-0 right-0 w-[22px] h-[22px] bg-gradient-to-bl from-fire-5 to-fire-2" style={{ clipPath: 'polygon(100% 0,100% 100%,0 0)' }} />
 
-        <motion.span
-          initial={{ scale: 0, rotate: -12 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-6xl block mb-3"
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.6, type: 'spring' }}
+          className="text-6xl mb-4"
         >
-          {isAthlete ? '🔥' : '🎉'}
-        </motion.span>
+          {isAthlete ? '🏅' : '🎫'}
+        </motion.div>
 
-        <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[3px] mb-2">
-          {isAthlete ? "YOU'RE IN THE FIRE" : "SEE YOU IN THE FIRE"}
+        <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2">
+          {isAthlete ? t('success_athlete_title') : t('success_spectator_title')}
         </h2>
 
-        <p className="text-base text-fire-4/60 mb-4 leading-relaxed">
-          {isAthlete
-            ? 'Registration confirmed. Check your email within 48h. The stage is yours.'
-            : 'Your spot is locked in. Check your email for all details.'}
+        <p className="font-rajdhani text-base text-fire-4/60 leading-relaxed mb-6">
+          {isAthlete ? t('success_athlete_msg') : t('success_spectator_msg')}
         </p>
 
-        {registration?.ticket_code && (
-          <div className="bg-black/50 border border-fire-3/15 p-4 mb-4">
-            <div className="font-mono text-[9px] tracking-[2px] text-fire-3/40 mb-1">TICKET ID</div>
-            <div className="font-orbitron font-bold text-lg text-fire-5 tracking-[3px]">{registration.ticket_code}</div>
-            <div className="font-mono text-[9px] tracking-[2px] text-fire-3/40 mt-2 mb-1">SEAT / ZONE</div>
-            <div className="font-orbitron font-bold text-2xl text-fire-gradient tracking-[2px]">{registration.seat_zone}</div>
+        {registration.ticket_code && (
+          <div className="bg-black/50 border border-fire-3/20 p-5 mb-6">
+            <div className="font-mono text-[10px] tracking-[3px] uppercase text-fire-3/40 mb-2">{t('success_ticket')}</div>
+            <div className="font-orbitron font-black text-2xl text-fire-5 tracking-[4px] mb-2">{registration.ticket_code}</div>
+            {registration.seat_zone && (
+              <div className="font-mono text-sm text-fire-4/50">
+                {t('success_seat')}: <span className="text-fire-4">{registration.seat_zone}</span>
+              </div>
+            )}
           </div>
         )}
 
-        <button onClick={onClose} className="btn-fire text-[13px] py-3 px-8 mt-2">
-          CLOSE
+        <button onClick={onClose} className="btn-fire text-[11px] py-3 px-8">
+          {t('success_close')}
         </button>
       </motion.div>
     </div>
