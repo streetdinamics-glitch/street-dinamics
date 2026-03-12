@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTranslation } from '../components/translations';
+import { useTranslation } from '@/components/translations';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import HeroSection from '../components/cyber/HeroSection';
