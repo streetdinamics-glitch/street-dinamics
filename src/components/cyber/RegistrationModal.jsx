@@ -22,10 +22,6 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
 
   const createReg = useMutation({
     mutationFn: (data) => base44.entities.Registration.create(data),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['registrations'] });
-      onSuccess?.(data);
-    },
   });
 
   const handleChange = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
@@ -36,7 +32,7 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
     
     const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
-      alert('File too large. Max 5MB.');
+      alert(t('reg_upload_size'));
       return;
     }
 
@@ -45,7 +41,7 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
       const { file_url } = await base44.integrations.Core.UploadFile({ file });
       handleChange('id_document', file_url);
     } catch (err) {
-      alert('Upload failed. Try again.');
+      alert(t('reg_upload_error'));
     } finally {
       setUploading(false);
     }
@@ -55,17 +51,50 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
   const canProceedStep2 = contractAccepted;
   const canProceedStep3 = signed;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const ticketCode = 'SD-' + Math.random().toString(36).substring(2, 8).toUpperCase();
     const seatZone = String.fromCharCode(65 + Math.floor(Math.random() * 6)) + String(Math.floor(Math.random() * 50) + 1).padStart(2, '0');
-    createReg.mutate({
+    
+    // Save signature canvas as image
+    const signatureUrl = canvasRef.current?.toDataURL('image/png');
+    
+    const regData = {
       event_id: event.id,
       type,
       ...form,
       contract_accepted: true,
+      signature_url: signatureUrl,
       status: 'confirmed',
       ticket_code: ticketCode,
       seat_zone: seatZone,
+    };
+    
+    createReg.mutate(regData, {
+      onSuccess: async (data) => {
+        // Send confirmation email with QR code
+        try {
+          const qrData = `SD-TICKET|${data.ticket_code}|${data.event_id}|${data.email}`;
+          await base44.integrations.Core.SendEmail({
+            to: form.email,
+            subject: `Street Dinamics - ${type === 'athlete' ? 'Registration' : 'Ticket'} Confirmed`,
+            body: `
+              <h2>🏅 Street Dinamics - ${event.title}</h2>
+              <p>Your ${type} registration is confirmed!</p>
+              <h3>Ticket Code: ${data.ticket_code}</h3>
+              <p>Seat: ${data.seat_zone}</p>
+              <p>QR Code Data: ${qrData}</p>
+              <p>Show this code at the venue entrance.</p>
+              <p>Event: ${event.title}</p>
+              <p>Date: ${event.date}</p>
+              <p>Location: ${event.location}</p>
+            `
+          });
+        } catch (err) {
+          console.error('Email failed:', err);
+        }
+        queryClient.invalidateQueries({ queryKey: ['registrations'] });
+        onSuccess?.(data);
+      }
     });
   };
 

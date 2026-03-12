@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '../components/translations';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
@@ -19,6 +19,7 @@ import Footer from '../components/cyber/Footer';
 export default function Home() {
   const [lang, setLang] = useState('en');
   const t = useTranslation(lang);
+  const queryClient = useQueryClient();
   const [regModal, setRegModal] = useState(null);
   const [successModal, setSuccessModal] = useState(null);
   const [socialOpen, setSocialOpen] = useState(false);
@@ -35,8 +36,16 @@ export default function Home() {
     initialData: [],
   });
 
-  // Mock token check - replace with real token ownership check when backend is ready
-  const hasToken = false;
+  // Check if user owns any tokens
+  const { data: tokens = [] } = useQuery({
+    queryKey: ['my-tokens'],
+    queryFn: async () => {
+      const user = await base44.auth.me();
+      return base44.entities.TokenOwnership.filter({ created_by: user.email });
+    },
+    initialData: [],
+  });
+  const hasToken = tokens.length > 0;
 
   const scrollTo = useCallback((id) => {
     if (id === 'social') {
