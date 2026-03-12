@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from '../components/translations';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import HeroSection from '../components/cyber/HeroSection';
@@ -16,7 +17,9 @@ import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import Footer from '../components/cyber/Footer';
 
 export default function Home() {
-  const [regModal, setRegModal] = useState(null); // { event, type }
+  const [lang, setLang] = useState('en');
+  const t = useTranslation(lang);
+  const [regModal, setRegModal] = useState(null);
   const [successModal, setSuccessModal] = useState(null);
   const [socialOpen, setSocialOpen] = useState(false);
 
@@ -32,7 +35,8 @@ export default function Home() {
     initialData: [],
   });
 
-  const hasRegistration = registrations.length > 0;
+  // Mock token check - replace with real token ownership check when backend is ready
+  const hasToken = false;
 
   const scrollTo = useCallback((id) => {
     if (id === 'social') {
@@ -51,28 +55,28 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
-      <Navbar onScrollTo={scrollTo} />
+      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} />
 
-      <HeroSection onScrollTo={scrollTo} />
+      <HeroSection onScrollTo={scrollTo} lang={lang} />
       <FireRule />
 
       {/* Events Section */}
       <section id="events" className="section-container">
         <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2 opacity-0 animate-[fadeUp_0.7s_ease_forwards]">
-          Live & Digital Circuit
+          {t('events_subtitle')}
         </p>
         <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-14 font-black opacity-0 animate-[fadeUp_0.8s_ease_0.1s_forwards]">
-          EVENTS
+          {t('events_title')}
         </h2>
 
-        <FlowSteps />
+        <FlowSteps lang={lang} />
 
         {eventsLoading ? (
-          <div className="text-center font-mono text-fire-3/30 text-sm tracking-[2px] py-20">LOADING EVENTS...</div>
+          <div className="text-center font-mono text-fire-3/30 text-sm tracking-[2px] py-20">{t('events_loading')}</div>
         ) : events.length === 0 ? (
           <div className="text-center py-20">
             <span className="text-4xl block mb-3">🔥</span>
-            <p className="font-mono text-sm tracking-[2px] text-fire-3/30">No events yet. Stay tuned.</p>
+            <p className="font-mono text-sm tracking-[2px] text-fire-3/30">{t('events_empty')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -81,6 +85,7 @@ export default function Home() {
                 key={ev.id}
                 event={ev}
                 index={i}
+                lang={lang}
                 onRegisterAthlete={(e) => setRegModal({ event: e, type: 'athlete' })}
                 onRegisterSpectator={(e) => setRegModal({ event: e, type: 'spectator' })}
               />
@@ -90,18 +95,24 @@ export default function Home() {
       </section>
 
       <FireRule />
-      <SponsorSection />
+      <SponsorSection lang={lang} />
       <FireRule />
-      <BetSection hasRegistration={hasRegistration} onScrollToEvents={() => scrollTo('events')} />
+      <BetSection
+        hasToken={hasToken}
+        onScrollToTokens={() => scrollTo('tokens')}
+        onScrollToSocial={() => scrollTo('social')}
+        lang={lang}
+      />
       <FireRule />
-      <TokenSection />
-      <Footer />
+      <TokenSection lang={lang} onScrollToSocial={() => scrollTo('social')} />
+      <Footer lang={lang} />
 
       {/* Modals */}
       {regModal && (
         <RegistrationModal
           event={regModal.event}
           type={regModal.type}
+          lang={lang}
           onClose={() => setRegModal(null)}
           onSuccess={handleRegSuccess}
         />
@@ -109,11 +120,12 @@ export default function Home() {
       {successModal && (
         <SuccessModal
           registration={successModal}
+          lang={lang}
           onClose={() => setSuccessModal(null)}
         />
       )}
       {socialOpen && (
-        <SocialLinksModal onClose={() => setSocialOpen(false)} />
+        <SocialLinksModal lang={lang} onClose={() => setSocialOpen(false)} />
       )}
     </div>
   );
