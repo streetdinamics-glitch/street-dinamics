@@ -239,6 +239,482 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dinamics ASD — Tutti i Diritti Riservati',
+  },
+  
+  es: {
+    // Navbar
+    nav_events: 'Eventos',
+    nav_tokens: '🎫 Tokens',
+    nav_bet: '🎯 Apostar',
+    nav_social: '🔗 Social',
+    
+    // HUD
+    hud_system: 'Sistema en Línea',
+    hud_ai: 'Secretaria IA: Activa',
+    
+    // Hero
+    hero_eyebrow: '// Circuito Deportivo Callejero de Italia //',
+    hero_tagline: 'Torneos · Scouting · Comunidad · 13–30',
+    hero_cta_athlete: 'ÚNETE COMO ATLETA',
+    hero_cta_spectator: 'VER COMO ESPECTADOR',
+    hero_cta_tokens: '🎫 OBTENER TOKENS',
+    hero_scroll: '↓ DESPLÁZATE PARA EVENTOS',
+    
+    // Events
+    events_title: 'EVENTOS',
+    events_subtitle: 'Circuito en Vivo y Digital',
+    events_loading: 'CARGANDO EVENTOS...',
+    events_empty: 'No hay eventos aún. Mantente atento.',
+    event_spots: 'plazas',
+    event_live: 'EN VIVO',
+    event_ended: 'FINALIZADO',
+    event_register_athlete: '🏅 Registrar Atleta',
+    event_register_spectator: '🎫 Obtener Entrada',
+    event_watch_stream: '▶️ VER EN VIVO',
+    event_watch_vod: '📺 VER REPETICIÓN',
+    
+    // Registration Flow
+    reg_step_info: 'Info',
+    reg_step_contract: 'Contrato',
+    reg_step_signature: 'Firma',
+    reg_athlete_title: 'Registro de Atleta',
+    reg_spectator_title: 'Entrada de Espectador',
+    reg_first_name: 'Nombre',
+    reg_last_name: 'Apellido',
+    reg_email: 'Correo',
+    reg_phone: 'Teléfono',
+    reg_dob: 'Fecha de Nacimiento',
+    reg_sport: 'Disciplina Deportiva',
+    reg_id_upload: 'Subir Documento',
+    reg_id_hint: 'JPG, PNG o PDF - Máx 5MB',
+    reg_contract_title: 'Exención de Responsabilidad',
+    reg_contract_accept: 'He leído y acepto los términos',
+    reg_signature_title: 'Firma Digital',
+    reg_signature_hint: 'Firma con tu dedo o ratón',
+    reg_signature_clear: 'Borrar',
+    reg_back: 'Atrás',
+    reg_next: 'Siguiente',
+    reg_submit: 'Enviar Registro',
+    reg_submitting: 'Procesando...',
+    reg_close: '✕ CERRAR',
+    reg_upload_error: 'Error al cargar. Inténtalo de nuevo.',
+    reg_upload_size: 'Archivo demasiado grande. Máximo 5MB.',
+    
+    // Success Modal
+    success_athlete_title: 'ATLETA REGISTRADO',
+    success_spectator_title: 'ENTRADA CONFIRMADA',
+    success_athlete_msg: 'Tu registro está confirmado. Revisa tu correo para el código QR.',
+    success_spectator_msg: 'Tu entrada está lista. Revisa tu correo para el código QR.',
+    success_ticket: 'TU ENTRADA',
+    success_seat: 'Asiento',
+    success_zone: 'Zona',
+    success_close: 'ENTENDIDO',
+    
+    // Tokens
+    tokens_title: 'TOKENS DE ATLETA',
+    tokens_subtitle: 'Coleccionables Digitales',
+    tokens_intro: 'Apoya a tus atletas favoritos y desbloquea beneficios exclusivos.',
+    tokens_soon: 'Marketplace de tokens próximamente.',
+    tokens_cta: 'UNIRSE A LISTA',
+    
+    // Betting
+    bet_title: 'APUESTAS ÉTICAS',
+    bet_subtitle: 'Recompensas por Predicción',
+    bet_locked_title: 'Token Requerido',
+    bet_locked_msg: 'Compra un token de atleta para desbloquear desafíos.',
+    bet_locked_cta: 'Obtener Tokens',
+    bet_my_bets: 'MIS PREDICCIONES',
+    bet_empty: 'No hay apuestas activas.',
+    bet_how_title: 'Cómo Funciona',
+    bet_how_1: '1. Posee un token de atleta',
+    bet_how_2: '2. Predice resultados',
+    bet_how_3: '3. Gana premios exclusivos',
+    bet_how_4: '4. Canjea recompensas',
+    bet_disclaimer: '⚠️ SIN PREMIOS MONETARIOS. Sistema de gamificación ético.',
+    
+    // Social Rewards
+    social_rewards_title: 'BENEFICIOS ESPECTADOR',
+    social_rewards_subtitle: 'Sigue y Gana',
+    social_rewards_msg: '¿Sin token? Síguenos en todas las plataformas para regalos.',
+    social_rewards_list: '✓ Sigue las 5 cuentas\n✓ Muestra prueba en el evento\n✓ Obtén regalos',
+    social_rewards_cta: 'VER ENLACES SOCIALES',
+    
+    // Sponsor
+    sponsor_title: 'ASÓCIATE CON NOSOTROS',
+    sponsor_subtitle: 'Alcanza la Nueva Generación',
+    sponsor_value: 'Street Dinamics conecta tu marca con atletas de 13–30 años en Italia.',
+    sponsor_demo: 'Edades 13–30 • 10K+ alcance social',
+    sponsor_cta: 'partnerships@streetdinamics.it',
+    sponsor_note: 'Respondemos en 48h.',
+    
+    // Social Modal
+    social_modal_title: 'STREET DINAMICS',
+    social_modal_subtitle: 'Síguenos en Todas Partes',
+    social_instagram: 'Instagram',
+    social_tiktok: 'TikTok',
+    social_youtube: 'YouTube',
+    social_kick: 'Kick — Transmisiones',
+    social_snapchat: 'Snapchat',
+    
+    // Footer
+    footer_rights: '© 2026 Street Dinamics ASD — Todos los Derechos Reservados',
+  },
+  
+  fr: {
+    // Navbar
+    nav_events: 'Événements',
+    nav_tokens: '🎫 Jetons',
+    nav_bet: '🎯 Parier',
+    nav_social: '🔗 Social',
+    
+    // HUD
+    hud_system: 'Système en Ligne',
+    hud_ai: 'Secrétaire IA : Active',
+    
+    // Hero
+    hero_eyebrow: '// Circuit Sportif de Rue Italien //',
+    hero_tagline: 'Tournois · Scouting · Communauté · 13–30',
+    hero_cta_athlete: 'REJOINDRE COMME ATHLÈTE',
+    hero_cta_spectator: 'REGARDER COMME SPECTATEUR',
+    hero_cta_tokens: '🎫 OBTENIR JETONS',
+    hero_scroll: '↓ DÉFILER POUR ÉVÉNEMENTS',
+    
+    // Events
+    events_title: 'ÉVÉNEMENTS',
+    events_subtitle: 'Circuit en Direct et Numérique',
+    events_loading: 'CHARGEMENT...',
+    events_empty: 'Pas encore d\'événements.',
+    event_spots: 'places',
+    event_live: 'EN DIRECT',
+    event_ended: 'TERMINÉ',
+    event_register_athlete: '🏅 Inscrire Athlète',
+    event_register_spectator: '🎫 Obtenir Billet',
+    event_watch_stream: '▶️ REGARDER EN DIRECT',
+    event_watch_vod: '📺 VOIR REPLAY',
+    
+    // Registration Flow
+    reg_step_info: 'Info',
+    reg_step_contract: 'Contrat',
+    reg_step_signature: 'Signature',
+    reg_athlete_title: 'Inscription Athlète',
+    reg_spectator_title: 'Billet Spectateur',
+    reg_first_name: 'Prénom',
+    reg_last_name: 'Nom',
+    reg_email: 'Email',
+    reg_phone: 'Téléphone',
+    reg_dob: 'Date de Naissance',
+    reg_sport: 'Discipline Sportive',
+    reg_id_upload: 'Télécharger Document',
+    reg_id_hint: 'JPG, PNG ou PDF - Max 5Mo',
+    reg_contract_title: 'Décharge de Responsabilité',
+    reg_contract_accept: 'J\'ai lu et accepte les termes',
+    reg_signature_title: 'Signature Numérique',
+    reg_signature_hint: 'Signez avec votre doigt ou souris',
+    reg_signature_clear: 'Effacer',
+    reg_back: 'Retour',
+    reg_next: 'Suivant',
+    reg_submit: 'Soumettre',
+    reg_submitting: 'Traitement...',
+    reg_close: '✕ FERMER',
+    reg_upload_error: 'Échec du téléchargement.',
+    reg_upload_size: 'Fichier trop volumineux. Max 5Mo.',
+    
+    // Success Modal
+    success_athlete_title: 'ATHLÈTE INSCRIT',
+    success_spectator_title: 'BILLET CONFIRMÉ',
+    success_athlete_msg: 'Votre inscription est confirmée. Vérifiez votre email.',
+    success_spectator_msg: 'Votre billet est prêt. Vérifiez votre email.',
+    success_ticket: 'VOTRE BILLET',
+    success_seat: 'Siège',
+    success_zone: 'Zone',
+    success_close: 'COMPRIS',
+    
+    // Tokens
+    tokens_title: 'JETONS D\'ATHLÈTE',
+    tokens_subtitle: 'Objets Numériques',
+    tokens_intro: 'Soutenez vos athlètes préférés et débloquez des avantages exclusifs.',
+    tokens_soon: 'Marketplace de jetons bientôt.',
+    tokens_cta: 'REJOINDRE LISTE',
+    
+    // Betting
+    bet_title: 'PARIS ÉTHIQUES',
+    bet_subtitle: 'Récompenses de Prédiction',
+    bet_locked_title: 'Jeton Requis',
+    bet_locked_msg: 'Achetez un jeton d\'athlète pour débloquer les défis.',
+    bet_locked_cta: 'Obtenir Jetons',
+    bet_my_bets: 'MES PRÉDICTIONS',
+    bet_empty: 'Pas de paris actifs.',
+    bet_how_title: 'Comment ça Marche',
+    bet_how_1: '1. Possédez un jeton',
+    bet_how_2: '2. Prédisez les résultats',
+    bet_how_3: '3. Gagnez des prix',
+    bet_how_4: '4. Réclamez les récompenses',
+    bet_disclaimer: '⚠️ AUCUN PRIX EN ARGENT. Système de gamification éthique.',
+    
+    // Social Rewards
+    social_rewards_title: 'AVANTAGES SPECTATEUR',
+    social_rewards_subtitle: 'Suivez et Gagnez',
+    social_rewards_msg: 'Pas de jeton ? Suivez-nous pour des cadeaux gratuits.',
+    social_rewards_list: '✓ Suivez les 5 comptes\n✓ Montrez la preuve\n✓ Obtenez des cadeaux',
+    social_rewards_cta: 'VOIR LIENS SOCIAUX',
+    
+    // Sponsor
+    sponsor_title: 'PARTENARIAT',
+    sponsor_subtitle: 'Atteindre la Nouvelle Génération',
+    sponsor_value: 'Street Dinamics connecte votre marque avec des athlètes de 13–30 ans.',
+    sponsor_demo: 'Âges 13–30 • 10K+ portée sociale',
+    sponsor_cta: 'partnerships@streetdinamics.it',
+    sponsor_note: 'Réponse sous 48h.',
+    
+    // Social Modal
+    social_modal_title: 'STREET DINAMICS',
+    social_modal_subtitle: 'Suivez-nous Partout',
+    social_instagram: 'Instagram',
+    social_tiktok: 'TikTok',
+    social_youtube: 'YouTube',
+    social_kick: 'Kick — Diffusions',
+    social_snapchat: 'Snapchat',
+    
+    // Footer
+    footer_rights: '© 2026 Street Dinamics ASD — Tous Droits Réservés',
+  },
+  
+  de: {
+    // Navbar
+    nav_events: 'Veranstaltungen',
+    nav_tokens: '🎫 Token',
+    nav_bet: '🎯 Wetten',
+    nav_social: '🔗 Social',
+    
+    // HUD
+    hud_system: 'System Online',
+    hud_ai: 'KI-Sekretärin: Aktiv',
+    
+    // Hero
+    hero_eyebrow: '// Italienischer Straßensport-Circuit //',
+    hero_tagline: 'Turniere · Scouting · Community · 13–30',
+    hero_cta_athlete: 'ALS ATHLET BEITRETEN',
+    hero_cta_spectator: 'ALS ZUSCHAUER ANSEHEN',
+    hero_cta_tokens: '🎫 TOKEN ERHALTEN',
+    hero_scroll: '↓ SCROLLEN FÜR EVENTS',
+    
+    // Events
+    events_title: 'VERANSTALTUNGEN',
+    events_subtitle: 'Live- und Digital-Circuit',
+    events_loading: 'LADE EVENTS...',
+    events_empty: 'Noch keine Events.',
+    event_spots: 'Plätze',
+    event_live: 'LIVE JETZT',
+    event_ended: 'BEENDET',
+    event_register_athlete: '🏅 Athlet Anmelden',
+    event_register_spectator: '🎫 Ticket Holen',
+    event_watch_stream: '▶️ LIVE ANSEHEN',
+    event_watch_vod: '📺 WIEDERHOLUNG',
+    
+    // Registration Flow
+    reg_step_info: 'Info',
+    reg_step_contract: 'Vertrag',
+    reg_step_signature: 'Unterschrift',
+    reg_athlete_title: 'Athleten-Anmeldung',
+    reg_spectator_title: 'Zuschauer-Ticket',
+    reg_first_name: 'Vorname',
+    reg_last_name: 'Nachname',
+    reg_email: 'E-Mail',
+    reg_phone: 'Telefon',
+    reg_dob: 'Geburtsdatum',
+    reg_sport: 'Sportdisziplin',
+    reg_id_upload: 'Dokument Hochladen',
+    reg_id_hint: 'JPG, PNG oder PDF - Max 5MB',
+    reg_contract_title: 'Haftungsausschluss',
+    reg_contract_accept: 'Ich habe gelesen und akzeptiere die Bedingungen',
+    reg_signature_title: 'Digitale Unterschrift',
+    reg_signature_hint: 'Mit Finger oder Maus unterschreiben',
+    reg_signature_clear: 'Löschen',
+    reg_back: 'Zurück',
+    reg_next: 'Weiter',
+    reg_submit: 'Absenden',
+    reg_submitting: 'Verarbeitung...',
+    reg_close: '✕ SCHLIESSEN',
+    reg_upload_error: 'Upload fehlgeschlagen.',
+    reg_upload_size: 'Datei zu groß. Max 5MB.',
+    
+    // Success Modal
+    success_athlete_title: 'ATHLET ANGEMELDET',
+    success_spectator_title: 'TICKET BESTÄTIGT',
+    success_athlete_msg: 'Ihre Anmeldung ist bestätigt. Prüfen Sie Ihre E-Mail.',
+    success_spectator_msg: 'Ihr Ticket ist bereit. Prüfen Sie Ihre E-Mail.',
+    success_ticket: 'IHR TICKET',
+    success_seat: 'Sitzplatz',
+    success_zone: 'Zone',
+    success_close: 'VERSTANDEN',
+    
+    // Tokens
+    tokens_title: 'ATHLETEN-TOKEN',
+    tokens_subtitle: 'Digitale Sammlerstücke',
+    tokens_intro: 'Unterstützen Sie Ihre Lieblingsathleten und entsperren Sie exklusive Vorteile.',
+    tokens_soon: 'Token-Marktplatz bald verfügbar.',
+    tokens_cta: 'WARTELISTE BEITRETEN',
+    
+    // Betting
+    bet_title: 'ETHISCHES WETTEN',
+    bet_subtitle: 'Vorhersage-Belohnungen',
+    bet_locked_title: 'Token Erforderlich',
+    bet_locked_msg: 'Kaufen Sie einen Athleten-Token, um Herausforderungen freizuschalten.',
+    bet_locked_cta: 'Token Erhalten',
+    bet_my_bets: 'MEINE VORHERSAGEN',
+    bet_empty: 'Keine aktiven Wetten.',
+    bet_how_title: 'Wie es Funktioniert',
+    bet_how_1: '1. Besitzen Sie einen Token',
+    bet_how_2: '2. Vorhersagen Sie Ergebnisse',
+    bet_how_3: '3. Gewinnen Sie Preise',
+    bet_how_4: '4. Belohnungen einlösen',
+    bet_disclaimer: '⚠️ KEINE GELDPREISE. Ethisches Gamification-System.',
+    
+    // Social Rewards
+    social_rewards_title: 'ZUSCHAUER-VORTEILE',
+    social_rewards_subtitle: 'Folgen und Gewinnen',
+    social_rewards_msg: 'Kein Token? Folgen Sie uns für kostenlose Geschenke.',
+    social_rewards_list: '✓ Folgen Sie allen 5 Konten\n✓ Nachweis zeigen\n✓ Geschenke erhalten',
+    social_rewards_cta: 'SOCIAL-LINKS ANSEHEN',
+    
+    // Sponsor
+    sponsor_title: 'PARTNERSCHAFT',
+    sponsor_subtitle: 'Erreichen Sie die Neue Generation',
+    sponsor_value: 'Street Dinamics verbindet Ihre Marke mit 13–30-jährigen Athleten.',
+    sponsor_demo: 'Alter 13–30 • 10K+ Social Reichweite',
+    sponsor_cta: 'partnerships@streetdinamics.it',
+    sponsor_note: 'Antwort innerhalb 48h.',
+    
+    // Social Modal
+    social_modal_title: 'STREET DINAMICS',
+    social_modal_subtitle: 'Folgen Sie Uns Überall',
+    social_instagram: 'Instagram',
+    social_tiktok: 'TikTok',
+    social_youtube: 'YouTube',
+    social_kick: 'Kick — Live-Streams',
+    social_snapchat: 'Snapchat',
+    
+    // Footer
+    footer_rights: '© 2026 Street Dinamics ASD — Alle Rechte Vorbehalten',
+  },
+  
+  ar: {
+    // Navbar
+    nav_events: 'الفعاليات',
+    nav_tokens: '🎫 الرموز',
+    nav_bet: '🎯 المراهنة',
+    nav_social: '🔗 التواصل',
+    
+    // HUD
+    hud_system: 'النظام متصل',
+    hud_ai: 'السكرتيرة الذكية: نشطة',
+    
+    // Hero
+    hero_eyebrow: '// دائرة الرياضات الشارعية الإيطالية //',
+    hero_tagline: 'البطولات · الكشف · المجتمع · 13–30',
+    hero_cta_athlete: 'انضم كرياضي',
+    hero_cta_spectator: 'شاهد كمتفرج',
+    hero_cta_tokens: '🎫 احصل على الرموز',
+    hero_scroll: '↓ مرر للفعاليات',
+    
+    // Events
+    events_title: 'الفعاليات',
+    events_subtitle: 'الدائرة المباشرة والرقمية',
+    events_loading: 'جارٍ التحميل...',
+    events_empty: 'لا توجد فعاليات بعد.',
+    event_spots: 'أماكن',
+    event_live: 'مباشر الآن',
+    event_ended: 'انتهى',
+    event_register_athlete: '🏅 تسجيل رياضي',
+    event_register_spectator: '🎫 احصل على تذكرة',
+    event_watch_stream: '▶️ مشاهدة مباشرة',
+    event_watch_vod: '📺 مشاهدة الإعادة',
+    
+    // Registration Flow
+    reg_step_info: 'المعلومات',
+    reg_step_contract: 'العقد',
+    reg_step_signature: 'التوقيع',
+    reg_athlete_title: 'تسجيل الرياضي',
+    reg_spectator_title: 'تذكرة المتفرج',
+    reg_first_name: 'الاسم الأول',
+    reg_last_name: 'اسم العائلة',
+    reg_email: 'البريد الإلكتروني',
+    reg_phone: 'الهاتف',
+    reg_dob: 'تاريخ الميلاد',
+    reg_sport: 'التخصص الرياضي',
+    reg_id_upload: 'رفع الوثيقة',
+    reg_id_hint: 'JPG أو PNG أو PDF - الحد الأقصى 5 ميجابايت',
+    reg_contract_title: 'إخلاء المسؤولية',
+    reg_contract_accept: 'لقد قرأت وأوافق على الشروط',
+    reg_signature_title: 'التوقيع الرقمي',
+    reg_signature_hint: 'وقع بإصبعك أو الماوس',
+    reg_signature_clear: 'مسح',
+    reg_back: 'رجوع',
+    reg_next: 'التالي',
+    reg_submit: 'إرسال التسجيل',
+    reg_submitting: 'جارٍ المعالجة...',
+    reg_close: '✕ إغلاق',
+    reg_upload_error: 'فشل الرفع. حاول مرة أخرى.',
+    reg_upload_size: 'الملف كبير جداً. الحد الأقصى 5 ميجابايت.',
+    
+    // Success Modal
+    success_athlete_title: 'تم تسجيل الرياضي',
+    success_spectator_title: 'تم تأكيد التذكرة',
+    success_athlete_msg: 'تم تأكيد تسجيلك. تحقق من بريدك الإلكتروني.',
+    success_spectator_msg: 'تذكرتك جاهزة. تحقق من بريدك الإلكتروني.',
+    success_ticket: 'تذكرتك',
+    success_seat: 'المقعد',
+    success_zone: 'المنطقة',
+    success_close: 'فهمت',
+    
+    // Tokens
+    tokens_title: 'رموز الرياضيين',
+    tokens_subtitle: 'المقتنيات الرقمية',
+    tokens_intro: 'ادعم رياضييك المفضلين واحصل على امتيازات حصرية.',
+    tokens_soon: 'سوق الرموز قريباً.',
+    tokens_cta: 'انضم للقائمة',
+    
+    // Betting
+    bet_title: 'المراهنة الأخلاقية',
+    bet_subtitle: 'مكافآت التوقع',
+    bet_locked_title: 'الرمز مطلوب',
+    bet_locked_msg: 'اشترِ رمز رياضي لفتح التحديات.',
+    bet_locked_cta: 'احصل على الرموز',
+    bet_my_bets: 'توقعاتي',
+    bet_empty: 'لا توجد رهانات نشطة.',
+    bet_how_title: 'كيف يعمل',
+    bet_how_1: '1. امتلك رمزاً',
+    bet_how_2: '2. توقع النتائج',
+    bet_how_3: '3. اربح جوائز',
+    bet_how_4: '4. استبدل المكافآت',
+    bet_disclaimer: '⚠️ لا توجد جوائز نقدية. نظام ألعاب أخلاقي.',
+    
+    // Social Rewards
+    social_rewards_title: 'امتيازات المتفرجين',
+    social_rewards_subtitle: 'تابع واربح',
+    social_rewards_msg: 'لا يوجد رمز؟ تابعنا للحصول على هدايا مجانية.',
+    social_rewards_list: '✓ تابع جميع الحسابات الـ5\n✓ أظهر الإثبات\n✓ احصل على هدايا',
+    social_rewards_cta: 'عرض الروابط الاجتماعية',
+    
+    // Sponsor
+    sponsor_title: 'كن شريكاً',
+    sponsor_subtitle: 'اصل للجيل الجديد',
+    sponsor_value: 'ستريت ديناميكس تربط علامتك التجارية برياضيين من عمر 13–30.',
+    sponsor_demo: 'الأعمار 13–30 • 10 آلاف+ وصول اجتماعي',
+    sponsor_cta: 'partnerships@streetdinamics.it',
+    sponsor_note: 'نجيب خلال 48 ساعة.',
+    
+    // Social Modal
+    social_modal_title: 'ستريت ديناميكس',
+    social_modal_subtitle: 'تابعنا في كل مكان',
+    social_instagram: 'إنستغرام',
+    social_tiktok: 'تيك توك',
+    social_youtube: 'يوتيوب',
+    social_kick: 'كيك — البث المباشر',
+    social_snapchat: 'سناب شات',
+    
+    // Footer
+    footer_rights: '© 2026 ستريت ديناميكس ASD — جميع الحقوق محفوظة',
   }
 };
 

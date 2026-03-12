@@ -230,20 +230,49 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
             <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Legally Binding</p>
 
             <div className="bg-black/50 border border-fire-3/10 p-4 mb-4 max-h-[260px] overflow-y-auto font-mono text-[13px] leading-loose text-fire-4/35 scrollbar-thin">
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">CONTRATTO DI PARTECIPAZIONE</h5>
-              Street Dinamics ASD — Il presente contratto è redatto in conformità al Codice Civile italiano, al D.Lgs. 36/2021, al GDPR (UE) 2016/679 e al Regolamento eIDAS.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">CONTRATTO DI PARTECIPAZIONE — STREET DINAMICS ASD</h5>
+              Il presente contratto è redatto in conformità al Codice Civile italiano, D.Lgs. 36/2021 (Riforma del Terzo Settore), GDPR (UE) 2016/679, e Regolamento eIDAS (UE) 910/2014.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">1 — Acceptance</h5>
-              By completing registration, you unconditionally accept all terms. This constitutes a legally binding agreement.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 1 — IDENTIFICAZIONE DELLE PARTI</h5>
+              <strong>Organizzatore:</strong> Street Dinamics ASD, con sede legale in [indirizzo], C.F. [codice fiscale], email info@streetdinamics.it, in qualità di Associazione Sportiva Dilettantistica iscritta al Registro CONI.<br/>
+              <strong>Partecipante:</strong> il sottoscrittore del presente contratto (di seguito "Partecipante"), maggiorenne o minorenne rappresentato da genitore/tutore.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">2 — Privacy (GDPR)</h5>
-              Data Controller: Street Dinamics ASD — info@streetdinamics.it. Data retained for 5 years post-event. Rights: access, rectification, erasure, portability.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 2 — OGGETTO DEL CONTRATTO</h5>
+              Il Partecipante si iscrive all'evento sportivo organizzato da Street Dinamics ASD. La registrazione implica l'accettazione integrale dei presenti termini e condizioni, nonché del Regolamento dell'evento pubblicato sul sito ufficiale.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">3 — Image Rights</h5>
-              Non-exclusive, royalty-free licence for promotional use of name, likeness, video footage for 24 months.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 3 — CONSENSO AL TRATTAMENTO DATI (GDPR)</h5>
+              <strong>Titolare del Trattamento:</strong> Street Dinamics ASD.<br/>
+              <strong>Finalità:</strong> Gestione iscrizioni, comunicazioni relative all'evento, adempimenti legali, marketing (previo consenso separato).<br/>
+              <strong>Base Giuridica:</strong> Esecuzione del contratto (art. 6.1.b GDPR), consenso esplicito per finalità promozionali (art. 6.1.a).<br/>
+              <strong>Conservazione:</strong> I dati saranno conservati per 5 anni dalla data dell'evento, salvo obblighi di legge più lunghi.<br/>
+              <strong>Diritti:</strong> Accesso, rettifica, cancellazione, portabilità, opposizione, limitazione del trattamento (artt. 15-22 GDPR). Per esercitare i diritti: privacy@streetdinamics.it.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">4 — Disclaimer</h5>
-              Street Dinamics ASD accepts no liability for personal injury, theft, or event cancellation due to force majeure.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 4 — CESSIONE DEI DIRITTI D'IMMAGINE</h5>
+              Il Partecipante autorizza Street Dinamics ASD a:<br/>
+              - Riprendere foto, video e registrazioni audio durante l'evento;<br/>
+              - Utilizzare tali materiali per scopi promozionali, editoriali, social media, per una durata di 24 mesi dalla data dell'evento;<br/>
+              - Cedere i diritti a partner commerciali e sponsor (solo per finalità promozionali dell'evento).<br/>
+              <strong>Revoca:</strong> Il Partecipante può revocare il consenso in qualsiasi momento scrivendo a privacy@streetdinamics.it. La revoca non pregiudica la liceità del trattamento precedente.
+              <br /><br />
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 5 — LIBERATORIA DI RESPONSABILITÀ</h5>
+              Il Partecipante dichiara di:<br/>
+              - Essere in condizioni fisiche idonee per l'attività sportiva;<br/>
+              - Esonerare Street Dinamics ASD da qualsiasi responsabilità per danni a persone o cose, salvo dolo o colpa grave dell'organizzatore (art. 1229 c.c.);<br/>
+              - Essere consapevole dei rischi connessi all'attività sportiva e accettarli volontariamente.<br/>
+              <strong>Assicurazione:</strong> L'organizzatore garantisce copertura assicurativa RC per danni a terzi durante l'evento.
+              <br /><br />
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 6 — CANCELLAZIONE E RIMBORSI</h5>
+              - Cancellazione da parte del Partecipante: entro 7 giorni dall'evento, rimborso del 50% della quota. Oltre tale termine, nessun rimborso.<br/>
+              - Cancellazione da parte dell'organizzatore: rimborso integrale in caso di annullamento per cause di forza maggiore (eventi atmosferici, emergenze sanitarie, provvedimenti autorità).
+              <br /><br />
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 7 — FIRMA DIGITALE (eIDAS)</h5>
+              La firma apposta tramite canvas digitale ha piena validità giuridica ai sensi del Regolamento eIDAS (UE) 910/2014 e del CAD (D.Lgs. 82/2005). L'hash della firma è conservato in formato sicuro come prova di consenso informato.
+              <br /><br />
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 8 — LEGGE APPLICABILE E FORO COMPETENTE</h5>
+              Il presente contratto è regolato dalla legge italiana. Per ogni controversia è competente il Foro di [città sede legale ASD].
+              <br /><br />
+              <strong>Data e Luogo:</strong> [generato automaticamente]<br/>
+              <strong>Il Partecipante / Genitore (se minorenne):</strong> [firma digitale]
             </div>
 
             <label className="flex items-start gap-2.5 cursor-pointer mb-4">
