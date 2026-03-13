@@ -80,7 +80,7 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
             body: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #ffe8c0; padding: 20px; border: 2px solid #ff5000;">
                 <div style="text-align: center; margin-bottom: 20px;">
-                  <h1 style="color: #ff9900; font-size: 28px; margin: 0;">🏅 STREET DYNAMICS</h1>
+                  <h1 style="color: #ff9900; font-size: 28px; margin: 0; letter-spacing: 2px;">🏅 STREET DYNAMICS</h1>
                   <p style="color: #664422; font-size: 11px; letter-spacing: 3px; margin: 5px 0;">GLOBAL SPORTS PLATFORM</p>
                 </div>
                 
@@ -104,8 +104,9 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
                 </div>
                 
                 <div style="text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,100,0,0.2);">
-                  <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px;">© 2026 STREET DYNAMICS HOLDING FZE — ALL RIGHTS RESERVED</p>
-                  <p style="font-size: 10px; color: #2a1500;">IFZA Business Park, Dubai, UAE</p>
+                  <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px; margin: 3px 0;">© 2026 STREET DYNAMICS HOLDING FZE — ALL RIGHTS RESERVED</p>
+                  <p style="font-size: 9px; color: #2a1500; margin: 2px 0;">IFZA Business Park, Dubai, UAE — License: [TBD]</p>
+                  <p style="font-size: 8px; color: #2a1500; margin: 2px 0;">Global Platform • Blockchain-Powered • Youth Sports 13-30</p>
                 </div>
               </div>
             `

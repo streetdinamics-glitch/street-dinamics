@@ -11,7 +11,7 @@ export const translations = {
     hud_ai: 'AI Secretary: Active',
     
     // Hero
-    hero_eyebrow: '// Italy\'s Street Sports Circuit //',
+    hero_eyebrow: '// Global Street Sports Platform //',
     hero_tagline: 'Tournaments · Scouting · Community · 13–30',
     hero_cta_athlete: 'JOIN AS ATHLETE',
     hero_cta_spectator: 'WATCH AS SPECTATOR',
@@ -108,7 +108,7 @@ export const translations = {
     sponsor_note: 'We respond within 48h. Media kits available on request.',
     
     // Social Modal
-    social_modal_title: 'STREET DINAMICS',
+    social_modal_title: 'STREET DYNAMICS',
     social_modal_subtitle: 'Follow Us Everywhere',
     social_instagram: 'Instagram',
     social_tiktok: 'TikTok',
@@ -132,7 +132,7 @@ export const translations = {
     hud_ai: 'Segretaria AI: Attiva',
     
     // Hero
-    hero_eyebrow: '// Il Circuito Sportivo di Strada Italiano //',
+    hero_eyebrow: '// Piattaforma Sportiva Globale //',
     hero_tagline: 'Tornei · Scouting · Comunità · 13–30',
     hero_cta_athlete: 'ISCRIVITI COME ATLETA',
     hero_cta_spectator: 'GUARDA COME SPETTATORE',
@@ -229,7 +229,7 @@ export const translations = {
     sponsor_note: 'Rispondiamo entro 48h. Kit media disponibili su richiesta.',
     
     // Social Modal
-    social_modal_title: 'STREET DINAMICS',
+    social_modal_title: 'STREET DYNAMICS',
     social_modal_subtitle: 'Seguici Ovunque',
     social_instagram: 'Instagram',
     social_tiktok: 'TikTok',
@@ -253,7 +253,7 @@ export const translations = {
     hud_ai: 'Secretaria IA: Activa',
     
     // Hero
-    hero_eyebrow: '// Circuito Deportivo Callejero de Italia //',
+    hero_eyebrow: '// Plataforma Deportiva Global //',
     hero_tagline: 'Torneos · Scouting · Comunidad · 13–30',
     hero_cta_athlete: 'ÚNETE COMO ATLETA',
     hero_cta_spectator: 'VER COMO ESPECTADOR',
@@ -348,7 +348,7 @@ export const translations = {
     sponsor_note: 'Respondemos en 48h.',
     
     // Social Modal
-    social_modal_title: 'STREET DINAMICS',
+    social_modal_title: 'STREET DYNAMICS',
     social_modal_subtitle: 'Síguenos en Todas Partes',
     social_instagram: 'Instagram',
     social_tiktok: 'TikTok',
@@ -372,7 +372,7 @@ export const translations = {
     hud_ai: 'Secrétaire IA : Active',
     
     // Hero
-    hero_eyebrow: '// Circuit Sportif de Rue Italien //',
+    hero_eyebrow: '// Plateforme Sportive Mondiale //',
     hero_tagline: 'Tournois · Scouting · Communauté · 13–30',
     hero_cta_athlete: 'REJOINDRE COMME ATHLÈTE',
     hero_cta_spectator: 'REGARDER COMME SPECTATEUR',
@@ -467,7 +467,7 @@ export const translations = {
     sponsor_note: 'Réponse sous 48h.',
     
     // Social Modal
-    social_modal_title: 'STREET DINAMICS',
+    social_modal_title: 'STREET DYNAMICS',
     social_modal_subtitle: 'Suivez-nous Partout',
     social_instagram: 'Instagram',
     social_tiktok: 'TikTok',
@@ -491,7 +491,7 @@ export const translations = {
     hud_ai: 'KI-Sekretärin: Aktiv',
     
     // Hero
-    hero_eyebrow: '// Italienischer Straßensport-Circuit //',
+    hero_eyebrow: '// Globale Sport-Plattform //',
     hero_tagline: 'Turniere · Scouting · Community · 13–30',
     hero_cta_athlete: 'ALS ATHLET BEITRETEN',
     hero_cta_spectator: 'ALS ZUSCHAUER ANSEHEN',
@@ -586,7 +586,7 @@ export const translations = {
     sponsor_note: 'Antwort innerhalb 48h.',
     
     // Social Modal
-    social_modal_title: 'STREET DINAMICS',
+    social_modal_title: 'STREET DYNAMICS',
     social_modal_subtitle: 'Folgen Sie Uns Überall',
     social_instagram: 'Instagram',
     social_tiktok: 'TikTok',
@@ -610,7 +610,7 @@ export const translations = {
     hud_ai: 'السكرتيرة الذكية: نشطة',
     
     // Hero
-    hero_eyebrow: '// دائرة الرياضات الشارعية الإيطالية //',
+    hero_eyebrow: '// منصة رياضية عالمية //',
     hero_tagline: 'البطولات · الكشف · المجتمع · 13–30',
     hero_cta_athlete: 'انضم كرياضي',
     hero_cta_spectator: 'شاهد كمتفرج',

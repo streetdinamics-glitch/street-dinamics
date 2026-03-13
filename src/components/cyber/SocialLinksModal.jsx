@@ -2,11 +2,11 @@ import React from 'react';
 import { useTranslation } from '../../components/translations';
 
 const links = [
-  { icon: '📸', label: 'social_instagram', url: 'https://instagram.com/streetdinamics' },
-  { icon: '🎵', label: 'social_tiktok', url: 'https://tiktok.com/@streetdinamics' },
-  { icon: '▶️', label: 'social_youtube', url: 'https://youtube.com/@streetdinamics' },
-  { icon: '🟢', label: 'social_kick', url: 'https://kick.com/streetdinamics' },
-  { icon: '👻', label: 'social_snapchat', url: 'https://snapchat.com/add/streetdinamics' },
+  { icon: '📸', label: 'social_instagram', url: 'https://instagram.com/streetdynamics' },
+  { icon: '🎵', label: 'social_tiktok', url: 'https://tiktok.com/@streetdynamics' },
+  { icon: '▶️', label: 'social_youtube', url: 'https://youtube.com/@streetdynamics' },
+  { icon: '🟢', label: 'social_kick', url: 'https://kick.com/streetdynamics' },
+  { icon: '👻', label: 'social_snapchat', url: 'https://snapchat.com/add/streetdynamics' },
 ];
 
 export default function SocialLinksModal({ onClose, lang }) {

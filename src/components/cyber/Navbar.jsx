@@ -32,13 +32,13 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch }) {
         
         <img
           src={SD_LOGO}
-          alt="Street Dinamics"
+          alt="Street Dynamics"
           className="h-[42px] w-[42px] object-cover rounded-md cursor-pointer drop-shadow-[0_0_12px_rgba(255,100,0,0.9)] hover:drop-shadow-[0_0_20px_rgba(255,150,0,1)] transition-all"
           onClick={() => onScrollTo?.('hero')}
         />
 
         <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 font-orbitron text-[11px] font-bold tracking-[6px] text-fire-3/30 uppercase">
-          STREET<span className="text-fire-3">//</span>DINAMICS
+          STREET<span className="text-fire-3">//</span>DYNAMICS
         </div>
 
         <div className="hidden md:flex items-center gap-2.5">
