@@ -76,17 +76,38 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
           const qrData = `SD-TICKET|${data.ticket_code}|${data.event_id}|${data.email}`;
           await base44.integrations.Core.SendEmail({
             to: form.email,
-            subject: `Street Dinamics - ${type === 'athlete' ? 'Registration' : 'Ticket'} Confirmed`,
+            subject: `Street Dynamics - ${type === 'athlete' ? 'Registration' : 'Ticket'} Confirmed`,
             body: `
-              <h2>🏅 Street Dinamics - ${event.title}</h2>
-              <p>Your ${type} registration is confirmed!</p>
-              <h3>Ticket Code: ${data.ticket_code}</h3>
-              <p>Seat: ${data.seat_zone}</p>
-              <p>QR Code Data: ${qrData}</p>
-              <p>Show this code at the venue entrance.</p>
-              <p>Event: ${event.title}</p>
-              <p>Date: ${event.date}</p>
-              <p>Location: ${event.location}</p>
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #ffe8c0; padding: 20px; border: 2px solid #ff5000;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                  <h1 style="color: #ff9900; font-size: 28px; margin: 0;">🏅 STREET DYNAMICS</h1>
+                  <p style="color: #664422; font-size: 11px; letter-spacing: 3px; margin: 5px 0;">GLOBAL SPORTS PLATFORM</p>
+                </div>
+                
+                <div style="background: rgba(255,100,0,0.05); border: 1px solid rgba(255,100,0,0.2); padding: 15px; margin-bottom: 20px;">
+                  <h2 style="color: #ffcc00; font-size: 20px; margin-top: 0;">${event.title}</h2>
+                  <p style="margin: 5px 0;"><strong>Status:</strong> ${type === 'athlete' ? '🏅 Athlete Registered' : '🎫 Spectator Ticket Confirmed'}</p>
+                  <p style="margin: 5px 0;"><strong>Date:</strong> ${event.date}</p>
+                  <p style="margin: 5px 0;"><strong>Location:</strong> ${event.location}</p>
+                </div>
+                
+                <div style="background: #080512; border: 2px solid #ff9900; padding: 20px; text-align: center; margin-bottom: 20px;">
+                  <h3 style="color: #00ffee; font-size: 16px; margin-top: 0;">YOUR TICKET CODE</h3>
+                  <div style="font-size: 32px; font-weight: bold; color: #fff; letter-spacing: 4px; margin: 15px 0;">${data.ticket_code}</div>
+                  <p style="color: #ff9900; margin: 10px 0;"><strong>Seat/Zone:</strong> ${data.seat_zone}</p>
+                  <p style="font-size: 11px; color: #664422; margin-top: 15px;">Show this code at venue entrance</p>
+                </div>
+                
+                <div style="font-size: 12px; color: #664422; line-height: 1.6;">
+                  <p><strong>Important:</strong> This registration is governed by the Terms of Service of Street Dynamics Holding FZE (IFZA, Dubai, UAE).</p>
+                  <p>For support: <a href="mailto:support@streetdynamics.ae" style="color: #ff9900;">support@streetdynamics.ae</a></p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,100,0,0.2);">
+                  <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px;">© 2026 STREET DYNAMICS HOLDING FZE — ALL RIGHTS RESERVED</p>
+                  <p style="font-size: 10px; color: #2a1500;">IFZA Business Park, Dubai, UAE</p>
+                </div>
+              </div>
             `
           });
         } catch (err) {
@@ -230,49 +251,75 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
             <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Legally Binding</p>
 
             <div className="bg-black/50 border border-fire-3/10 p-4 mb-4 max-h-[260px] overflow-y-auto font-mono text-[13px] leading-loose text-fire-4/35 scrollbar-thin">
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">CONTRATTO DI PARTECIPAZIONE — STREET DINAMICS ASD</h5>
-              Il presente contratto è redatto in conformità al Codice Civile italiano, D.Lgs. 36/2021 (Riforma del Terzo Settore), GDPR (UE) 2016/679, e Regolamento eIDAS (UE) 910/2014.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">PARTICIPATION AGREEMENT — STREET DYNAMICS HOLDING FZE</h5>
+              This agreement is governed by UAE Federal Law, DIFC Law, GDPR (EU) 2016/679, UAE Data Protection Law (DIFC Law No. 5/2020), and eIDAS Regulation (EU) 910/2014.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 1 — IDENTIFICAZIONE DELLE PARTI</h5>
-              <strong>Organizzatore:</strong> Street Dinamics ASD, con sede legale in [indirizzo], C.F. [codice fiscale], email info@streetdinamics.it, in qualità di Associazione Sportiva Dilettantistica iscritta al Registro CONI.<br/>
-              <strong>Partecipante:</strong> il sottoscrittore del presente contratto (di seguito "Partecipante"), maggiorenne o minorenne rappresentato da genitore/tutore.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 1 — IDENTIFICATION OF PARTIES</h5>
+              <strong>Organizer:</strong> Street Dynamics Holding FZE, registered in IFZA (International Free Zone Authority), Dubai, UAE, License No. [TBD], with registered office at [IFZA Business Park, Dubai], email: legal@streetdynamics.ae.<br/>
+              Street Dynamics Holding FZE is the sole controlling entity of the "Street Dynamics" brand and all affiliated platforms, events, digital assets, and IP rights globally.<br/>
+              <strong>Participant:</strong> The undersigned individual (hereinafter "Participant"), of legal age or represented by a parent/guardian if minor.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 2 — OGGETTO DEL CONTRATTO</h5>
-              Il Partecipante si iscrive all'evento sportivo organizzato da Street Dinamics ASD. La registrazione implica l'accettazione integrale dei presenti termini e condizioni, nonché del Regolamento dell'evento pubblicato sul sito ufficiale.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 2 — SCOPE OF AGREEMENT</h5>
+              The Participant registers for a sporting event organized, branded, or licensed by Street Dynamics Holding FZE. Registration constitutes full acceptance of these Terms and Conditions, Event Rules published on the official website, and all policies of Street Dynamics Holding FZE.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 3 — CONSENSO AL TRATTAMENTO DATI (GDPR)</h5>
-              <strong>Titolare del Trattamento:</strong> Street Dinamics ASD.<br/>
-              <strong>Finalità:</strong> Gestione iscrizioni, comunicazioni relative all'evento, adempimenti legali, marketing (previo consenso separato).<br/>
-              <strong>Base Giuridica:</strong> Esecuzione del contratto (art. 6.1.b GDPR), consenso esplicito per finalità promozionali (art. 6.1.a).<br/>
-              <strong>Conservazione:</strong> I dati saranno conservati per 5 anni dalla data dell'evento, salvo obblighi di legge più lunghi.<br/>
-              <strong>Diritti:</strong> Accesso, rettifica, cancellazione, portabilità, opposizione, limitazione del trattamento (artt. 15-22 GDPR). Per esercitare i diritti: privacy@streetdinamics.it.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 3 — DATA PROTECTION (GDPR + UAE LAW)</h5>
+              <strong>Data Controller:</strong> Street Dynamics Holding FZE.<br/>
+              <strong>Purpose:</strong> Event registration, communication, legal compliance, marketing (opt-in required), blockchain/token operations (if applicable).<br/>
+              <strong>Legal Basis:</strong> Contract performance (GDPR Art. 6.1.b), explicit consent for promotional purposes (GDPR Art. 6.1.a), legitimate interest for platform security.<br/>
+              <strong>Data Retention:</strong> 7 years from event date, or as required by UAE/EU law, whichever is longer.<br/>
+              <strong>Rights:</strong> Access, rectification, erasure, portability, objection, restriction (GDPR Art. 15-22). Contact: privacy@streetdynamics.ae.<br/>
+              <strong>Cross-Border Transfers:</strong> Data may be transferred outside the UAE/EU under Standard Contractual Clauses (SCC) and appropriate safeguards.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 4 — CESSIONE DEI DIRITTI D'IMMAGINE</h5>
-              Il Partecipante autorizza Street Dinamics ASD a:<br/>
-              - Riprendere foto, video e registrazioni audio durante l'evento;<br/>
-              - Utilizzare tali materiali per scopi promozionali, editoriali, social media, per una durata di 24 mesi dalla data dell'evento;<br/>
-              - Cedere i diritti a partner commerciali e sponsor (solo per finalità promozionali dell'evento).<br/>
-              <strong>Revoca:</strong> Il Partecipante può revocare il consenso in qualsiasi momento scrivendo a privacy@streetdinamics.it. La revoca non pregiudica la liceità del trattamento precedente.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 4 — IMAGE RIGHTS & CONTENT LICENSE</h5>
+              Participant grants Street Dynamics Holding FZE a worldwide, royalty-free, perpetual, irrevocable license to:<br/>
+              - Capture photos, videos, audio recordings during events;<br/>
+              - Use such materials for promotional, editorial, social media, NFT minting, and commercial purposes globally;<br/>
+              - Sublicense rights to sponsors, media partners, and blockchain platforms (including tokenization of content).<br/>
+              <strong>Revocation:</strong> Consent may be revoked by written notice to privacy@streetdynamics.ae. Revocation does not affect prior lawful use or minted NFTs.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 5 — LIBERATORIA DI RESPONSABILITÀ</h5>
-              Il Partecipante dichiara di:<br/>
-              - Essere in condizioni fisiche idonee per l'attività sportiva;<br/>
-              - Esonerare Street Dinamics ASD da qualsiasi responsabilità per danni a persone o cose, salvo dolo o colpa grave dell'organizzatore (art. 1229 c.c.);<br/>
-              - Essere consapevole dei rischi connessi all'attività sportiva e accettarli volontariamente.<br/>
-              <strong>Assicurazione:</strong> L'organizzatore garantisce copertura assicurativa RC per danni a terzi durante l'evento.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 5 — LIABILITY WAIVER</h5>
+              Participant acknowledges:<br/>
+              - Physical fitness for sporting activity;<br/>
+              - Voluntary assumption of all inherent risks;<br/>
+              - Release of Street Dynamics Holding FZE from liability for personal injury, property damage, or loss, except in cases of gross negligence or willful misconduct.<br/>
+              <strong>Insurance:</strong> Street Dynamics Holding FZE maintains public liability insurance covering third-party claims during events.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 6 — CANCELLAZIONE E RIMBORSI</h5>
-              - Cancellazione da parte del Partecipante: entro 7 giorni dall'evento, rimborso del 50% della quota. Oltre tale termine, nessun rimborso.<br/>
-              - Cancellazione da parte dell'organizzatore: rimborso integrale in caso di annullamento per cause di forza maggiore (eventi atmosferici, emergenze sanitarie, provvedimenti autorità).
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 6 — CANCELLATION & REFUNDS</h5>
+              - Participant cancellation: 50% refund if cancelled 7+ days before event. No refund within 7 days.<br/>
+              - Organizer cancellation: Full refund if cancelled due to force majeure (weather, health emergencies, government orders).<br/>
+              - Refunds processed within 30 business days via original payment method.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 7 — FIRMA DIGITALE (eIDAS)</h5>
-              La firma apposta tramite canvas digitale ha piena validità giuridica ai sensi del Regolamento eIDAS (UE) 910/2014 e del CAD (D.Lgs. 82/2005). L'hash della firma è conservato in formato sicuro come prova di consenso informato.
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 7 — TOKEN & NFT MECHANICS (IF APPLICABLE)</h5>
+              If the Participant engages with Street Dynamics tokens (SD Tokens), NFT drops, or blockchain-based rewards:<br/>
+              - Tokens are digital assets, not securities, and carry no ownership rights in Street Dynamics Holding FZE.<br/>
+              - NFTs are minted on [Polygon/Ethereum/Solana - TBD] and subject to blockchain immutability.<br/>
+              - Token holders may receive event access, voting rights, revenue-sharing from sponsorships (as per tokenomics whitepaper).<br/>
+              - No guarantee of financial return. Tokens are utility assets for platform engagement only.
               <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 8 — LEGGE APPLICABILE E FORO COMPETENTE</h5>
-              Il presente contratto è regolato dalla legge italiana. Per ogni controversia è competente il Foro di [città sede legale ASD].
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 8 — DIGITAL SIGNATURE (eIDAS + UAE)</h5>
+              The signature affixed via digital canvas is legally binding under:<br/>
+              - eIDAS Regulation (EU) 910/2014 (for EU participants);<br/>
+              - UAE Electronic Transactions Law (Federal Law No. 1/2006);<br/>
+              - DIFC Electronic Transactions Law (Law No. 2/2017).<br/>
+              The signature hash is cryptographically stored as proof of informed consent.
               <br /><br />
-              <strong>Data e Luogo:</strong> [generato automaticamente]<br/>
-              <strong>Il Partecipante / Genitore (se minorenne):</strong> [firma digitale]
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 9 — INTELLECTUAL PROPERTY</h5>
+              "Street Dynamics" and all associated logos, trademarks, content, and IP are the exclusive property of Street Dynamics Holding FZE. Unauthorized use is prohibited and subject to legal action.
+              <br /><br />
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 10 — GOVERNING LAW & DISPUTE RESOLUTION</h5>
+              <strong>Governing Law:</strong> Laws of the Dubai International Financial Centre (DIFC).<br/>
+              <strong>Jurisdiction:</strong> Any disputes shall be resolved by:<br/>
+              1. Good-faith negotiation (30 days);<br/>
+              2. Mediation via DIFC-LCIA Arbitration Centre;<br/>
+              3. Binding arbitration in Dubai under DIFC-LCIA Arbitration Rules (English language).<br/>
+              Class actions and jury trials are waived.
+              <br /><br />
+              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 11 — SEVERABILITY & AMENDMENTS</h5>
+              If any provision is invalid, the remainder remains enforceable. Street Dynamics Holding FZE reserves the right to amend these Terms with 30 days' notice via email and website publication.
+              <br /><br />
+              <strong>Date & Place:</strong> [Auto-generated]<br/>
+              <strong>Participant / Parent (if minor):</strong> [Digital signature]<br/>
+              <strong>Binding Entity:</strong> Street Dynamics Holding FZE (IFZA, Dubai, UAE)
             </div>
 
             <label className="flex items-start gap-2.5 cursor-pointer mb-4">

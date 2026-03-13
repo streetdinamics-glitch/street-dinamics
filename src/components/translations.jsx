@@ -102,9 +102,9 @@ export const translations = {
     // Sponsor
     sponsor_title: 'PARTNER WITH US',
     sponsor_subtitle: 'Reach the Next Generation',
-    sponsor_value: 'Street Dinamics connects your brand with 13–30 year-old athletes and fans across Italy. Multi-platform visibility, live event activation, and authentic community engagement.',
-    sponsor_demo: 'Ages 13–30 • 10K+ social reach • Live & digital events',
-    sponsor_cta: 'partnerships@streetdinamics.it',
+    sponsor_value: 'Street Dynamics connects your brand with 13–30 year-old athletes and fans globally. Multi-platform visibility, live event activation, NFT drops, and authentic community engagement across UAE, Europe, and international markets.',
+    sponsor_demo: 'Ages 13–30 • 50K+ global reach • Live & digital events • Token integration',
+    sponsor_cta: 'partnerships@streetdynamics.ae',
     sponsor_note: 'We respond within 48h. Media kits available on request.',
     
     // Social Modal
@@ -117,7 +117,7 @@ export const translations = {
     social_snapchat: 'Snapchat',
     
     // Footer
-    footer_rights: '© 2026 Street Dinamics ASD — All Rights Reserved',
+    footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — All Rights Reserved',
   },
   
   it: {
@@ -223,9 +223,9 @@ export const translations = {
     // Sponsor
     sponsor_title: 'COLLABORA CON NOI',
     sponsor_subtitle: 'Raggiungi la Nuova Generazione',
-    sponsor_value: 'Street Dinamics collega il tuo brand con atleti e fan di 13–30 anni in tutta Italia. Visibilità multi-piattaforma, attivazione di eventi dal vivo e coinvolgimento autentico della comunità.',
-    sponsor_demo: 'Età 13–30 • 10K+ reach social • Eventi live & digitali',
-    sponsor_cta: 'partnerships@streetdinamics.it',
+    sponsor_value: 'Street Dynamics collega il tuo brand con atleti e fan di 13–30 anni a livello globale. Visibilità multi-piattaforma, eventi dal vivo, NFT drop e coinvolgimento autentico in UAE, Europa e mercati internazionali.',
+    sponsor_demo: 'Età 13–30 • 50K+ reach globale • Eventi live & digitali • Integrazione token',
+    sponsor_cta: 'partnerships@streetdynamics.ae',
     sponsor_note: 'Rispondiamo entro 48h. Kit media disponibili su richiesta.',
     
     // Social Modal
@@ -238,7 +238,7 @@ export const translations = {
     social_snapchat: 'Snapchat',
     
     // Footer
-    footer_rights: '© 2026 Street Dinamics ASD — Tutti i Diritti Riservati',
+    footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Tutti i Diritti Riservati',
   },
   
   es: {
@@ -357,7 +357,7 @@ export const translations = {
     social_snapchat: 'Snapchat',
     
     // Footer
-    footer_rights: '© 2026 Street Dinamics ASD — Todos los Derechos Reservados',
+    footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Todos los Derechos Reservados',
   },
   
   fr: {
@@ -476,7 +476,7 @@ export const translations = {
     social_snapchat: 'Snapchat',
     
     // Footer
-    footer_rights: '© 2026 Street Dinamics ASD — Tous Droits Réservés',
+    footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Tous Droits Réservés',
   },
   
   de: {
@@ -595,7 +595,7 @@ export const translations = {
     social_snapchat: 'Snapchat',
     
     // Footer
-    footer_rights: '© 2026 Street Dinamics ASD — Alle Rechte Vorbehalten',
+    footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Alle Rechte Vorbehalten',
   },
   
   ar: {
@@ -714,7 +714,7 @@ export const translations = {
     social_snapchat: 'سناب شات',
     
     // Footer
-    footer_rights: '© 2026 ستريت ديناميكس ASD — جميع الحقوق محفوظة',
+    footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, دبي، الإمارات) — جميع الحقوق محفوظة',
   }
 };
 
