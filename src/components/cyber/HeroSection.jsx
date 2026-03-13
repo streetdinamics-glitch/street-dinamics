@@ -31,7 +31,7 @@ export default function HeroSection({ onScrollTo, lang }) {
         <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyber-cyan to-transparent opacity-30 pointer-events-none" style={{ animation: 'card-scan 3s ease-in-out infinite' }} />
         <img
           src={SD_LOGO_LARGE}
-          alt="Street Dynamics"
+          alt="Street Dinamics"
           className="w-[min(380px,70vw)] h-auto rounded-2xl"
           style={{ animation: 'logo-pulse 4s ease-in-out infinite', filter: 'drop-shadow(0 0 30px rgba(255,100,0,0.8))' }}
         />

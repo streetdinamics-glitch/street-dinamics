@@ -9,7 +9,7 @@ export default function Footer({ lang }) {
     <footer className="relative z-10 text-center py-11 px-5 border-t border-fire-3/10">
       <img
         src={SD_LOGO}
-        alt="Street Dynamics"
+        alt="Street Dinamics"
         className="w-16 h-16 object-cover rounded-lg mx-auto mb-3"
         style={{ filter: 'drop-shadow(0 0 12px rgba(255,100,0,0.5))' }}
       />

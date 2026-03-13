@@ -76,11 +76,11 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
           const qrData = `SD-TICKET|${data.ticket_code}|${data.event_id}|${data.email}`;
           await base44.integrations.Core.SendEmail({
             to: form.email,
-            subject: `Street Dynamics - ${type === 'athlete' ? 'Registration' : 'Ticket'} Confirmed`,
+            subject: `Street Dinamics - ${type === 'athlete' ? 'Registration' : 'Ticket'} Confirmed`,
             body: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #ffe8c0; padding: 20px; border: 2px solid #ff5000;">
                 <div style="text-align: center; margin-bottom: 20px;">
-                  <h1 style="color: #ff9900; font-size: 28px; margin: 0; letter-spacing: 2px;">🏅 STREET DYNAMICS</h1>
+                  <h1 style="color: #ff9900; font-size: 28px; margin: 0; letter-spacing: 2px;">🏅 STREET DINAMICS</h1>
                   <p style="color: #664422; font-size: 11px; letter-spacing: 3px; margin: 5px 0;">GLOBAL SPORTS PLATFORM</p>
                 </div>
                 
@@ -100,7 +100,7 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
                 
                 <div style="font-size: 12px; color: #664422; line-height: 1.6;">
                   <p><strong>Important:</strong> This registration is governed by the Terms of Service of Street Dynamics Holding FZE (IFZA, Dubai, UAE).</p>
-                  <p>For support: <a href="mailto:support@streetdynamics.ae" style="color: #ff9900;">support@streetdynamics.ae</a></p>
+                  <p>For support: <a href="mailto:support@streetdinamics.ae" style="color: #ff9900;">support@streetdinamics.ae</a></p>
                 </div>
                 
                 <div style="text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,100,0,0.2);">
