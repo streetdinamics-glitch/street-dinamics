@@ -342,10 +342,10 @@ export const translations = {
     // Sponsor
     sponsor_title: 'ASÓCIATE CON NOSOTROS',
     sponsor_subtitle: 'Alcanza la Nueva Generación',
-    sponsor_value: 'Street Dinamics conecta tu marca con atletas de 13–30 años en Italia.',
-    sponsor_demo: 'Edades 13–30 • 10K+ alcance social',
-    sponsor_cta: 'partnerships@streetdinamics.it',
-    sponsor_note: 'Respondemos en 48h.',
+    sponsor_value: 'Street Dynamics conecta tu marca con atletas y fans de 13–30 años a nivel global. Visibilidad multi-plataforma, eventos en vivo, NFT drops y compromiso auténtico en EAU, Europa y mercados internacionales.',
+    sponsor_demo: 'Edades 13–30 • 50K+ alcance global • Eventos en vivo y digitales • Integración de tokens',
+    sponsor_cta: 'partnerships@streetdynamics.ae',
+    sponsor_note: 'Respondemos en 48h. Kits de medios disponibles bajo solicitud.',
     
     // Social Modal
     social_modal_title: 'STREET DYNAMICS',
@@ -461,10 +461,10 @@ export const translations = {
     // Sponsor
     sponsor_title: 'PARTENARIAT',
     sponsor_subtitle: 'Atteindre la Nouvelle Génération',
-    sponsor_value: 'Street Dinamics connecte votre marque avec des athlètes de 13–30 ans.',
-    sponsor_demo: 'Âges 13–30 • 10K+ portée sociale',
-    sponsor_cta: 'partnerships@streetdinamics.it',
-    sponsor_note: 'Réponse sous 48h.',
+    sponsor_value: 'Street Dynamics connecte votre marque avec des athlètes et des fans de 13–30 ans à l\'échelle mondiale. Visibilité multi-plateformes, activation d\'événements en direct, NFT drops et engagement authentique aux EAU, en Europe et sur les marchés internationaux.',
+    sponsor_demo: 'Âges 13–30 • 50K+ portée mondiale • Événements en direct et numériques • Intégration de tokens',
+    sponsor_cta: 'partnerships@streetdynamics.ae',
+    sponsor_note: 'Réponse sous 48h. Kits média disponibles sur demande.',
     
     // Social Modal
     social_modal_title: 'STREET DYNAMICS',
@@ -580,10 +580,10 @@ export const translations = {
     // Sponsor
     sponsor_title: 'PARTNERSCHAFT',
     sponsor_subtitle: 'Erreichen Sie die Neue Generation',
-    sponsor_value: 'Street Dinamics verbindet Ihre Marke mit 13–30-jährigen Athleten.',
-    sponsor_demo: 'Alter 13–30 • 10K+ Social Reichweite',
-    sponsor_cta: 'partnerships@streetdinamics.it',
-    sponsor_note: 'Antwort innerhalb 48h.',
+    sponsor_value: 'Street Dynamics verbindet Ihre Marke mit 13–30-jährigen Athleten und Fans weltweit. Multi-Plattform-Sichtbarkeit, Live-Event-Aktivierung, NFT-Drops und authentisches Community-Engagement in den VAE, Europa und internationalen Märkten.',
+    sponsor_demo: 'Alter 13–30 • 50K+ globale Reichweite • Live- und digitale Events • Token-Integration',
+    sponsor_cta: 'partnerships@streetdynamics.ae',
+    sponsor_note: 'Antwort innerhalb 48h. Medien-Kits auf Anfrage verfügbar.',
     
     // Social Modal
     social_modal_title: 'STREET DYNAMICS',
@@ -699,10 +699,10 @@ export const translations = {
     // Sponsor
     sponsor_title: 'كن شريكاً',
     sponsor_subtitle: 'اصل للجيل الجديد',
-    sponsor_value: 'ستريت ديناميكس تربط علامتك التجارية برياضيين من عمر 13–30.',
-    sponsor_demo: 'الأعمار 13–30 • 10 آلاف+ وصول اجتماعي',
-    sponsor_cta: 'partnerships@streetdinamics.it',
-    sponsor_note: 'نجيب خلال 48 ساعة.',
+    sponsor_value: 'ستريت ديناميكس تربط علامتك التجارية برياضيين ومشجعين من عمر 13-30 على مستوى العالم. رؤية متعددة المنصات، تفعيل الفعاليات المباشرة، إصدارات NFT، ومشاركة مجتمعية أصيلة في الإمارات وأوروبا والأسواق العالمية.',
+    sponsor_demo: 'الأعمار 13–30 • 50 ألف+ وصول عالمي • فعاليات مباشرة ورقمية • تكامل الرموز',
+    sponsor_cta: 'partnerships@streetdynamics.ae',
+    sponsor_note: 'نجيب خلال 48 ساعة. حزم إعلامية متاحة عند الطلب.',
     
     // Social Modal
     social_modal_title: 'ستريت ديناميكس',
