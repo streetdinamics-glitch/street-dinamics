@@ -156,11 +156,18 @@ export default function NFTMarketplace() {
         priceRange={[0, 1000]}
       />
 
+      {/* Results Info */}
+      <div className="mb-6 flex items-center justify-between">
+        <p className="font-mono text-sm text-fire-3/60 tracking-[1px]">
+          Showing <span className="text-fire-4 font-bold">{liveCards.length}</span> of <span className="text-fire-4 font-bold">{nftCards.length}</span> NFT drops
+        </p>
+      </div>
+
       {/* NFT Grid */}
       {liveCards.length === 0 ? (
         <div className="text-center py-20">
           <Sparkles size={48} className="text-fire-3/30 mx-auto mb-4" />
-          <p className="font-mono text-sm text-fire-3/40 tracking-[2px]">NO DROPS AVAILABLE</p>
+          <p className="font-mono text-sm text-fire-3/40 tracking-[2px]">NO DROPS MATCH YOUR FILTERS</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
