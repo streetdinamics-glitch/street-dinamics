@@ -26,7 +26,7 @@ export default function UserManagementPanel() {
   }, [allUsers, page]);
 
   const updateUser = useMutation({
-    mutationFn: ({ email, data }) => base44.entities.User.update(email, data),
+    mutationFn: ({ id, data }) => base44.entities.User.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       toast.success('User updated');
@@ -37,7 +37,7 @@ export default function UserManagementPanel() {
   });
 
   const deleteUser = useMutation({
-    mutationFn: (email) => base44.entities.User.delete(email),
+    mutationFn: (id) => base44.entities.User.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       toast.success('User deleted');
@@ -82,7 +82,7 @@ export default function UserManagementPanel() {
 
   const handleUpgradeToAthlete = (user) => {
     updateUser.mutate({
-      email: user.email,
+      id: user.id,
       data: {
         role: 'athlete',
         athlete_profile: {
@@ -97,7 +97,7 @@ export default function UserManagementPanel() {
 
   const handleUpgradeToFan = (user) => {
     updateUser.mutate({
-      email: user.email,
+      id: user.id,
       data: {
         role: 'user',
         fan_benefits: {
@@ -111,7 +111,7 @@ export default function UserManagementPanel() {
 
   const handleDelete = (user) => {
     if (confirm(`Delete ${user.full_name}? This cannot be undone.`)) {
-      deleteUser.mutate(user.email);
+      deleteUser.mutate(user.id);
     }
   };
 
