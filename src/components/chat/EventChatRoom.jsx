@@ -157,8 +157,25 @@ export default function EventChatRoom({ event, lang }) {
             className="overflow-hidden"
           >
             <div className="bg-gradient-to-br from-purple-500/5 to-black border-l border-r border-b border-purple-500/20 p-4">
+              {/* Pinned Messages */}
+              {pinnedMessages.length > 0 && (
+                <div className="mb-4 space-y-2 border-b border-purple-500/20 pb-3">
+                  {pinnedMessages.map(msg => (
+                    <div key={msg.id} className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                      <div className="flex items-start gap-2 mb-1">
+                        <Pin size={14} className="text-yellow-500 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <span className="font-mono text-[9px] font-bold text-yellow-600">{msg.user_name}</span>
+                          <p className="font-rajdhani text-xs text-yellow-700 mt-1">{msg.message}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {/* Messages Container */}
-              <div className="h-[400px] overflow-y-auto mb-4 space-y-2 pr-2 scrollbar-thin scrollbar-thumb-purple-500/30 scrollbar-track-transparent">
+              <div className="h-[300px] overflow-y-auto mb-4 space-y-2 pr-2 scrollbar-thin scrollbar-thumb-purple-500/30 scrollbar-track-transparent">
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center">
                     <MessageCircle className="w-12 h-12 text-purple-400/30 mb-3" />
