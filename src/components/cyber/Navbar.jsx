@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../translations';
 
 const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
-export default function Navbar({ onScrollTo, lang, onLangSwitch }) {
+export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick }) {
   const t = useTranslation(lang);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
+
+  const { data: user } = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => base44.auth.me(),
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,10 +59,24 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch }) {
             </button>
           ))}
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
+          {user && (
+            <button
+              onClick={onProfileClick}
+              className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
+            >
+              <User size={12} />
+              PROFILE
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
+          {user && (
+            <button onClick={onProfileClick} className="p-1.5 border border-fire-3/20 bg-transparent">
+              <User size={18} className="text-fire-3" />
+            </button>
+          )}
           <button
             className="flex flex-col gap-1 p-1.5 border border-fire-3/20 bg-transparent"
             onClick={() => setMobileOpen(!mobileOpen)}

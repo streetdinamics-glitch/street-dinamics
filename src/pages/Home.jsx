@@ -14,6 +14,8 @@ import SponsorSection from '../components/cyber/SponsorSection';
 import BetSection from '../components/cyber/BetSection';
 import TokenSection from '../components/cyber/TokenSection';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
+import OnboardingFlow from '../components/onboarding/OnboardingFlow';
+import UserProfile from '../components/profile/UserProfile';
 import Footer from '../components/cyber/Footer';
 
 export default function Home() {
@@ -23,6 +25,14 @@ export default function Home() {
   const [regModal, setRegModal] = useState(null);
   const [successModal, setSuccessModal] = useState(null);
   const [socialOpen, setSocialOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
+  const { data: user } = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => base44.auth.me(),
+  });
+
+  const showOnboarding = user && !user.onboarding_completed;
 
   const { data: events = [], isLoading: eventsLoading } = useQuery({
     queryKey: ['events'],
@@ -64,7 +74,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
-      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} />
+      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} onProfileClick={() => setProfileOpen(true)} />
 
       <HeroSection onScrollTo={scrollTo} lang={lang} />
       <FireRule />
@@ -135,6 +145,16 @@ export default function Home() {
       )}
       {socialOpen && (
         <SocialLinksModal lang={lang} onClose={() => setSocialOpen(false)} />
+      )}
+      {showOnboarding && (
+        <OnboardingFlow
+          user={user}
+          lang={lang}
+          onComplete={() => queryClient.invalidateQueries({ queryKey: ['current-user'] })}
+        />
+      )}
+      {profileOpen && !showOnboarding && (
+        <UserProfile lang={lang} onClose={() => setProfileOpen(false)} />
       )}
     </div>
   );
