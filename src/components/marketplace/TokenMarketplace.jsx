@@ -8,6 +8,7 @@ import TokenFilters from './TokenFilters';
 import PurchaseModal from './PurchaseModal';
 import PurchaseSuccessModal from './PurchaseSuccessModal';
 import Web3PurchaseModal from '../web3/Web3PurchaseModal';
+import WatchlistButton from '../watchlist/WatchlistButton';
 import { useTranslation } from '../translations';
 
 export default function TokenMarketplace({ lang }) {
