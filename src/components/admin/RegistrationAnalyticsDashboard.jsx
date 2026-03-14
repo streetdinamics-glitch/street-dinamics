@@ -109,6 +109,24 @@ export default function RegistrationAnalyticsDashboard() {
     const minorCount = registrations.filter(r => r.is_minor).length;
     const adultCount = registrations.length - minorCount;
 
+    // 7. Referral source breakdown
+    const bySource = {};
+    registrations.forEach(reg => {
+      const source = reg.referral_source || 'direct';
+      if (!bySource[source]) bySource[source] = { athletes: 0, spectators: 0 };
+      if (reg.type === 'athlete') bySource[source].athletes++;
+      else bySource[source].spectators++;
+    });
+
+    const sourceData = Object.entries(bySource)
+      .map(([source, data]) => ({
+        source,
+        count: data.athletes + data.spectators,
+        athletes: data.athletes,
+        spectators: data.spectators,
+      }))
+      .sort((a, b) => b.count - a.count);
+
     return {
       totalRegs: registrations.length,
       athleteCount,
@@ -120,6 +138,7 @@ export default function RegistrationAnalyticsDashboard() {
       ageData,
       eventData,
       attendanceModeData,
+      sourceData,
       growthRate: registrations.length > 0 
         ? ((growthData.reduce((s, g) => s + g.registrations, 0) / registrations.length) * 100).toFixed(1)
         : 0,
@@ -337,11 +356,40 @@ export default function RegistrationAnalyticsDashboard() {
         </div>
       </motion.div>
 
-      {/* Demographics Summary */}
+      {/* Referral Source Breakdown */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
+        className="bg-gradient-to-br from-fire-3/10 to-fire-3/5 border border-fire-3/20 p-6"
+      >
+        <h3 className="font-orbitron font-bold text-lg text-fire-5 mb-4">Registration Source Breakdown</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {analytics.sourceData.map((source, i) => (
+            <div key={i} className="bg-black/40 border border-fire-3/10 p-4">
+              <div className="font-rajdhani font-bold text-sm text-fire-5 mb-1 capitalize">
+                {source.source.replace('_', ' ')}
+              </div>
+              <div className="font-orbitron font-black text-2xl text-fire-3 mb-2">{source.count}</div>
+              <div className="flex gap-2">
+                <div className="text-xs text-fire-3/60">
+                  <div className="font-mono">Athletes: {source.athletes}</div>
+                  <div className="font-mono">Spectators: {source.spectators}</div>
+                </div>
+              </div>
+              <div className="font-mono text-xs text-fire-4 mt-2">
+                {((source.count / analytics.totalRegs) * 100).toFixed(1)}%
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Demographics Summary */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
         className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
         <div className="bg-gradient-to-br from-cyan/10 to-cyan/5 border border-cyan/20 p-5">
