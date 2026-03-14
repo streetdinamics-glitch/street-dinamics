@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Award, Users, Heart, Target, Shield } from 'lucide-react';
+import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from 'recharts';
 
 export default function PerformanceScoreCard({ score }) {
   const criteria = [
@@ -10,6 +11,7 @@ export default function PerformanceScoreCard({ score }) {
       weight: 25,
       icon: TrendingUp,
       color: 'fire-3',
+      shortName: 'Technical',
     },
     {
       name: 'Engagement Generated',
@@ -17,6 +19,7 @@ export default function PerformanceScoreCard({ score }) {
       weight: 20,
       icon: Heart,
       color: 'fire-4',
+      shortName: 'Engagement',
     },
     {
       name: 'Consistency',
@@ -24,6 +27,7 @@ export default function PerformanceScoreCard({ score }) {
       weight: 15,
       icon: Target,
       color: 'fire-5',
+      shortName: 'Consistency',
     },
     {
       name: 'External Recognition',
@@ -31,6 +35,7 @@ export default function PerformanceScoreCard({ score }) {
       weight: 15,
       icon: Award,
       color: 'cyan',
+      shortName: 'Recognition',
     },
     {
       name: 'Fanbase Growth',
@@ -38,6 +43,7 @@ export default function PerformanceScoreCard({ score }) {
       weight: 15,
       icon: Users,
       color: 'cyan',
+      shortName: 'Fanbase',
     },
     {
       name: 'Behavior & Leadership',
@@ -45,8 +51,16 @@ export default function PerformanceScoreCard({ score }) {
       weight: 10,
       icon: Shield,
       color: 'purple-400',
+      shortName: 'Leadership',
     },
   ];
+
+  // Data for radar chart
+  const radarData = criteria.map(c => ({
+    name: c.shortName,
+    value: c.value,
+    fullScore: 100,
+  }));
 
   return (
     <motion.div
@@ -69,6 +83,27 @@ export default function PerformanceScoreCard({ score }) {
         </div>
       </div>
 
+      {/* Radar Chart Visualization */}
+      <div className="mb-8 bg-fire-3/5 border border-fire-3/10 p-6 flex flex-col items-center">
+        <p className="font-mono text-xs text-fire-3/60 mb-4 tracking-[1px]">6-CRITERIA DISTRIBUTION</p>
+        <ResponsiveContainer width="100%" height={300}>
+          <RadarChart data={radarData}>
+            <PolarGrid stroke="rgba(255,100,0,0.15)" />
+            <PolarAngleAxis dataKey="name" stroke="rgba(255,100,0,0.4)" tick={{ fontSize: 12, fill: 'rgba(255,100,0,0.6)' }} />
+            <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="rgba(255,100,0,0.2)" tick={{ fontSize: 10, fill: 'rgba(255,100,0,0.4)' }} />
+            <Radar 
+              name="Score" 
+              dataKey="value" 
+              stroke="#ff6600" 
+              fill="#ff6600" 
+              fillOpacity={0.25}
+              animationDuration={1000}
+            />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Criteria Breakdown */}
       <div className="space-y-4">
         {criteria.map((criterion, index) => {
           const Icon = criterion.icon;
