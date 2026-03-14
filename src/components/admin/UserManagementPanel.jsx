@@ -88,9 +88,9 @@ export default function UserManagementPanel() {
         athlete_profile: {
           ...(user.athlete_profile || {}),
           verification_status: 'verified',
-          tokenized: true,
           created_at: user.athlete_profile?.created_at || new Date().toISOString(),
         },
+        user_type: 'athlete',
       },
     });
   };
