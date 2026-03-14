@@ -375,14 +375,14 @@ export default function SecondaryMarket({ lang = 'en' }) {
                     onClick={() => setShowListingModal(false)}
                     className="btn-ghost flex-1"
                   >
-                    CANCEL
+                    {t('secondary_cancel')}
                   </button>
                   <button
                     onClick={handleCreateListing}
                     disabled={!selectedAsset || !listingPrice || createListingMutation.isPending}
                     className="btn-fire flex-1"
                   >
-                    {createListingMutation.isPending ? 'CREATING...' : 'CREATE LISTING'}
+                    {createListingMutation.isPending ? t('secondary_creating') : t('secondary_create')}
                   </button>
                 </div>
               </div>
