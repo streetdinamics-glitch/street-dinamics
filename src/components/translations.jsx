@@ -221,7 +221,11 @@ export const translations = {
     watchlist_listings_off: 'Listings Off',
     watchlist_remove: 'Remove',
 
-    // Secondary Market Activity
+    // Secondary Market
+    secondary_subtitle: 'Peer-to-Peer Trading',
+    secondary_title: 'SECONDARY MARKET',
+    secondary_description: 'Buy and sell athlete tokens & NFTs directly from other collectors. 5% platform fee on all trades.',
+    secondary_list_for_sale: 'List for Sale',
     secondary_top_assets: 'TOP ASSETS',
     secondary_recent_transactions: 'RECENT TRANSACTIONS',
     secondary_activity_empty: 'No activity yet',
