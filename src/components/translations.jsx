@@ -1218,7 +1218,11 @@ export const translations = {
     secondary_create: 'إنشاء قائمة',
     secondary_creating: 'جارٍ الإنشاء...',
 
-    // Secondary Market Activity
+    // Secondary Market
+    secondary_subtitle: 'التداول من نظير إلى نظير',
+    secondary_title: 'السوق الثانوية',
+    secondary_description: 'اشترِ وبع رموز الرياضيين و NFTs مباشرة من المجمعين الآخرين. 5% رسم منصة على جميع التداولات.',
+    secondary_list_for_sale: 'قائمة للبيع',
     secondary_top_assets: 'الأصول الرئيسية',
     secondary_recent_transactions: 'المعاملات الأخيرة',
     secondary_activity_empty: 'لا يوجد نشاط بعد',
