@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, Trophy, DollarSign, Activity, Star, Target, Zap } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import ProgressionCharts from '../components/analytics/ProgressionCharts';
+import RankingComparison from '../components/analytics/RankingComparison';
 
 export default function Analytics() {
   const [selectedAthlete, setSelectedAthlete] = useState(null);
@@ -49,6 +51,13 @@ export default function Analytics() {
   const { data: badges = [] } = useQuery({
     queryKey: ['athlete-badges'],
     queryFn: () => base44.entities.AthleteBadge.list(),
+    initialData: [],
+  });
+
+  const { data: performanceScores = [] } = useQuery({
+    queryKey: ['performance-scores'],
+    queryFn: () => base44.entities.AthletePerformanceScore.filter({ athlete_email: selectedAthleteEmail }),
+    enabled: !!selectedAthleteEmail,
     initialData: [],
   });
 
@@ -300,7 +309,7 @@ export default function Analytics() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-fire-3/20 p-6 clip-cyber"
+          className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-fire-3/20 p-6 clip-cyber mb-8"
         >
           <div className="flex items-center gap-3 mb-6">
             <Activity className="text-fire-3" size={20} />
@@ -327,6 +336,32 @@ export default function Analytics() {
             </div>
           </div>
         </motion.div>
+
+        {/* Advanced Analytics */}
+        <div className="space-y-8">
+          {/* Progression Charts Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-4">// PROGRESSION ANALYSIS //</p>
+            <ProgressionCharts
+              athleteStats={athleteStats}
+              performanceScores={performanceScores}
+              registrations={athleteRegistrations}
+            />
+          </motion.div>
+
+          {/* Ranking Comparison Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-4">// COMPETITIVE ANALYSIS //</p>
+            <RankingComparison athleteStats={athleteStats} allAthletes={athletes} />
+          </motion.div>
+        </div>
       </div>
     </div>
   );
