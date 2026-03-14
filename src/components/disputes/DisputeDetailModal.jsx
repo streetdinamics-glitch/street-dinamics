@@ -175,7 +175,7 @@ export default function DisputeDetailModal({ dispute, onClose, onReload }) {
             { id: 'evidence', label: 'Evidence', icon: FileText },
             { id: 'mediation', label: 'Mediation', icon: Scale },
             { id: 'resolution', label: 'Resolution', icon: Send },
-          ].map(({ id, label, icon: Icon }) => (
+          ].map(({ id, label, icon: IconComponent }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
@@ -185,7 +185,7 @@ export default function DisputeDetailModal({ dispute, onClose, onReload }) {
                   : 'border-transparent text-fire-3/60 hover:text-fire-4'
               }`}
             >
-              <Icon size={18} />
+              <IconComponent size={18} />
               {label}
             </button>
           ))}
