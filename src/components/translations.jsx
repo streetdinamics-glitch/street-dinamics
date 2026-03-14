@@ -409,6 +409,15 @@ export const translations = {
     attendance_online_desc: 'Guarda la diretta streaming da remoto. Ricevi pass digitale e accesso a funzionalità online esclusive.',
     attendance_select: 'SELEZIONA',
 
+    // Secondary Market Activity
+    secondary_top_assets: 'ASSET PRINCIPALI',
+    secondary_recent_transactions: 'TRANSAZIONI RECENTI',
+    secondary_activity_empty: 'Nessuna attività ancora',
+    secondary_transactions_empty: 'Nessuna transazione ancora',
+
+    // Gamification
+    gamification_subtitle: 'Hub di Coinvolgimento Fan',
+
     // Global Leaderboard
     leaderboard_subtitle: 'Sistema di Ranking Globale',
     leaderboard_title: 'BOARD DEI CAMPIONI',
