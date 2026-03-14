@@ -166,6 +166,16 @@ export default function Home() {
                 <FanVotingModule event={ev} />
                 <LiveVotingPanel event={ev} lang={lang} />
                 <EventChatRoom event={ev} lang={lang} />
+                {ev.status === 'live' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-8 mb-12"
+                  >
+                    <h3 className="heading-fire text-3xl mb-6 font-black">FAN LEADERBOARD</h3>
+                    <FanLeaderboard event={ev} />
+                  </motion.div>
+                )}
               </div>
             ))}
           </div>
