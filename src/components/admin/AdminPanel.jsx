@@ -264,6 +264,12 @@ export default function AdminPanel({ lang, onClose }) {
           >
             🛡️ Minor Approvals
           </button>
+          <button
+            onClick={() => setShowRegistrationAnalytics(true)}
+            className="btn-ghost text-[11px] py-2.5 px-5"
+          >
+            📊 Registration Analytics
+          </button>
           {events.find(e => e.status === 'live') && (
             <button
               onClick={() => setChatModeratingEvent(events.find(e => e.status === 'live'))}
