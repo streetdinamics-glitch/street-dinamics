@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import EventRegistrations from './EventRegistrations';
 import Leaderboard from './Leaderboard';
+import QRScanner from './QRScanner';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -24,6 +25,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [editForm, setEditForm] = useState({
     title: '', sport: '', date: '', location: '', description: '', max_spots: 50
   });
+  const [showScanner, setShowScanner] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -220,6 +222,12 @@ export default function AdminPanel({ lang, onClose }) {
           >
             + {t('admin_create_event')}
           </Link>
+          <button
+            onClick={() => setShowScanner(true)}
+            className="btn-fire text-[11px] py-2.5 px-5"
+          >
+            QR Check-In
+          </button>
           <button
             onClick={() => setShowLeaderboard(true)}
             className="btn-ghost text-[11px] py-2.5 px-5"
@@ -544,6 +552,9 @@ export default function AdminPanel({ lang, onClose }) {
             onClose={() => setShowLeaderboard(false)}
             lang={lang}
           />
+        )}
+        {showScanner && (
+          <QRScanner onClose={() => setShowScanner(false)} />
         )}
 
         {/* Change Password */}
