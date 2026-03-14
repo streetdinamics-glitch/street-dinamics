@@ -41,6 +41,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [nftEvent, setNftEvent] = useState(null);
   const [showRoyaltyManager, setShowRoyaltyManager] = useState(false);
   const [showMinorApprovals, setShowMinorApprovals] = useState(false);
+  const [chatModeratingEvent, setChatModeratingEvent] = useState(null);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
