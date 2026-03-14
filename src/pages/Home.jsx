@@ -15,6 +15,7 @@ import SuccessModal from '../components/cyber/SuccessModal';
 import SponsorSection from '../components/cyber/SponsorSection';
 import BetSection from '../components/cyber/BetSection';
 import TokenMarketplace from '../components/marketplace/TokenMarketplace';
+import MetricsVisualizationDashboard from '../components/dashboard/MetricsVisualizationDashboard';
 import TournamentSection from '../components/cyber/TournamentSection';
 import LiveVotingPanel from '../components/voting/LiveVotingPanel';
 import EventChatRoom from '../components/chat/EventChatRoom';
