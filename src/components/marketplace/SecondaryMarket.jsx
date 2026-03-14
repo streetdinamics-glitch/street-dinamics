@@ -153,14 +153,14 @@ export default function SecondaryMarket({ lang = 'en' }) {
   return (
     <section id="secondary-market" className="section-container">
       <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">
-        Peer-to-Peer Trading
+        {t('secondary_subtitle')}
       </p>
       <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-4 font-black">
-        SECONDARY MARKET
+        {t('secondary_title')}
       </h2>
 
       <p className="text-center font-rajdhani text-lg text-fire-4/70 max-w-3xl mx-auto mb-8">
-        Buy and sell athlete tokens and NFTs directly from other collectors. 5% platform fee on all trades.
+        {t('secondary_description')}
       </p>
 
       {/* Action Buttons */}
