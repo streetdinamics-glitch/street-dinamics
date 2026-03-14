@@ -325,7 +325,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
                 {selectedAsset?.type === 'token' && (
                   <div>
                     <label className="font-orbitron text-sm font-bold text-fire-4 mb-2 block">
-                      QUANTITY
+                      {t('secondary_quantity')}
                     </label>
                     <input
                       type="number"
