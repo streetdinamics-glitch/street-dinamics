@@ -13,7 +13,7 @@ import RegistrationModal from '../components/cyber/RegistrationModal';
 import SuccessModal from '../components/cyber/SuccessModal';
 import SponsorSection from '../components/cyber/SponsorSection';
 import BetSection from '../components/cyber/BetSection';
-import TokenSection from '../components/cyber/TokenSection';
+import TokenMarketplace from '../components/marketplace/TokenMarketplace';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
@@ -160,12 +160,12 @@ export default function Home() {
       <FireRule />
       <BetSection
         hasToken={hasToken}
-        onScrollToTokens={() => scrollTo('tokens')}
+        onScrollToTokens={() => scrollTo('marketplace')}
         onScrollToSocial={() => scrollTo('social')}
         lang={lang}
       />
       <FireRule />
-      <TokenSection lang={lang} onScrollToSocial={() => scrollTo('social')} />
+      <TokenMarketplace lang={lang} />
       <FireRule />
       <SponsorSection lang={lang} />
       <Footer lang={lang} />
