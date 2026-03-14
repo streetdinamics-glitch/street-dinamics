@@ -148,28 +148,13 @@ export default function NFTMarketplace() {
         Each NFT captures a unique historic moment. Limited supply. Value grows with athlete performance.
       </p>
 
-      {/* Rarity Filter */}
-      <div className="flex justify-center gap-3 mb-12 flex-wrap">
-        {[
-          { value: 'all', label: 'ALL TIERS' },
-          { value: 'common', label: 'RISING STARS' },
-          { value: 'rare', label: 'ELITE PERFORMERS' },
-          { value: 'epic', label: 'CHAMPIONS' },
-          { value: 'legendary', label: 'HALL OF FAME' }
-        ].map(({ value, label }) => (
-          <button
-            key={value}
-            onClick={() => setSelectedRarity(value)}
-            className={`font-orbitron text-xs font-bold tracking-[2px] uppercase px-4 py-2 transition-all ${
-              selectedRarity === value
-                ? 'bg-fire-3/20 border border-fire-3/40 text-fire-5'
-                : 'bg-transparent border border-fire-3/10 text-fire-3/40 hover:border-fire-3/20 hover:text-fire-3'
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {/* Advanced Filter Panel */}
+      <NFTFilterPanel
+        filters={filters}
+        onFiltersChange={setFilters}
+        athletes={athleteNames}
+        priceRange={[0, 1000]}
+      />
 
       {/* NFT Grid */}
       {liveCards.length === 0 ? (
