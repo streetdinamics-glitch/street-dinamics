@@ -201,6 +201,8 @@ export default function Home() {
       <FireRule />
       <SecondaryMarket />
       <FireRule />
+      <GlobalLeaderboard lang={lang} />
+      <FireRule />
       {events.length > 0 && (
         <>
           <SpectatorGamificationHub eventId={events[0]?.id} lang={lang} />
