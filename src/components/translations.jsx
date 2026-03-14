@@ -793,7 +793,11 @@ export const translations = {
     attendance_online_desc: 'Regardez la diffusion en direct à distance. Recevez un pass numérique et accès à des fonctionnalités en ligne exclusives.',
     attendance_select: 'SÉLECTIONNER',
 
-    // Secondary Market Activity
+    // Secondary Market
+    secondary_subtitle: 'Trading de Pair à Pair',
+    secondary_title: 'MARCHÉ SECONDAIRE',
+    secondary_description: 'Achetez et vendez des tokens d\'athlètes et des NFT directement auprès d\'autres collectionneurs. 5% de frais de plateforme sur tous les échanges.',
+    secondary_list_for_sale: 'Mettre en Vente',
     secondary_top_assets: 'ACTIFS PRINCIPAUX',
     secondary_recent_transactions: 'TRANSACTIONS RÉCENTES',
     secondary_activity_empty: 'Pas d\'activité encore',
