@@ -118,6 +118,38 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — All Rights Reserved',
+    
+    // Onboarding
+    onboard_welcome: 'WELCOME TO STREET DINAMICS',
+    onboard_choose: 'Choose Your Path',
+    onboard_athlete: 'ATHLETE',
+    onboard_athlete_desc: 'Compete in events, build your profile, earn tokens, and grow your fan base',
+    onboard_spectator: 'SPECTATOR',
+    onboard_spectator_desc: 'Watch events, support athletes, collect tokens, and win prizes',
+    onboard_profile_title: 'Complete Your Profile',
+    onboard_photo: 'Upload Photo',
+    onboard_phone: 'Phone',
+    onboard_dob: 'Date of Birth',
+    onboard_country: 'Country',
+    onboard_city: 'City',
+    onboard_sports: 'Sports (comma-separated)',
+    onboard_sports_placeholder: 'e.g. Parkour, BMX, Skateboarding',
+    onboard_bio: 'Bio',
+    onboard_bio_placeholder: 'Tell us about yourself and your journey...',
+    onboard_fav_sports: 'Favorite Sports (comma-separated)',
+    onboard_back: 'Back',
+    onboard_complete: 'Complete Setup',
+    onboard_creating: 'Creating Profile...',
+    
+    // Admin
+    admin_panel: 'ADMIN PANEL',
+    admin_create_event: '+ CREATE EVENT',
+    admin_go_live: 'GO LIVE',
+    admin_end_event: 'END EVENT',
+    admin_kick_url: 'Kick Live URL',
+    admin_youtube_url: 'YouTube Live URL',
+    admin_save_links: 'Save Live Links',
+    admin_change_pass: 'Change Password',
   },
   
   it: {
@@ -239,6 +271,38 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Tutti i Diritti Riservati',
+    
+    // Onboarding
+    onboard_welcome: 'BENVENUTO A STREET DINAMICS',
+    onboard_choose: 'Scegli il Tuo Percorso',
+    onboard_athlete: 'ATLETA',
+    onboard_athlete_desc: 'Gareggia negli eventi, costruisci il tuo profilo, guadagna token e fai crescere la tua fanbase',
+    onboard_spectator: 'SPETTATORE',
+    onboard_spectator_desc: 'Guarda gli eventi, supporta gli atleti, colleziona token e vinci premi',
+    onboard_profile_title: 'Completa il Tuo Profilo',
+    onboard_photo: 'Carica Foto',
+    onboard_phone: 'Telefono',
+    onboard_dob: 'Data di Nascita',
+    onboard_country: 'Paese',
+    onboard_city: 'Città',
+    onboard_sports: 'Sport (separati da virgola)',
+    onboard_sports_placeholder: 'es. Parkour, BMX, Skateboarding',
+    onboard_bio: 'Bio',
+    onboard_bio_placeholder: 'Raccontaci di te e del tuo percorso...',
+    onboard_fav_sports: 'Sport Preferiti (separati da virgola)',
+    onboard_back: 'Indietro',
+    onboard_complete: 'Completa Configurazione',
+    onboard_creating: 'Creazione Profilo...',
+    
+    // Admin
+    admin_panel: 'PANNELLO ADMIN',
+    admin_create_event: '+ CREA EVENTO',
+    admin_go_live: 'VAI LIVE',
+    admin_end_event: 'TERMINA EVENTO',
+    admin_kick_url: 'URL Live Kick',
+    admin_youtube_url: 'URL Live YouTube',
+    admin_save_links: 'Salva Link Live',
+    admin_change_pass: 'Cambia Password',
   },
   
   es: {
@@ -358,6 +422,38 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Todos los Derechos Reservados',
+    
+    // Onboarding
+    onboard_welcome: 'BIENVENIDO A STREET DINAMICS',
+    onboard_choose: 'Elige Tu Camino',
+    onboard_athlete: 'ATLETA',
+    onboard_athlete_desc: 'Compite en eventos, construye tu perfil, gana tokens y aumenta tu base de fans',
+    onboard_spectator: 'ESPECTADOR',
+    onboard_spectator_desc: 'Ve eventos, apoya a atletas, colecciona tokens y gana premios',
+    onboard_profile_title: 'Completa Tu Perfil',
+    onboard_photo: 'Subir Foto',
+    onboard_phone: 'Teléfono',
+    onboard_dob: 'Fecha de Nacimiento',
+    onboard_country: 'País',
+    onboard_city: 'Ciudad',
+    onboard_sports: 'Deportes (separados por coma)',
+    onboard_sports_placeholder: 'ej. Parkour, BMX, Skateboarding',
+    onboard_bio: 'Biografía',
+    onboard_bio_placeholder: 'Cuéntanos sobre ti y tu trayectoria...',
+    onboard_fav_sports: 'Deportes Favoritos (separados por coma)',
+    onboard_back: 'Atrás',
+    onboard_complete: 'Completar Configuración',
+    onboard_creating: 'Creando Perfil...',
+    
+    // Admin
+    admin_panel: 'PANEL DE ADMIN',
+    admin_create_event: '+ CREAR EVENTO',
+    admin_go_live: 'IR EN VIVO',
+    admin_end_event: 'FINALIZAR EVENTO',
+    admin_kick_url: 'URL Live Kick',
+    admin_youtube_url: 'URL Live YouTube',
+    admin_save_links: 'Guardar Enlaces Live',
+    admin_change_pass: 'Cambiar Contraseña',
   },
   
   fr: {
@@ -477,6 +573,38 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Tous Droits Réservés',
+    
+    // Onboarding
+    onboard_welcome: 'BIENVENUE À STREET DINAMICS',
+    onboard_choose: 'Choisissez Votre Voie',
+    onboard_athlete: 'ATHLÈTE',
+    onboard_athlete_desc: 'Participez aux événements, construisez votre profil, gagnez des jetons et développez votre base de fans',
+    onboard_spectator: 'SPECTATEUR',
+    onboard_spectator_desc: 'Regardez les événements, soutenez les athlètes, collectez des jetons et gagnez des prix',
+    onboard_profile_title: 'Complétez Votre Profil',
+    onboard_photo: 'Télécharger Photo',
+    onboard_phone: 'Téléphone',
+    onboard_dob: 'Date de Naissance',
+    onboard_country: 'Pays',
+    onboard_city: 'Ville',
+    onboard_sports: 'Sports (séparés par virgule)',
+    onboard_sports_placeholder: 'ex. Parkour, BMX, Skateboarding',
+    onboard_bio: 'Bio',
+    onboard_bio_placeholder: 'Parlez-nous de vous et de votre parcours...',
+    onboard_fav_sports: 'Sports Favoris (séparés par virgule)',
+    onboard_back: 'Retour',
+    onboard_complete: 'Terminer la Configuration',
+    onboard_creating: 'Création du Profil...',
+    
+    // Admin
+    admin_panel: 'PANNEAU ADMIN',
+    admin_create_event: '+ CRÉER ÉVÉNEMENT',
+    admin_go_live: 'PASSER EN DIRECT',
+    admin_end_event: 'TERMINER ÉVÉNEMENT',
+    admin_kick_url: 'URL Live Kick',
+    admin_youtube_url: 'URL Live YouTube',
+    admin_save_links: 'Enregistrer Liens Live',
+    admin_change_pass: 'Changer Mot de Passe',
   },
   
   de: {
@@ -596,6 +724,38 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Alle Rechte Vorbehalten',
+    
+    // Onboarding
+    onboard_welcome: 'WILLKOMMEN BEI STREET DINAMICS',
+    onboard_choose: 'Wählen Sie Ihren Weg',
+    onboard_athlete: 'ATHLET',
+    onboard_athlete_desc: 'Nimm an Events teil, baue dein Profil auf, verdiene Token und vergrößere deine Fanbasis',
+    onboard_spectator: 'ZUSCHAUER',
+    onboard_spectator_desc: 'Schaue Events, unterstütze Athleten, sammle Token und gewinne Preise',
+    onboard_profile_title: 'Vervollständige Dein Profil',
+    onboard_photo: 'Foto Hochladen',
+    onboard_phone: 'Telefon',
+    onboard_dob: 'Geburtsdatum',
+    onboard_country: 'Land',
+    onboard_city: 'Stadt',
+    onboard_sports: 'Sportarten (durch Komma getrennt)',
+    onboard_sports_placeholder: 'z.B. Parkour, BMX, Skateboarding',
+    onboard_bio: 'Biografie',
+    onboard_bio_placeholder: 'Erzähle uns über dich und deine Reise...',
+    onboard_fav_sports: 'Lieblingssportarten (durch Komma getrennt)',
+    onboard_back: 'Zurück',
+    onboard_complete: 'Setup Abschließen',
+    onboard_creating: 'Profil Wird Erstellt...',
+    
+    // Admin
+    admin_panel: 'ADMIN-PANEL',
+    admin_create_event: '+ EVENT ERSTELLEN',
+    admin_go_live: 'LIVE GEHEN',
+    admin_end_event: 'EVENT BEENDEN',
+    admin_kick_url: 'Kick Live URL',
+    admin_youtube_url: 'YouTube Live URL',
+    admin_save_links: 'Live-Links Speichern',
+    admin_change_pass: 'Passwort Ändern',
   },
   
   ar: {
@@ -715,6 +875,38 @@ export const translations = {
     
     // Footer
     footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, دبي، الإمارات) — جميع الحقوق محفوظة',
+    
+    // Onboarding
+    onboard_welcome: 'مرحباً بك في ستريت ديناميكس',
+    onboard_choose: 'اختر مسارك',
+    onboard_athlete: 'رياضي',
+    onboard_athlete_desc: 'شارك في الفعاليات، ابنِ ملفك الشخصي، اكسب الرموز، ونمّي قاعدة معجبيك',
+    onboard_spectator: 'متفرج',
+    onboard_spectator_desc: 'شاهد الفعاليات، ادعم الرياضيين، اجمع الرموز، واربح الجوائز',
+    onboard_profile_title: 'أكمل ملفك الشخصي',
+    onboard_photo: 'رفع صورة',
+    onboard_phone: 'الهاتف',
+    onboard_dob: 'تاريخ الميلاد',
+    onboard_country: 'البلد',
+    onboard_city: 'المدينة',
+    onboard_sports: 'الرياضات (مفصولة بفواصل)',
+    onboard_sports_placeholder: 'مثل: باركور، BMX، التزلج',
+    onboard_bio: 'السيرة الذاتية',
+    onboard_bio_placeholder: 'أخبرنا عن نفسك ورحلتك...',
+    onboard_fav_sports: 'الرياضات المفضلة (مفصولة بفواصل)',
+    onboard_back: 'رجوع',
+    onboard_complete: 'إكمال الإعداد',
+    onboard_creating: 'جارٍ إنشاء الملف الشخصي...',
+    
+    // Admin
+    admin_panel: 'لوحة الإدارة',
+    admin_create_event: '+ إنشاء فعالية',
+    admin_go_live: 'انطلق مباشرة',
+    admin_end_event: 'إنهاء الفعالية',
+    admin_kick_url: 'رابط Kick المباشر',
+    admin_youtube_url: 'رابط YouTube المباشر',
+    admin_save_links: 'حفظ روابط البث',
+    admin_change_pass: 'تغيير كلمة المرور',
   }
 };
 

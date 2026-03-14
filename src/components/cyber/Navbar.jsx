@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, User } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
+import { createPageUrl } from '@/utils';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../translations';
 
@@ -60,13 +61,23 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           ))}
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
           {user && (
-            <button
-              onClick={onProfileClick}
-              className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
-            >
-              <User size={12} />
-              PROFILE
-            </button>
+            <>
+              <button
+                onClick={onProfileClick}
+                className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
+              >
+                <User size={12} />
+                PROFILE
+              </button>
+              {user.role === 'admin' && (
+                <button
+                  onClick={() => window.location.href = createPageUrl('Admin')}
+                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 px-3.5 py-1.5 cursor-pointer transition-all hover:border-green-500 hover:bg-green-500/5 clip-btn"
+                >
+                  ADMIN
+                </button>
+              )}
+            </>
           )}
         </div>
 

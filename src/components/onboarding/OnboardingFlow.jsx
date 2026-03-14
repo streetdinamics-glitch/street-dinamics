@@ -83,10 +83,10 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
         {step === 1 && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-3xl tracking-[2px] mb-2 text-center">
-              WELCOME TO STREET DINAMICS
+              {t('onboard_welcome')}
             </h2>
             <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-8 text-center">
-              Choose Your Path
+              {t('onboard_choose')}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -95,9 +95,9 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 className="relative group p-8 bg-gradient-to-br from-fire-3/10 to-fire-2/5 border-2 border-fire-3/20 hover:border-fire-3 transition-all"
               >
                 <div className="text-5xl mb-4">🏅</div>
-                <div className="font-orbitron font-bold text-xl text-fire-4 mb-2">ATHLETE</div>
+                <div className="font-orbitron font-bold text-xl text-fire-4 mb-2">{t('onboard_athlete')}</div>
                 <div className="font-rajdhani text-sm text-fire-3/40 leading-relaxed">
-                  Compete in events, build your profile, earn tokens, and grow your fan base
+                  {t('onboard_athlete_desc')}
                 </div>
               </button>
 
@@ -106,9 +106,9 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 className="relative group p-8 bg-gradient-to-br from-cyan/10 to-cyan/5 border-2 border-cyan/20 hover:border-cyan transition-all"
               >
                 <div className="text-5xl mb-4">🎫</div>
-                <div className="font-orbitron font-bold text-xl text-cyan mb-2">SPECTATOR</div>
+                <div className="font-orbitron font-bold text-xl text-cyan mb-2">{t('onboard_spectator')}</div>
                 <div className="font-rajdhani text-sm text-cyan/60 leading-relaxed">
-                  Watch events, support athletes, collect tokens, and win prizes
+                  {t('onboard_spectator_desc')}
                 </div>
               </button>
             </div>
@@ -119,10 +119,10 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
         {step === 2 && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">
-              {userType === 'athlete' ? 'ATHLETE PROFILE' : 'SPECTATOR PROFILE'}
+              {userType === 'athlete' ? t('onboard_athlete').toUpperCase() : t('onboard_spectator').toUpperCase()} {t('onboard_profile_title').split(' ')[0].toUpperCase()}
             </h2>
             <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-6">
-              Complete Your Profile
+              {t('onboard_profile_title')}
             </p>
 
             {/* Avatar Upload */}
@@ -146,13 +146,13 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 disabled={uploading}
                 className="btn-ghost text-[10px] py-2 px-4"
               >
-                {uploading ? '⏳ Uploading...' : formData.avatar_url ? '✓ Photo Uploaded' : '📸 Upload Photo'}
+                {uploading ? '⏳...' : formData.avatar_url ? '✓' : `📸 ${t('onboard_photo')}`}
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Phone</label>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_phone')}</label>
                 <input
                   className="cyber-input"
                   value={formData.phone}
@@ -160,7 +160,7 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 />
               </div>
               <div>
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Date of Birth</label>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_dob')}</label>
                 <input
                   type="date"
                   className="cyber-input"
@@ -172,7 +172,7 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Country</label>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_country')}</label>
                 <input
                   className="cyber-input"
                   value={formData.country}
@@ -180,7 +180,7 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 />
               </div>
               <div>
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">City</label>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_city')}</label>
                 <input
                   className="cyber-input"
                   value={formData.city}
@@ -192,19 +192,19 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             {userType === 'athlete' && (
               <>
                 <div className="mb-4">
-                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Sports (comma-separated)</label>
+                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_sports')}</label>
                   <input
                     className="cyber-input"
-                    placeholder="e.g. Parkour, BMX, Skateboarding"
+                    placeholder={t('onboard_sports_placeholder')}
                     value={formData.sports.join(', ')}
                     onChange={(e) => setFormData({ ...formData, sports: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Bio</label>
+                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_bio')}</label>
                   <textarea
                     className="cyber-input h-24"
-                    placeholder="Tell us about yourself and your journey..."
+                    placeholder={t('onboard_bio_placeholder')}
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                   />
@@ -214,10 +214,10 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
 
             {userType === 'spectator' && (
               <div className="mb-4">
-                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Favorite Sports (comma-separated)</label>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_fav_sports')}</label>
                 <input
                   className="cyber-input"
-                  placeholder="e.g. Parkour, BMX, Skateboarding"
+                  placeholder={t('onboard_sports_placeholder')}
                   value={formData.favorite_sports.join(', ')}
                   onChange={(e) => setFormData({ ...formData, favorite_sports: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
                 />
@@ -225,13 +225,13 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             )}
 
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setStep(1)} className="btn-ghost py-3 px-5">← Back</button>
+              <button onClick={() => setStep(1)} className="btn-ghost py-3 px-5">← {t('onboard_back')}</button>
               <button
                 onClick={handleSubmit}
                 disabled={updateUser.isPending || !formData.phone || !formData.date_of_birth}
                 className="btn-fire flex-1 py-3 disabled:opacity-20"
               >
-                {updateUser.isPending ? 'Creating Profile...' : '✓ Complete Setup'}
+                {updateUser.isPending ? t('onboard_creating') : `✓ ${t('onboard_complete')}`}
               </button>
             </div>
           </div>
