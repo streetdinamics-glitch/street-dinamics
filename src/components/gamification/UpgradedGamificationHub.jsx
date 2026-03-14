@@ -52,83 +52,91 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
 
   const tasks = [
     {
-      id: 'first-share',
-      icon: <Share2 size={20} />,
-      title: 'Share Event',
-      description: 'Post on social media',
-      points: 50,
-      point_type: 'chat_points',
-      claimed: false,
-      color: 'from-cyan/20 to-cyan/5',
-      borderColor: 'border-cyan/30',
-    },
-    {
-      id: 'ugc-video',
+      id: 'ugc-video-master',
       icon: <Video size={20} />,
-      title: 'Upload UGC Video',
-      description: 'Post a 15-30s clip (reactions, hype, highlights)',
-      points: 150,
+      title: 'Video Creator',
+      description: 'Record 15-30s reaction, highlight or hype clip',
+      points: 250,
       point_type: 'chat_points',
       claimed: ugcSubmissions.some(s => s.type === 'video'),
       color: 'from-fire-3/20 to-fire-3/5',
       borderColor: 'border-fire-3/30',
+      tier: 'premium',
     },
     {
-      id: 'ugc-photo',
+      id: 'ugc-photo-streak',
       icon: <Aperture size={20} />,
-      title: 'Upload UGC Photo',
-      description: 'Share your best event moment',
-      points: 75,
+      title: 'Moment Capture',
+      description: 'Upload 3 unique photos from the event',
+      points: 180,
       point_type: 'chat_points',
-      claimed: ugcSubmissions.some(s => s.type === 'photo'),
+      claimed: ugcSubmissions.filter(s => s.type === 'photo').length >= 3,
+      progress: Math.min(ugcSubmissions.filter(s => s.type === 'photo').length / 3, 1),
       color: 'from-fire-5/20 to-fire-5/5',
       borderColor: 'border-fire-5/30',
+      tier: 'premium',
     },
     {
-      id: 'refer-friend',
+      id: 'content-viral',
+      icon: <TrendingUp size={20} />,
+      title: 'Viral Amplifier',
+      description: 'Get your UGC featured with 50+ engagement',
+      points: 400,
+      point_type: 'chat_points',
+      claimed: ugcSubmissions.some(s => (s.engagement_count || 0) >= 50),
+      color: 'from-cyan/20 to-cyan/5',
+      borderColor: 'border-cyan/30',
+      tier: 'elite',
+    },
+    {
+      id: 'referral-network',
       icon: <Users size={20} />,
-      title: 'Invite Friend',
-      description: 'Each friend = 100 points (they must register)',
-      points: 100,
+      title: 'Network Builder',
+      description: 'Invite 5 friends to register and attend',
+      points: 500,
       point_type: 'chat_points',
       claimed: false,
       claimed_count: 0,
+      progress: 0,
       color: 'from-purple-500/20 to-purple-500/5',
       borderColor: 'border-purple-500/30',
+      tier: 'elite',
     },
     {
-      id: 'voting-spree',
-      icon: <TrendingUp size={20} />,
-      title: 'Vote 5x',
-      description: 'Participate in 5 poll rounds',
-      points: 60,
-      point_type: 'vote_points',
-      claimed: (fanPoints.votes_count || 0) >= 5,
-      progress: Math.min((fanPoints.votes_count || 0) / 5, 1),
+      id: 'hashtag-campaign',
+      icon: <Share2 size={20} />,
+      title: 'Hashtag Power',
+      description: 'Post with event hashtag 10 times across platforms',
+      points: 200,
+      point_type: 'chat_points',
+      claimed: false,
+      progress: 0,
       color: 'from-green-500/20 to-green-500/5',
       borderColor: 'border-green-500/30',
+      tier: 'premium',
     },
     {
-      id: 'prediction-master',
+      id: 'prediction-streak',
       icon: <Zap size={20} />,
-      title: 'Correct Prediction',
-      description: 'Get 3 outcome predictions right',
-      points: 200,
+      title: 'Prediction Prophet',
+      description: 'Get 5 consecutive predictions correct',
+      points: 300,
       point_type: 'prediction_points',
-      claimed: (fanPoints.correct_predictions || 0) >= 3,
-      progress: Math.min((fanPoints.correct_predictions || 0) / 3, 1),
+      claimed: (fanPoints.correct_predictions || 0) >= 5,
+      progress: Math.min((fanPoints.correct_predictions || 0) / 5, 1),
       color: 'from-yellow-500/20 to-yellow-500/5',
       borderColor: 'border-yellow-500/30',
+      tier: 'premium',
     },
   ];
 
   const achievements = [
-    { id: 'content-creator', unlocked: ugcSubmissions.length >= 5, progress: Math.min(ugcSubmissions.length / 5, 1) },
-    { id: 'influencer', unlocked: false, progress: 0.3 },
-    { id: 'superfan', unlocked: (fanPoints.total_points || 0) >= 100, progress: Math.min((fanPoints.total_points || 0) / 100, 1) },
-    { id: 'social-butterfly', unlocked: false, progress: 0.5 },
-    { id: 'explorer', unlocked: false, progress: 0.8 },
-    { id: 'champion', unlocked: false, progress: 0 },
+    { id: 'content-master', unlocked: ugcSubmissions.length >= 5, progress: Math.min(ugcSubmissions.length / 5, 1) },
+    { id: 'network-architect', unlocked: false, progress: 0.3 },
+    { id: 'engagement-magnet', unlocked: (fanPoints.total_points || 0) >= 250, progress: Math.min((fanPoints.total_points || 0) / 250, 1) },
+    { id: 'influence-nexus', unlocked: false, progress: 0.5 },
+    { id: 'viral-catalyst', unlocked: ugcSubmissions.some(s => (s.engagement_count || 0) >= 100), progress: 0.8 },
+    { id: 'legacy-builder', unlocked: (fanPoints.total_points || 0) >= 1000, progress: Math.min((fanPoints.total_points || 0) / 1000, 1) },
   ];
 
   return (
@@ -165,7 +173,7 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
                 : 'border-transparent text-fire-3/40 hover:text-fire-3'
             }`}
           >
-            {tab === 'tasks' ? '🎯 TASKS' : '⭐ ACHIEVEMENTS'}
+            {tab === 'tasks' ? 'TASKS' : 'ACHIEVEMENTS'}
           </button>
         ))}
       </div>
@@ -210,7 +218,7 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
                       : 'border-fire-3/60 bg-fire-3/10 text-fire-3 hover:border-fire-3 hover:bg-fire-3/20'
                   }`}
                 >
-                  {task.claimed ? '✓ CLAIMED' : 'CLAIM'}
+                  {task.claimed ? 'CLAIMED' : 'CLAIM'}
                 </button>
               </div>
             </motion.div>
@@ -234,8 +242,8 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
 
       {/* Referral Link Section */}
       <div className="border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-transparent p-6 clip-cyber">
-        <h3 className="font-orbitron font-bold text-purple-400 mb-2">🔗 Your Referral Link</h3>
-        <p className="font-mono text-[10px] text-purple-500/60 mb-3">Share & earn 100 points per friend signup</p>
+        <h3 className="font-orbitron font-bold text-purple-400 mb-2">Your Referral Link</h3>
+        <p className="font-mono text-[10px] text-purple-500/60 mb-3">Share & earn points for each friend who registers and attends</p>
         <div className="flex gap-2">
           <input
             type="text"
@@ -255,12 +263,12 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
         </div>
       </div>
 
-      {/* Swag Shop Teaser */}
+      {/* Rewards Section */}
       <div className="border border-fire-3/30 bg-gradient-to-br from-fire-3/10 to-transparent p-6 clip-cyber">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-orbitron font-bold text-fire-4 mb-1">🎁 Exclusive Swag Shop</h3>
-            <p className="font-mono text-[10px] text-fire-3/60">Redeem points for limited edition merch</p>
+            <h3 className="font-orbitron font-bold text-fire-4 mb-1">Rewards Marketplace</h3>
+            <p className="font-mono text-[10px] text-fire-3/60">Redeem points for exclusive merch and NFT drops</p>
           </div>
           <button className="btn-fire py-2 px-6 text-[10px]">Coming Soon</button>
         </div>
