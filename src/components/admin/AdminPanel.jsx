@@ -262,6 +262,14 @@ export default function AdminPanel({ lang, onClose }) {
           >
             🛡️ Minor Approvals
           </button>
+          {events.find(e => e.status === 'live') && (
+            <button
+              onClick={() => setChatModeratingEvent(events.find(e => e.status === 'live'))}
+              className="btn-fire text-[11px] py-2.5 px-5"
+            >
+              💬 Live Chat
+            </button>
+          )}
         </div>
 
         {/* Pending Athletes */}
