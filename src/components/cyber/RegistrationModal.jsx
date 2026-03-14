@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '../translations';
+import ComprehensiveContract from '../legal/ComprehensiveContract';
+import AgeVerification from '../legal/AgeVerification';
+import MinorConsentForm from '../legal/MinorConsentForm';
+import GDPRConsentManager from '../legal/GDPRConsentManager';
 
 export default function RegistrationModal({ event, type, attendanceMode, onClose, onSuccess, lang }) {
   const t = useTranslation(lang);
@@ -14,11 +18,16 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
   const [contractAccepted, setContractAccepted] = useState(false);
   const [signed, setSigned] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [ageVerified, setAgeVerified] = useState(null);
+  const [ageCategory, setAgeCategory] = useState(null);
+  const [gdprConsents, setGdprConsents] = useState({});
+  const [parentalConsent, setParentalConsent] = useState(null);
   const canvasRef = useRef(null);
+  const parentCanvasRef = useRef(null);
   const isDrawing = useRef(false);
   const fileInputRef = useRef(null);
 
-  const totalSteps = 3;
+  const totalSteps = ageCategory?.isMinor ? 5 : 4;
 
   const createReg = useMutation({
     mutationFn: (data) => base44.entities.Registration.create(data),
@@ -47,17 +56,31 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
     }
   };
 
-  const canProceedStep1 = form.first_name && form.last_name && form.email && form.phone && form.id_document;
-  const canProceedStep2 = contractAccepted;
-  const canProceedStep3 = signed;
+  const canProceedStep1 = form.first_name && form.last_name && form.email && form.phone && form.date_of_birth && form.id_document && ageVerified;
+  const canProceedStep2 = Object.keys(gdprConsents).length > 0;
+  const canProceedStep3 = contractAccepted;
+  const canProceedStep4 = ageCategory?.isMinor ? (parentalConsent && parentalConsent.signature_url) : true;
+  const canProceedStep5 = signed;
 
   const handleSubmit = async () => {
+    // Validate age verification
+    if (!ageVerified || !ageCategory) {
+      alert('Age verification failed. Please check date of birth.');
+      return;
+    }
+
+    // For minors, verify parental consent
+    if (ageCategory.isMinor && !parentalConsent?.signature_url) {
+      alert('Parental consent signature is required for minors.');
+      return;
+    }
+
     const ticketCode = 'SD-' + Math.random().toString(36).substring(2, 8).toUpperCase();
     const seatZone = type === 'spectator' && attendanceMode === 'in-person' 
       ? String.fromCharCode(65 + Math.floor(Math.random() * 6)) + String(Math.floor(Math.random() * 50) + 1).padStart(2, '0')
       : 'ONLINE';
     
-    // Save signature canvas as image
+    // Save participant signature
     const signatureUrl = canvasRef.current?.toDataURL('image/png');
     
     const regData = {
@@ -67,9 +90,24 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
       ...form,
       contract_accepted: true,
       signature_url: signatureUrl,
-      status: 'confirmed',
+      status: ageCategory.isMinor ? 'pending' : 'confirmed',
       ticket_code: ticketCode,
       seat_zone: seatZone,
+      // Age and consent tracking
+      age_at_registration: ageCategory.age,
+      is_minor: ageCategory.isMinor,
+      // GDPR consents
+      gdpr_consents: gdprConsents,
+      marketing_consent: gdprConsents.marketing || false,
+      image_rights_consent: gdprConsents.imageRights || false,
+      tokenization_consent: gdprConsents.tokenization || false,
+      cross_border_consent: gdprConsents.crossBorder || false,
+      // Parental data (if minor)
+      parental_consent: ageCategory.isMinor ? parentalConsent : null,
+      // Legal compliance timestamps
+      gdpr_consent_date: new Date().toISOString(),
+      contract_version: '1.2',
+      ip_address: 'REDACTED', // Would be captured server-side
     };
     
     createReg.mutate(regData, {
@@ -169,8 +207,11 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
         <button onClick={onClose} className="absolute top-3 right-4 font-mono text-xs tracking-[2px] text-fire-3/30 hover:text-fire-3 cursor-pointer bg-transparent border-none">{t('reg_close')}</button>
 
         {/* Step indicator */}
-        <div className="flex items-center mb-5 gap-0">
-          {[t('reg_step_info'), t('reg_step_contract'), t('reg_step_signature')].map((label, i) => (
+        <div className="flex items-center mb-5 gap-0 overflow-x-auto">
+          {(ageCategory?.isMinor 
+            ? ['Info', 'GDPR', 'Contract', 'Parent', 'Sign']
+            : ['Info', 'GDPR', 'Contract', 'Sign']
+          ).map((label, i) => (
             <div key={i} className={`flex-1 text-center pb-2.5 relative font-mono text-[9px] tracking-[2px] ${step > i + 1 ? 'text-fire-4' : step === i + 1 ? 'text-fire-5' : 'text-fire-3/25'}`}>
               <div className={`w-[22px] h-[22px] rounded-full border mx-auto mb-1 flex items-center justify-center font-orbitron text-[9px] font-bold transition-all ${step === i + 1 ? 'border-fire-3 text-fire-5 bg-fire-3/10 shadow-[0_0_10px_rgba(255,100,0,0.35)]' : step > i + 1 ? 'border-fire-4 text-fire-5 bg-fire-3/15' : 'border-fire-3/25 text-fire-3/25'}`}>
                 {i + 1}
@@ -208,16 +249,34 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
               <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_phone')}</label>
               <input className="cyber-input" type="tel" value={form.phone} onChange={e => handleChange('phone', e.target.value)} />
             </div>
-            {type === 'athlete' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                <div>
-                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_dob')}</label>
-                  <input className="cyber-input" type="date" value={form.date_of_birth} onChange={e => handleChange('date_of_birth', e.target.value)} />
-                </div>
-                <div>
-                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_sport')}</label>
-                  <input className="cyber-input" value={form.sport} onChange={e => handleChange('sport', e.target.value)} />
-                </div>
+            <div className="mb-3">
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_dob')} *</label>
+              <input 
+                className="cyber-input" 
+                type="date" 
+                value={form.date_of_birth} 
+                onChange={e => handleChange('date_of_birth', e.target.value)}
+                max={new Date().toISOString().split('T')[0]}
+              />
+            </div>
+
+            {/* Age Verification */}
+            {form.date_of_birth && (
+              <div className="mb-3">
+                <AgeVerification 
+                  dateOfBirth={form.date_of_birth}
+                  onVerified={(verified, category) => {
+                    setAgeVerified(verified);
+                    setAgeCategory(category);
+                  }}
+                />
+              </div>
+            )}
+
+            {type === 'athlete' && ageVerified && (
+              <div className="mb-3">
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_sport')} *</label>
+                <input className="cyber-input" value={form.sport} onChange={e => handleChange('sport', e.target.value)} />
               </div>
             )}
 
@@ -253,110 +312,117 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
           </div>
         )}
 
-        {/* Step 2: Contract */}
+        {/* Step 2: GDPR Consent */}
         {step === 2 && (
           <div className="animate-[fadeUp_0.35s_ease]">
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">{t('reg_contract_title').toUpperCase()}</h2>
-            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Legally Binding</p>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">DATA PROTECTION</h2>
+            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">GDPR Compliance</p>
 
-            <div className="bg-black/50 border border-fire-3/10 p-4 mb-4 max-h-[260px] overflow-y-auto font-mono text-[13px] leading-loose text-fire-4/35 scrollbar-thin">
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">PARTICIPATION AGREEMENT — STREET DYNAMICS HOLDING FZE</h5>
-              This agreement is governed by UAE Federal Law, DIFC Law, GDPR (EU) 2016/679, UAE Data Protection Law (DIFC Law No. 5/2020), and eIDAS Regulation (EU) 910/2014.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 1 — IDENTIFICATION OF PARTIES</h5>
-              <strong>Organizer:</strong> Street Dynamics Holding FZE, registered in IFZA (International Free Zone Authority), Dubai, UAE, License No. [TBD], with registered office at [IFZA Business Park, Dubai], email: legal@streetdynamics.ae.<br/>
-              Street Dynamics Holding FZE is the sole controlling entity of the "Street Dynamics" brand and all affiliated platforms, events, digital assets, and IP rights globally.<br/>
-              <strong>Participant:</strong> The undersigned individual (hereinafter "Participant"), of legal age or represented by a parent/guardian if minor.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 2 — SCOPE OF AGREEMENT</h5>
-              The Participant registers for a sporting event organized, branded, or licensed by Street Dynamics Holding FZE. Registration constitutes full acceptance of these Terms and Conditions, Event Rules published on the official website, and all policies of Street Dynamics Holding FZE.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 3 — DATA PROTECTION (GDPR + UAE LAW)</h5>
-              <strong>Data Controller:</strong> Street Dynamics Holding FZE.<br/>
-              <strong>Purpose:</strong> Event registration, communication, legal compliance, marketing (opt-in required), blockchain/token operations (if applicable).<br/>
-              <strong>Legal Basis:</strong> Contract performance (GDPR Art. 6.1.b), explicit consent for promotional purposes (GDPR Art. 6.1.a), legitimate interest for platform security.<br/>
-              <strong>Data Retention:</strong> 7 years from event date, or as required by UAE/EU law, whichever is longer.<br/>
-              <strong>Rights:</strong> Access, rectification, erasure, portability, objection, restriction (GDPR Art. 15-22). Contact: privacy@streetdynamics.ae.<br/>
-              <strong>Cross-Border Transfers:</strong> Data may be transferred outside the UAE/EU under Standard Contractual Clauses (SCC) and appropriate safeguards.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 4 — IMAGE RIGHTS & CONTENT LICENSE</h5>
-              Participant grants Street Dynamics Holding FZE a worldwide, royalty-free, perpetual, irrevocable license to:<br/>
-              - Capture photos, videos, audio recordings during events;<br/>
-              - Use such materials for promotional, editorial, social media, NFT minting, and commercial purposes globally;<br/>
-              - Sublicense rights to sponsors, media partners, and blockchain platforms (including tokenization of content).<br/>
-              <strong>Revocation:</strong> Consent may be revoked by written notice to privacy@streetdynamics.ae. Revocation does not affect prior lawful use or minted NFTs.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 5 — LIABILITY WAIVER</h5>
-              Participant acknowledges:<br/>
-              - Physical fitness for sporting activity;<br/>
-              - Voluntary assumption of all inherent risks;<br/>
-              - Release of Street Dynamics Holding FZE from liability for personal injury, property damage, or loss, except in cases of gross negligence or willful misconduct.<br/>
-              <strong>Insurance:</strong> Street Dynamics Holding FZE maintains public liability insurance covering third-party claims during events.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 6 — CANCELLATION & REFUNDS</h5>
-              - Participant cancellation: 50% refund if cancelled 7+ days before event. No refund within 7 days.<br/>
-              - Organizer cancellation: Full refund if cancelled due to force majeure (weather, health emergencies, government orders).<br/>
-              - Refunds processed within 30 business days via original payment method.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 7 — TOKEN & NFT MECHANICS (IF APPLICABLE)</h5>
-              If the Participant engages with Street Dynamics tokens (SD Tokens), NFT drops, or blockchain-based rewards:<br/>
-              - Tokens are digital assets, not securities, and carry no ownership rights in Street Dynamics Holding FZE.<br/>
-              - NFTs are minted on [Polygon/Ethereum/Solana - TBD] and subject to blockchain immutability.<br/>
-              - Token holders may receive event access, voting rights, revenue-sharing from sponsorships (as per tokenomics whitepaper).<br/>
-              - No guarantee of financial return. Tokens are utility assets for platform engagement only.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 8 — DIGITAL SIGNATURE (eIDAS + UAE)</h5>
-              The signature affixed via digital canvas is legally binding under:<br/>
-              - eIDAS Regulation (EU) 910/2014 (for EU participants);<br/>
-              - UAE Electronic Transactions Law (Federal Law No. 1/2006);<br/>
-              - DIFC Electronic Transactions Law (Law No. 2/2017).<br/>
-              The signature hash is cryptographically stored as proof of informed consent.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 9 — INTELLECTUAL PROPERTY</h5>
-              "Street Dynamics" and all associated logos, trademarks, content, and IP are the exclusive property of Street Dynamics Holding FZE. Unauthorized use is prohibited and subject to legal action.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 10 — GOVERNING LAW & DISPUTE RESOLUTION</h5>
-              <strong>Governing Law:</strong> Laws of the Dubai International Financial Centre (DIFC).<br/>
-              <strong>Jurisdiction:</strong> Any disputes shall be resolved by:<br/>
-              1. Good-faith negotiation (30 days);<br/>
-              2. Mediation via DIFC-LCIA Arbitration Centre;<br/>
-              3. Binding arbitration in Dubai under DIFC-LCIA Arbitration Rules (English language).<br/>
-              Class actions and jury trials are waived.
-              <br /><br />
-              <h5 className="font-rajdhani font-bold text-[13px] tracking-[3px] text-fire-3 uppercase mb-1">ART. 11 — SEVERABILITY & AMENDMENTS</h5>
-              If any provision is invalid, the remainder remains enforceable. Street Dynamics Holding FZE reserves the right to amend these Terms with 30 days' notice via email and website publication.
-              <br /><br />
-              <strong>Date & Place:</strong> [Auto-generated]<br/>
-              <strong>Participant / Parent (if minor):</strong> [Digital signature]<br/>
-              <strong>Binding Entity:</strong> Street Dynamics Holding FZE (IFZA, Dubai, UAE)
+            <div className="max-h-[400px] overflow-y-auto mb-4">
+              <GDPRConsentManager
+                type={type}
+                onConsentChange={setGdprConsents}
+              />
             </div>
 
-            <label className="flex items-start gap-2.5 cursor-pointer mb-4">
-              <input type="checkbox" checked={contractAccepted} onChange={e => setContractAccepted(e.target.checked)} className="w-4 h-4 mt-0.5 accent-fire-3 flex-shrink-0" />
-              <span className="text-sm text-fire-3/30 leading-snug">
-                {t('reg_contract_accept')}
-              </span>
-            </label>
-
             <div className="flex gap-2.5">
-              <button onClick={() => setStep(1)} className="btn-ghost py-3.5 px-5 text-[13px]">← {t('reg_back')}</button>
-              <button disabled={!canProceedStep2} onClick={() => setStep(3)} className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed">
-                {t('reg_next')} →
+              <button onClick={() => setStep(1)} className="btn-ghost py-3.5 px-5 text-[13px]">← Back</button>
+              <button 
+                disabled={!canProceedStep2} 
+                onClick={() => setStep(3)} 
+                className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
+              >
+                Next →
               </button>
             </div>
           </div>
         )}
 
-        {/* Step 3: Signature */}
+        {/* Step 3: Contract */}
         {step === 3 && (
           <div className="animate-[fadeUp_0.35s_ease]">
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">{t('reg_signature_title').toUpperCase()}</h2>
-            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">{t('reg_signature_hint')}</p>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">LEGAL AGREEMENT</h2>
+            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Binding Contract</p>
+
+            <div className="bg-black/50 border border-fire-3/10 p-4 mb-4 max-h-[320px] overflow-y-auto scrollbar-thin">
+              <ComprehensiveContract type={type} isMinor={ageCategory?.isMinor} />
+            </div>
+
+            <label className="flex items-start gap-2.5 cursor-pointer mb-4">
+              <input 
+                type="checkbox" 
+                checked={contractAccepted} 
+                onChange={e => setContractAccepted(e.target.checked)} 
+                className="w-4 h-4 mt-0.5 accent-fire-3 flex-shrink-0" 
+              />
+              <span className="text-sm text-fire-3/30 leading-snug">
+                I have read, understood, and accept all terms of this comprehensive agreement. 
+                {ageCategory?.isMinor && ' My parent/guardian will co-sign on the next step.'}
+              </span>
+            </label>
+
+            <div className="flex gap-2.5">
+              <button onClick={() => setStep(2)} className="btn-ghost py-3.5 px-5 text-[13px]">← Back</button>
+              <button 
+                disabled={!canProceedStep3} 
+                onClick={() => setStep(ageCategory?.isMinor ? 4 : 4)} 
+                className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 4: Parental Consent (Only for Minors) */}
+        {step === 4 && ageCategory?.isMinor && (
+          <div className="animate-[fadeUp_0.35s_ease]">
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">PARENTAL CONSENT</h2>
+            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">Required for Minors</p>
+
+            <div className="max-h-[400px] overflow-y-auto mb-4">
+              <MinorConsentForm
+                minorData={form}
+                onParentSign={setParentalConsent}
+                parentSignature={parentalConsent}
+                onClearSignature={() => setParentalConsent(null)}
+              />
+            </div>
+
+            <div className="flex gap-2.5">
+              <button onClick={() => setStep(3)} className="btn-ghost py-3.5 px-5 text-[13px]">← Back</button>
+              <button 
+                disabled={!canProceedStep4} 
+                onClick={() => setStep(5)} 
+                className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 4/5: Participant Signature */}
+        {((step === 4 && !ageCategory?.isMinor) || (step === 5 && ageCategory?.isMinor)) && (
+          <div className="animate-[fadeUp_0.35s_ease]">
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">
+              {ageCategory?.isMinor ? 'MINOR SIGNATURE' : 'YOUR SIGNATURE'}
+            </h2>
+            <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">
+              {ageCategory?.isMinor ? 'Minor Co-Signs with Parent' : 'Legally Binding eSignature'}
+            </p>
 
             <div className="mb-4">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30">{t('reg_signature_title')}</span>
-                <button onClick={clearSig} className="font-mono text-[11px] tracking-[2px] text-fire-3/40 hover:text-fire-3 bg-transparent border-none cursor-pointer">{t('reg_signature_clear')}</button>
+                <span className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30">
+                  {ageCategory?.isMinor ? 'Minor Participant Signature' : 'Your Signature'}
+                </span>
+                <button 
+                  onClick={clearSig} 
+                  className="font-mono text-[11px] tracking-[2px] text-fire-3/40 hover:text-fire-3 bg-transparent border-none cursor-pointer"
+                >
+                  Clear
+                </button>
               </div>
               <canvas
                 ref={canvasRef}
@@ -371,16 +437,35 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
                 onTouchMove={draw}
                 onTouchEnd={endDraw}
               />
+              <p className="font-mono text-xs text-fire-3/60 mt-2">
+                {ageCategory?.isMinor 
+                  ? 'Minor participants must sign alongside their parent/guardian. Both signatures are required.'
+                  : 'Sign with your finger or mouse. This creates a legally binding electronic signature.'}
+              </p>
             </div>
 
+            {ageCategory?.isMinor && (
+              <div className="bg-cyan/10 border border-cyan/30 p-4 mb-4">
+                <p className="font-mono text-xs text-cyan/80 leading-relaxed">
+                  ✓ Parent signature: <strong className="text-cyan">VERIFIED</strong><br/>
+                  → Minor signature: <strong className="text-fire-3">{signed ? 'COMPLETED' : 'PENDING'}</strong>
+                </p>
+              </div>
+            )}
+
             <div className="flex gap-2.5">
-              <button onClick={() => setStep(2)} className="btn-ghost py-3.5 px-5 text-[13px]">← {t('reg_back')}</button>
+              <button 
+                onClick={() => setStep(ageCategory?.isMinor ? 4 : 3)} 
+                className="btn-ghost py-3.5 px-5 text-[13px]"
+              >
+                ← Back
+              </button>
               <button
-                disabled={!canProceedStep3 || createReg.isPending}
+                disabled={!canProceedStep5 || createReg.isPending}
                 onClick={handleSubmit}
                 className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                {createReg.isPending ? t('reg_submitting') : t('reg_submit')}
+                {createReg.isPending ? 'Processing...' : 'Complete Registration'}
               </button>
             </div>
           </div>
