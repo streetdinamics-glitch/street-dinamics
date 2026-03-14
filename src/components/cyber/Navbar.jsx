@@ -110,16 +110,25 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="fixed top-[52px] left-0 right-0 z-[198] bg-[rgba(4,2,10,0.98)] border-b border-fire-3/20 flex flex-col p-2.5 gap-2 backdrop-blur-xl md:hidden">
+        <div className="fixed top-[80px] left-0 right-0 z-[198] bg-[rgba(4,2,10,0.98)] border-b border-fire-3/20 flex flex-col p-2.5 gap-2 backdrop-blur-xl md:hidden">
           {navItems.map(item => (
             <button
               key={item.id}
               onClick={() => { onScrollTo?.(item.id); setMobileOpen(false); }}
-              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/60 py-2.5 px-3.5 text-left transition-all hover:border-fire-3 hover:text-fire-3"
+              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/60 py-2.5 px-3.5 text-left transition-all hover:border-fire-3 hover:text-fire-3 w-full"
             >
               {item.label}
             </button>
           ))}
+          {user?.role === 'admin' && (
+            <Link
+              to={createPageUrl('Admin')}
+              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 py-2.5 px-3.5 text-left transition-all hover:border-green-500 hover:bg-green-500/5 w-full no-underline block"
+              onClick={() => setMobileOpen(false)}
+            >
+              ADMIN
+            </Link>
+          )}
         </div>
       )}
     </>
