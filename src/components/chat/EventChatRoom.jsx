@@ -99,7 +99,7 @@ export default function EventChatRoom({ event, lang }) {
     }
   });
 
-  const handleSend = (e) => {
+  const handleSend = (e, messageType = 'regular') => {
     e.preventDefault();
     const trimmed = message.trim();
     if (!trimmed || !user) return;
@@ -107,8 +107,10 @@ export default function EventChatRoom({ event, lang }) {
       toast.error('Message too long (max 500 characters)');
       return;
     }
-    sendMessage.mutate(trimmed);
+    sendMessage.mutate({ text: trimmed, messageType });
   };
+
+  const isAdmin = user?.role === 'admin';
 
   if (event.status !== 'live') return null;
 
