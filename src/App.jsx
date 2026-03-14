@@ -15,6 +15,7 @@ import Analytics from './pages/Analytics';
 import NFTDashboard from './pages/NFTDashboard';
 import UserProfile from './pages/UserProfile';
 import VotingHub from './pages/VotingHub';
+import EnhancedUserProfile from './pages/EnhancedUserProfile';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -53,6 +54,7 @@ const AuthenticatedApp = () => {
       <Route path="/NFTDashboard" element={<NFTDashboard />} />
       <Route path="/UserProfile" element={<UserProfile />} />
       <Route path="/VotingHub" element={<VotingHub />} />
+      <Route path="/EnhancedUserProfile" element={<EnhancedUserProfile />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
