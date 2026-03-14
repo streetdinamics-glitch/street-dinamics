@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '../components/translations';
 import CyberOverlays from '../components/cyber/CyberOverlays';
+import ParticleField from '../components/cyber/ParticleField';
 import Navbar from '../components/cyber/Navbar';
 import HeroSection from '../components/cyber/HeroSection';
 import FireRule from '../components/cyber/FireRule';
@@ -116,6 +117,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
+      <ParticleField />
       <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} onProfileClick={() => setProfileOpen(true)} />
 
       <HeroSection onScrollTo={scrollTo} lang={lang} />

@@ -2,9 +2,9 @@ export const translations = {
   en: {
     // Navbar
     nav_events: 'Events',
-    nav_tokens: '🎫 Tokens',
-    nav_bet: '🎯 Bet',
-    nav_social: '🔗 Social',
+    nav_tokens: 'Tokens',
+    nav_bet: 'Bet',
+    nav_social: 'Social',
     
     // HUD
     hud_system: 'System Online',
@@ -12,11 +12,11 @@ export const translations = {
     
     // Hero
     hero_eyebrow: '// Global Street Sports Platform //',
-    hero_tagline: 'Tournaments · Scouting · Community · 13–30',
+    hero_tagline: 'ENERGY · VIBES · COMMUNITY · LIFE',
     hero_cta_athlete: 'JOIN AS ATHLETE',
     hero_cta_spectator: 'WATCH AS SPECTATOR',
-    hero_cta_tokens: '🎫 GET ATHLETE TOKENS',
-    hero_scroll: '↓ SCROLL FOR EVENTS',
+    hero_cta_tokens: 'GET ATHLETE TOKENS',
+    hero_scroll: 'SCROLL FOR EVENTS',
     
     // Events
     events_title: 'EVENTS',
@@ -26,10 +26,10 @@ export const translations = {
     event_spots: 'spots',
     event_live: 'LIVE NOW',
     event_ended: 'ENDED',
-    event_register_athlete: '🏅 Register Athlete',
-    event_register_spectator: '🎫 Get Ticket',
-    event_watch_stream: '▶️ WATCH LIVE',
-    event_watch_vod: '📺 WATCH REPLAY',
+    event_register_athlete: 'Register Athlete',
+    event_register_spectator: 'Get Ticket',
+    event_watch_stream: 'WATCH LIVE',
+    event_watch_vod: 'WATCH REPLAY',
     
     // Registration Flow
     reg_step_info: 'Info',
