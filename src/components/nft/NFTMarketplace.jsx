@@ -104,9 +104,34 @@ export default function NFTMarketplace() {
     legendary: { bg: 'from-fire-5/20 to-fire-3/10', border: 'border-fire-5/40', text: 'text-fire-6' },
   };
 
-  const filteredCards = selectedRarity === 'all' 
-    ? nftCards 
-    : nftCards.filter(c => c.rarity === selectedRarity);
+  // Get unique athlete names
+  const athleteNames = useMemo(() => {
+    return Array.from(new Set(nftCards.map(c => c.athlete_name))).sort();
+  }, [nftCards]);
+
+  // Apply all filters
+  const filteredCards = useMemo(() => {
+    return nftCards.filter(card => {
+      // Rarity filter
+      if (filters.rarity !== 'all' && card.rarity !== filters.rarity) return false;
+
+      // Athlete filter
+      if (filters.athlete && card.athlete_name !== filters.athlete) return false;
+
+      // Price range filter
+      if (card.mint_price < filters.priceRange[0] || card.mint_price > filters.priceRange[1]) return false;
+
+      // Availability filter
+      const availability = card.status === 'sold_out' ? 'soldout' : 
+                          card.status === 'upcoming' ? 'upcoming' :
+                          (card.total_supply - card.minted_count) === 0 ? 'soldout' :
+                          (card.total_supply - card.minted_count) <= (card.total_supply * 0.2) ? 'limited' : 'available';
+      
+      if (filters.availability !== 'all' && availability !== filters.availability) return false;
+
+      return true;
+    });
+  }, [nftCards, filters]);
 
   const liveCards = filteredCards.filter(c => c.status === 'live' || c.status === 'upcoming');
 
