@@ -176,6 +176,9 @@ export default function SecondaryMarket({ lang = 'en' }) {
         </button>
       </div>
 
+      {/* Activity Feed */}
+      <ActivityFeed lang={lang} />
+
       {/* Active Listings */}
       {listings.length === 0 ? (
         <div className="text-center py-20">
