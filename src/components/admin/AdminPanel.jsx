@@ -420,6 +420,7 @@ export default function AdminPanel({ lang, onClose }) {
                     onClick={() => {
                       setSelectedEvent(event);
                       setShowScanner(true);
+                      setLiveLinks({ kick: '', youtube: '' });
                     }}
                     className="btn-cyan text-[10px] py-2 px-4"
                   >
@@ -462,7 +463,7 @@ export default function AdminPanel({ lang, onClose }) {
         )}
 
         {/* Live Links Modal */}
-        {selectedEvent && (
+        {selectedEvent && !showScanner && (
           <div className="mb-8 p-6 bg-green-500/5 border border-green-500/20">
             <h3 className="font-orbitron font-bold text-lg text-green-400 mb-2">
               {t('admin_go_live')}: {selectedEvent.title}
