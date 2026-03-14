@@ -4,27 +4,39 @@
  */
 
 import React from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Trophy, TrendingUp, Users, Medal } from 'lucide-react';
+import { Trophy, TrendingUp, Users, Medal, Zap } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-export default function RankingComparison({ athleteStats, allAthletes = [] }) {
-  // Simulated ranking data by discipline
-  const disciplineRankings = [
-    { discipline: 'Skateboarding', rank: 3, total: 50, score: 87 },
-    { discipline: 'BMX', rank: 5, total: 45, score: 82 },
-    { discipline: 'Parkour', rank: 2, total: 38, score: 91 },
-    { discipline: 'Freestyle', rank: 7, total: 42, score: 78 },
-  ];
+export default function RankingComparison({ athleteStats, allAthletes = [], eventId }) {
+  // Fetch universal performance scores
+  const { data: performanceScores = [] } = useQuery({
+    queryKey: ['performance-scores', eventId],
+    queryFn: () => base44.entities.AthletePerformanceScore.filter({ event_id: eventId }),
+    initialData: [],
+  });
 
-  // Top competitors in same discipline
-  const topCompetitors = [
-    { name: 'Alex Chen', score: 95, discipline: 'Skateboarding' },
-    { name: 'Maria Santos', score: 89, discipline: 'Skateboarding' },
-    { name: 'You', score: 87, discipline: 'Skateboarding', isCurrentAthlete: true },
-    { name: 'Jordan Brown', score: 84, discipline: 'Skateboarding' },
-    { name: 'Sam Taylor', score: 81, discipline: 'Skateboarding' },
-  ];
+  // Get current athlete's score
+  const athleteScore = performanceScores[0];
+  
+  // Calculate discipline rankings from performance scores
+  const disciplineRankings = performanceScores.slice(0, 4).map((score, idx) => ({
+    discipline: 'Overall',
+    rank: idx + 1,
+    total: performanceScores.length,
+    score: Math.round(score.total_score),
+    techProgression: Math.round(score.technical_progression),
+    engagement: Math.round(score.engagement_generated),
+  }));
+
+  // Top competitors based on universal scoring
+  const topCompetitors = performanceScores.slice(0, 5).map((score, idx) => ({
+    name: score.athlete_email?.split('@')[0] || `Athlete ${idx + 1}`,
+    score: Math.round(score.total_score),
+    isCurrentAthlete: idx === 0,
+  }));
 
   return (
     <div className="space-y-6">
