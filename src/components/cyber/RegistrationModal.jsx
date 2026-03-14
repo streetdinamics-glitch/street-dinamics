@@ -236,7 +236,7 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
                 disabled={uploading}
                 className="btn-ghost w-full text-[11px] py-2.5 px-3 flex items-center justify-center gap-2 disabled:opacity-40"
               >
-                {uploading ? '⏳ Uploading...' : form.id_document ? '✓ Document Uploaded' : '📎 Choose File'}
+                {uploading ? 'Uploading...' : form.id_document ? 'Document Uploaded' : 'Choose File'}
               </button>
               <p className="font-mono text-[9px] tracking-[1px] text-fire-3/30 mt-1">{t('reg_id_hint')}</p>
             </div>
@@ -355,7 +355,7 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
 
             <div className="mb-4">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30">✍ {t('reg_signature_title')}</span>
+                <span className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30">{t('reg_signature_title')}</span>
                 <button onClick={clearSig} className="font-mono text-[11px] tracking-[2px] text-fire-3/40 hover:text-fire-3 bg-transparent border-none cursor-pointer">{t('reg_signature_clear')}</button>
               </div>
               <canvas
@@ -380,7 +380,7 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
                 onClick={handleSubmit}
                 className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                {createReg.isPending ? t('reg_submitting') : `✓ ${t('reg_submit')}`}
+                {createReg.isPending ? t('reg_submitting') : t('reg_submit')}
               </button>
             </div>
           </div>
