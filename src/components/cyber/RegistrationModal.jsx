@@ -20,7 +20,6 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
   });
   const [contractAccepted, setContractAccepted] = useState(false);
   const [signed, setSigned] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [ageVerified, setAgeVerified] = useState(null);
   const [ageCategory, setAgeCategory] = useState(null);
   const [gdprConsents, setGdprConsents] = useState({});
