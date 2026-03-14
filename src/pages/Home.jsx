@@ -22,6 +22,7 @@ import FanVotingModule from '../components/fan/FanVotingModule';
 import FanLeaderboard from '../components/fan/FanLeaderboard';
 import NFTMarketplace from '../components/nft/NFTMarketplace';
 import SecondaryMarket from '../components/marketplace/SecondaryMarket';
+import GlobalLeaderboard from '../components/leaderboard/GlobalLeaderboard';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
