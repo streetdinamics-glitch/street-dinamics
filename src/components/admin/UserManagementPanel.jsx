@@ -237,26 +237,22 @@ export default function UserManagementPanel() {
                         >
                           <Mail size={14} className="text-fire-3/60 hover:text-fire-3" />
                         </button>
-                        {user.role !== 'athlete' && (
-                          <button
-                            onClick={() => handleUpgradeToAthlete(user)}
-                            title="Upgrade to verified athlete"
-                            disabled={updateUser.isPending}
-                            className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
-                          >
-                            <Crown size={14} className="text-cyan/60 hover:text-cyan" />
-                          </button>
-                        )}
-                        {user.role !== 'user' && (
-                          <button
-                            onClick={() => handleUpgradeToFan(user)}
-                            title="Upgrade to verified fan"
-                            disabled={updateUser.isPending}
-                            className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
-                          >
-                            <Star size={14} className="text-fire-5/60 hover:text-fire-5" />
-                          </button>
-                        )}
+                        <button
+                          onClick={() => handleUpgradeToAthlete(user)}
+                          title="Upgrade to verified athlete"
+                          disabled={updateUser.isPending || user.role === 'athlete'}
+                          className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
+                        >
+                          <Crown size={14} className="text-cyan/60 hover:text-cyan" />
+                        </button>
+                        <button
+                          onClick={() => handleUpgradeToFan(user)}
+                          title="Upgrade to verified fan"
+                          disabled={updateUser.isPending || user.role === 'user'}
+                          className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
+                        >
+                          <Star size={14} className="text-fire-5/60 hover:text-fire-5" />
+                        </button>
                         <button
                           onClick={() => handleDelete(user)}
                           title="Delete user"
