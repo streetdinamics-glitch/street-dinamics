@@ -1198,6 +1198,15 @@ export const translations = {
     secondary_create: 'إنشاء قائمة',
     secondary_creating: 'جارٍ الإنشاء...',
 
+    // Secondary Market Activity
+    secondary_top_assets: 'الأصول الرئيسية',
+    secondary_recent_transactions: 'المعاملات الأخيرة',
+    secondary_activity_empty: 'لا يوجد نشاط بعد',
+    secondary_transactions_empty: 'لا توجد معاملات بعد',
+
+    // Gamification
+    gamification_subtitle: 'مركز المشاركة',
+
     // Global Leaderboard
     leaderboard_subtitle: 'نظام الترتيب العالمي',
     leaderboard_title: 'لوحة الأبطال',
