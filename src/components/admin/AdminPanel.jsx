@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import EventRegistrations from './EventRegistrations';
 import Leaderboard from './Leaderboard';
 import QRScanner from './QRScanner';
+import TournamentManager from './TournamentManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -26,6 +27,7 @@ export default function AdminPanel({ lang, onClose }) {
     title: '', sport: '', date: '', location: '', description: '', max_spots: 50
   });
   const [showScanner, setShowScanner] = useState(false);
+  const [tournamentEvent, setTournamentEvent] = useState(null);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -319,6 +321,12 @@ export default function AdminPanel({ lang, onClose }) {
                   >
                     Registrations
                   </button>
+                  <button
+                    onClick={() => setTournamentEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    Tournament
+                  </button>
                   {event.status === 'upcoming' && (
                     <button
                       onClick={() => handleGoLive(event)}
@@ -555,6 +563,12 @@ export default function AdminPanel({ lang, onClose }) {
         )}
         {showScanner && (
           <QRScanner onClose={() => setShowScanner(false)} />
+        )}
+        {tournamentEvent && (
+          <TournamentManager
+            event={tournamentEvent}
+            onClose={() => setTournamentEvent(null)}
+          />
         )}
 
         {/* Change Password */}
