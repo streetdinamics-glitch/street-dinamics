@@ -186,42 +186,78 @@ export default function EventChatRoom({ event, lang }) {
                 ) : (
                   <>
                     {messages.slice().reverse().map((msg, i) => {
-                      const isOwnMessage = user && msg.user_email === user.email;
-                      return (
-                        <motion.div
-                          key={msg.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.02 }}
-                          className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}
-                        >
-                          <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
-                            <div className="flex items-baseline gap-2 mb-1">
-                              <span className={`font-mono text-[10px] font-bold tracking-[1px] ${
-                                isOwnMessage ? 'text-cyan' : 'text-purple-400'
-                              }`}>
-                                {msg.user_name}
-                              </span>
-                              <span className="font-mono text-[9px] text-fire-3/30">
-                                {new Date(msg.timestamp).toLocaleTimeString('en-US', { 
-                                  hour: '2-digit', 
-                                  minute: '2-digit' 
-                                })}
-                              </span>
-                            </div>
-                            <div className={`px-3 py-2 rounded-lg ${
-                              isOwnMessage 
-                                ? 'bg-cyan/10 border border-cyan/20 text-cyan/90' 
-                                : 'bg-purple-500/10 border border-purple-500/20 text-fire-4/80'
-                            }`}>
-                              <p className="font-rajdhani text-sm leading-relaxed break-words">
-                                {msg.message}
-                              </p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
+                       const isOwnMessage = user && msg.user_email === user.email;
+                       const bgColor = msg.message_type === 'announcement' ? 'bg-yellow-500/10 border-yellow-500/30' :
+                                      msg.message_type === 'answer' ? 'bg-green-500/10 border-green-500/30' :
+                                      msg.message_type === 'update' ? 'bg-blue-500/10 border-blue-500/30' :
+                                      isOwnMessage ? 'bg-cyan/10 border-cyan/20' : 'bg-purple-500/10 border-purple-500/20';
+
+                       const textColor = msg.message_type === 'announcement' ? 'text-yellow-600' :
+                                        msg.message_type === 'answer' ? 'text-green-600' :
+                                        msg.message_type === 'update' ? 'text-blue-600' :
+                                        isOwnMessage ? 'text-cyan/90' : 'text-fire-4/80';
+
+                       return (
+                         <motion.div
+                           key={msg.id}
+                           initial={{ opacity: 0, x: -20 }}
+                           animate={{ opacity: 1, x: 0 }}
+                           transition={{ delay: i * 0.02 }}
+                           className={`flex gap-2 group ${isOwnMessage ? 'justify-end' : 'justify-start'}`}
+                         >
+                           <div className={`max-w-[80%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
+                             <div className="flex items-baseline gap-2 mb-1">
+                               <span className={`font-mono text-[10px] font-bold tracking-[1px] ${
+                                 msg.user_role === 'admin' ? 'text-red-400' : isOwnMessage ? 'text-cyan' : 'text-purple-400'
+                               }`}>
+                                 {msg.user_role === 'admin' && '👤 '}
+                                 {msg.user_name}
+                               </span>
+                               <span className="font-mono text-[9px] text-fire-3/30">
+                                 {new Date(msg.timestamp).toLocaleTimeString('en-US', { 
+                                   hour: '2-digit', 
+                                   minute: '2-digit' 
+                                 })}
+                               </span>
+                             </div>
+                             <div className={`px-3 py-2 rounded-lg border relative ${bgColor} ${textColor}`}>
+                               <p className="font-rajdhani text-sm leading-relaxed break-words">
+                                 {msg.message}
+                               </p>
+                               {/* Admin Controls */}
+                               {isAdmin && (
+                                 <div className="absolute -right-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                                   {!msg.is_pinned ? (
+                                     <button
+                                       onClick={() => pinMessage.mutate(msg.id)}
+                                       className="w-6 h-6 rounded bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center hover:bg-yellow-500/30 transition-all"
+                                       title="Pin message"
+                                     >
+                                       <Pin size={12} className="text-yellow-500" />
+                                     </button>
+                                   ) : (
+                                     <button
+                                       onClick={() => unpinMessage.mutate(msg.id)}
+                                       className="w-6 h-6 rounded bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center hover:bg-yellow-500/30 transition-all"
+                                       title="Unpin message"
+                                     >
+                                       <Pin size={12} className="text-yellow-500 opacity-50" />
+                                     </button>
+                                   )}
+                                   <button
+                                     onClick={() => deleteMessage.mutate(msg.id)}
+                                     className="w-6 h-6 rounded bg-red-500/20 border border-red-500/30 flex items-center justify-center hover:bg-red-500/30 transition-all"
+                                     title="Delete message"
+                                   >
+                                     <Trash2 size={12} className="text-red-500" />
+                                   </button>
+                                 </div>
+                               )}
+                             </div>
+                           </div>
+                         </motion.div>
+                       );
+                     })}
                     <div ref={messagesEndRef} />
                   </>
                 )}
