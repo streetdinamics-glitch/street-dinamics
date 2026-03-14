@@ -55,22 +55,47 @@ export default function EventChatRoom({ event, lang }) {
   }, [event.id, event.status, queryClient]);
 
   const sendMessage = useMutation({
-    mutationFn: async (text) => {
+    mutationFn: async ({ text, messageType = 'regular' }) => {
       const currentUser = await base44.auth.me();
       return base44.entities.ChatMessage.create({
         event_id: event.id,
         user_email: currentUser.email,
         user_name: currentUser.nickname || currentUser.full_name,
+        user_role: currentUser.role || 'fan',
         message: text,
+        message_type: messageType,
         timestamp: new Date().toISOString()
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['chat-messages'] });
+      queryClient.invalidateQueries({ queryKey: ['chat-messages', event.id] });
       setMessage('');
     },
     onError: () => {
       toast.error('Failed to send message');
+    }
+  });
+
+  const deleteMessage = useMutation({
+    mutationFn: (msgId) => base44.entities.ChatMessage.update(msgId, { is_deleted: true }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chat-messages', event.id] });
+      toast.success('Message deleted');
+    }
+  });
+
+  const pinMessage = useMutation({
+    mutationFn: (msgId) => base44.entities.ChatMessage.update(msgId, { is_pinned: true }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chat-messages', event.id] });
+      toast.success('Message pinned');
+    }
+  });
+
+  const unpinMessage = useMutation({
+    mutationFn: (msgId) => base44.entities.ChatMessage.update(msgId, { is_pinned: false }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chat-messages', event.id] });
     }
   });
 
