@@ -1,13 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../../components/translations';
 import AthleteInterviewPrompt from './AthleteInterviewPrompt';
+import QRCode from 'qrcode';
 
 export default function SuccessModal({ registration, event, onClose, lang }) {
   const t = useTranslation(lang);
   const [showInterview, setShowInterview] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const canvasRef = useRef(null);
   const isAthlete = registration.type === 'athlete';
   const isOnline = registration.attendance_mode === 'online';
+
+  useEffect(() => {
+    // Generate QR code
+    const qrData = JSON.stringify({
+      ticket_code: registration.ticket_code,
+      event_id: registration.event_id,
+      email: registration.email,
+      type: registration.type,
+      name: `${registration.first_name} ${registration.last_name}`,
+      seat_zone: registration.seat_zone
+    });
+
+    QRCode.toDataURL(qrData, {
+      width: 200,
+      margin: 2,
+      color: {
+        dark: '#ff9900',
+        light: '#000000'
+      }
+    }).then(url => {
+      setQrCodeUrl(url);
+    }).catch(err => {
+      console.error('QR generation failed:', err);
+    });
+  }, [registration]);
 
   return (
     <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center p-5">
@@ -51,6 +79,15 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
         {registration.ticket_code && (
           <div className="bg-black/50 border border-fire-3/20 p-5 mb-6">
             <div className="font-mono text-[10px] tracking-[3px] uppercase text-fire-3/40 mb-2">{t('success_ticket')}</div>
+            
+            {qrCodeUrl && (
+              <div className="flex justify-center mb-4">
+                <div className="p-3 bg-white rounded-lg">
+                  <img src={qrCodeUrl} alt="Ticket QR Code" className="w-[200px] h-[200px]" />
+                </div>
+              </div>
+            )}
+            
             <div className="font-orbitron font-black text-2xl text-fire-5 tracking-[4px] mb-2">{registration.ticket_code}</div>
             {registration.seat_zone && registration.seat_zone !== 'ONLINE' && (
               <div className="font-mono text-sm text-fire-4/50">
@@ -62,6 +99,9 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
                 Access: <span className="text-cyan font-bold">Online Stream</span>
               </div>
             )}
+            <p className="font-mono text-[9px] text-fire-3/40 tracking-[1px] mt-3">
+              Scan QR code at venue entrance for automated check-in
+            </p>
           </div>
         )}
 
