@@ -21,14 +21,18 @@ export default function EventChatRoom({ event, lang }) {
   const { data: messages = [] } = useQuery({
     queryKey: ['chat-messages', event.id],
     queryFn: () => base44.entities.ChatMessage.filter(
-      { event_id: event.id },
+      { event_id: event.id, is_deleted: false },
       '-timestamp',
       100
     ),
     enabled: event.status === 'live',
     initialData: [],
-    refetchInterval: 2000, // Real-time updates every 2 seconds
+    refetchInterval: 2000,
   });
+
+  const pinnedMessages = messages.filter(m => m.is_pinned).sort((a, b) => 
+    new Date(b.timestamp) - new Date(a.timestamp)
+  );
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
