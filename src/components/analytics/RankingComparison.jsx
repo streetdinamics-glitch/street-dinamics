@@ -161,10 +161,10 @@ export default function RankingComparison({ athleteStats, allAthletes = [], even
         transition={{ delay: 0.4 }}
         className="grid grid-cols-2 md:grid-cols-3 gap-4"
       >
-        {[
-          { label: 'Rank vs Avg', value: '+8', icon: TrendingUp, color: 'green-400' },
-          { label: 'Score vs Peers', value: '+6%', icon: Trophy, color: 'fire-4' },
-          { label: 'Growth Rate', value: '+12%/mo', icon: TrendingUp, color: 'cyan' },
+        {athleteScore && [
+          { label: 'Technical Progression', value: `${Math.round(athleteScore.technical_progression)}%`, icon: Zap, color: 'cyan' },
+          { label: 'Fan Engagement', value: `${Math.round(athleteScore.engagement_generated)}%`, icon: Trophy, color: 'fire-4' },
+          { label: 'Consistency Score', value: `${Math.round(athleteScore.consistency)}%`, icon: TrendingUp, color: 'green-400' },
         ].map((stat, idx) => (
           <motion.div
             key={idx}
