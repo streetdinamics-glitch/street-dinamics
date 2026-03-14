@@ -179,7 +179,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
       {listings.length === 0 ? (
         <div className="text-center py-20">
           <ShoppingBag size={48} className="text-fire-3/30 mx-auto mb-4" />
-          <p className="font-mono text-sm text-fire-3/40 tracking-[2px]">NO LISTINGS AVAILABLE</p>
+          <p className="font-mono text-sm text-fire-3/40 tracking-[2px]">{t('secondary_no_listings')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
