@@ -9,6 +9,7 @@ import ParticleField from '../components/cyber/ParticleField';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import EditProfileModal from '../components/profile/EditProfileModal';
+import BadgeDisplay from '../components/profile/BadgeDisplay';
 
 export default function AthleteProfile() {
   const [searchParams] = useSearchParams();
@@ -50,6 +51,18 @@ export default function AthleteProfile() {
   const { data: stats } = useQuery({
     queryKey: ['athlete-stats', athleteEmail],
     queryFn: () => base44.entities.AthleteStats.filter({ athlete_email: athleteEmail }),
+    enabled: !!athleteEmail,
+    initialData: [],
+  });
+
+  const { data: badges = [], refetch: refetchBadges } = useQuery({
+    queryKey: ['athlete-badges', athleteEmail],
+    queryFn: async () => {
+      // Award badges first
+      await base44.functions.invoke('awardBadges', { athlete_email: athleteEmail });
+      // Then fetch all badges
+      return await base44.entities.AthleteBadge.filter({ athlete_email: athleteEmail });
+    },
     enabled: !!athleteEmail,
     initialData: [],
   });
@@ -240,11 +253,24 @@ export default function AthleteProfile() {
           </div>
         </motion.div>
 
-        {/* Event History */}
+        {/* Badges Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
+          className="max-w-5xl mx-auto mb-12"
+        >
+          <h2 className="heading-fire text-4xl mb-8 font-black">BADGES</h2>
+          <div className="bg-gradient-to-br from-[rgba(10,4,18,0.97)] to-[rgba(4,2,8,0.99)] border border-fire-3/20 clip-cyber p-6">
+            <BadgeDisplay badges={badges} />
+          </div>
+        </motion.div>
+
+        {/* Event History */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
           className="max-w-5xl mx-auto"
         >
           <h2 className="heading-fire text-4xl mb-8 font-black">EVENT HISTORY</h2>
@@ -261,7 +287,7 @@ export default function AthleteProfile() {
                   key={item.id}
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + i * 0.05 }}
+                  transition={{ delay: 0.4 + i * 0.05 }}
                   className="bg-gradient-to-br from-[rgba(10,4,18,0.97)] to-[rgba(4,2,8,0.99)] border border-fire-3/20 p-6 hover:border-fire-3/40 transition-all"
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -295,7 +321,7 @@ export default function AthleteProfile() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.5 }}
             className="max-w-5xl mx-auto mt-12"
           >
             <h2 className="heading-fire text-4xl mb-8 font-black">ACHIEVEMENTS</h2>
@@ -305,7 +331,7 @@ export default function AthleteProfile() {
                   key={i}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 + i * 0.05 }}
+                  transition={{ delay: 0.6 + i * 0.05 }}
                   className="bg-gradient-to-r from-fire-3/5 to-cyber-purple/5 border border-fire-3/20 p-5 flex items-start gap-3"
                 >
                   <Trophy className="w-6 h-6 text-fire-4 flex-shrink-0 mt-0.5" />
