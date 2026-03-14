@@ -11,6 +11,9 @@ import QRScanner from './QRScanner';
 import TournamentManager from './TournamentManager';
 import VotingManager from '../voting/VotingManager';
 import FanVotingManager from './FanVotingManager';
+import PerformanceScoreManager from './PerformanceScoreManager';
+import NFTDropManager from './NFTDropManager';
+import RoyaltyDistributionManager from './RoyaltyDistributionManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -32,6 +35,9 @@ export default function AdminPanel({ lang, onClose }) {
   const [tournamentEvent, setTournamentEvent] = useState(null);
   const [votingEvent, setVotingEvent] = useState(null);
   const [fanVotingEvent, setFanVotingEvent] = useState(null);
+  const [scoreEvent, setScoreEvent] = useState(null);
+  const [nftEvent, setNftEvent] = useState(null);
+  const [showRoyaltyManager, setShowRoyaltyManager] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -240,6 +246,12 @@ export default function AdminPanel({ lang, onClose }) {
           >
             Leaderboard
           </button>
+          <button
+            onClick={() => setShowRoyaltyManager(true)}
+            className="btn-ghost text-[11px] py-2.5 px-5"
+          >
+            💰 Royalty Distribution
+          </button>
         </div>
 
         {/* Pending Athletes */}
@@ -342,6 +354,18 @@ export default function AdminPanel({ lang, onClose }) {
                     className="btn-cyan text-[10px] py-2 px-4"
                   >
                     Fan Voting
+                  </button>
+                  <button
+                    onClick={() => setScoreEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    Scores
+                  </button>
+                  <button
+                    onClick={() => setNftEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    NFT Drops
                   </button>
                   {event.status === 'upcoming' && (
                     <button
@@ -603,6 +627,48 @@ export default function AdminPanel({ lang, onClose }) {
                 CLOSE
               </button>
               <FanVotingManager event={fanVotingEvent} />
+            </div>
+          </div>
+        )}
+        {scoreEvent && (
+          <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+            <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
+              <div className="absolute top-0 left-0 right-0 fire-line" />
+              <button
+                onClick={() => setScoreEvent(null)}
+                className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+              >
+                CLOSE
+              </button>
+              <PerformanceScoreManager event={scoreEvent} />
+            </div>
+          </div>
+        )}
+        {nftEvent && (
+          <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+            <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
+              <div className="absolute top-0 left-0 right-0 fire-line" />
+              <button
+                onClick={() => setNftEvent(null)}
+                className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+              >
+                CLOSE
+              </button>
+              <NFTDropManager event={nftEvent} />
+            </div>
+          </div>
+        )}
+        {showRoyaltyManager && (
+          <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+            <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
+              <div className="absolute top-0 left-0 right-0 fire-line" />
+              <button
+                onClick={() => setShowRoyaltyManager(false)}
+                className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+              >
+                CLOSE
+              </button>
+              <RoyaltyDistributionManager />
             </div>
           </div>
         )}
