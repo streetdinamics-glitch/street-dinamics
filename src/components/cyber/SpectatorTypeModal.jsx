@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '../translations';
 
 export default function SpectatorTypeModal({ event, onClose, onSelectType, lang }) {
+  const t = useTranslation(lang);
   return (
     <div className="fixed inset-0 z-[500] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
       <motion.div 
@@ -17,7 +19,7 @@ export default function SpectatorTypeModal({ event, onClose, onSelectType, lang 
         </button>
 
         <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2">
-          CHOOSE ATTENDANCE TYPE
+          {t('attendance_title')}
         </h2>
         <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-8">
           {event.title}
@@ -49,17 +51,17 @@ export default function SpectatorTypeModal({ event, onClose, onSelectType, lang 
               </div>
               
               <h3 className="font-orbitron font-black text-xl tracking-[2px] text-fire-5 mb-2">
-                DAL VIVO
+                {t('attendance_in_person')}
               </h3>
               <p className="font-rajdhani text-base text-fire-4/60 leading-relaxed">
-                Attend the event in person at {event.location}. Get physical ticket with seat assignment and venue access.
+                {t('attendance_in_person_desc').replace('{location}', event.location)}
               </p>
             </div>
             
             <motion.div
               className="absolute bottom-4 right-4 font-mono text-[9px] tracking-[3px] uppercase text-fire-3/40 group-hover:text-fire-4 transition-colors"
             >
-              SELECT →
+              {t('attendance_select')} →
             </motion.div>
           </motion.button>
 
@@ -88,17 +90,17 @@ export default function SpectatorTypeModal({ event, onClose, onSelectType, lang 
               </div>
               
               <h3 className="font-orbitron font-black text-xl tracking-[2px] text-cyan mb-2">
-                ONLINE
+                {t('attendance_online')}
               </h3>
               <p className="font-rajdhani text-base text-cyan/60 leading-relaxed">
-                Watch the live stream remotely. Receive digital pass and access to exclusive online features.
+                {t('attendance_online_desc')}
               </p>
             </div>
             
             <motion.div
               className="absolute bottom-4 right-4 font-mono text-[9px] tracking-[3px] uppercase text-cyan/40 group-hover:text-cyan transition-colors"
             >
-              SELECT →
+              {t('attendance_select')} →
             </motion.div>
           </motion.button>
         </div>

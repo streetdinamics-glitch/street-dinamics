@@ -7,8 +7,10 @@ import TokenCard from './TokenCard';
 import TokenFilters from './TokenFilters';
 import PurchaseModal from './PurchaseModal';
 import PurchaseSuccessModal from './PurchaseSuccessModal';
+import { useTranslation } from '../translations';
 
 export default function TokenMarketplace({ lang }) {
+  const t = useTranslation(lang);
   const [filters, setFilters] = useState({
     tier: 'all',
     sport: 'all',
@@ -56,9 +58,9 @@ export default function TokenMarketplace({ lang }) {
 
   return (
     <section id="marketplace" className="section-container">
-      <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">Digital Collectibles</p>
+      <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">{t('marketplace_subtitle')}</p>
       <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-4 font-black">
-        TOKEN MARKETPLACE
+        {t('marketplace_title')}
       </h2>
 
       {/* Stats bar */}
@@ -71,7 +73,7 @@ export default function TokenMarketplace({ lang }) {
           >
             <div className="flex items-center justify-center gap-2 mb-1">
               <Sparkles size={16} className="text-fire-3" />
-              <span className="font-mono text-[9px] text-fire-3/40 tracking-[2px] uppercase">Total Athletes</span>
+              <span className="font-mono text-[9px] text-fire-3/40 tracking-[2px] uppercase">{t('marketplace_total_athletes')}</span>
             </div>
             <div className="font-orbitron font-black text-3xl text-fire-5">{tokens.length}</div>
           </motion.div>
@@ -84,7 +86,7 @@ export default function TokenMarketplace({ lang }) {
           >
             <div className="flex items-center justify-center gap-2 mb-1">
               <TrendingUp size={16} className="text-cyan" />
-              <span className="font-mono text-[9px] text-cyan/60 tracking-[2px] uppercase">Available Tokens</span>
+              <span className="font-mono text-[9px] text-cyan/60 tracking-[2px] uppercase">{t('marketplace_available')}</span>
             </div>
             <div className="font-orbitron font-black text-3xl text-cyan">
               {tokens.reduce((sum, t) => sum + (t.available_supply || 0), 0)}
@@ -98,7 +100,7 @@ export default function TokenMarketplace({ lang }) {
             className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20 p-4 text-center"
           >
             <div className="flex items-center justify-center gap-2 mb-1">
-              <span className="font-mono text-[9px] text-purple-400/60 tracking-[2px] uppercase">Floor Price</span>
+              <span className="font-mono text-[9px] text-purple-400/60 tracking-[2px] uppercase">{t('marketplace_floor')}</span>
             </div>
             <div className="font-orbitron font-black text-3xl text-purple-400">
               €{tokens.length > 0 ? Math.min(...tokens.map(t => t.current_price || t.base_price)).toFixed(0) : 0}
@@ -112,11 +114,11 @@ export default function TokenMarketplace({ lang }) {
 
       {/* Token grid */}
       {isLoading ? (
-        <div className="text-center font-mono text-fire-3/30 text-sm tracking-[2px] py-20">LOADING TOKENS...</div>
+        <div className="text-center font-mono text-fire-3/30 text-sm tracking-[2px] py-20">{t('marketplace_loading')}</div>
       ) : filteredTokens.length === 0 ? (
         <div className="text-center py-20">
           <span className="text-4xl block mb-3">🎫</span>
-          <p className="font-mono text-sm tracking-[2px] text-fire-3/30">No tokens match your filters</p>
+          <p className="font-mono text-sm tracking-[2px] text-fire-3/30">{t('marketplace_no_match')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

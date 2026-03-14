@@ -152,6 +152,23 @@ export const translations = {
     admin_change_pass: 'Change Password',
     admin_new_pass: 'New Password',
     admin_confirm_pass: 'Confirm Password',
+    
+    // Token Marketplace
+    marketplace_title: 'TOKEN MARKETPLACE',
+    marketplace_subtitle: 'Digital Collectibles',
+    marketplace_total_athletes: 'Total Athletes',
+    marketplace_available: 'Available Tokens',
+    marketplace_floor: 'Floor Price',
+    marketplace_loading: 'LOADING TOKENS...',
+    marketplace_no_match: 'No tokens match your filters',
+    
+    // Attendance Type
+    attendance_title: 'CHOOSE ATTENDANCE TYPE',
+    attendance_in_person: 'IN PERSON',
+    attendance_in_person_desc: 'Attend the event in person at {location}. Get physical ticket with seat assignment and venue access.',
+    attendance_online: 'ONLINE',
+    attendance_online_desc: 'Watch the live stream remotely. Receive digital pass and access to exclusive online features.',
+    attendance_select: 'SELECT',
   },
   
   it: {
@@ -307,6 +324,23 @@ export const translations = {
     admin_change_pass: 'Cambia Password',
     admin_new_pass: 'Nuova Password',
     admin_confirm_pass: 'Conferma Password',
+    
+    // Token Marketplace
+    marketplace_title: 'MARKETPLACE TOKEN',
+    marketplace_subtitle: 'Oggetti Digitali',
+    marketplace_total_athletes: 'Atleti Totali',
+    marketplace_available: 'Token Disponibili',
+    marketplace_floor: 'Prezzo Base',
+    marketplace_loading: 'CARICAMENTO TOKEN...',
+    marketplace_no_match: 'Nessun token corrisponde ai filtri',
+    
+    // Attendance Type
+    attendance_title: 'SCEGLI TIPO DI PARTECIPAZIONE',
+    attendance_in_person: 'DAL VIVO',
+    attendance_in_person_desc: 'Partecipa di persona all\'evento a {location}. Ricevi biglietto fisico con posto assegnato e accesso alla sede.',
+    attendance_online: 'ONLINE',
+    attendance_online_desc: 'Guarda la diretta streaming da remoto. Ricevi pass digitale e accesso a funzionalità online esclusive.',
+    attendance_select: 'SELEZIONA',
   },
   
   es: {
@@ -460,6 +494,23 @@ export const translations = {
     admin_change_pass: 'Cambiar Contraseña',
     admin_new_pass: 'Nueva Contraseña',
     admin_confirm_pass: 'Confirmar Contraseña',
+    
+    // Token Marketplace
+    marketplace_title: 'MARKETPLACE DE TOKENS',
+    marketplace_subtitle: 'Coleccionables Digitales',
+    marketplace_total_athletes: 'Atletas Totales',
+    marketplace_available: 'Tokens Disponibles',
+    marketplace_floor: 'Precio Base',
+    marketplace_loading: 'CARGANDO TOKENS...',
+    marketplace_no_match: 'Ningún token coincide con tus filtros',
+    
+    // Attendance Type
+    attendance_title: 'ELIGE TIPO DE ASISTENCIA',
+    attendance_in_person: 'EN PERSONA',
+    attendance_in_person_desc: 'Asiste al evento en persona en {location}. Recibe entrada física con asiento asignado y acceso al lugar.',
+    attendance_online: 'EN LÍNEA',
+    attendance_online_desc: 'Ve la transmisión en vivo de forma remota. Recibe pase digital y acceso a funciones en línea exclusivas.',
+    attendance_select: 'SELECCIONAR',
   },
   
   fr: {
@@ -613,6 +664,23 @@ export const translations = {
     admin_change_pass: 'Changer Mot de Passe',
     admin_new_pass: 'Nouveau Mot de Passe',
     admin_confirm_pass: 'Confirmer Mot de Passe',
+    
+    // Token Marketplace
+    marketplace_title: 'MARKETPLACE DE JETONS',
+    marketplace_subtitle: 'Objets Numériques',
+    marketplace_total_athletes: 'Athlètes Totaux',
+    marketplace_available: 'Jetons Disponibles',
+    marketplace_floor: 'Prix Plancher',
+    marketplace_loading: 'CHARGEMENT DES JETONS...',
+    marketplace_no_match: 'Aucun jeton ne correspond à vos filtres',
+    
+    // Attendance Type
+    attendance_title: 'CHOISIR LE TYPE DE PARTICIPATION',
+    attendance_in_person: 'EN PERSONNE',
+    attendance_in_person_desc: 'Assistez à l\'événement en personne à {location}. Recevez un billet physique avec siège assigné et accès au lieu.',
+    attendance_online: 'EN LIGNE',
+    attendance_online_desc: 'Regardez la diffusion en direct à distance. Recevez un pass numérique et accès à des fonctionnalités en ligne exclusives.',
+    attendance_select: 'SÉLECTIONNER',
   },
   
   de: {
@@ -766,6 +834,23 @@ export const translations = {
     admin_change_pass: 'Passwort Ändern',
     admin_new_pass: 'Neues Passwort',
     admin_confirm_pass: 'Passwort Bestätigen',
+    
+    // Token Marketplace
+    marketplace_title: 'TOKEN-MARKTPLATZ',
+    marketplace_subtitle: 'Digitale Sammlerstücke',
+    marketplace_total_athletes: 'Athleten Gesamt',
+    marketplace_available: 'Verfügbare Token',
+    marketplace_floor: 'Mindestpreis',
+    marketplace_loading: 'LADE TOKEN...',
+    marketplace_no_match: 'Keine Token entsprechen Ihren Filtern',
+    
+    // Attendance Type
+    attendance_title: 'TEILNAHMEART WÄHLEN',
+    attendance_in_person: 'VOR ORT',
+    attendance_in_person_desc: 'Nehmen Sie persönlich an der Veranstaltung in {location} teil. Erhalten Sie ein physisches Ticket mit zugewiesenem Sitzplatz und Zugang zum Veranstaltungsort.',
+    attendance_online: 'ONLINE',
+    attendance_online_desc: 'Sehen Sie sich den Livestream aus der Ferne an. Erhalten Sie einen digitalen Pass und Zugang zu exklusiven Online-Funktionen.',
+    attendance_select: 'AUSWÄHLEN',
   },
   
   ar: {
@@ -919,6 +1004,23 @@ export const translations = {
     admin_change_pass: 'تغيير كلمة المرور',
     admin_new_pass: 'كلمة المرور الجديدة',
     admin_confirm_pass: 'تأكيد كلمة المرور',
+    
+    // Token Marketplace
+    marketplace_title: 'سوق الرموز',
+    marketplace_subtitle: 'المقتنيات الرقمية',
+    marketplace_total_athletes: 'إجمالي الرياضيين',
+    marketplace_available: 'الرموز المتاحة',
+    marketplace_floor: 'السعر الأدنى',
+    marketplace_loading: 'جارٍ تحميل الرموز...',
+    marketplace_no_match: 'لا توجد رموز تطابق مرشحاتك',
+    
+    // Attendance Type
+    attendance_title: 'اختر نوع الحضور',
+    attendance_in_person: 'حضور شخصي',
+    attendance_in_person_desc: 'احضر الحدث شخصياً في {location}. احصل على تذكرة فعلية مع مقعد محدد والدخول إلى المكان.',
+    attendance_online: 'عبر الإنترنت',
+    attendance_online_desc: 'شاهد البث المباشر عن بُعد. احصل على تصريح رقمي وإمكانية الوصول إلى الميزات الحصرية عبر الإنترنت.',
+    attendance_select: 'اختيار',
   }
 };
 
