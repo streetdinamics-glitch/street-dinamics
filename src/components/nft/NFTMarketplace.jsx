@@ -2,11 +2,12 @@ import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Sparkles, Flame, Star, ShoppingCart } from 'lucide-react';
+import { Sparkles, Flame, Star, ShoppingCart, BarChart3 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from '../translations';
 import NFTFilterPanel from './NFTFilterPanel';
 import WatchlistButton from '../watchlist/WatchlistButton';
+import NFTAnalyticsModal from './NFTAnalyticsModal';
 
 export default function NFTMarketplace({ lang = 'en' }) {
   const t = useTranslation(lang);
