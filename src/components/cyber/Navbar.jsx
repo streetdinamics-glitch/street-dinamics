@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, User } from 'lucide-react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { Menu, X, User, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -7,13 +7,15 @@ import { createPageUrl } from '@/utils';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../translations';
 import WalletConnectButton from '../web3/WalletConnectButton';
+import WatchlistPanel from '../watchlist/WatchlistPanel';
 
 const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
-export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick, onWatchlistClick }) {
+export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick }) {
   const t = useTranslation(lang);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
+  const [watchlistOpen, setWatchlistOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -74,15 +76,17 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick,
           <WalletConnectButton minimal={true} />
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
           {user && (
+            <button
+              onClick={() => setWatchlistOpen(true)}
+              className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
+            >
+              <Star size={12} />
+              WATCHLIST
+            </button>
+          )}
+          {user && (
             <>
               <div className="h-5 w-[1px] bg-fire-3/20" />
-              <button
-                onClick={onWatchlistClick}
-                className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap"
-              >
-                ⭐
-                WATCHLIST
-              </button>
               <button
                 onClick={onProfileClick}
                 className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap"
@@ -113,9 +117,6 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick,
 
         <div className="flex items-center gap-2 md:hidden">
           {user && (
-            <button onClick={onWatchlistClick} className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all">
-              <span className="text-lg">⭐</span>
-            </button>
             <button onClick={onProfileClick} className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all">
               <User size={16} className="text-fire-3" />
             </button>
@@ -197,6 +198,19 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick,
             )}
           </div>
         </div>
+      )}
+
+      {/* Watchlist Modal */}
+      {watchlistOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-[399] bg-black/40"
+            onClick={() => setWatchlistOpen(false)}
+          />
+          <Suspense fallback={null}>
+            <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
+          </Suspense>
+        </>
       )}
     </>
   );
