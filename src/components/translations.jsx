@@ -781,6 +781,15 @@ export const translations = {
     attendance_online_desc: 'Regardez la diffusion en direct à distance. Recevez un pass numérique et accès à des fonctionnalités en ligne exclusives.',
     attendance_select: 'SÉLECTIONNER',
 
+    // Secondary Market Activity
+    secondary_top_assets: 'ACTIFS PRINCIPAUX',
+    secondary_recent_transactions: 'TRANSACTIONS RÉCENTES',
+    secondary_activity_empty: 'Pas d\'activité encore',
+    secondary_transactions_empty: 'Pas de transactions encore',
+
+    // Gamification
+    gamification_subtitle: 'Hub d\'Engagement des Fans',
+
     // Global Leaderboard
     leaderboard_subtitle: 'Système de Classement Global',
     leaderboard_title: 'TABLEAU DES CHAMPIONS',
