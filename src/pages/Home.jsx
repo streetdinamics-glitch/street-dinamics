@@ -14,6 +14,7 @@ import SuccessModal from '../components/cyber/SuccessModal';
 import SponsorSection from '../components/cyber/SponsorSection';
 import BetSection from '../components/cyber/BetSection';
 import TokenMarketplace from '../components/marketplace/TokenMarketplace';
+import TournamentSection from '../components/cyber/TournamentSection';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
@@ -143,16 +144,20 @@ export default function Home() {
             <p className="font-mono text-sm tracking-[2px] text-fire-3/30">{t('events_empty')}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <div className="space-y-12">
             {events.map((ev, i) => (
-              <EventCard
-                key={ev.id}
-                event={ev}
-                index={i}
-                lang={lang}
-                onRegisterAthlete={(e) => handleRegisterClick(e, 'athlete')}
-                onRegisterSpectator={(e) => handleRegisterClick(e, 'spectator')}
-              />
+              <div key={ev.id} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                  <EventCard
+                    event={ev}
+                    index={i}
+                    lang={lang}
+                    onRegisterAthlete={(e) => handleRegisterClick(e, 'athlete')}
+                    onRegisterSpectator={(e) => handleRegisterClick(e, 'spectator')}
+                  />
+                </div>
+                <TournamentSection event={ev} />
+              </div>
             ))}
           </div>
         )}
