@@ -26,13 +26,12 @@ export default function Home() {
   const [successModal, setSuccessModal] = useState(null);
   const [socialOpen, setSocialOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
   });
-
-  const showOnboarding = user && !user.onboarding_completed;
 
   const { data: events = [], isLoading: eventsLoading } = useQuery({
     queryKey: ['events'],
@@ -71,6 +70,19 @@ export default function Home() {
     setSuccessModal(data);
   };
 
+  const handleRegisterClick = async (event, type) => {
+    try {
+      const currentUser = await base44.auth.me();
+      if (!currentUser.onboarding_completed) {
+        setOnboardingOpen(true);
+      } else {
+        setRegModal({ event, type });
+      }
+    } catch (err) {
+      setRegModal({ event, type });
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
@@ -105,8 +117,8 @@ export default function Home() {
                 event={ev}
                 index={i}
                 lang={lang}
-                onRegisterAthlete={(e) => setRegModal({ event: e, type: 'athlete' })}
-                onRegisterSpectator={(e) => setRegModal({ event: e, type: 'spectator' })}
+                onRegisterAthlete={(e) => handleRegisterClick(e, 'athlete')}
+                onRegisterSpectator={(e) => handleRegisterClick(e, 'spectator')}
               />
             ))}
           </div>
@@ -146,14 +158,17 @@ export default function Home() {
       {socialOpen && (
         <SocialLinksModal lang={lang} onClose={() => setSocialOpen(false)} />
       )}
-      {showOnboarding && (
+      {onboardingOpen && (
         <OnboardingFlow
           user={user}
           lang={lang}
-          onComplete={() => queryClient.invalidateQueries({ queryKey: ['current-user'] })}
+          onComplete={() => {
+            queryClient.invalidateQueries({ queryKey: ['current-user'] });
+            setOnboardingOpen(false);
+          }}
         />
       )}
-      {profileOpen && !showOnboarding && (
+      {profileOpen && (
         <UserProfile lang={lang} onClose={() => setProfileOpen(false)} />
       )}
     </div>
