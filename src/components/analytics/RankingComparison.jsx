@@ -142,14 +142,16 @@ export default function RankingComparison({ athleteStats, allAthletes = [], even
           </BarChart>
         </ResponsiveContainer>
 
-        <div className="mt-6 p-4 bg-cyan/5 border border-cyan/20 rounded">
-          <p className="font-rajdhani text-sm text-cyan/80">
-            <strong>Your Position:</strong> You're ranked <span className="text-cyan font-bold">#3</span> among 50 skateboarding athletes.
-            <span className="block mt-2">
-              Score gap to #1: <span className="text-orange-500">-8 points</span>. Keep grinding!
-            </span>
-          </p>
-        </div>
+        {athleteScore && (
+          <div className="mt-6 p-4 bg-cyan/5 border border-cyan/20 rounded">
+            <p className="font-rajdhani text-sm text-cyan/80">
+              <strong>Your Universal Score:</strong> <span className="text-cyan font-bold">{Math.round(athleteScore.total_score)}</span> / 100
+              <span className="block mt-2">
+                Strengths: Technical {Math.round(athleteScore.technical_progression)}% • Engagement {Math.round(athleteScore.engagement_generated)}% • Consistency {Math.round(athleteScore.consistency)}%
+              </span>
+            </p>
+          </div>
+        )}
       </motion.div>
 
       {/* Peer Comparison Metrics */}
