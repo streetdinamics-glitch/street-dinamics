@@ -395,7 +395,14 @@ export const translations = {
     attendance_online: 'ONLINE',
     attendance_online_desc: 'Guarda la diretta streaming da remoto. Ricevi pass digitale e accesso a funzionalità online esclusive.',
     attendance_select: 'SELEZIONA',
-  },
+
+    // Global Leaderboard
+    leaderboard_subtitle: 'Sistema di Ranking Globale',
+    leaderboard_title: 'BOARD DEI CAMPIONI',
+    leaderboard_showing: 'Mostra',
+    leaderboard_empty: 'Nessun atleta sulla classifica ancora',
+    leaderboard_loading: 'Caricamento ranking...',
+    },
   
   es: {
     // Navbar
