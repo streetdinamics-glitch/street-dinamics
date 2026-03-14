@@ -291,7 +291,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
       {myNFTs.length > 0 && (
         <div className="mt-16">
           <h3 className="font-orbitron font-bold text-2xl text-fire-5 mb-6 text-center">
-            MY COLLECTION
+            {t('nft_my_collection')}
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {myNFTs.slice(0, 6).map((nft, i) => (
