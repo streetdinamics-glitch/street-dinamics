@@ -216,11 +216,11 @@ export default function NFTMarketplace({ lang = 'en' }) {
 
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <div className="font-mono text-xs text-fire-3/60">CARD #</div>
+                      <div className="font-mono text-xs text-fire-3/60">{t('nft_card_number')}</div>
                       <div className="font-orbitron font-bold text-fire-5">{card.card_number}</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-mono text-xs text-fire-3/60">PRICE</div>
+                      <div className="font-mono text-xs text-fire-3/60">{t('nft_price')}</div>
                       <div className="font-orbitron font-bold text-fire-5">€{card.mint_price}</div>
                     </div>
                   </div>
