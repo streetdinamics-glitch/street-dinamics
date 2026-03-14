@@ -69,8 +69,9 @@ export default function Home() {
   }, []);
 
   const handleRegSuccess = (data) => {
+    const event = events.find(e => e.id === data.event_id);
     setRegModal(null);
-    setSuccessModal(data);
+    setSuccessModal({ registration: data, event });
   };
 
   const handleRegisterClick = (event, type) => {
@@ -191,7 +192,8 @@ export default function Home() {
       )}
       {successModal && (
         <SuccessModal
-          registration={successModal}
+          registration={successModal.registration}
+          event={successModal.event}
           lang={lang}
           onClose={() => setSuccessModal(null)}
         />

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../../components/translations';
+import AthleteInterviewPrompt from './AthleteInterviewPrompt';
 
-export default function SuccessModal({ registration, onClose, lang }) {
+export default function SuccessModal({ registration, event, onClose, lang }) {
   const t = useTranslation(lang);
+  const [showInterview, setShowInterview] = useState(false);
   const isAthlete = registration.type === 'athlete';
   const isOnline = registration.attendance_mode === 'online';
 
@@ -63,10 +65,30 @@ export default function SuccessModal({ registration, onClose, lang }) {
           </div>
         )}
 
-        <button onClick={onClose} className="btn-fire text-[11px] py-3 px-8">
-          {t('success_close')}
-        </button>
+        {isAthlete ? (
+          <button
+            onClick={() => setShowInterview(true)}
+            className="btn-fire text-[11px] py-3 px-8"
+          >
+            PROCEED TO AI INTERVIEW →
+          </button>
+        ) : (
+          <button onClick={onClose} className="btn-fire text-[11px] py-3 px-8">
+            {t('success_close')}
+          </button>
+        )}
       </motion.div>
+
+      {showInterview && (
+        <AthleteInterviewPrompt
+          registration={registration}
+          event={event}
+          onClose={() => {
+            setShowInterview(false);
+            onClose();
+          }}
+        />
+      )}
     </div>
   );
 }
