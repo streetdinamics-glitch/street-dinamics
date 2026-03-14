@@ -23,8 +23,8 @@ export default function SponsorSection({ lang }) {
             <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">Global Audience Reach</div>
           </div>
           <div className="p-4 bg-fire-3/5 border border-fire-3/10">
-            <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">UAE+EU</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">International Markets</div>
+            <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">GLOBAL</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">Worldwide Presence</div>
           </div>
         </div>
 
