@@ -27,6 +27,7 @@ import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
 import Footer from '../components/cyber/Footer';
 import SpectatorTypeModal from '../components/cyber/SpectatorTypeModal';
+import SpectatorGamificationHub from '../components/gamification/SpectatorGamificationHub';
 import WatchlistPanel from '../components/watchlist/WatchlistPanel';
 
 export default function Home() {
