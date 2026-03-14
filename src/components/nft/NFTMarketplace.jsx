@@ -161,7 +161,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
       {/* Results Info */}
       <div className="mb-6 flex items-center justify-between">
         <p className="font-mono text-sm text-fire-3/60 tracking-[1px]">
-          Showing <span className="text-fire-4 font-bold">{liveCards.length}</span> of <span className="text-fire-4 font-bold">{nftCards.length}</span> NFT drops
+          {t('nft_showing')} <span className="text-fire-4 font-bold">{liveCards.length}</span> {t('nft_of')} <span className="text-fire-4 font-bold">{nftCards.length}</span> {t('nft_drops')}
         </p>
       </div>
 
