@@ -18,6 +18,7 @@ import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
 import Footer from '../components/cyber/Footer';
+import SpectatorTypeModal from '../components/cyber/SpectatorTypeModal';
 
 export default function Home() {
   const [lang, setLang] = useState('en');
@@ -28,6 +29,7 @@ export default function Home() {
   const [socialOpen, setSocialOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -87,13 +89,28 @@ export default function Home() {
           setOnboardingOpen(true);
         }
       } else {
-        setRegModal({ event, type });
+        // Spectator needs to choose attendance type
+        if (type === 'spectator') {
+          setSpectatorTypeModal(event);
+        } else {
+          setRegModal({ event, type });
+        }
       }
     } catch (err) {
       // Not authenticated - redirect to login
       sessionStorage.setItem('pendingRegistration', JSON.stringify({ event, type }));
       base44.auth.redirectToLogin(window.location.pathname);
     }
+  };
+
+  const handleSpectatorTypeSelect = (attendanceMode) => {
+    if (!spectatorTypeModal) return;
+    setSpectatorTypeModal(null);
+    setRegModal({ 
+      event: spectatorTypeModal, 
+      type: 'spectator',
+      attendanceMode 
+    });
   };
 
   // Auto-open registration after onboarding completes
@@ -107,7 +124,11 @@ export default function Home() {
       try {
         const { event, type } = JSON.parse(pending);
         sessionStorage.removeItem('pendingRegistration');
-        setTimeout(() => setRegModal({ event, type }), 300);
+        if (type === 'spectator') {
+          setTimeout(() => setSpectatorTypeModal(event), 300);
+        } else {
+          setTimeout(() => setRegModal({ event, type }), 300);
+        }
       } catch (err) {
         console.error('Failed to restore pending registration');
       }
@@ -171,10 +192,19 @@ export default function Home() {
       <Footer lang={lang} />
 
       {/* Modals */}
+      {spectatorTypeModal && (
+        <SpectatorTypeModal
+          event={spectatorTypeModal}
+          onClose={() => setSpectatorTypeModal(null)}
+          onSelectType={handleSpectatorTypeSelect}
+          lang={lang}
+        />
+      )}
       {regModal && (
         <RegistrationModal
           event={regModal.event}
           type={regModal.type}
+          attendanceMode={regModal.attendanceMode}
           lang={lang}
           onClose={() => setRegModal(null)}
           onSuccess={handleRegSuccess}

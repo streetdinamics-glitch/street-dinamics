@@ -147,11 +147,9 @@ export default function EventRegistrations({ event, onClose, lang }) {
                       <div className="font-mono text-xs text-cyan/60 mt-1">
                         {reg.email}
                       </div>
-                      {reg.seat_zone && (
-                        <div className="font-mono text-xs text-cyan/60">
-                          Seat: {reg.seat_zone}
-                        </div>
-                      )}
+                      <div className="font-mono text-xs text-cyan/60">
+                        {reg.attendance_mode === 'online' ? 'Mode: Online Stream' : `Seat: ${reg.seat_zone || 'TBA'}`}
+                      </div>
                       <div className={`inline-block mt-2 px-2 py-1 text-[8px] font-mono tracking-[2px] uppercase border ${
                         reg.status === 'confirmed' ? 'border-green-500/40 text-green-400 bg-green-500/5' :
                         reg.status === 'rejected' ? 'border-red-500/40 text-red-400 bg-red-500/5' :

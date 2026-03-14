@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '../translations';
 
-export default function RegistrationModal({ event, type, onClose, onSuccess, lang }) {
+export default function RegistrationModal({ event, type, attendanceMode, onClose, onSuccess, lang }) {
   const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [step, setStep] = useState(1);
@@ -53,7 +53,9 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
 
   const handleSubmit = async () => {
     const ticketCode = 'SD-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-    const seatZone = String.fromCharCode(65 + Math.floor(Math.random() * 6)) + String(Math.floor(Math.random() * 50) + 1).padStart(2, '0');
+    const seatZone = type === 'spectator' && attendanceMode === 'in-person' 
+      ? String.fromCharCode(65 + Math.floor(Math.random() * 6)) + String(Math.floor(Math.random() * 50) + 1).padStart(2, '0')
+      : 'ONLINE';
     
     // Save signature canvas as image
     const signatureUrl = canvasRef.current?.toDataURL('image/png');
@@ -61,6 +63,7 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
     const regData = {
       event_id: event.id,
       type,
+      attendance_mode: attendanceMode || (type === 'athlete' ? 'in-person' : 'online'),
       ...form,
       contract_accepted: true,
       signature_url: signatureUrl,
@@ -80,22 +83,27 @@ export default function RegistrationModal({ event, type, onClose, onSuccess, lan
             body: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #ffe8c0; padding: 20px; border: 2px solid #ff5000;">
                 <div style="text-align: center; margin-bottom: 20px;">
-                  <h1 style="color: #ff9900; font-size: 28px; margin: 0; letter-spacing: 2px;">🏅 STREET DINAMICS</h1>
+                  <h1 style="color: #ff9900; font-size: 28px; margin: 0; letter-spacing: 2px;">STREET DINAMICS</h1>
                   <p style="color: #664422; font-size: 11px; letter-spacing: 3px; margin: 5px 0;">GLOBAL SPORTS PLATFORM</p>
                 </div>
                 
                 <div style="background: rgba(255,100,0,0.05); border: 1px solid rgba(255,100,0,0.2); padding: 15px; margin-bottom: 20px;">
                   <h2 style="color: #ffcc00; font-size: 20px; margin-top: 0;">${event.title}</h2>
-                  <p style="margin: 5px 0;"><strong>Status:</strong> ${type === 'athlete' ? '🏅 Athlete Registered' : '🎫 Spectator Ticket Confirmed'}</p>
+                  <p style="margin: 5px 0;"><strong>Status:</strong> ${type === 'athlete' ? 'Athlete Registered' : 'Spectator Ticket Confirmed'}</p>
+                  <p style="margin: 5px 0;"><strong>Type:</strong> ${attendanceMode === 'in-person' ? 'In-Person Attendance' : 'Online Stream Access'}</p>
                   <p style="margin: 5px 0;"><strong>Date:</strong> ${event.date}</p>
-                  <p style="margin: 5px 0;"><strong>Location:</strong> ${event.location}</p>
+                  <p style="margin: 5px 0;"><strong>Location:</strong> ${attendanceMode === 'in-person' ? event.location : 'Online Stream'}</p>
                 </div>
                 
                 <div style="background: #080512; border: 2px solid #ff9900; padding: 20px; text-align: center; margin-bottom: 20px;">
                   <h3 style="color: #00ffee; font-size: 16px; margin-top: 0;">YOUR TICKET CODE</h3>
                   <div style="font-size: 32px; font-weight: bold; color: #fff; letter-spacing: 4px; margin: 15px 0;">${data.ticket_code}</div>
-                  <p style="color: #ff9900; margin: 10px 0;"><strong>Seat/Zone:</strong> ${data.seat_zone}</p>
-                  <p style="font-size: 11px; color: #664422; margin-top: 15px;">Show this code at venue entrance</p>
+                  ${attendanceMode === 'in-person' 
+                    ? `<p style="color: #ff9900; margin: 10px 0;"><strong>Seat/Zone:</strong> ${data.seat_zone}</p>
+                       <p style="font-size: 11px; color: #664422; margin-top: 15px;">Show this code at venue entrance</p>`
+                    : `<p style="color: #00ffee; margin: 10px 0;"><strong>Access:</strong> Online Stream</p>
+                       <p style="font-size: 11px; color: #664422; margin-top: 15px;">Use this code to access the live stream</p>`
+                  }
                 </div>
                 
                 <div style="font-size: 12px; color: #664422; line-height: 1.6;">
