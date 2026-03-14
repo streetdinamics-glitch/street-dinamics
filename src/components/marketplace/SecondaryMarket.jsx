@@ -6,7 +6,8 @@ import { TrendingUp, Tag, ShoppingBag, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from '../translations';
 
-export default function SecondaryMarket() {
+export default function SecondaryMarket({ lang = 'en' }) {
+  const t = useTranslation(lang);
   const [showListingModal, setShowListingModal] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [listingPrice, setListingPrice] = useState('');
