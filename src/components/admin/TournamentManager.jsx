@@ -4,7 +4,7 @@ import { X, Plus, Save } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import TournamentBracket from '../tournament/TournamentBracket';
+import InteractiveBracket from '../tournament/InteractiveBracket';
 
 export default function TournamentManager({ event, onClose }) {
   const queryClient = useQueryClient();
@@ -231,46 +231,14 @@ export default function TournamentManager({ event, onClose }) {
               </button>
             </div>
 
-            <TournamentBracket tournament={tournament} matches={matches} />
-
-            {/* Match Editor */}
-            <div className="mt-8 p-6 bg-fire-3/5 border border-fire-3/20">
-              <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4">UPDATE MATCH RESULT</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <select
-                  className="cyber-input"
-                  onChange={(e) => {
-                    const match = matches.find(m => m.id === e.target.value);
-                    setEditingMatch(match);
-                  }}
-                  value={editingMatch?.id || ''}
-                >
-                  <option value="">Select a match...</option>
-                  {matches.filter(m => m.status !== 'completed').map(match => (
-                    <option key={match.id} value={match.id}>
-                      Round {match.round_number} - Match {match.match_number}: {match.participant1_name} vs {match.participant2_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {editingMatch && (
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => handleUpdateMatch(1)}
-                    className="btn-fire flex-1 text-[11px] py-3"
-                  >
-                    {editingMatch.participant1_name} WINS
-                  </button>
-                  <button
-                    onClick={() => handleUpdateMatch(2)}
-                    className="btn-fire flex-1 text-[11px] py-3"
-                  >
-                    {editingMatch.participant2_name} WINS
-                  </button>
-                </div>
-              )}
-            </div>
+            <InteractiveBracket
+              tournament={tournament}
+              matches={matches}
+              onMatchUpdate={() => {
+                queryClient.invalidateQueries({ queryKey: ['tournament-matches'] });
+                queryClient.invalidateQueries({ queryKey: ['tournament'] });
+              }}
+            />
           </>
         )}
       </motion.div>
