@@ -16,6 +16,7 @@ export default function CreateEvent() {
     max_spots: 50,
     filled_spots: 0,
     status: 'upcoming',
+    whatsapp_channel_link: '',
   });
 
   const createEvent = useMutation({
@@ -116,6 +117,22 @@ export default function CreateEvent() {
                 value={form.max_spots}
                 onChange={(e) => setForm({ ...form, max_spots: parseInt(e.target.value) || 50 })}
               />
+            </div>
+
+            <div>
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                WhatsApp Channel Link
+              </label>
+              <input
+                type="url"
+                className="cyber-input"
+                placeholder="https://whatsapp.com/channel/..."
+                value={form.whatsapp_channel_link}
+                onChange={(e) => setForm({ ...form, whatsapp_channel_link: e.target.value })}
+              />
+              <p className="font-mono text-[8px] text-fire-3/30 mt-1">
+                Approved athletes will receive this link after AI secretary interview
+              </p>
             </div>
 
             <div className="flex gap-3 mt-6">
