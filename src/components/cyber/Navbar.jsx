@@ -100,18 +100,16 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
-          <WalletConnectButton minimal={true} />
-          <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
           {user && (
-            <button onClick={onProfileClick} className="p-1.5 border border-fire-3/20 bg-transparent">
-              <User size={18} className="text-fire-3" />
+            <button onClick={onProfileClick} className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all">
+              <User size={16} className="text-fire-3" />
             </button>
           )}
           <button
-            className="flex flex-col gap-1 p-1.5 border border-fire-3/20 bg-transparent"
+            className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
-            {mobileOpen ? <X size={18} className="text-fire-3" /> : <Menu size={18} className="text-fire-3" />}
+            {mobileOpen ? <X size={16} className="text-fire-3" /> : <Menu size={16} className="text-fire-3" />}
           </button>
         </div>
       </nav>
@@ -128,35 +126,61 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="fixed top-[80px] left-0 right-0 z-[198] bg-[rgba(4,2,10,0.98)] border-b border-fire-3/20 flex flex-col p-2.5 gap-2 backdrop-blur-xl md:hidden">
-          {navItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => { onScrollTo?.(item.id); setMobileOpen(false); }}
-              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/60 py-2.5 px-3.5 text-left transition-all hover:border-fire-3 hover:text-fire-3 w-full"
-            >
-              {item.label}
-            </button>
-          ))}
-          {navLinks.map(link => (
-            <Link
-              key={link.path}
-              to={createPageUrl(link.path.replace('/', ''))}
-              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/60 py-2.5 px-3.5 text-left transition-all hover:border-fire-3 hover:text-fire-3 w-full no-underline block"
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {user?.role === 'admin' && (
-            <Link
-              to={createPageUrl('Admin')}
-              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 py-2.5 px-3.5 text-left transition-all hover:border-green-500 hover:bg-green-500/5 w-full no-underline block"
-              onClick={() => setMobileOpen(false)}
-            >
-              ADMIN
-            </Link>
-          )}
+        <div className="fixed top-[80px] left-0 right-0 bottom-0 z-[198] bg-black/95 backdrop-blur-xl md:hidden overflow-y-auto">
+          <div className="p-4 space-y-3">
+            {/* Navigation Section */}
+            <div className="mb-4">
+              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Navigation</div>
+              {navItems.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => { onScrollTo?.(item.id); setMobileOpen(false); }}
+                  className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-fire-3/10 to-transparent border-l-2 border-fire-3/40 text-fire-4 py-3 px-4 text-left transition-all hover:border-fire-3 hover:from-fire-3/20 hover:text-fire-5 w-full mb-2"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Wallet & Language Section */}
+            <div className="mb-4">
+              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Settings</div>
+              <div className="bg-fire-3/5 border border-fire-3/20 p-3 mb-2">
+                <div className="font-mono text-[9px] tracking-[1px] uppercase text-fire-3/60 mb-2">Wallet</div>
+                <WalletConnectButton minimal={false} />
+              </div>
+              <div className="bg-fire-3/5 border border-fire-3/20 p-3">
+                <div className="font-mono text-[9px] tracking-[1px] uppercase text-fire-3/60 mb-2">Language</div>
+                <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
+              </div>
+            </div>
+
+            {/* User Actions Section */}
+            {user && (
+              <div className="mb-4">
+                <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Account</div>
+                {navLinks.map(link => (
+                  <Link
+                    key={link.path}
+                    to={createPageUrl(link.path.replace('/', ''))}
+                    className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-cyan/10 to-transparent border-l-2 border-cyan/40 text-cyan py-3 px-4 text-left transition-all hover:border-cyan hover:from-cyan/20 w-full no-underline block mb-2"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                {user.role === 'admin' && (
+                  <Link
+                    to={createPageUrl('Admin')}
+                    className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-green-500/10 to-transparent border-l-2 border-green-500/40 text-green-400 py-3 px-4 text-left transition-all hover:border-green-500 hover:from-green-500/20 w-full no-underline block"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    🔧 ADMIN PANEL
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </>
