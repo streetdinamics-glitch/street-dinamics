@@ -117,7 +117,6 @@ export default function TokenMarketplace({ lang }) {
         <div className="text-center font-mono text-fire-3/30 text-sm tracking-[2px] py-20">{t('marketplace_loading')}</div>
       ) : filteredTokens.length === 0 ? (
         <div className="text-center py-20">
-          <span className="text-4xl block mb-3">🎫</span>
           <p className="font-mono text-sm tracking-[2px] text-fire-3/30">{t('marketplace_no_match')}</p>
         </div>
       ) : (
