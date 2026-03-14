@@ -7,7 +7,8 @@ import { toast } from 'sonner';
 import { useTranslation } from '../translations';
 import NFTFilterPanel from './NFTFilterPanel';
 
-export default function NFTMarketplace() {
+export default function NFTMarketplace({ lang = 'en' }) {
+  const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [filters, setFilters] = useState({
     rarity: 'all',
