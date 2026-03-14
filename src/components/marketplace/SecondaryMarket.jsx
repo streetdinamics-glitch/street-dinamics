@@ -308,7 +308,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
                 {/* Price Input */}
                 <div>
                   <label className="font-orbitron text-sm font-bold text-fire-4 mb-2 block">
-                    LISTING PRICE (EUR)
+                    {t('secondary_listing_price')}
                   </label>
                   <input
                     type="number"
@@ -316,7 +316,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
                     min="0"
                     value={listingPrice}
                     onChange={(e) => setListingPrice(e.target.value)}
-                    placeholder="Enter price per unit"
+                    placeholder={t('secondary_enter_price')}
                     className="cyber-input"
                   />
                 </div>
