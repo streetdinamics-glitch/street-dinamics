@@ -246,7 +246,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
               className="w-full max-w-2xl bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,0.99)] border border-fire-3/30 clip-cyber p-8"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="heading-fire text-2xl font-black">CREATE LISTING</h3>
+                <h3 className="heading-fire text-2xl font-black">{t('secondary_create_listing')}</h3>
                 <button
                   onClick={() => setShowListingModal(false)}
                   className="p-2 border border-fire-3/20 hover:border-fire-3/40 transition-all"
