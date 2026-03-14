@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Sparkles, Flame, Star, ShoppingCart } from 'lucide-react';
 import { toast } from 'sonner';
+import NFTFilterPanel from './NFTFilterPanel';
 
 export default function NFTMarketplace() {
   const [selectedRarity, setSelectedRarity] = useState('all');
