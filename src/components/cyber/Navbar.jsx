@@ -164,7 +164,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             {user && (
               <div className="mb-4">
                 <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Account</div>
-                {navLinks.map(link => (
+                {(user?.role === 'admin' ? navLinks : userNavLinks).map(link => (
                   <Link
                     key={link.path}
                     to={createPageUrl(link.path.replace('/', ''))}
