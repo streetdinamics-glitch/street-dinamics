@@ -9,6 +9,7 @@ import EventRegistrations from './EventRegistrations';
 import Leaderboard from './Leaderboard';
 import QRScanner from './QRScanner';
 import TournamentManager from './TournamentManager';
+import VotingManager from '../voting/VotingManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -28,6 +29,7 @@ export default function AdminPanel({ lang, onClose }) {
   });
   const [showScanner, setShowScanner] = useState(false);
   const [tournamentEvent, setTournamentEvent] = useState(null);
+  const [votingEvent, setVotingEvent] = useState(null);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -327,6 +329,12 @@ export default function AdminPanel({ lang, onClose }) {
                   >
                     Tournament
                   </button>
+                  <button
+                    onClick={() => setVotingEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    Fan Voting
+                  </button>
                   {event.status === 'upcoming' && (
                     <button
                       onClick={() => handleGoLive(event)}
@@ -568,6 +576,12 @@ export default function AdminPanel({ lang, onClose }) {
           <TournamentManager
             event={tournamentEvent}
             onClose={() => setTournamentEvent(null)}
+          />
+        )}
+        {votingEvent && (
+          <VotingManager
+            event={votingEvent}
+            onClose={() => setVotingEvent(null)}
           />
         )}
 
