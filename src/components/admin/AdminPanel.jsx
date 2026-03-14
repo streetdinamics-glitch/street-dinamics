@@ -416,6 +416,15 @@ export default function AdminPanel({ lang, onClose }) {
                   >
                     🗺️ Venue Map
                   </button>
+                  <button
+                    onClick={() => {
+                      setSelectedEvent(event);
+                      setShowScanner(true);
+                    }}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    📱 Check-In
+                  </button>
                   {event.status === 'upcoming' && (
                     <button
                       onClick={() => handleGoLive(event)}
