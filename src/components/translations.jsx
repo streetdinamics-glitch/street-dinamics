@@ -1148,6 +1148,13 @@ export const translations = {
     secondary_cancel: 'إلغاء',
     secondary_create: 'إنشاء قائمة',
     secondary_creating: 'جارٍ الإنشاء...',
+
+    // Global Leaderboard
+    leaderboard_subtitle: 'نظام الترتيب العالمي',
+    leaderboard_title: 'لوحة الأبطال',
+    leaderboard_showing: 'عرض',
+    leaderboard_empty: 'لا يوجد رياضيون على لوحة الرتب حتى الآن',
+    leaderboard_loading: 'جارٍ تحميل الترتيب...',
   }
 };
 
