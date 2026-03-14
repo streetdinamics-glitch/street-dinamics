@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,18 @@ import AdminPanel from '../components/admin/AdminPanel';
 
 export default function Admin() {
   const navigate = useNavigate();
-  const [lang, setLang] = React.useState('en');
+  const [lang, setLang] = useState('en');
   
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
   });
+
+  useEffect(() => {
+    if (user?.preferences?.language) {
+      setLang(user.preferences.language);
+    }
+  }, [user]);
 
   if (!user || user.role !== 'admin') {
     return (
@@ -31,12 +37,6 @@ export default function Admin() {
       </div>
     );
   }
-
-  React.useEffect(() => {
-    if (user?.preferences?.language) {
-      setLang(user.preferences.language);
-    }
-  }, [user]);
 
   return (
     <div className="min-h-screen bg-cyber-void">
