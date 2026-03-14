@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, UserPlus } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import TournamentBracket from '../tournament/TournamentBracket';
+import InteractiveBracket from '../tournament/InteractiveBracket';
 import TournamentRegistrationModal from '../tournament/TournamentRegistrationModal';
 
 export default function TournamentSection({ event }) {
   const [regModalOpen, setRegModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+
   const { data: tournament } = useQuery({
     queryKey: ['tournament', event.id],
     queryFn: async () => {
@@ -46,6 +48,11 @@ export default function TournamentSection({ event }) {
   }
 
   const canRegister = event.status === 'upcoming' && !myRegistration;
+
+  const handleMatchUpdate = () => {
+    queryClient.invalidateQueries({ queryKey: ['tournament-matches', tournament?.id] });
+    queryClient.invalidateQueries({ queryKey: ['tournament', event.id] });
+  };
 
   return (
     <motion.div
@@ -90,7 +97,7 @@ export default function TournamentSection({ event }) {
           </div>
         </div>
 
-        <TournamentBracket tournament={tournament} matches={matches} />
+        <InteractiveBracket tournament={tournament} matches={matches} onMatchUpdate={handleMatchUpdate} />
       </div>
 
       {regModalOpen && (
