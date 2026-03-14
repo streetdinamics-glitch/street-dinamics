@@ -17,7 +17,6 @@ import RoyaltyDistributionManager from './RoyaltyDistributionManager';
 import MinorRegistrationApproval from './MinorRegistrationApproval';
 import ChatModerationPanel from '../chat/ChatModerationPanel';
 import RegistrationAnalyticsDashboard from './RegistrationAnalyticsDashboard';
-import VenueMapManager from './VenueMapManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -46,6 +45,9 @@ export default function AdminPanel({ lang, onClose }) {
   const [chatModeratingEvent, setChatModeratingEvent] = useState(null);
   const [showRegistrationAnalytics, setShowRegistrationAnalytics] = useState(false);
   const [venueMapEvent, setVenueMapEvent] = useState(null);
+
+  // Lazy load VenueMapManager
+  const VenueMapManager = React.lazy(() => import('./VenueMapManager'));
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -780,7 +782,9 @@ export default function AdminPanel({ lang, onClose }) {
                 >
                   CLOSE
                 </button>
-                <VenueMapManager event={venueMapEvent} />
+                <Suspense fallback={<div className="text-fire-3/40 text-center py-8">Loading...</div>}>
+                  <VenueMapManager event={venueMapEvent} />
+                </Suspense>
               </div>
             </div>
           )}
