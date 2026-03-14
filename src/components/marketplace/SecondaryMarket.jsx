@@ -228,7 +228,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
                 disabled={buyListingMutation.isPending}
                 className="btn-fire w-full text-xs"
               >
-                {buyListingMutation.isPending ? 'PROCESSING...' : 'BUY NOW'}
+                {buyListingMutation.isPending ? t('secondary_processing') : t('secondary_buy_now')}
               </button>
             </motion.div>
           ))}
