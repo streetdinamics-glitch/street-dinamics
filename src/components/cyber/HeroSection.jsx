@@ -164,23 +164,23 @@ export default function HeroSection({ onScrollTo, lang }) {
       </motion.div>
 
       {/* Scroll hint with animation */}
-      <motion.div className="ml-8 absolute bottom-7 right-8 flex flex-col items-center gap-2"
+      <motion.div className="ml-8 absolute bottom-7 right-8 flex flex-col items-center gap-1"
 
-      animate={{ y: [0, 10, 0] }}
+      animate={{ y: [0, 6, 0] }}
       transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
 
         <motion.div
-          className="w-6 h-10 border-2 border-fire-3/30 rounded-full flex justify-center pt-2"
+          className="w-3 h-5 border border-fire-3/30 rounded-full flex justify-center pt-1"
           animate={{ borderColor: ['rgba(255,100,0,0.2)', 'rgba(255,100,0,0.5)', 'rgba(255,100,0,0.2)'] }}
           transition={{ duration: 2, repeat: Infinity }}>
 
           <motion.div
-            className="w-1.5 h-1.5 bg-fire-3 rounded-full"
-            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+            className="w-0.5 h-0.5 bg-fire-3 rounded-full"
+            animate={{ y: [0, 6, 0], opacity: [1, 0.3, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} />
 
         </motion.div>
-        <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/25">
+        <p className="font-mono text-[6px] tracking-[3px] uppercase text-fire-3/25">
           {t('hero_scroll')}
         </p>
       </motion.div>
