@@ -70,7 +70,7 @@ export default function EventRegistrations({ event, onClose, lang }) {
         {/* Athletes */}
         <div className="mb-8">
           <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4 flex items-center gap-2">
-            🏅 ATHLETES ({athletes.length})
+            ATHLETES ({athletes.length})
           </h3>
           {athletes.length === 0 ? (
             <p className="text-center py-8 font-mono text-xs text-fire-3/30">No athlete registrations yet</p>
@@ -112,13 +112,13 @@ export default function EventRegistrations({ event, onClose, lang }) {
                         onClick={() => handleApprove(reg)}
                         className="btn-fire text-[9px] py-1.5 px-3 flex-1"
                       >
-                        ✓ Approve
+                        Approve
                       </button>
                       <button
                         onClick={() => handleReject(reg)}
                         className="btn-ghost text-[9px] py-1.5 px-3 flex-1"
                       >
-                        ✕ Reject
+                        Reject
                       </button>
                     </div>
                   )}
@@ -131,7 +131,7 @@ export default function EventRegistrations({ event, onClose, lang }) {
         {/* Spectators */}
         <div>
           <h3 className="font-orbitron font-bold text-lg text-cyan mb-4 flex items-center gap-2">
-            🎫 SPECTATORS ({spectators.length})
+            SPECTATORS ({spectators.length})
           </h3>
           {spectators.length === 0 ? (
             <p className="text-center py-8 font-mono text-xs text-fire-3/30">No spectator tickets yet</p>

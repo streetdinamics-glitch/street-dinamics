@@ -12,7 +12,11 @@ export default function BetSection({ hasToken, onScrollToTokens, onScrollToSocia
 
         {/* Locked */}
         <div className="flex flex-col items-center justify-center text-center py-10 px-5 max-w-[600px] mx-auto">
-          <span className="text-5xl mb-4">🔒</span>
+          <div className="w-20 h-20 mb-4 rounded-full border-4 border-fire-3/30 flex items-center justify-center">
+            <div className="w-8 h-10 border-4 border-fire-3 rounded-md relative">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-6 h-6 border-4 border-fire-3 rounded-full" />
+            </div>
+          </div>
           <div className="font-orbitron font-black text-lg tracking-[3px] uppercase text-fire-4 mb-2.5">{t('bet_locked_title')}</div>
           <div className="font-rajdhani text-base text-fire-4/50 mb-6 leading-relaxed">
             {t('bet_locked_msg')}
@@ -42,10 +46,12 @@ export default function BetSection({ hasToken, onScrollToTokens, onScrollToSocia
 
       <div className="max-w-[1060px] mx-auto mb-12">
         <div className="flex items-baseline justify-between mb-4 border-b border-cyber-cyan/10 pb-3">
-          <div className="font-orbitron font-extrabold text-[13px] tracking-[3px] uppercase text-cyber-cyan">🎯 {t('bet_my_bets')}</div>
+          <div className="font-orbitron font-extrabold text-[13px] tracking-[3px] uppercase text-cyber-cyan">{t('bet_my_bets')}</div>
         </div>
         <div className="text-center py-10">
-          <span className="text-3xl block mb-2.5">🎯</span>
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-fire-3/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-fire-3/10 border-2 border-fire-3/40" />
+          </div>
           <div className="font-mono text-xs tracking-[2px] text-fire-3/30 leading-loose">
             {t('bet_empty')}
           </div>

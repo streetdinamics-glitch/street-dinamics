@@ -16,7 +16,7 @@ export default function TokenSection({ lang, onScrollToSocial }) {
         <div className="bg-gradient-to-br from-cyber-cyan/5 to-cyber-purple/5 border border-cyber-cyan/15 p-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-cyan to-transparent fire-line" />
           <div className="font-orbitron font-black text-sm tracking-[4px] uppercase text-cyber-cyan mb-4">
-            🎫 {t('tokens_title')}
+            {t('tokens_title')}
           </div>
           <p className="font-rajdhani text-base text-fire-4/50 mb-6 leading-relaxed">
             {t('tokens_soon')}
