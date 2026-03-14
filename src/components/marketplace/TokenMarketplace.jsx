@@ -9,6 +9,7 @@ import PurchaseModal from './PurchaseModal';
 import PurchaseSuccessModal from './PurchaseSuccessModal';
 import Web3PurchaseModal from '../web3/Web3PurchaseModal';
 import { useTranslation } from '../translations';
+import WatchlistButton from '../watchlist/WatchlistButton';
 
 export default function TokenMarketplace({ lang }) {
   const t = useTranslation(lang);

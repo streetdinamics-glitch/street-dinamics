@@ -188,18 +188,9 @@ export default function NFTMarketplace({ lang = 'en' }) {
                 transition={{ delay: i * 0.1 }}
                 className={`relative bg-gradient-to-br ${rarityStyle.bg} border ${rarityStyle.border} overflow-hidden`}
               >
-                {/* Rarity Badge & Watchlist */}
-                <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-2">
-                  <div className={`px-3 py-1 border ${rarityStyle.border} ${rarityStyle.text} font-mono text-xs tracking-[1px] uppercase bg-black/60 backdrop-blur-sm`}>
-                    {t(`nft_${card.rarity}`)}
-                  </div>
-                  <WatchlistButton
-                    assetType="nft_drop"
-                    assetId={card.id}
-                    assetName={card.athlete_name}
-                    price={card.mint_price}
-                    className="border border-fire-3/20 bg-black/60 backdrop-blur-sm px-2 py-1"
-                  />
+                {/* Rarity Badge */}
+                <div className={`absolute top-3 right-3 px-3 py-1 border ${rarityStyle.border} ${rarityStyle.text} font-mono text-xs tracking-[1px] uppercase bg-black/60 backdrop-blur-sm z-10`}>
+                  {t(`nft_${card.rarity}`)}
                 </div>
 
                 {/* Image */}
@@ -252,6 +243,17 @@ export default function NFTMarketplace({ lang = 'en' }) {
                         className="h-full bg-gradient-to-r from-fire-3 to-fire-5"
                       />
                     </div>
+                  </div>
+
+                  {/* Watchlist Button */}
+                  <div className="mb-3">
+                    <WatchlistButton
+                      assetType="nft_drop"
+                      assetId={card.id}
+                      assetName={card.athlete_name}
+                      price={card.mint_price}
+                      className="w-full justify-center border border-fire-3/20 hover:border-fire-3/40 py-2 px-3 text-xs"
+                    />
                   </div>
 
                   {/* Status & Action */}

@@ -27,6 +27,7 @@ import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
 import Footer from '../components/cyber/Footer';
 import SpectatorTypeModal from '../components/cyber/SpectatorTypeModal';
+import WatchlistPanel from '../components/watchlist/WatchlistPanel';
 
 export default function Home() {
   const [lang, setLang] = useState('en');
@@ -38,6 +39,7 @@ export default function Home() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
+  const [watchlistOpen, setWatchlistOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -127,7 +129,7 @@ export default function Home() {
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <ParticleField />
-      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} onProfileClick={() => setProfileOpen(true)} />
+      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} onProfileClick={() => setProfileOpen(true)} onWatchlistClick={() => setWatchlistOpen(true)} />
 
       <HeroSection onScrollTo={scrollTo} lang={lang} />
       <FireRule />
@@ -239,6 +241,9 @@ export default function Home() {
       )}
       {profileOpen && (
         <UserProfile lang={lang} onClose={() => setProfileOpen(false)} />
+      )}
+      {watchlistOpen && (
+        <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
       )}
     </div>
   );
