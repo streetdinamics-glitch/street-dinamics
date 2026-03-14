@@ -200,6 +200,12 @@ export default function Home() {
       <FireRule />
       <SecondaryMarket />
       <FireRule />
+      {events.length > 0 && (
+        <>
+          <SpectatorGamificationHub eventId={events[0]?.id} lang={lang} />
+          <FireRule />
+        </>
+      )}
       <SponsorSection lang={lang} />
       <Footer lang={lang} />
 
