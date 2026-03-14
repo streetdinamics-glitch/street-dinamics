@@ -226,15 +226,15 @@ export default function NFTMarketplace({ lang = 'en' }) {
                   </div>
 
                   {/* Availability */}
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-mono text-xs text-fire-3/60">AVAILABLE</span>
-                      <span className={`font-mono text-xs ${
-                        availability === 0 ? 'text-red-400' : 'text-fire-4'
-                      }`}>
-                        {availability} / {card.total_supply}
-                      </span>
-                    </div>
+                   <div className="mb-4">
+                     <div className="flex items-center justify-between mb-1">
+                       <span className="font-mono text-xs text-fire-3/60">{t('nft_available')}</span>
+                       <span className={`font-mono text-xs ${
+                         availability === 0 ? 'text-red-400' : 'text-fire-4'
+                       }`}>
+                         {availability} / {card.total_supply}
+                       </span>
+                     </div>
                     <div className="h-2 bg-fire-3/10 rounded overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
