@@ -150,6 +150,8 @@ export const translations = {
     admin_youtube_url: 'YouTube Live URL',
     admin_save_links: 'Save Live Links',
     admin_change_pass: 'Change Password',
+    admin_new_pass: 'New Password',
+    admin_confirm_pass: 'Confirm Password',
   },
   
   it: {
@@ -303,6 +305,8 @@ export const translations = {
     admin_youtube_url: 'URL Live YouTube',
     admin_save_links: 'Salva Link Live',
     admin_change_pass: 'Cambia Password',
+    admin_new_pass: 'Nuova Password',
+    admin_confirm_pass: 'Conferma Password',
   },
   
   es: {
@@ -454,6 +458,8 @@ export const translations = {
     admin_youtube_url: 'URL Live YouTube',
     admin_save_links: 'Guardar Enlaces Live',
     admin_change_pass: 'Cambiar Contraseña',
+    admin_new_pass: 'Nueva Contraseña',
+    admin_confirm_pass: 'Confirmar Contraseña',
   },
   
   fr: {
@@ -605,6 +611,8 @@ export const translations = {
     admin_youtube_url: 'URL Live YouTube',
     admin_save_links: 'Enregistrer Liens Live',
     admin_change_pass: 'Changer Mot de Passe',
+    admin_new_pass: 'Nouveau Mot de Passe',
+    admin_confirm_pass: 'Confirmer Mot de Passe',
   },
   
   de: {
@@ -756,6 +764,8 @@ export const translations = {
     admin_youtube_url: 'YouTube Live URL',
     admin_save_links: 'Live-Links Speichern',
     admin_change_pass: 'Passwort Ändern',
+    admin_new_pass: 'Neues Passwort',
+    admin_confirm_pass: 'Passwort Bestätigen',
   },
   
   ar: {
@@ -907,6 +917,8 @@ export const translations = {
     admin_youtube_url: 'رابط YouTube المباشر',
     admin_save_links: 'حفظ روابط البث',
     admin_change_pass: 'تغيير كلمة المرور',
+    admin_new_pass: 'كلمة المرور الجديدة',
+    admin_confirm_pass: 'تأكيد كلمة المرور',
   }
 };
 

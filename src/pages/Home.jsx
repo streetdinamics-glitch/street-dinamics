@@ -73,13 +73,33 @@ export default function Home() {
   const handleRegisterClick = async (event, type) => {
     try {
       const currentUser = await base44.auth.me();
-      if (!currentUser.onboarding_completed) {
+      if (!currentUser?.onboarding_completed) {
         setOnboardingOpen(true);
+        // Store pending registration to auto-open after onboarding
+        sessionStorage.setItem('pendingRegistration', JSON.stringify({ event, type }));
       } else {
         setRegModal({ event, type });
       }
     } catch (err) {
       setRegModal({ event, type });
+    }
+  };
+
+  // Auto-open registration after onboarding completes
+  const handleOnboardingComplete = () => {
+    queryClient.invalidateQueries({ queryKey: ['current-user'] });
+    setOnboardingOpen(false);
+    
+    // Check for pending registration
+    const pending = sessionStorage.getItem('pendingRegistration');
+    if (pending) {
+      try {
+        const { event, type } = JSON.parse(pending);
+        sessionStorage.removeItem('pendingRegistration');
+        setTimeout(() => setRegModal({ event, type }), 300);
+      } catch (err) {
+        console.error('Failed to restore pending registration');
+      }
     }
   };
 
@@ -162,10 +182,7 @@ export default function Home() {
         <OnboardingFlow
           user={user}
           lang={lang}
-          onComplete={() => {
-            queryClient.invalidateQueries({ queryKey: ['current-user'] });
-            setOnboardingOpen(false);
-          }}
+          onComplete={handleOnboardingComplete}
         />
       )}
       {profileOpen && (

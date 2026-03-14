@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { toast } from 'sonner';
 
 export default function CreateEvent() {
   const navigate = useNavigate();
@@ -20,7 +21,11 @@ export default function CreateEvent() {
   const createEvent = useMutation({
     mutationFn: (data) => base44.entities.Event.create(data),
     onSuccess: () => {
-      navigate(createPageUrl('Home'));
+      toast.success('Event created successfully!');
+      navigate(createPageUrl('Admin'));
+    },
+    onError: (err) => {
+      toast.error('Failed to create event: ' + err.message);
     },
   });
 
@@ -116,10 +121,10 @@ export default function CreateEvent() {
             <div className="flex gap-3 mt-6">
               <button
                 type="button"
-                onClick={() => navigate(createPageUrl('Home'))}
+                onClick={() => navigate(createPageUrl('Admin'))}
                 className="btn-ghost py-3 px-5"
               >
-                Cancel
+                ← Back to Admin
               </button>
               <button
                 type="submit"

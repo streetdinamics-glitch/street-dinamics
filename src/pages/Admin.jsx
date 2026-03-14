@@ -7,6 +7,8 @@ import AdminPanel from '../components/admin/AdminPanel';
 
 export default function Admin() {
   const navigate = useNavigate();
+  const [lang, setLang] = React.useState('en');
+  
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
@@ -30,9 +32,15 @@ export default function Admin() {
     );
   }
 
+  React.useEffect(() => {
+    if (user?.preferences?.language) {
+      setLang(user.preferences.language);
+    }
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-cyber-void">
-      <AdminPanel lang="en" onClose={() => navigate(createPageUrl('Home'))} />
+      <AdminPanel lang={lang} onClose={() => navigate(createPageUrl('Home'))} />
     </div>
   );
 }

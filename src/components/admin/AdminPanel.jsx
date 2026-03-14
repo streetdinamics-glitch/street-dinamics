@@ -4,12 +4,15 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '../translations';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [liveLinks, setLiveLinks] = useState({ kick: '', youtube: '' });
+  const [vodLinks, setVodLinks] = useState({ kick: '', youtube: '' });
+  const [editingVod, setEditingVod] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -20,11 +23,17 @@ export default function AdminPanel({ lang, onClose }) {
 
   const updateEvent = useMutation({
     mutationFn: ({ id, data }) => base44.entities.Event.update(id, data),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       queryClient.invalidateQueries({ queryKey: ['events'] });
       setSelectedEvent(null);
+      setEditingVod(null);
       setLiveLinks({ kick: '', youtube: '' });
+      setVodLinks({ kick: '', youtube: '' });
+      toast.success(variables.successMessage || 'Event updated');
+    },
+    onError: (err) => {
+      toast.error('Failed to update event: ' + err.message);
     },
   });
 
@@ -45,6 +54,7 @@ export default function AdminPanel({ lang, onClose }) {
         kick_live_url: liveLinks.kick,
         youtube_live_url: liveLinks.youtube,
       },
+      successMessage: 'Event is now LIVE!',
     });
   };
 
@@ -52,26 +62,47 @@ export default function AdminPanel({ lang, onClose }) {
     updateEvent.mutate({
       id: event.id,
       data: { status: 'ended' },
+      successMessage: 'Event ended',
+    });
+  };
+
+  const handleEditVod = (event) => {
+    setEditingVod(event);
+    setVodLinks({
+      kick: event.kick_vod_url || '',
+      youtube: event.youtube_vod_url || '',
+    });
+  };
+
+  const handleSaveVod = () => {
+    if (!editingVod) return;
+    updateEvent.mutate({
+      id: editingVod.id,
+      data: {
+        kick_vod_url: vodLinks.kick,
+        youtube_vod_url: vodLinks.youtube,
+      },
+      successMessage: 'VOD links saved',
     });
   };
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
-      alert('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
     if (newPassword.length < 8) {
-      alert('Password must be at least 8 characters');
+      toast.error('Password must be at least 8 characters');
       return;
     }
     
     try {
       await base44.auth.updateMe({ password: newPassword });
-      alert('Password changed successfully');
+      toast.success('Password changed successfully');
       setNewPassword('');
       setConfirmPassword('');
     } catch (err) {
-      alert('Failed to change password');
+      toast.error('Failed to change password: ' + err.message);
     }
   };
 
@@ -96,48 +127,69 @@ export default function AdminPanel({ lang, onClose }) {
         </Link>
 
         {/* Events List */}
-        <div className="space-y-4 mb-8">
-          {events.map(event => (
-            <div key={event.id} className="p-5 bg-fire-3/5 border border-fire-3/10 flex justify-between items-center">
-              <div className="flex-1">
-                <div className="font-orbitron font-bold text-lg text-fire-4 mb-1">{event.title}</div>
-                <div className="font-mono text-xs text-fire-3/40">{event.date} • {event.location}</div>
-                <div className={`inline-block mt-2 px-3 py-1 text-[9px] font-mono tracking-[2px] uppercase border ${
-                  event.status === 'live' ? 'border-green-500/40 text-green-400 bg-green-500/5' :
-                  event.status === 'ended' ? 'border-red-500/40 text-red-400 bg-red-500/5' :
-                  'border-fire-3/40 text-fire-4 bg-fire-3/5'
-                }`}>
-                  {event.status}
+        {events.length === 0 ? (
+          <div className="text-center py-16 mb-8">
+            <span className="text-5xl block mb-4">📅</span>
+            <p className="font-mono text-sm text-fire-3/30 mb-4">No events yet. Create your first event!</p>
+            <Link to={createPageUrl('CreateEvent')} className="btn-fire text-[11px] py-3 px-6 inline-block no-underline">
+              {t('admin_create_event')}
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-4 mb-8">
+            {events.map(event => (
+              <div key={event.id} className="p-4 md:p-5 bg-fire-3/5 border border-fire-3/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <div className="flex-1">
+                  <div className="font-orbitron font-bold text-base md:text-lg text-fire-4 mb-1">{event.title}</div>
+                  <div className="font-mono text-xs text-fire-3/40">{event.date} • {event.location}</div>
+                  <div className={`inline-block mt-2 px-3 py-1 text-[9px] font-mono tracking-[2px] uppercase border ${
+                    event.status === 'live' ? 'border-green-500/40 text-green-400 bg-green-500/5' :
+                    event.status === 'ended' ? 'border-red-500/40 text-red-400 bg-red-500/5' :
+                    'border-fire-3/40 text-fire-4 bg-fire-3/5'
+                  }`}>
+                    {event.status}
+                  </div>
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  {event.status === 'upcoming' && (
+                    <button
+                      onClick={() => handleGoLive(event)}
+                      className="btn-fire text-[10px] py-2 px-4"
+                    >
+                      {t('admin_go_live')}
+                    </button>
+                  )}
+                  {event.status === 'live' && (
+                    <button
+                      onClick={() => handleEndEvent(event)}
+                      className="btn-ghost text-[10px] py-2 px-4"
+                    >
+                      {t('admin_end_event')}
+                    </button>
+                  )}
+                  {event.status === 'ended' && (
+                    <button
+                      onClick={() => handleEditVod(event)}
+                      className="btn-cyan text-[10px] py-2 px-4"
+                    >
+                      📺 Add VOD
+                    </button>
+                  )}
                 </div>
               </div>
-              <div className="flex gap-2">
-                {event.status === 'upcoming' && (
-                  <button
-                    onClick={() => handleGoLive(event)}
-                    className="btn-fire text-[10px] py-2 px-4"
-                  >
-                    {t('admin_go_live')}
-                  </button>
-                )}
-                {event.status === 'live' && (
-                  <button
-                    onClick={() => handleEndEvent(event)}
-                    className="btn-ghost text-[10px] py-2 px-4"
-                  >
-                    {t('admin_end_event')}
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Live Links Modal */}
         {selectedEvent && (
           <div className="mb-8 p-6 bg-green-500/5 border border-green-500/20">
-            <h3 className="font-orbitron font-bold text-lg text-green-400 mb-4">
+            <h3 className="font-orbitron font-bold text-lg text-green-400 mb-2">
               {t('admin_go_live')}: {selectedEvent.title}
             </h3>
+            <p className="font-mono text-[9px] text-green-400/60 mb-4 tracking-[1px]">
+              Enter live stream URLs. At least one platform required.
+            </p>
             <div className="space-y-3 mb-4">
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
@@ -145,7 +197,7 @@ export default function AdminPanel({ lang, onClose }) {
                 </label>
                 <input
                   className="cyber-input"
-                  placeholder="https://kick.com/..."
+                  placeholder="https://kick.com/streetdinamics"
                   value={liveLinks.kick}
                   onChange={(e) => setLiveLinks({ ...liveLinks, kick: e.target.value })}
                 />
@@ -156,7 +208,7 @@ export default function AdminPanel({ lang, onClose }) {
                 </label>
                 <input
                   className="cyber-input"
-                  placeholder="https://youtube.com/..."
+                  placeholder="https://youtube.com/live/..."
                   value={liveLinks.youtube}
                   onChange={(e) => setLiveLinks({ ...liveLinks, youtube: e.target.value })}
                 />
@@ -168,10 +220,58 @@ export default function AdminPanel({ lang, onClose }) {
               </button>
               <button
                 onClick={handleSaveLinks}
-                disabled={!liveLinks.kick && !liveLinks.youtube}
+                disabled={updateEvent.isPending || (!liveLinks.kick && !liveLinks.youtube)}
                 className="btn-fire py-2 px-4 text-[10px] disabled:opacity-20"
               >
-                {t('admin_save_links')}
+                {updateEvent.isPending ? 'Saving...' : `${t('admin_save_links')} & GO LIVE 🔴`}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* VOD Links Modal */}
+        {editingVod && (
+          <div className="mb-8 p-6 bg-purple-500/5 border border-purple-500/20">
+            <h3 className="font-orbitron font-bold text-lg text-purple-400 mb-2">
+              📺 Add Replay Links: {editingVod.title}
+            </h3>
+            <p className="font-mono text-[9px] text-purple-400/60 mb-4 tracking-[1px]">
+              Enter video-on-demand (VOD) / replay URLs for this event.
+            </p>
+            <div className="space-y-3 mb-4">
+              <div>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                  Kick VOD URL
+                </label>
+                <input
+                  className="cyber-input"
+                  placeholder="https://kick.com/video/..."
+                  value={vodLinks.kick}
+                  onChange={(e) => setVodLinks({ ...vodLinks, kick: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                  YouTube VOD URL
+                </label>
+                <input
+                  className="cyber-input"
+                  placeholder="https://youtube.com/watch?v=..."
+                  value={vodLinks.youtube}
+                  onChange={(e) => setVodLinks({ ...vodLinks, youtube: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button onClick={() => setEditingVod(null)} className="btn-ghost py-2 px-4 text-[10px]">
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveVod}
+                disabled={updateEvent.isPending || (!vodLinks.kick && !vodLinks.youtube)}
+                className="btn-fire py-2 px-4 text-[10px] disabled:opacity-20"
+              >
+                {updateEvent.isPending ? 'Saving...' : 'Save VOD Links'}
               </button>
             </div>
           </div>
@@ -183,24 +283,26 @@ export default function AdminPanel({ lang, onClose }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
-                New Password
+                {t('admin_new_pass')}
               </label>
               <input
                 type="password"
                 className="cyber-input"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Min 8 characters"
               />
             </div>
             <div>
               <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
-                Confirm Password
+                {t('admin_confirm_pass')}
               </label>
               <input
                 type="password"
                 className="cyber-input"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm password"
               />
             </div>
           </div>

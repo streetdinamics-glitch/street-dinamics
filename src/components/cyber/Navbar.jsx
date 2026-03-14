@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
@@ -70,12 +71,12 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                 PROFILE
               </button>
               {user.role === 'admin' && (
-                <button
-                  onClick={() => window.location.href = createPageUrl('Admin')}
-                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 px-3.5 py-1.5 cursor-pointer transition-all hover:border-green-500 hover:bg-green-500/5 clip-btn"
+                <Link
+                  to={createPageUrl('Admin')}
+                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 px-3.5 py-1.5 cursor-pointer transition-all hover:border-green-500 hover:bg-green-500/5 clip-btn no-underline flex items-center"
                 >
                   ADMIN
-                </button>
+                </Link>
               )}
             </>
           )}

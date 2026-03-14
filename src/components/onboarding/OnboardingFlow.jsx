@@ -21,7 +21,9 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
 
   const updateUser = useMutation({
     mutationFn: (data) => base44.auth.updateMe(data),
-    onSuccess: () => onComplete?.(),
+    onSuccess: () => {
+      setStep(3);
+    },
   });
 
   const handleFileUpload = async (e) => {
@@ -112,6 +114,27 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 </div>
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Step 3: Success */}
+        {step === 3 && (
+          <div className="animate-[fadeUp_0.35s_ease] text-center py-8">
+            <div className="text-6xl mb-6">✓</div>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-3">
+              {t('onboard_complete').toUpperCase()}
+            </h2>
+            <p className="font-rajdhani text-base text-fire-4/60 mb-6 leading-relaxed max-w-md mx-auto">
+              {userType === 'athlete' 
+                ? 'Your athlete profile is ready! You can now register for events and start competing.'
+                : 'Your spectator profile is ready! You can now get tickets and support your favorite athletes.'}
+            </p>
+            <button
+              onClick={() => onComplete?.()}
+              className="btn-fire py-3 px-8"
+            >
+              START EXPLORING →
+            </button>
           </div>
         )}
 
