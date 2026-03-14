@@ -595,6 +595,15 @@ export const translations = {
     attendance_online_desc: 'Ve la transmisión en vivo de forma remota. Recibe pase digital y acceso a funciones en línea exclusivas.',
     attendance_select: 'SELECCIONAR',
 
+    // Secondary Market Activity
+    secondary_top_assets: 'PRINCIPALES ACTIVOS',
+    secondary_recent_transactions: 'TRANSACCIONES RECIENTES',
+    secondary_activity_empty: 'Sin actividad aún',
+    secondary_transactions_empty: 'Sin transacciones aún',
+
+    // Gamification
+    gamification_subtitle: 'Centro de Participación de Fans',
+
     // Global Leaderboard
     leaderboard_subtitle: 'Sistema de Ranking Global',
     leaderboard_title: 'TABLA DE CAMPEONES',
