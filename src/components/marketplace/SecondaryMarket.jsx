@@ -342,19 +342,19 @@ export default function SecondaryMarket({ lang = 'en' }) {
                   <div className="bg-fire-3/10 border border-fire-3/20 p-4">
                     <div className="font-mono text-xs text-fire-3/60 space-y-1">
                       <div className="flex justify-between">
-                        <span>Sale Price:</span>
+                        <span>{t('secondary_sale_price')}:</span>
                         <span className="text-fire-4">
                           €{(parseFloat(listingPrice) * listingQuantity).toFixed(2)}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Platform Fee (5%):</span>
+                        <span>{t('secondary_platform_fee')}:</span>
                         <span className="text-red-400">
                           -€{((parseFloat(listingPrice) * listingQuantity) * 0.05).toFixed(2)}
                         </span>
                       </div>
                       <div className="flex justify-between pt-2 border-t border-fire-3/20">
-                        <span className="text-fire-5">You Receive:</span>
+                        <span className="text-fire-5">{t('secondary_you_receive')}:</span>
                         <span className="text-fire-5 font-bold">
                           €{((parseFloat(listingPrice) * listingQuantity) * 0.95).toFixed(2)}
                         </span>
