@@ -16,6 +16,7 @@ import NFTDropManager from './NFTDropManager';
 import RoyaltyDistributionManager from './RoyaltyDistributionManager';
 import MinorRegistrationApproval from './MinorRegistrationApproval';
 import ChatModerationPanel from '../chat/ChatModerationPanel';
+import RegistrationAnalyticsDashboard from './RegistrationAnalyticsDashboard';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
