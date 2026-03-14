@@ -12,7 +12,38 @@ export default function EventCard({ event, index, onRegisterAthlete, onRegisterS
 
   const hasLiveStream = event.status === 'live' && (event.kick_live_url || event.youtube_live_url);
   const hasVOD = event.status === 'ended' && (event.kick_vod_url || event.youtube_vod_url);
-  const streamUrl = event.kick_live_url || event.youtube_live_url || event.kick_vod_url || event.youtube_vod_url;
+  
+  // Safely construct stream URL with validation
+  const getStreamUrl = () => {
+    if (event.status === 'live') {
+      return event.kick_live_url || event.youtube_live_url || '';
+    }
+    if (event.status === 'ended') {
+      return event.kick_vod_url || event.youtube_vod_url || '';
+    }
+    return '';
+  };
+  
+  const streamUrl = getStreamUrl();
+  
+  // Safe URL opener that always works
+  const handleStreamClick = (e) => {
+    e.preventDefault();
+    if (!streamUrl) return;
+    
+    try {
+      // Ensure URL is valid
+      const url = streamUrl.startsWith('http') ? streamUrl : `https://${streamUrl}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      // Fallback: try direct navigation
+      try {
+        window.location.href = streamUrl;
+      } catch {
+        console.error('Failed to open stream URL');
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -148,11 +179,9 @@ export default function EventCard({ event, index, onRegisterAthlete, onRegisterS
 
         {/* Stream buttons with 3D hover */}
         {(hasLiveStream || hasVOD) && streamUrl && (
-          <motion.a
-            href={streamUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-fire text-[10px] py-2.5 px-3 mb-2 text-center no-underline relative overflow-hidden"
+          <motion.button
+            onClick={handleStreamClick}
+            className="btn-fire text-[10px] py-2.5 px-3 mb-2 text-center relative overflow-hidden w-full cursor-pointer"
             whileHover={{ 
               scale: 1.05, 
               rotateX: -5,
@@ -166,7 +195,7 @@ export default function EventCard({ event, index, onRegisterAthlete, onRegisterS
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
             />
             <span className="relative z-10">{hasLiveStream ? t('event_watch_stream') : t('event_watch_vod')}</span>
-          </motion.a>
+          </motion.button>
         )}
 
         {/* Registration buttons with 3D depth */}
