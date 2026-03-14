@@ -68,7 +68,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
       toast.success(t('secondary_list_success'));
     },
     onError: () => {
-      toast.error('Failed to create listing');
+      toast.error(t('secondary_list_error'));
     },
   });
 
