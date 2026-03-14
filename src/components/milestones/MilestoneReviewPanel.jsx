@@ -22,40 +22,36 @@ export default function MilestoneReviewPanel({ request, deal, onClose, onReload 
         throw new Error('Please provide rejection reason');
       }
 
-      const updateData = {
-        status: action === 'approve' ? 'approved' : 'rejected',
-        reviewed_at: new Date().toISOString(),
-        brand_notes: brandNotes,
-      };
-
-      if (action === 'reject') {
-        updateData.rejection_reason = rejectionReason;
-      }
-
       if (action === 'approve') {
-        updateData.approved_at = new Date().toISOString();
-
-        // Create payout for approved milestone
-        const payout = await base44.entities.Payout.create({
-          athlete_email: request.athlete_email,
-          escrow_id: request.escrow_id,
-          deal_id: request.deal_id,
-          amount: request.milestone_amount,
-          currency: 'EUR',
-          payout_method: 'braintree',
-          status: 'pending',
-          initiated_date: new Date().toISOString(),
+        // Call automated payout processing function
+        const result = await base44.functions.invoke('processPayoutAndReceipt', {
+          milestoneRequestId: request.id,
+          escrowId: request.escrow_id,
+          dealId: request.deal_id,
         });
 
-        updateData.payout_id = payout.id;
+        // Also update milestone with brand notes
+        await base44.entities.MilestonePaymentRequest.update(request.id, {
+          brand_notes: brandNotes,
+        });
+
+        return result;
+      } else {
+        // Handle rejection
+        const updateData = {
+          status: 'rejected',
+          reviewed_at: new Date().toISOString(),
+          brand_notes: brandNotes,
+          rejection_reason: rejectionReason,
+        };
+
+        const updated = await base44.entities.MilestonePaymentRequest.update(
+          request.id,
+          updateData
+        );
+
+        return updated;
       }
-
-      const updated = await base44.entities.MilestonePaymentRequest.update(
-        request.id,
-        updateData
-      );
-
-      return updated;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['milestone-requests'] });
