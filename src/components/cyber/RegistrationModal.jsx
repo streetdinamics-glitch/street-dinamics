@@ -334,18 +334,41 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*,.pdf"
+                accept=".jpg,.jpeg,.png,.pdf"
                 onChange={handleFileUpload}
                 className="hidden"
+                disabled={uploading}
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="btn-ghost w-full text-[11px] py-2.5 px-3 flex items-center justify-center gap-2 disabled:opacity-40"
+                className={`w-full text-[11px] py-2.5 px-3 flex items-center justify-center gap-2 transition-all border ${
+                  form.id_document
+                    ? 'border-cyan/40 bg-cyan/10 text-cyan disabled:opacity-40'
+                    : 'btn-ghost disabled:opacity-40'
+                }`}
               >
-                {uploading ? 'Uploading...' : form.id_document ? 'Document Uploaded' : 'Choose File'}
+                {form.id_document ? (
+                  <>
+                    <CheckCircle2 size={14} />
+                    Document Verified
+                  </>
+                ) : uploading ? (
+                  <>
+                    <div className="w-3 h-3 border-2 border-fire-3/30 border-t-fire-3 rounded-full animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Upload size={14} />
+                    Choose File
+                  </>
+                )}
               </button>
               <p className="font-mono text-[9px] tracking-[1px] text-fire-3/30 mt-1">{t('reg_id_hint')}</p>
+              {form.id_document && (
+                <p className="font-mono text-[9px] tracking-[1px] text-cyan/60 mt-1">✓ Document ready for submission</p>
+              )}
             </div>
 
             <div className="flex gap-2.5 mt-4">
