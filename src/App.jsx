@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
 import CreateEvent from './pages/CreateEvent';
+import AthleteProfile from './pages/AthleteProfile';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -40,6 +41,7 @@ const AuthenticatedApp = () => {
       <Route path="/Home" element={<Home />} />
       <Route path="/Admin" element={<Admin />} />
       <Route path="/CreateEvent" element={<CreateEvent />} />
+      <Route path="/AthleteProfile" element={<AthleteProfile />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
