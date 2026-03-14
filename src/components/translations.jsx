@@ -926,6 +926,13 @@ export const translations = {
     attendance_online: 'ONLINE',
     attendance_online_desc: 'Sehen Sie sich den Livestream aus der Ferne an. Erhalten Sie einen digitalen Pass und Zugang zu exklusiven Online-Funktionen.',
     attendance_select: 'AUSWÄHLEN',
+
+    // Global Leaderboard
+    leaderboard_subtitle: 'Globales Ranking-System',
+    leaderboard_title: 'CHAMPIONS BOARD',
+    leaderboard_showing: 'Anzeige',
+    leaderboard_empty: 'Noch keine Athleten auf der Rangliste',
+    leaderboard_loading: 'Rankings werden geladen...',
   },
   
   ar: {
