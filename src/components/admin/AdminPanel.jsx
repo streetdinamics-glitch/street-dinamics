@@ -10,6 +10,7 @@ import Leaderboard from './Leaderboard';
 import QRScanner from './QRScanner';
 import TournamentManager from './TournamentManager';
 import VotingManager from '../voting/VotingManager';
+import FanVotingManager from './FanVotingManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -30,6 +31,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showScanner, setShowScanner] = useState(false);
   const [tournamentEvent, setTournamentEvent] = useState(null);
   const [votingEvent, setVotingEvent] = useState(null);
+  const [fanVotingEvent, setFanVotingEvent] = useState(null);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -333,6 +335,12 @@ export default function AdminPanel({ lang, onClose }) {
                     onClick={() => setVotingEvent(event)}
                     className="btn-cyan text-[10px] py-2 px-4"
                   >
+                    Voting
+                  </button>
+                  <button
+                    onClick={() => setFanVotingEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
                     Fan Voting
                   </button>
                   {event.status === 'upcoming' && (
@@ -583,6 +591,20 @@ export default function AdminPanel({ lang, onClose }) {
             event={votingEvent}
             onClose={() => setVotingEvent(null)}
           />
+        )}
+        {fanVotingEvent && (
+          <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+            <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
+              <div className="absolute top-0 left-0 right-0 fire-line" />
+              <button
+                onClick={() => setFanVotingEvent(null)}
+                className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+              >
+                CLOSE
+              </button>
+              <FanVotingManager event={fanVotingEvent} />
+            </div>
+          </div>
         )}
 
         {/* Change Password */}
