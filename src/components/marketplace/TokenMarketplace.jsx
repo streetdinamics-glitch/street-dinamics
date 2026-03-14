@@ -9,7 +9,6 @@ import PurchaseModal from './PurchaseModal';
 import PurchaseSuccessModal from './PurchaseSuccessModal';
 import Web3PurchaseModal from '../web3/Web3PurchaseModal';
 import { useTranslation } from '../translations';
-import WatchlistButton from '../watchlist/WatchlistButton';
 
 export default function TokenMarketplace({ lang }) {
   const t = useTranslation(lang);
@@ -130,7 +129,17 @@ export default function TokenMarketplace({ lang }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
+              className="relative"
             >
+              <div className="absolute top-4 right-4 z-10">
+                <WatchlistButton
+                  assetType="athlete"
+                  assetId={token.athlete_email || token.id}
+                  assetName={token.athlete_name}
+                  price={token.current_price || token.base_price}
+                  className="border border-fire-3/20 bg-black/60 backdrop-blur-sm px-2 py-1"
+                />
+              </div>
               <TokenCard 
                 token={token} 
                 onBuy={(tkn, method) => {
