@@ -33,6 +33,10 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
     { label: t('nav_bet'), id: 'gamification' },
     { label: t('nav_social'), id: 'social' },
   ];
+  
+  const navLinks = user?.role === 'athlete' || user?.role === 'admin' ? [
+    { label: '📊 Analytics', path: '/Analytics' },
+  ] : [];
 
   return (
     <>

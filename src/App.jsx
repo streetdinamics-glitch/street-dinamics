@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import CreateEvent from './pages/CreateEvent';
 import AthleteProfile from './pages/AthleteProfile';
+import Analytics from './pages/Analytics';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -43,6 +44,7 @@ const AuthenticatedApp = () => {
       <Route path="/Admin" element={<Admin />} />
       <Route path="/CreateEvent" element={<CreateEvent />} />
       <Route path="/AthleteProfile" element={<AthleteProfile />} />
+      <Route path="/Analytics" element={<Analytics />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
