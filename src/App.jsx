@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import CreateEvent from './pages/CreateEvent';
 import AthleteProfile from './pages/AthleteProfile';
+import AthleteProfilePage from './pages/AthleteProfilePage';
 import Analytics from './pages/Analytics';
 import NFTDashboard from './pages/NFTDashboard';
 import { Navigate } from 'react-router-dom';
