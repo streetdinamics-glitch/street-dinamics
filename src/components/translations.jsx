@@ -749,6 +749,13 @@ export const translations = {
     attendance_online: 'EN LIGNE',
     attendance_online_desc: 'Regardez la diffusion en direct à distance. Recevez un pass numérique et accès à des fonctionnalités en ligne exclusives.',
     attendance_select: 'SÉLECTIONNER',
+
+    // Global Leaderboard
+    leaderboard_subtitle: 'Système de Classement Global',
+    leaderboard_title: 'TABLEAU DES CHAMPIONS',
+    leaderboard_showing: 'Affichage',
+    leaderboard_empty: 'Aucun athlète sur le classement encore',
+    leaderboard_loading: 'Chargement du classement...',
   },
   
   de: {
