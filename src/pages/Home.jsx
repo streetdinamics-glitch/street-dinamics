@@ -196,6 +196,8 @@ export default function Home() {
         lang={lang}
       />
       <FireRule />
+      {user && <MetricsVisualizationDashboard lang={lang} />}
+      <FireRule />
       <TokenMarketplace lang={lang} />
       <FireRule />
       <NFTMarketplace />
