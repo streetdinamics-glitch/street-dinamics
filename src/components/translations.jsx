@@ -216,6 +216,13 @@ export const translations = {
     watchlist_listings: 'Listings On',
     watchlist_listings_off: 'Listings Off',
     watchlist_remove: 'Remove',
+
+    // Global Leaderboard
+    leaderboard_subtitle: 'Global Ranking System',
+    leaderboard_title: 'CHAMPIONS BOARD',
+    leaderboard_showing: 'Showing',
+    leaderboard_empty: 'No athletes on the leaderboard yet',
+    leaderboard_loading: 'Loading rankings...',
   },
   
   it: {
