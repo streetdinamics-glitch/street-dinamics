@@ -1,4 +1,12 @@
 import React, { useState, useMemo } from 'react';
+
+// Unified tier config for both NFT and Token cards
+const TIER_CONFIG = {
+  common: { bg: 'from-slate-600 to-slate-800', glow: 'rgba(148, 163, 184, 0.4)', border: 'border-slate-500/30', accent: 'text-slate-400' },
+  rare: { bg: 'from-blue-600 to-purple-700', glow: 'rgba(147, 51, 234, 0.4)', border: 'border-purple-500/30', accent: 'text-purple-400' },
+  epic: { bg: 'from-cyan-500 to-cyan-700', glow: 'rgba(0, 255, 238, 0.4)', border: 'border-cyan/30', accent: 'text-cyan' },
+  legendary: { bg: 'from-yellow-500 via-orange-500 to-red-600', glow: 'rgba(255, 150, 0, 0.6)', border: 'border-fire-3/40', accent: 'text-fire-5' },
+};
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -102,12 +110,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
     }
   };
 
-  const rarityColors = {
-    common: { bg: 'from-fire-3/10 to-fire-3/5', border: 'border-fire-3/30', text: 'text-fire-3' },
-    rare: { bg: 'from-cyan/10 to-cyan/5', border: 'border-cyan/30', text: 'text-cyan' },
-    epic: { bg: 'from-purple-500/10 to-purple-500/5', border: 'border-purple-500/30', text: 'text-purple-400' },
-    legendary: { bg: 'from-fire-5/20 to-fire-3/10', border: 'border-fire-5/40', text: 'text-fire-6' },
-  };
+
 
   // Get unique athlete names
   const athleteNames = useMemo(() => {
@@ -177,7 +180,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {liveCards.map((card, i) => {
-            const rarityStyle = rarityColors[card.rarity];
+            const tierStyle = TIER_CONFIG[card.rarity];
             const availability = card.total_supply - card.minted_count;
             const soldPercentage = (card.minted_count / card.total_supply) * 100;
             const isOwned = myNFTs.some(nft => nft.nft_id === card.id);
@@ -188,11 +191,14 @@ export default function NFTMarketplace({ lang = 'en' }) {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`relative bg-gradient-to-br ${rarityStyle.bg} border ${rarityStyle.border} overflow-hidden`}
+                className={`relative bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border ${tierStyle.border} overflow-hidden group clip-cyber`}
               >
+                {/* Tier glow */}
+                <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `radial-gradient(circle at 50% 0%, ${tierStyle.glow}, transparent 70%)` }} />
+                
                 {/* Rarity Badge */}
-                <div className={`absolute top-3 right-3 px-3 py-1 border ${rarityStyle.border} ${rarityStyle.text} font-mono text-xs tracking-[1px] uppercase bg-black/60 backdrop-blur-sm z-10`}>
-                  {t(`nft_${card.rarity}`)}
+                <div className={`absolute top-3 right-3 px-3 py-1 border font-orbitron text-[8px] tracking-[2px] uppercase bg-gradient-to-r ${tierStyle.bg} ${tierStyle.accent} clip-btn z-10`}>
+                  {card.rarity}
                 </div>
 
                 {/* Image */}
@@ -326,12 +332,12 @@ export default function NFTMarketplace({ lang = 'en' }) {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
-                className={`bg-gradient-to-br ${rarityColors[nft.rarity].bg} border ${rarityColors[nft.rarity].border} p-3 text-center`}
+                className={`bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border ${TIER_CONFIG[nft.rarity].border} p-3 text-center`}
               >
                 <div className="font-mono text-xs text-fire-3/60 mb-1">#{nft.serial_number}</div>
                 <div className="font-rajdhani font-bold text-sm text-fire-5">{nft.athlete_name}</div>
-                <div className={`font-mono text-xs ${rarityColors[nft.rarity].text} uppercase mt-2`}>
-                  {nft.rarity}
+                <div className={`font-mono text-xs ${TIER_CONFIG[nft.rarity].accent} uppercase mt-2`}>
+                   {nft.rarity}
                 </div>
               </motion.div>
             ))}
