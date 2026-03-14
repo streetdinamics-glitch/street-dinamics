@@ -14,6 +14,7 @@ import FanVotingManager from './FanVotingManager';
 import PerformanceScoreManager from './PerformanceScoreManager';
 import NFTDropManager from './NFTDropManager';
 import RoyaltyDistributionManager from './RoyaltyDistributionManager';
+import MinorRegistrationApproval from './MinorRegistrationApproval';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -38,6 +39,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [scoreEvent, setScoreEvent] = useState(null);
   const [nftEvent, setNftEvent] = useState(null);
   const [showRoyaltyManager, setShowRoyaltyManager] = useState(false);
+  const [showMinorApprovals, setShowMinorApprovals] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -251,6 +253,12 @@ export default function AdminPanel({ lang, onClose }) {
             className="btn-ghost text-[11px] py-2.5 px-5"
           >
             💰 Royalty Distribution
+          </button>
+          <button
+            onClick={() => setShowMinorApprovals(true)}
+            className="btn-cyan text-[11px] py-2.5 px-5"
+          >
+            🛡️ Minor Approvals
           </button>
         </div>
 
@@ -669,6 +677,20 @@ export default function AdminPanel({ lang, onClose }) {
                 CLOSE
               </button>
               <RoyaltyDistributionManager />
+            </div>
+          </div>
+        )}
+        {showMinorApprovals && (
+          <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+            <div className="relative w-full max-w-5xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-cyan/30 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
+              <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-cyan/40 via-cyan/60 to-cyan/40 h-[2px]" />
+              <button
+                onClick={() => setShowMinorApprovals(false)}
+                className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-cyan/60 hover:text-cyan"
+              >
+                CLOSE
+              </button>
+              <MinorRegistrationApproval />
             </div>
           </div>
         )}
