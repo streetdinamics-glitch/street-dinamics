@@ -179,8 +179,6 @@ export default function Home() {
       </section>
 
       <FireRule />
-      <SponsorSection lang={lang} />
-      <FireRule />
       <BetSection
         hasToken={hasToken}
         onScrollToTokens={() => scrollTo('tokens')}
@@ -189,6 +187,8 @@ export default function Home() {
       />
       <FireRule />
       <TokenSection lang={lang} onScrollToSocial={() => scrollTo('social')} />
+      <FireRule />
+      <SponsorSection lang={lang} />
       <Footer lang={lang} />
 
       {/* Modals */}
