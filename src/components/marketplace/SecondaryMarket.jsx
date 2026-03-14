@@ -259,7 +259,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
                 {/* Select Asset */}
                 <div>
                   <label className="font-orbitron text-sm font-bold text-fire-4 mb-3 block">
-                    SELECT ASSET TO SELL
+                    {t('secondary_select_asset')}
                   </label>
                   
                   <div className="space-y-2 max-h-64 overflow-y-auto">
