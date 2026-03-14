@@ -572,6 +572,13 @@ export const translations = {
     attendance_online: 'EN LÍNEA',
     attendance_online_desc: 'Ve la transmisión en vivo de forma remota. Recibe pase digital y acceso a funciones en línea exclusivas.',
     attendance_select: 'SELECCIONAR',
+
+    // Global Leaderboard
+    leaderboard_subtitle: 'Sistema de Ranking Global',
+    leaderboard_title: 'TABLA DE CAMPEONES',
+    leaderboard_showing: 'Mostrando',
+    leaderboard_empty: 'Ningún atleta en el ranking aún',
+    leaderboard_loading: 'Cargando ranking...',
   },
   
   fr: {
