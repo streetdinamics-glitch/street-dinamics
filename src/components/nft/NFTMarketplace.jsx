@@ -140,14 +140,14 @@ export default function NFTMarketplace({ lang = 'en' }) {
   return (
     <section id="nft-marketplace" className="section-container">
       <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">
-        Historic Moments
+        {t('nft_subtitle')}
       </p>
       <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-4 font-black">
-        NFT COLLECTION CARDS
+        {t('nft_title')}
       </h2>
 
       <p className="text-center font-rajdhani text-lg text-fire-4/70 max-w-3xl mx-auto mb-8">
-        Each NFT captures a unique historic moment. Limited supply. Value grows with athlete performance.
+        {t('nft_description')}
       </p>
 
       {/* Advanced Filter Panel */}
