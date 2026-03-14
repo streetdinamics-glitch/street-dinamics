@@ -13,7 +13,7 @@ export default function LiveEventTicker({ eventId, eventStatus = 'live' }) {
     queryKey: ['event-details', eventId],
     queryFn: () => base44.entities.Event.filter({ id: eventId }).then(r => r[0]),
     enabled: !!eventId,
-    refetchInterval: 5000,
+    refetchInterval: 30000,
   });
 
   // Fetch live scores
@@ -21,7 +21,7 @@ export default function LiveEventTicker({ eventId, eventStatus = 'live' }) {
     queryKey: ['live-scores', eventId],
     queryFn: () => base44.entities.EventScore.filter({ event_id: eventId, status: 'submitted' }).then(r => r.sort((a, b) => (b.score || 0) - (a.score || 0))),
     enabled: !!eventId && eventStatus === 'live',
-    refetchInterval: 3000,
+    refetchInterval: 15000,
   });
 
   // Fetch active voting campaigns
@@ -29,14 +29,14 @@ export default function LiveEventTicker({ eventId, eventStatus = 'live' }) {
     queryKey: ['active-campaigns', eventId],
     queryFn: () => base44.entities.EventVote.filter({ event_id: eventId, status: 'active' }),
     enabled: !!eventId,
-    refetchInterval: 5000,
+    refetchInterval: 30000,
   });
 
   // Fetch upcoming events/phases
   const { data: allEvents = [] } = useQuery({
     queryKey: ['upcoming-events'],
     queryFn: () => base44.entities.Event.list('-date', 20),
-    refetchInterval: 10000,
+    refetchInterval: 60000,
   });
 
   // Get current user for notifications

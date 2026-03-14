@@ -34,6 +34,13 @@ import WatchlistPanel from '../components/watchlist/WatchlistPanel';
 
 export default function Home() {
   const [lang, setLang] = useState('en');
+  const [regModal, setRegModal] = useState(null);
+  const [successModal, setSuccessModal] = useState(null);
+  const [socialOpen, setSocialOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
+  const [watchlistOpen, setWatchlistOpen] = useState(false);
   const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [regModal, setRegModal] = useState(null);

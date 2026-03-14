@@ -20,12 +20,14 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
     queryKey: ['fan-points', eventId, user?.email],
     queryFn: () => base44.entities.FanPoints.filter({ event_id: eventId, fan_email: user?.email }).then(r => r[0] || {}),
     enabled: !!user && !!eventId,
+    staleTime: 60000,
   });
 
   const { data: ugcSubmissions = [] } = useQuery({
     queryKey: ['ugc-submissions', user?.email],
     queryFn: () => base44.entities.UGCSubmission.filter({ creator_email: user?.email }),
     enabled: !!user,
+    staleTime: 60000,
   });
 
   // Track referral conversions
@@ -39,6 +41,7 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
       };
     },
     enabled: !!user?.email,
+    staleTime: 60000,
   });
 
   const claimTaskMutation = useMutation({
