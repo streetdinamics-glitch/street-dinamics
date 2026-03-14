@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Check, AlertCircle, Trophy, User, Calendar } from 'lucide-react';
+import { X, Check, AlertCircle, Trophy, User, Calendar, Shield } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function TournamentRegistrationModal({ event, tournament, onClose, onSuccess }) {
@@ -37,9 +37,33 @@ export default function TournamentRegistrationModal({ event, tournament, onClose
     { value: 'professional', label: 'Professional (5+ years)' },
   ];
 
+  const { data: currentUser } = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => base44.auth.me(),
+  });
+
   const registerMutation = useMutation({
     mutationFn: async (data) => {
       const user = await base44.auth.me();
+      
+      // Validate age for tournament
+      if (!user.date_of_birth) {
+        throw new Error('Date of birth is required. Please complete your profile first.');
+      }
+      
+      const birthDate = new Date(user.date_of_birth);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      
+      if (age < 13 || age > 30) {
+        throw new Error('Tournament participants must be between 13-30 years old.');
+      }
+      
+      const isMinor = age < 18;
       
       // Create tournament participant record
       const participant = await base44.entities.TournamentParticipant.create({
@@ -53,8 +77,13 @@ export default function TournamentRegistrationModal({ event, tournament, onClose
         emergency_contact: data.emergency_contact,
         emergency_phone: data.emergency_phone,
         medical_conditions: data.medical_conditions || null,
-        status: 'registered',
+        status: isMinor ? 'pending' : 'registered',
         registration_date: new Date().toISOString(),
+        age_at_registration: age,
+        is_minor: isMinor,
+        terms_accepted: true,
+        terms_version: '1.2',
+        terms_accepted_date: new Date().toISOString(),
       });
 
       // Update user profile with discipline if not already set
@@ -344,14 +373,34 @@ export default function TournamentRegistrationModal({ event, tournament, onClose
                 </div>
 
                 <div className="bg-fire-3/5 border border-fire-3/20 p-6">
-                  <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-3">TOURNAMENT TERMS & CONDITIONS</h4>
-                  <div className="font-mono text-xs text-fire-3/60 space-y-2 max-h-48 overflow-y-auto">
-                    <p>• I understand this is a competitive tournament and accept the inherent risks.</p>
-                    <p>• I confirm I am physically fit to participate in the selected discipline.</p>
-                    <p>• I will compete fairly and respect all participants, judges, and organizers.</p>
-                    <p>• I grant permission for photos/videos taken during the event to be used for promotional purposes.</p>
-                    <p>• I understand that Street Dinamics is not liable for injuries sustained during participation.</p>
-                    <p>• I will follow all safety guidelines and event rules.</p>
+                  <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-3 flex items-center gap-2">
+                    <Shield size={16} />
+                    TOURNAMENT PARTICIPATION AGREEMENT
+                  </h4>
+                  <div className="font-mono text-xs text-fire-3/60 space-y-2 max-h-64 overflow-y-auto leading-relaxed">
+                    <p><strong className="text-fire-4">ASSUMPTION OF RISK:</strong> I understand competitive sports involve inherent risks including physical injury, equipment failure, and medical emergencies. I voluntarily assume all such risks.</p>
+                    
+                    <p><strong className="text-fire-4">FITNESS DECLARATION:</strong> I certify I am in good physical health with no medical conditions that would prevent safe participation. I have disclosed all relevant medical information.</p>
+                    
+                    <p><strong className="text-fire-4">FAIR PLAY COMMITMENT:</strong> I agree to compete with integrity, respect all participants, judges, and organizers, and comply with anti-doping regulations (WADA standards if applicable).</p>
+                    
+                    <p><strong className="text-fire-4">IMAGE RIGHTS:</strong> I grant Street Dynamics Holding FZE permission to capture, use, and distribute photos/videos of my participation for promotional purposes, social media, and NFT minting.</p>
+                    
+                    <p><strong className="text-fire-4">LIABILITY RELEASE:</strong> I release Street Dynamics Holding FZE from liability for injuries, property damage, or losses, except in cases of gross negligence or willful misconduct.</p>
+                    
+                    <p><strong className="text-fire-4">SAFETY COMPLIANCE:</strong> I will follow all safety guidelines, wear required protective equipment, and immediately report any unsafe conditions to event staff.</p>
+                    
+                    <p><strong className="text-fire-4">DISCIPLINE & CONDUCT:</strong> I understand violations of the Code of Conduct may result in disqualification, forfeiture of prizes, and permanent ban from future events.</p>
+                    
+                    <p><strong className="text-fire-4">EMERGENCY AUTHORIZATION:</strong> I authorize Street Dynamics staff to seek emergency medical treatment on my behalf if I am incapacitated and my emergency contact cannot be reached.</p>
+                    
+                    <p><strong className="text-fire-4">GOVERNING LAW:</strong> This agreement is governed by DIFC law (Dubai). Disputes resolved via arbitration per DIFC-LCIA rules.</p>
+                    
+                    {formData.medical_conditions && (
+                      <div className="mt-3 pt-3 border-t border-fire-3/20">
+                        <p className="text-fire-5"><strong>MEDICAL DISCLOSURE ACKNOWLEDGED:</strong> Event staff will be informed of your medical conditions for safety purposes only.</p>
+                      </div>
+                    )}
                   </div>
                   
                   <label className="flex items-start gap-3 mt-4 cursor-pointer">

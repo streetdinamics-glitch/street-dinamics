@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, AlertCircle, Shield, CheckCircle2 } from 'lucide-react';
 
@@ -6,7 +6,7 @@ export default function AgeVerification({ dateOfBirth, onVerified }) {
   const [verified, setVerified] = useState(false);
   const [ageCategory, setAgeCategory] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!dateOfBirth) return;
 
     const birthDate = new Date(dateOfBirth);
