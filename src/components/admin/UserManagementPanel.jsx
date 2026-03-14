@@ -272,13 +272,12 @@ export default function UserManagementPanel() {
             </tbody>
           </table>
         </div>
-          {filteredUsers.length === 0 && (
-            <div className="p-8 text-center">
-              <p className="font-mono text-sm text-fire-3/40">No users match your filters</p>
-            </div>
-          )}
-        </div>
-
+        {filteredUsers.length === 0 && (
+          <div className="p-8 text-center">
+            <p className="font-mono text-sm text-fire-3/40">No users match your filters</p>
+          </div>
+        )}
+        
         {/* Pagination */}
         {allUsers.length > pageSize && (
           <div className="flex items-center justify-between mt-4 px-4 py-3 bg-fire-3/5 border border-fire-3/10">
