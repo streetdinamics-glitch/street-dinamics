@@ -983,7 +983,11 @@ export const translations = {
     attendance_online_desc: 'Sehen Sie sich den Livestream aus der Ferne an. Erhalten Sie einen digitalen Pass und Zugang zu exklusiven Online-Funktionen.',
     attendance_select: 'AUSWÄHLEN',
 
-    // Secondary Market Activity
+    // Secondary Market
+    secondary_subtitle: 'Peer-to-Peer-Handel',
+    secondary_title: 'SEKUNDÄRMARKT',
+    secondary_description: 'Kaufen und verkaufen Sie Athleten-Token und NFTs direkt von anderen Sammlern. 5% Plattformgebühr auf alle Transaktionen.',
+    secondary_list_for_sale: 'Zum Verkauf Anbieten',
     secondary_top_assets: 'TOP ASSETS',
     secondary_recent_transactions: 'AKTUELLE TRANSAKTIONEN',
     secondary_activity_empty: 'Noch keine Aktivität',
