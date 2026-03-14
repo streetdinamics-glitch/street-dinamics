@@ -28,7 +28,6 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
   const canvasRef = useRef(null);
   const parentCanvasRef = useRef(null);
   const isDrawing = useRef(false);
-  const fileInputRef = useRef(null);
 
   const totalSteps = ageCategory?.isMinor ? 5 : 4;
 
