@@ -221,6 +221,15 @@ export const translations = {
     watchlist_listings_off: 'Listings Off',
     watchlist_remove: 'Remove',
 
+    // Secondary Market Activity
+    secondary_top_assets: 'TOP ASSETS',
+    secondary_recent_transactions: 'RECENT TRANSACTIONS',
+    secondary_activity_empty: 'No activity yet',
+    secondary_transactions_empty: 'No transactions yet',
+
+    // Gamification
+    gamification_subtitle: 'Fan Engagement Hub',
+
     // Global Leaderboard
     leaderboard_subtitle: 'Global Ranking System',
     leaderboard_title: 'CHAMPIONS BOARD',
