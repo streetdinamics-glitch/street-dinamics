@@ -15,6 +15,9 @@ export default function Analytics() {
     queryFn: () => base44.auth.me(),
   });
 
+  // Calculate selected athlete email early
+  const selectedAthleteEmail = selectedAthlete?.email || user?.email;
+
   const { data: athletes = [] } = useQuery({
     queryKey: ['athlete-users'],
     queryFn: async () => {
@@ -60,9 +63,6 @@ export default function Analytics() {
     enabled: !!selectedAthleteEmail,
     initialData: [],
   });
-
-  // Calculate dashboard metrics
-  const selectedAthleteEmail = selectedAthlete?.email || user?.email;
   const athleteStats = stats.find(s => s.athlete_email === selectedAthleteEmail) || {};
   const athleteToken = tokens.find(t => t.athlete_email === selectedAthleteEmail);
   const athleteRegistrations = registrations.filter(r => r.email === selectedAthleteEmail);
