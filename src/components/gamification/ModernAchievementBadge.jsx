@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Zap, Heart, Share2, Compass, TrendingUp, Award } from 'lucide-react';
 
 const badgeStyles = {
-  'content-creator': { icon: <Zap size={24} />, color: 'from-fire-3 to-fire-5', label: 'CONTENT CREATOR', desc: '5+ UGC posts' },
-  'influencer': { icon: <TrendingUp size={24} />, color: 'from-cyan to-purple-500', label: 'INFLUENCER', desc: '10+ referrals' },
-  'superfan': { icon: <Heart size={24} />, color: 'from-fire-5 to-red-500', label: 'SUPERFAN', desc: '100+ points' },
-  'social-butterfly': { icon: <Share2 size={24} />, color: 'from-green-500 to-cyan', label: 'SOCIAL BUTTERFLY', desc: '20+ shares' },
-  'explorer': { icon: <Compass size={24} />, color: 'from-purple-500 to-pink-500', label: 'EXPLORER', desc: 'Visit all zones' },
-  'champion': { icon: <Award size={24} />, color: 'from-yellow-400 to-fire-3', label: 'CHAMPION', desc: '#1 on leaderboard' },
+  'content-master': { icon: <Zap size={24} />, color: 'from-fire-3 to-fire-5', label: 'CONTENT MASTER', desc: '5+ UGC posts' },
+  'network-architect': { icon: <TrendingUp size={24} />, color: 'from-cyan to-purple-500', label: 'NETWORK ARCHITECT', desc: '5+ referrals' },
+  'engagement-magnet': { icon: <Heart size={24} />, color: 'from-fire-5 to-red-500', label: 'ENGAGEMENT MAGNET', desc: '250+ points' },
+  'influence-nexus': { icon: <Share2 size={24} />, color: 'from-green-500 to-cyan', label: 'INFLUENCE NEXUS', desc: '20+ viral posts' },
+  'viral-catalyst': { icon: <Compass size={24} />, color: 'from-purple-500 to-pink-500', label: 'VIRAL CATALYST', desc: '100+ total reach' },
+  'legacy-builder': { icon: <Award size={24} />, color: 'from-yellow-400 to-fire-3', label: 'LEGACY BUILDER', desc: '1000+ points' },
 };
 
 export default function ModernAchievementBadge({ badgeId, unlocked = false, progress = 0 }) {
