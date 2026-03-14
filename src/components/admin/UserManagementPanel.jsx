@@ -187,121 +187,122 @@ export default function UserManagementPanel() {
       {/* Users Table */}
       {!usersLoading && (
         <div className="border border-fire-3/10 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-fire-3/5 border-b border-fire-3/10">
-              <tr>
-                <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">NAME</th>
-                <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">EMAIL</th>
-                <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">ROLE</th>
-                <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">JOINED</th>
-                <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-fire-3/10">
-              {filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-fire-3/5 transition-colors">
-                  <td className="px-4 py-3 font-rajdhani text-fire-3/80">{user.full_name}</td>
-                  <td className="px-4 py-3 font-mono text-[10px] text-fire-3/60">{user.email}</td>
-                  <td className="px-4 py-3">
-                    <div className="space-y-1">
-                      <span className={`inline-block px-2.5 py-1 text-[9px] font-mono tracking-[1px] uppercase border ${
-                        user.role === 'admin' ? 'border-purple-500/40 bg-purple-500/10 text-purple-400' :
-                        user.role === 'athlete' ? 'border-cyan/40 bg-cyan/10 text-cyan' :
-                        'border-fire-3/40 bg-fire-3/10 text-fire-4'
-                      }`}>
-                        {user.role}
-                      </span>
-                      {user.athlete_profile?.verification_status === 'verified' && (
-                        <div className="text-[8px] text-cyan/60">✓ Tokenized</div>
-                      )}
-                      {user.fan_benefits?.verified && (
-                        <div className="text-[8px] text-fire-5/60">⭐ {user.fan_benefits.loyalty_level}</div>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[10px] text-fire-3/60">
-                    {new Date(user.created_date).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => {
-                          setMessageModal(user);
-                          setMessageText('');
-                          setMessageSubject('');
-                        }}
-                        title="Send message"
-                        disabled={sendMessage.isPending}
-                        className="p-1.5 border border-fire-3/20 hover:border-fire-3 hover:bg-fire-3/10 transition-all disabled:opacity-50"
-                      >
-                        <Mail size={14} className="text-fire-3/60 hover:text-fire-3" />
-                      </button>
-                      {user.role !== 'athlete' && (
-                        <button
-                          onClick={() => handleUpgradeToAthlete(user)}
-                          title="Upgrade to verified athlete"
-                          disabled={updateUser.isPending}
-                          className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
-                        >
-                          <Crown size={14} className="text-cyan/60 hover:text-cyan" />
-                        </button>
-                      )}
-                      {user.role !== 'user' && (
-                        <button
-                          onClick={() => handleUpgradeToFan(user)}
-                          title="Upgrade to verified fan"
-                          disabled={updateUser.isPending}
-                          className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
-                        >
-                          <Star size={14} className="text-fire-5/60 hover:text-fire-5" />
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleDelete(user)}
-                        title="Delete user"
-                        disabled={deleteUser.isPending}
-                        className="p-1.5 border border-red-500/20 hover:border-red-500 hover:bg-red-500/10 transition-all disabled:opacity-50"
-                      >
-                        <Trash2 size={14} className="text-red-500/60 hover:text-red-500" />
-                      </button>
-                    </div>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-fire-3/5 border-b border-fire-3/10">
+                <tr>
+                  <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">NAME</th>
+                  <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">EMAIL</th>
+                  <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">ROLE</th>
+                  <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">JOINED</th>
+                  <th className="px-4 py-3 text-left font-orbitron text-fire-4 text-[11px] tracking-[1px]">ACTIONS</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-fire-3/10">
+                {filteredUsers.map((user) => (
+                  <tr key={user.id} className="hover:bg-fire-3/5 transition-colors">
+                    <td className="px-4 py-3 font-rajdhani text-fire-3/80">{user.full_name}</td>
+                    <td className="px-4 py-3 font-mono text-[10px] text-fire-3/60">{user.email}</td>
+                    <td className="px-4 py-3">
+                      <div className="space-y-1">
+                        <span className={`inline-block px-2.5 py-1 text-[9px] font-mono tracking-[1px] uppercase border ${
+                          user.role === 'admin' ? 'border-purple-500/40 bg-purple-500/10 text-purple-400' :
+                          user.role === 'athlete' ? 'border-cyan/40 bg-cyan/10 text-cyan' :
+                          'border-fire-3/40 bg-fire-3/10 text-fire-4'
+                        }`}>
+                          {user.role}
+                        </span>
+                        {user.athlete_profile?.verification_status === 'verified' && (
+                          <div className="text-[8px] text-cyan/60">✓ Tokenized</div>
+                        )}
+                        {user.fan_benefits?.verified && (
+                          <div className="text-[8px] text-fire-5/60">⭐ {user.fan_benefits.loyalty_level}</div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 font-mono text-[10px] text-fire-3/60">
+                      {new Date(user.created_date).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            setMessageModal(user);
+                            setMessageText('');
+                            setMessageSubject('');
+                          }}
+                          title="Send message"
+                          disabled={sendMessage.isPending}
+                          className="p-1.5 border border-fire-3/20 hover:border-fire-3 hover:bg-fire-3/10 transition-all disabled:opacity-50"
+                        >
+                          <Mail size={14} className="text-fire-3/60 hover:text-fire-3" />
+                        </button>
+                        {user.role !== 'athlete' && (
+                          <button
+                            onClick={() => handleUpgradeToAthlete(user)}
+                            title="Upgrade to verified athlete"
+                            disabled={updateUser.isPending}
+                            className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
+                          >
+                            <Crown size={14} className="text-cyan/60 hover:text-cyan" />
+                          </button>
+                        )}
+                        {user.role !== 'user' && (
+                          <button
+                            onClick={() => handleUpgradeToFan(user)}
+                            title="Upgrade to verified fan"
+                            disabled={updateUser.isPending}
+                            className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
+                          >
+                            <Star size={14} className="text-fire-5/60 hover:text-fire-5" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleDelete(user)}
+                          title="Delete user"
+                          disabled={deleteUser.isPending}
+                          className="p-1.5 border border-red-500/20 hover:border-red-500 hover:bg-red-500/10 transition-all disabled:opacity-50"
+                        >
+                          <Trash2 size={14} className="text-red-500/60 hover:text-red-500" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {filteredUsers.length === 0 && (
+            <div className="p-8 text-center">
+              <p className="font-mono text-sm text-fire-3/40">No users match your filters</p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {allUsers.length > pageSize && (
+            <div className="flex items-center justify-between mt-4 px-4 py-3 bg-fire-3/5 border border-fire-3/10">
+              <div className="font-mono text-[10px] text-fire-3/60">
+                Showing {page * pageSize + 1}–{Math.min((page + 1) * pageSize, allUsers.length)} of {allUsers.length} users
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setPage(Math.max(0, page - 1))}
+                  disabled={page === 0}
+                  className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
+                >
+                  ← Prev
+                </button>
+                <button
+                  onClick={() => setPage(Math.min(Math.ceil(allUsers.length / pageSize) - 1, page + 1))}
+                  disabled={page >= Math.ceil(allUsers.length / pageSize) - 1}
+                  className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
+                >
+                  Next →
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-        {filteredUsers.length === 0 && (
-          <div className="p-8 text-center">
-            <p className="font-mono text-sm text-fire-3/40">No users match your filters</p>
-          </div>
-        )}
-        
-        {/* Pagination */}
-        {allUsers.length > pageSize && (
-          <div className="flex items-center justify-between mt-4 px-4 py-3 bg-fire-3/5 border border-fire-3/10">
-            <div className="font-mono text-[10px] text-fire-3/60">
-              Showing {page * pageSize + 1}–{Math.min((page + 1) * pageSize, allUsers.length)} of {allUsers.length} users
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setPage(Math.max(0, page - 1))}
-                disabled={page === 0}
-                className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
-              >
-                ← Prev
-              </button>
-              <button
-                onClick={() => setPage(Math.min(Math.ceil(allUsers.length / pageSize) - 1, page + 1))}
-                disabled={page >= Math.ceil(allUsers.length / pageSize) - 1}
-                className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
-              >
-                Next →
-              </button>
-            </div>
-          </div>
-        )}
       )}
 
       {/* Message Modal */}
