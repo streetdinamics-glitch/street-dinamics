@@ -7,6 +7,7 @@ import TokenCard from './TokenCard';
 import TokenFilters from './TokenFilters';
 import PurchaseModal from './PurchaseModal';
 import PurchaseSuccessModal from './PurchaseSuccessModal';
+import Web3PurchaseModal from '../web3/Web3PurchaseModal';
 import { useTranslation } from '../translations';
 
 export default function TokenMarketplace({ lang }) {
@@ -18,6 +19,7 @@ export default function TokenMarketplace({ lang }) {
     sort: 'newest',
   });
   const [purchaseModal, setPurchaseModal] = useState(null);
+  const [web3PurchaseModal, setWeb3PurchaseModal] = useState(null);
   const [successModal, setSuccessModal] = useState(null);
 
   const { data: tokens = [], isLoading } = useQuery({
@@ -128,17 +130,34 @@ export default function TokenMarketplace({ lang }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
             >
-              <TokenCard token={token} onBuy={() => setPurchaseModal(token)} />
+              <TokenCard 
+                token={token} 
+                onBuy={(tkn, method) => {
+                  if (method === 'crypto') {
+                    setWeb3PurchaseModal(tkn);
+                  } else {
+                    setPurchaseModal(tkn);
+                  }
+                }} 
+              />
             </motion.div>
           ))}
         </div>
       )}
 
-      {/* Purchase modal */}
+      {/* Purchase modals */}
       {purchaseModal && (
         <PurchaseModal
           token={purchaseModal}
           onClose={() => setPurchaseModal(null)}
+          onSuccess={handlePurchaseSuccess}
+        />
+      )}
+      
+      {web3PurchaseModal && (
+        <Web3PurchaseModal
+          token={web3PurchaseModal}
+          onClose={() => setWeb3PurchaseModal(null)}
           onSuccess={handlePurchaseSuccess}
         />
       )}

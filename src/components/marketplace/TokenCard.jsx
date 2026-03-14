@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, Trophy, Zap } from 'lucide-react';
 
@@ -30,8 +30,13 @@ const TIER_CONFIG = {
 };
 
 export default function TokenCard({ token, onBuy }) {
+  const [showPaymentChoice, setShowPaymentChoice] = useState(false);
   const config = TIER_CONFIG[token.token_tier];
   const soldOutPercentage = ((token.total_supply - token.available_supply) / token.total_supply) * 100;
+
+  const handleBuyClick = () => {
+    setShowPaymentChoice(true);
+  };
 
   return (
     <motion.div
@@ -148,9 +153,24 @@ export default function TokenCard({ token, onBuy }) {
             >
               COMING SOON
             </button>
+          ) : showPaymentChoice ? (
+            <div className="flex flex-col gap-1.5">
+              <button
+                onClick={() => { setShowPaymentChoice(false); onBuy?.(token, 'fiat'); }}
+                className="btn-ghost text-[9px] py-1.5 px-3 border-fire-3/40"
+              >
+                💳 Fiat
+              </button>
+              <button
+                onClick={() => { setShowPaymentChoice(false); onBuy?.(token, 'crypto'); }}
+                className="btn-ghost text-[9px] py-1.5 px-3 border-cyan/40 text-cyan"
+              >
+                🔗 Web3
+              </button>
+            </div>
           ) : (
             <motion.button
-              onClick={() => onBuy?.(token)}
+              onClick={handleBuyClick}
               className="btn-fire text-[10px] py-2.5 px-5"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../translations';
+import WalletConnectButton from '../web3/WalletConnectButton';
 
 const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
@@ -60,6 +61,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
               {item.label}
             </button>
           ))}
+          <WalletConnectButton minimal={true} />
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
           {user && (
             <>
@@ -83,6 +85,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <WalletConnectButton minimal={true} />
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
           {user && (
             <button onClick={onProfileClick} className="p-1.5 border border-fire-3/20 bg-transparent">

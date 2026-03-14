@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, Wallet, ShoppingCart, CheckCircle, AlertCircle } from 'lucide-react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
@@ -6,8 +6,8 @@ import { parseEther } from 'viem';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { CONTRACT_ADDRESSES } from '@/lib/web3Config';
-import { ATHLETE_TOKEN_ABI, eurToEth, generateTokenMetadata } from '@/lib/web3Utils';
+import { CONTRACT_ADDRESSES } from '../web3/web3Config';
+import { ATHLETE_TOKEN_ABI, eurToEth, generateTokenMetadata } from '../web3/web3Utils';
 import WalletConnectButton from './WalletConnectButton';
 
 export default function Web3PurchaseModal({ token, onClose, onSuccess }) {
