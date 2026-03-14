@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, Tag, ShoppingBag, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from '../translations';
 
 export default function SecondaryMarket() {
   const [showListingModal, setShowListingModal] = useState(false);
