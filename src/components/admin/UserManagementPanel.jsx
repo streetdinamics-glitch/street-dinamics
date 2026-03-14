@@ -115,6 +115,27 @@ export default function UserManagementPanel() {
     }
   };
 
+  const handleReverseAthlete = (user) => {
+    updateUser.mutate({
+      id: user.id,
+      data: {
+        role: 'user',
+        athlete_profile: null,
+        user_type: 'fan',
+      },
+    });
+  };
+
+  const handleReverseFan = (user) => {
+    updateUser.mutate({
+      id: user.id,
+      data: {
+        role: 'user',
+        fan_benefits: null,
+      },
+    });
+  };
+
   const handleSendMessage = () => {
     if (!messageModal || !messageText.trim() || !messageSubject.trim()) {
       toast.error('Please fill in subject and message');
@@ -224,7 +245,7 @@ export default function UserManagementPanel() {
                       {new Date(user.created_date).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-wrap">
                         <button
                           onClick={() => {
                             setMessageModal(user);
@@ -237,22 +258,44 @@ export default function UserManagementPanel() {
                         >
                           <Mail size={14} className="text-fire-3/60 hover:text-fire-3" />
                         </button>
-                        <button
-                          onClick={() => handleUpgradeToAthlete(user)}
-                          title="Upgrade to verified athlete"
-                          disabled={updateUser.isPending || user.role === 'athlete'}
-                          className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
-                        >
-                          <Crown size={14} className="text-cyan/60 hover:text-cyan" />
-                        </button>
-                        <button
-                          onClick={() => handleUpgradeToFan(user)}
-                          title="Upgrade to verified fan"
-                          disabled={updateUser.isPending || user.role === 'user'}
-                          className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
-                        >
-                          <Star size={14} className="text-fire-5/60 hover:text-fire-5" />
-                        </button>
+                        {user.role !== 'athlete' ? (
+                          <button
+                            onClick={() => handleUpgradeToAthlete(user)}
+                            title="Upgrade to verified athlete"
+                            disabled={updateUser.isPending}
+                            className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
+                          >
+                            <Crown size={14} className="text-cyan/60 hover:text-cyan" />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleReverseAthlete(user)}
+                            title="Reverse athlete status"
+                            disabled={updateUser.isPending}
+                            className="p-1.5 border border-cyan/20 hover:border-cyan hover:bg-cyan/10 transition-all disabled:opacity-50"
+                          >
+                            <Crown size={14} className="text-cyan/60 hover:text-cyan opacity-30" />
+                          </button>
+                        )}
+                        {user.role !== 'fan' && !user.fan_benefits ? (
+                          <button
+                            onClick={() => handleUpgradeToFan(user)}
+                            title="Upgrade to verified fan"
+                            disabled={updateUser.isPending}
+                            className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
+                          >
+                            <Star size={14} className="text-fire-5/60 hover:text-fire-5" />
+                          </button>
+                        ) : user.fan_benefits?.verified ? (
+                          <button
+                            onClick={() => handleReverseFan(user)}
+                            title="Reverse fan status"
+                            disabled={updateUser.isPending}
+                            className="p-1.5 border border-fire-5/20 hover:border-fire-5 hover:bg-fire-5/10 transition-all disabled:opacity-50"
+                          >
+                            <Star size={14} className="text-fire-5/60 hover:text-fire-5 opacity-30" />
+                          </button>
+                        ) : null}
                         <button
                           onClick={() => handleDelete(user)}
                           title="Delete user"
