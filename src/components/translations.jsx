@@ -413,7 +413,11 @@ export const translations = {
     attendance_online_desc: 'Guarda la diretta streaming da remoto. Ricevi pass digitale e accesso a funzionalità online esclusive.',
     attendance_select: 'SELEZIONA',
 
-    // Secondary Market Activity
+    // Secondary Market
+    secondary_subtitle: 'Commercio da Pari a Pari',
+    secondary_title: 'MERCATO SECONDARIO',
+    secondary_description: 'Compra e vendi token atleti e NFT direttamente da altri collezionisti. 5% di commissione piattaforma su tutti gli scambi.',
+    secondary_list_for_sale: 'Metti in Vendita',
     secondary_top_assets: 'ASSET PRINCIPALI',
     secondary_recent_transactions: 'TRANSAZIONI RECENTI',
     secondary_activity_empty: 'Nessuna attività ancora',
