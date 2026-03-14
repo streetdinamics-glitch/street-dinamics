@@ -38,19 +38,65 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
+
+    // Step 1: MIME type validation
+    const allowedMimes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+    if (!allowedMimes.includes(file.type)) {
+      toast.error('Invalid file type. Only JPG, PNG, or PDF allowed.');
+      fileInputRef.current.value = '';
+      return;
+    }
+
+    // Step 2: File extension validation (prevent spoofed files)
+    const filename = file.name.toLowerCase();
+    const ext = filename.substring(filename.lastIndexOf('.') + 1);
+    const allowedExts = ['jpg', 'jpeg', 'png', 'pdf'];
+    if (!allowedExts.includes(ext)) {
+      toast.error('Invalid file extension. Only .jpg, .png, or .pdf allowed.');
+      fileInputRef.current.value = '';
+      return;
+    }
+
+    // Step 3: Size validation (5MB limit)
     const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
-      alert(t('reg_upload_size'));
+      toast.error(t('reg_upload_size'));
+      fileInputRef.current.value = '';
+      return;
+    }
+
+    // Step 4: Minimum file size check (prevent empty/corrupt files)
+    if (file.size < 1024) {
+      toast.error('File is too small or empty.');
+      fileInputRef.current.value = '';
       return;
     }
 
     setUploading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      handleChange('id_document', file_url);
+      // Step 5: Attempt upload with retries
+      let uploadErr = null;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const { file_url } = await base44.integrations.Core.UploadFile({ file });
+          if (!file_url) throw new Error('No file URL returned');
+          
+          handleChange('id_document', file_url);
+          toast.success('Document uploaded successfully');
+          return;
+        } catch (err) {
+          uploadErr = err;
+          if (attempt < 3) {
+            await new Promise(r => setTimeout(r, 1000 * attempt)); // Exponential backoff
+          }
+        }
+      }
+      throw uploadErr;
     } catch (err) {
-      alert(t('reg_upload_error'));
+      console.error('Upload error:', err);
+      toast.error(`${t('reg_upload_error')} (${err?.message || 'Network error'})`);
+      handleChange('id_document', ''); // Clear invalid state
+      fileInputRef.current.value = '';
     } finally {
       setUploading(false);
     }
