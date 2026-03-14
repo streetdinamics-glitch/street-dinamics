@@ -203,12 +203,12 @@ export default function SecondaryMarket({ lang = 'en' }) {
               </div>
 
               <div className="mb-4">
-                <div className="font-orbitron font-black text-xl text-fire-5 mb-1">
-                  {listing.athlete_name}
-                </div>
-                <div className="font-mono text-xs text-fire-3/60">
-                  Quantity: {listing.quantity}
-                </div>
+               <div className="font-orbitron font-black text-xl text-fire-5 mb-1">
+                 {listing.athlete_name}
+               </div>
+               <div className="font-mono text-xs text-fire-3/60">
+                 {t('secondary_quantity')}: {listing.quantity}
+               </div>
               </div>
 
               <div className="mb-4">
