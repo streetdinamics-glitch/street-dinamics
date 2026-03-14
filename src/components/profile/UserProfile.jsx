@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from '../translations';
+import ConsentWithdrawal from '../legal/ConsentWithdrawal';
+import { Shield } from 'lucide-react';
 
 export default function UserProfile({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -82,7 +84,7 @@ export default function UserProfile({ lang, onClose }) {
 
         {/* Tabs */}
         <div className="flex gap-2 mb-6 border-b border-fire-3/10 pb-0">
-          {['profile', 'events', 'tokens', 'bets'].map(tab => (
+          {['profile', 'events', 'tokens', 'bets', 'privacy'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -249,6 +251,13 @@ export default function UserProfile({ lang, onClose }) {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Privacy Tab */}
+        {activeTab === 'privacy' && (
+          <div>
+            <ConsentWithdrawal user={user} />
           </div>
         )}
       </div>
