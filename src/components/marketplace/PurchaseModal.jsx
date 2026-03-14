@@ -162,18 +162,18 @@ export default function PurchaseModal({ token, onClose, onSuccess }) {
               }`}
             >
               <CreditCard size={14} />
-              Card
+              Fiat (EUR)
             </button>
             <button
-              onClick={() => setPaymentMethod('wallet')}
+              onClick={() => setPaymentMethod('crypto')}
               className={`flex items-center gap-2 justify-center py-2.5 px-3 border font-mono text-[10px] tracking-[1px] transition-all ${
-                paymentMethod === 'wallet'
+                paymentMethod === 'crypto'
                   ? 'border-cyan bg-cyan/10 text-cyan'
                   : 'border-fire-3/20 text-fire-3/40 hover:border-fire-3/40'
               }`}
             >
               <Wallet size={14} />
-              Crypto
+              Web3 NFT
             </button>
           </div>
         </div>
