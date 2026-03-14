@@ -49,8 +49,6 @@ export default function EventMap({ event, isOpen, onClose, restrictToTicketHolde
   });
 
   const hasTicket = registrations.length > 0;
-  const { MapContainer, TileLayer, Marker, Popup, Circle } = require('react-leaflet');
-  const L = require('leaflet');
 
   // Check if user has ticket
   if (restrictToTicketHolders && !hasTicket) {
