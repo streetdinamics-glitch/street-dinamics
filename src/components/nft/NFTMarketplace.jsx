@@ -7,8 +7,13 @@ import { toast } from 'sonner';
 import NFTFilterPanel from './NFTFilterPanel';
 
 export default function NFTMarketplace() {
-  const [selectedRarity, setSelectedRarity] = useState('all');
   const queryClient = useQueryClient();
+  const [filters, setFilters] = useState({
+    rarity: 'all',
+    athlete: '',
+    priceRange: [0, 1000],
+    availability: 'all',
+  });
 
   const { data: nftCards = [] } = useQuery({
     queryKey: ['nft-cards'],
