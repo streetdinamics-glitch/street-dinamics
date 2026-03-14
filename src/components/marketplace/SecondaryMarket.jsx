@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, Tag, ShoppingBag, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from '../translations';
+import ActivityFeed from './ActivityFeed';
 
 export default function SecondaryMarket({ lang = 'en' }) {
   const t = useTranslation(lang);
