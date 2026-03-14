@@ -65,7 +65,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
       setShowListingModal(false);
       setSelectedAsset(null);
       setListingPrice('');
-      toast.success('Listed on marketplace!');
+      toast.success(t('secondary_list_success'));
     },
     onError: () => {
       toast.error('Failed to create listing');
