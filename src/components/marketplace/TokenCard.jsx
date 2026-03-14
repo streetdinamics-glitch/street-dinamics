@@ -7,25 +7,29 @@ const TIER_CONFIG = {
     gradient: 'from-slate-600 to-slate-800',
     glow: 'rgba(148, 163, 184, 0.4)',
     border: 'border-slate-500/30',
-    accent: 'text-slate-400'
-  },
-  uncommon: {
-    gradient: 'from-green-600 to-green-800',
-    glow: 'rgba(34, 197, 94, 0.4)',
-    border: 'border-green-500/30',
-    accent: 'text-green-400'
+    accent: 'text-slate-400',
+    badgeBg: 'bg-slate-500/20'
   },
   rare: {
     gradient: 'from-blue-600 to-purple-700',
     glow: 'rgba(147, 51, 234, 0.4)',
     border: 'border-purple-500/30',
-    accent: 'text-purple-400'
+    accent: 'text-purple-400',
+    badgeBg: 'bg-purple-500/20'
+  },
+  epic: {
+    gradient: 'from-cyan-500 to-cyan-700',
+    glow: 'rgba(0, 255, 238, 0.4)',
+    border: 'border-cyan/30',
+    accent: 'text-cyan',
+    badgeBg: 'bg-cyan/20'
   },
   legendary: {
     gradient: 'from-yellow-500 via-orange-500 to-red-600',
     glow: 'rgba(255, 150, 0, 0.6)',
     border: 'border-fire-3/40',
-    accent: 'text-fire-5'
+    accent: 'text-fire-5',
+    badgeBg: 'bg-fire-3/30'
   }
 };
 
@@ -136,7 +140,7 @@ export default function TokenCard({ token, onBuy }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-mono text-[9px] text-fire-3/40 tracking-[1px] mb-0.5">PRICE</div>
-            <div className="font-orbitron font-black text-xl text-fire-5">€{token.current_price || token.base_price}</div>
+            <div className="font-orbitron font-black text-xl text-fire-5">€{token.current_price !== undefined ? token.current_price : token.base_price}</div>
           </div>
           
           {token.status === 'sold_out' ? (
