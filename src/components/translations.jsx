@@ -204,6 +204,18 @@ export const translations = {
     nft_filters_availability_sold: 'Sold Out',
     nft_filters_availability_coming: 'Coming Soon',
     nft_filters_clear: 'Clear All Filters',
+
+    // Watchlist
+    watchlist_title: 'MY WATCHLIST',
+    watchlist_description: 'Track price changes and new listings for your favorite assets',
+    watchlist_empty: 'No watchlist items yet. Add athletes or NFT drops to track them here.',
+    watchlist_watch: 'Watch',
+    watchlist_watched: 'Watched',
+    watchlist_price_alerts: 'Price Alerts On',
+    watchlist_price_alerts_off: 'Price Alerts Off',
+    watchlist_listings: 'Listings On',
+    watchlist_listings_off: 'Listings Off',
+    watchlist_remove: 'Remove',
   },
   
   it: {

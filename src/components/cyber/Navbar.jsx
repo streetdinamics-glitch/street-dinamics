@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -14,6 +14,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   const t = useTranslation(lang);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
+  const [watchlistOpen, setWatchlistOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -73,6 +74,15 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           <div className="h-5 w-[1px] bg-fire-3/20" />
           <WalletConnectButton minimal={true} />
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
+          {user && (
+            <button
+              onClick={() => setWatchlistOpen(true)}
+              className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
+            >
+              <Star size={12} />
+              WATCHLIST
+            </button>
+          )}
           {user && (
             <>
               <div className="h-5 w-[1px] bg-fire-3/20" />
@@ -187,6 +197,31 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             )}
           </div>
         </div>
+      )}
+
+      {/* Watchlist Modal */}
+      {watchlistOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-[399] bg-black/40"
+            onClick={() => setWatchlistOpen(false)}
+          />
+          <div className="fixed inset-0 z-[400] overflow-y-auto">
+            {/* Lazy load WatchlistPanel */}
+            <div className="flex items-start justify-center p-4 min-h-screen">
+              <div className="w-full max-w-3xl">
+                {typeof window !== 'undefined' && (
+                  <React.Suspense fallback={null}>
+                    {(() => {
+                      const { default: WatchlistPanel } = require('@/components/watchlist/WatchlistPanel');
+                      return <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />;
+                    })()}
+                  </React.Suspense>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </>
   );
