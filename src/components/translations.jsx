@@ -183,7 +183,11 @@ export const translations = {
     sponsor_nft_title: 'NFT & TOKEN INTEGRATION',
     sponsor_nft_desc: 'Innovative digital assets that keep your brand at the forefront of Web3 culture',
 
-    // NFT Filter
+    // NFT Marketplace
+    nft_subtitle: 'Historic Moments',
+    nft_title: 'NFT COLLECTION CARDS',
+    nft_description: 'Each NFT captures a unique historic moment. Limited supply. Value increases with athlete performance.',
+    nft_filters: 'Advanced Filters',
     nft_filters_title: 'ADVANCED FILTERS',
     nft_filters_tier: 'Card Tier',
     nft_filters_tier_all: 'All Tiers',
