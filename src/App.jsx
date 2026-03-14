@@ -13,6 +13,7 @@ import AthleteProfile from './pages/AthleteProfile';
 import AthleteProfilePage from './pages/AthleteProfilePage';
 import Analytics from './pages/Analytics';
 import NFTDashboard from './pages/NFTDashboard';
+import UserProfile from './pages/UserProfile';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
@@ -49,6 +50,7 @@ const AuthenticatedApp = () => {
       <Route path="/AthleteProfilePage/:athleteEmail" element={<AthleteProfilePage />} />
       <Route path="/Analytics" element={<Analytics />} />
       <Route path="/NFTDashboard" element={<NFTDashboard />} />
+      <Route path="/UserProfile" element={<UserProfile />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
