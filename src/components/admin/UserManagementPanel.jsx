@@ -10,12 +10,20 @@ export default function UserManagementPanel() {
   const [roleFilter, setRoleFilter] = useState('all');
   const [messageModal, setMessageModal] = useState(null);
   const [messageText, setMessageText] = useState('');
+  const [messageSubject, setMessageSubject] = useState('');
   const queryClient = useQueryClient();
 
-  const { data: users = [] } = useQuery({
+  const [page, setPage] = useState(0);
+  const pageSize = 20;
+
+  const { data: allUsers = [], isLoading: usersLoading } = useQuery({
     queryKey: ['admin-users'],
-    queryFn: () => base44.entities.User.list('-created_date', 200),
+    queryFn: () => base44.entities.User.list('-created_date', 500),
   });
+
+  const users = useMemo(() => {
+    return allUsers.slice(page * pageSize, (page + 1) * pageSize);
+  }, [allUsers, page]);
 
   const updateUser = useMutation({
     mutationFn: ({ email, data }) => base44.entities.User.update(email, data),
@@ -51,6 +59,7 @@ export default function UserManagementPanel() {
       toast.success('Message sent');
       setMessageModal(null);
       setMessageText('');
+      setMessageSubject('');
     },
     onError: (err) => {
       toast.error('Failed to send: ' + err.message);
@@ -77,9 +86,10 @@ export default function UserManagementPanel() {
       data: {
         role: 'athlete',
         athlete_profile: {
+          ...(user.athlete_profile || {}),
           verification_status: 'verified',
           tokenized: true,
-          created_at: new Date().toISOString(),
+          created_at: user.athlete_profile?.created_at || new Date().toISOString(),
         },
       },
     });
@@ -91,6 +101,7 @@ export default function UserManagementPanel() {
       data: {
         role: 'user',
         fan_benefits: {
+          ...(user.fan_benefits || {}),
           verified: true,
           loyalty_level: 'bronze',
         },
@@ -105,13 +116,13 @@ export default function UserManagementPanel() {
   };
 
   const handleSendMessage = () => {
-    if (!messageModal || !messageText.trim()) {
-      toast.error('Please enter a message');
+    if (!messageModal || !messageText.trim() || !messageSubject.trim()) {
+      toast.error('Please fill in subject and message');
       return;
     }
     sendMessage.mutate({
       email: messageModal.email,
-      subject: `Message from Street Dinamics Admin`,
+      subject: messageSubject,
       body: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #000; color: #ffe8c0; padding: 20px; border: 2px solid #ff5000;">
         <div style="text-align: center; margin-bottom: 20px;">
           <h1 style="color: #ff9900; font-size: 24px; margin: 0;">STREET DINAMICS</h1>
@@ -165,7 +176,16 @@ export default function UserManagementPanel() {
         </div>
       </div>
 
+      {/* Loading Indicator */}
+      {usersLoading && (
+        <div className="text-center py-8">
+          <div className="inline-block w-6 h-6 border-2 border-fire-3/30 border-t-fire-3 rounded-full animate-spin"></div>
+          <p className="font-mono text-sm text-fire-3/60 mt-2">Loading users...</p>
+        </div>
+      )}
+
       {/* Users Table */}
+      {!usersLoading && (
       <div className="border border-fire-3/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -184,13 +204,21 @@ export default function UserManagementPanel() {
                   <td className="px-4 py-3 font-rajdhani text-fire-3/80">{user.full_name}</td>
                   <td className="px-4 py-3 font-mono text-[10px] text-fire-3/60">{user.email}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2.5 py-1 text-[9px] font-mono tracking-[1px] uppercase border ${
-                      user.role === 'admin' ? 'border-purple-500/40 bg-purple-500/10 text-purple-400' :
-                      user.role === 'athlete' ? 'border-cyan/40 bg-cyan/10 text-cyan' :
-                      'border-fire-3/40 bg-fire-3/10 text-fire-4'
-                    }`}>
-                      {user.role}
-                    </span>
+                    <div className="space-y-1">
+                      <span className={`inline-block px-2.5 py-1 text-[9px] font-mono tracking-[1px] uppercase border ${
+                        user.role === 'admin' ? 'border-purple-500/40 bg-purple-500/10 text-purple-400' :
+                        user.role === 'athlete' ? 'border-cyan/40 bg-cyan/10 text-cyan' :
+                        'border-fire-3/40 bg-fire-3/10 text-fire-4'
+                      }`}>
+                        {user.role}
+                      </span>
+                      {user.athlete_profile?.verification_status === 'verified' && (
+                        <div className="text-[8px] text-cyan/60">✓ Tokenized</div>
+                      )}
+                      {user.fan_benefits?.verified && (
+                        <div className="text-[8px] text-fire-5/60">⭐ {user.fan_benefits.loyalty_level}</div>
+                      )}
+                    </div>
                   </td>
                   <td className="px-4 py-3 font-mono text-[10px] text-fire-3/60">
                     {new Date(user.created_date).toLocaleDateString()}
@@ -198,9 +226,14 @@ export default function UserManagementPanel() {
                   <td className="px-4 py-3">
                     <div className="flex gap-2">
                       <button
-                        onClick={() => setMessageModal(user)}
+                        onClick={() => {
+                          setMessageModal(user);
+                          setMessageText('');
+                          setMessageSubject('');
+                        }}
                         title="Send message"
-                        className="p-1.5 border border-fire-3/20 hover:border-fire-3 hover:bg-fire-3/10 transition-all"
+                        disabled={sendMessage.isPending}
+                        className="p-1.5 border border-fire-3/20 hover:border-fire-3 hover:bg-fire-3/10 transition-all disabled:opacity-50"
                       >
                         <Mail size={14} className="text-fire-3/60 hover:text-fire-3" />
                       </button>
@@ -246,6 +279,32 @@ export default function UserManagementPanel() {
         )}
       </div>
 
+      {/* Pagination */}
+      {!usersLoading && allUsers.length > pageSize && (
+        <div className="flex items-center justify-between mt-4 px-4 py-3 bg-fire-3/5 border border-fire-3/10">
+          <div className="font-mono text-[10px] text-fire-3/60">
+            Showing {page * pageSize + 1}–{Math.min((page + 1) * pageSize, allUsers.length)} of {allUsers.length} users
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setPage(Math.max(0, page - 1))}
+              disabled={page === 0}
+              className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
+            >
+              ← Prev
+            </button>
+            <button
+              onClick={() => setPage(Math.min(Math.ceil(allUsers.length / pageSize) - 1, page + 1))}
+              disabled={page >= Math.ceil(allUsers.length / pageSize) - 1}
+              className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
+            >
+              Next →
+            </button>
+          </div>
+        </div>
+      )}
+      )}
+
       {/* Message Modal */}
       {messageModal && (
         <motion.div
@@ -262,17 +321,31 @@ export default function UserManagementPanel() {
               <MessageSquare size={20} className="text-fire-3" />
               <div>
                 <h3 className="font-orbitron font-bold text-fire-4">Send Message</h3>
-                <p className="font-mono text-[10px] text-fire-3/60">To: {messageModal.full_name}</p>
+                <p className="font-mono text-[10px] text-fire-3/60">To: {messageModal.full_name} ({messageModal.email})</p>
               </div>
             </div>
 
-            <textarea
-              value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
-              placeholder="Write your message here..."
-              rows={6}
-              className="cyber-input w-full mb-4"
-            />
+            <div className="mb-3">
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/60 block mb-2">Subject</label>
+              <input
+                type="text"
+                value={messageSubject}
+                onChange={(e) => setMessageSubject(e.target.value)}
+                placeholder="Email subject..."
+                className="cyber-input w-full"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/60 block mb-2">Message</label>
+              <textarea
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                placeholder="Write your message here..."
+                rows={6}
+                className="cyber-input w-full"
+              />
+            </div>
 
             <div className="flex gap-3">
               <button
