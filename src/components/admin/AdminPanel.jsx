@@ -17,6 +17,7 @@ import RoyaltyDistributionManager from './RoyaltyDistributionManager';
 import MinorRegistrationApproval from './MinorRegistrationApproval';
 import ChatModerationPanel from '../chat/ChatModerationPanel';
 import RegistrationAnalyticsDashboard from './RegistrationAnalyticsDashboard';
+import VenueMapManager from './VenueMapManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -44,6 +45,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showMinorApprovals, setShowMinorApprovals] = useState(false);
   const [chatModeratingEvent, setChatModeratingEvent] = useState(null);
   const [showRegistrationAnalytics, setShowRegistrationAnalytics] = useState(false);
+  const [venueMapEvent, setVenueMapEvent] = useState(null);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -398,6 +400,12 @@ export default function AdminPanel({ lang, onClose }) {
                   >
                     NFT Drops
                   </button>
+                  <button
+                    onClick={() => setVenueMapEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    🗺️ Venue Map
+                  </button>
                   {event.status === 'upcoming' && (
                     <button
                       onClick={() => handleGoLive(event)}
@@ -749,19 +757,33 @@ export default function AdminPanel({ lang, onClose }) {
            </div>
          )}
          {showRegistrationAnalytics && (
-           <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
-             <div className="relative w-full max-w-6xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
-               <div className="absolute top-0 left-0 right-0 fire-line" />
-               <button
-                 onClick={() => setShowRegistrationAnalytics(false)}
-                 className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
-               >
-                 CLOSE
-               </button>
-               <RegistrationAnalyticsDashboard />
-             </div>
-           </div>
-         )}
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-6xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setShowRegistrationAnalytics(false)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <RegistrationAnalyticsDashboard />
+              </div>
+            </div>
+          )}
+         {venueMapEvent && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setVenueMapEvent(null)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <VenueMapManager event={venueMapEvent} />
+              </div>
+            </div>
+          )}
 
         {/* Change Password */}
         <div className="p-6 bg-fire-3/5 border border-fire-3/10">

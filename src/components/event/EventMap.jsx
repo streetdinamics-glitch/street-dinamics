@@ -36,7 +36,30 @@ const foodIcon = createIcon('#ffcc00', '🍕');
 const medicalIcon = createIcon('#ff4444', '⚕️');
 const accessibilityIcon = createIcon('#9b00ff', '♿');
 
-export default function EventMap({ event, isOpen, onClose }) {
+export default function EventMap({ event, isOpen, onClose, restrictToTicketHolders = false }) {
+  const { data: user } = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => base44.auth.me(),
+  });
+
+  const { data: registrations = [] } = useQuery({
+    queryKey: ['user-registration', event?.id],
+    queryFn: () => base44.entities.Registration.filter({ event_id: event?.id, created_by: user?.email }),
+    enabled: !!user && !!event,
+  });
+
+  const hasTicket = registrations.length > 0;
+  const { MapContainer, TileLayer, Marker, Popup, Circle } = require('react-leaflet');
+  const L = require('leaflet');
+
+  // Check if user has ticket
+  if (restrictToTicketHolders && !hasTicket) {
+    return (
+      <div className="p-4 bg-red-500/10 border border-red-500/30 rounded text-center">
+        <p className="font-mono text-sm text-red-400">🔒 Venue map is only available to ticket holders</p>
+      </div>
+    );
+  }
   const [selectedPOI, setSelectedPOI] = useState(null);
 
   if (!event || !event.coordinates) return null;
