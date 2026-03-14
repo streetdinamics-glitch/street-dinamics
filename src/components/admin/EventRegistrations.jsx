@@ -57,7 +57,7 @@ export default function EventRegistrations({ event, onClose, lang }) {
       <div className="relative w-full max-w-[1200px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-6 md:p-8 my-auto">
         <div className="absolute top-0 left-0 right-0 fire-line" />
         <button onClick={onClose} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3">
-          ✕ CLOSE
+          CLOSE
         </button>
 
         <h2 className="text-fire-gradient font-orbitron font-black text-xl md:text-2xl tracking-[2px] mb-2">

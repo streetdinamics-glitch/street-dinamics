@@ -180,7 +180,7 @@ export default function AdminPanel({ lang, onClose }) {
       <div className="relative w-full max-w-[1100px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-auto">
         <div className="absolute top-0 left-0 right-0 fire-line" />
         <button onClick={onClose} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3">
-          ✕ CLOSE
+          CLOSE
         </button>
 
         <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2">
@@ -199,7 +199,7 @@ export default function AdminPanel({ lang, onClose }) {
             onClick={() => setShowLeaderboard(true)}
             className="btn-ghost text-[11px] py-2.5 px-5"
           >
-            🏆 Leaderboard
+            Leaderboard
           </button>
         </div>
 
@@ -207,7 +207,7 @@ export default function AdminPanel({ lang, onClose }) {
         {users.length > 0 && (
           <div className="mb-8 p-5 bg-fire-3/5 border border-fire-3/20">
             <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4">
-              ⏳ PENDING ATHLETE APPROVALS ({users.length})
+              PENDING ATHLETE APPROVALS ({users.length})
             </h3>
             <div className="space-y-3">
               {users.map(user => (
@@ -216,7 +216,7 @@ export default function AdminPanel({ lang, onClose }) {
                     {user.avatar_url ? (
                       <img src={user.avatar_url} alt="" className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-2xl">👤</span>
+                      <div className="w-8 h-8 rounded-full bg-fire-3/20 border-2 border-fire-3/40" />
                     )}
                   </div>
                   <div className="flex-1">
@@ -232,13 +232,13 @@ export default function AdminPanel({ lang, onClose }) {
                       onClick={() => handleApproveAthlete(user)}
                       className="btn-fire text-[9px] py-1.5 px-4"
                     >
-                      ✓ Approve
+                      Approve
                     </button>
                     <button
                       onClick={() => handleRejectAthlete(user)}
                       className="btn-ghost text-[9px] py-1.5 px-4"
                     >
-                      ✕ Reject
+                      Reject
                     </button>
                   </div>
                 </div>
@@ -250,7 +250,9 @@ export default function AdminPanel({ lang, onClose }) {
         {/* Events List */}
         {events.length === 0 ? (
           <div className="text-center py-16 mb-8">
-            <span className="text-5xl block mb-4">📅</span>
+            <div className="w-20 h-20 mx-auto mb-4 rounded-lg border-2 border-fire-3/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-md bg-fire-3/10 border border-fire-3/30" />
+            </div>
             <p className="font-mono text-sm text-fire-3/30 mb-4">No events yet. Create your first event!</p>
             <Link to={createPageUrl('CreateEvent')} className="btn-fire text-[11px] py-3 px-6 inline-block no-underline">
               {t('admin_create_event')}
@@ -276,7 +278,7 @@ export default function AdminPanel({ lang, onClose }) {
                     onClick={() => setViewingRegistrations(event)}
                     className="btn-cyan text-[10px] py-2 px-4"
                   >
-                    👥 Registrations
+                    Registrations
                   </button>
                   {event.status === 'upcoming' && (
                     <button
@@ -299,14 +301,14 @@ export default function AdminPanel({ lang, onClose }) {
                       onClick={() => handleEditVod(event)}
                       className="btn-cyan text-[10px] py-2 px-4"
                     >
-                      📺 Add VOD
+                      Add VOD
                     </button>
                   )}
                   <button
                     onClick={() => handleDeleteEvent(event)}
                     className="btn-ghost text-[10px] py-2 px-4 border-red-500/40 text-red-400 hover:bg-red-500/5"
                   >
-                    🗑 Delete
+                    Delete
                   </button>
                 </div>
               </div>
@@ -356,7 +358,7 @@ export default function AdminPanel({ lang, onClose }) {
                 disabled={updateEvent.isPending || (!liveLinks.kick && !liveLinks.youtube)}
                 className="btn-fire py-2 px-4 text-[10px] disabled:opacity-20"
               >
-                {updateEvent.isPending ? 'Saving...' : `${t('admin_save_links')} & GO LIVE 🔴`}
+                {updateEvent.isPending ? 'Saving...' : `${t('admin_save_links')} & GO LIVE`}
               </button>
             </div>
           </div>
@@ -366,7 +368,7 @@ export default function AdminPanel({ lang, onClose }) {
         {editingVod && (
           <div className="mb-8 p-6 bg-purple-500/5 border border-purple-500/20">
             <h3 className="font-orbitron font-bold text-lg text-purple-400 mb-2">
-              📺 Add Replay Links: {editingVod.title}
+              Add Replay Links: {editingVod.title}
             </h3>
             <p className="font-mono text-[9px] text-purple-400/60 mb-4 tracking-[1px]">
               Enter video-on-demand (VOD) / replay URLs for this event.

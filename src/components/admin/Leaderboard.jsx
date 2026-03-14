@@ -21,17 +21,17 @@ export default function Leaderboard({ onClose, lang }) {
       <div className="relative w-full max-w-[1000px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-6 md:p-8 my-auto">
         <div className="absolute top-0 left-0 right-0 fire-line" />
         <button onClick={onClose} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3">
-          ✕ CLOSE
+          CLOSE
         </button>
 
         <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-6">
-          🏆 ATHLETE LEADERBOARD
+          ATHLETE LEADERBOARD
         </h2>
 
         {/* Verified Athletes */}
         <div className="mb-8">
           <h3 className="font-orbitron font-bold text-lg text-green-400 mb-4">
-            ✓ VERIFIED ATHLETES ({users.length})
+            VERIFIED ATHLETES ({users.length})
           </h3>
           {users.length === 0 ? (
             <p className="text-center py-8 font-mono text-xs text-fire-3/30">No verified athletes yet</p>
@@ -39,11 +39,11 @@ export default function Leaderboard({ onClose, lang }) {
             <div className="space-y-3">
               {users.map((user, idx) => (
                 <div key={user.id} className="p-4 bg-green-500/5 border border-green-500/20 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center overflow-hidden">
                     {user.avatar_url ? (
                       <img src={user.avatar_url} alt="" className="w-full h-full rounded-full object-cover" />
                     ) : (
-                      <span className="text-2xl">🏅</span>
+                      <div className="w-8 h-8 rounded-full bg-green-500/20 border-2 border-green-500/40" />
                     )}
                   </div>
                   <div className="flex-1">
@@ -69,7 +69,7 @@ export default function Leaderboard({ onClose, lang }) {
         {stats.length > 0 && (
           <div>
             <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4">
-              📊 TOP PERFORMERS
+              TOP PERFORMERS
             </h3>
             <div className="space-y-3">
               {stats.slice(0, 10).map((stat, idx) => (
