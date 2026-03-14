@@ -11,15 +11,15 @@ export default function LanguageSwitcher({ currentLang, onSwitch }) {
   ];
 
   return (
-    <div className="flex items-center gap-1 border border-fire-3/20 bg-fire-3/5 flex-wrap">
+    <div className="flex items-center border border-fire-3/20 bg-fire-3/5 overflow-hidden">
       {langs.map(lang => (
         <button
           key={lang.code}
           onClick={() => onSwitch(lang.code)}
-          className={`font-orbitron text-[9px] font-bold tracking-[1px] px-2 py-1 transition-all ${
+          className={`font-orbitron text-[9px] font-bold tracking-[1px] px-2.5 py-1.5 transition-all border-r border-fire-3/10 last:border-r-0 ${
             currentLang === lang.code
               ? 'bg-fire-3 text-black'
-              : 'bg-transparent text-fire-3/40 hover:text-fire-3'
+              : 'bg-transparent text-fire-3/40 hover:text-fire-3 hover:bg-fire-3/10'
           }`}
         >
           {lang.label}

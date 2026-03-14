@@ -55,23 +55,25 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           STREET<span className="text-fire-3">//</span>DINAMICS
         </div>
 
-        <div className="hidden md:flex items-center gap-2.5">
+        <div className="hidden md:flex items-center gap-2">
           {navItems.map(item => (
             <button
               key={item.id}
               onClick={() => onScrollTo?.(item.id)}
-              className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
+              className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap"
             >
               {item.label}
             </button>
           ))}
+          <div className="h-5 w-[1px] bg-fire-3/20" />
           <WalletConnectButton minimal={true} />
           <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
           {user && (
             <>
+              <div className="h-5 w-[1px] bg-fire-3/20" />
               <button
                 onClick={onProfileClick}
-                className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
+                className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap"
               >
                 <User size={12} />
                 PROFILE
@@ -80,7 +82,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                 <Link
                   key={link.path}
                   to={createPageUrl(link.path.replace('/', ''))}
-                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn no-underline flex items-center"
+                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn no-underline flex items-center whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
@@ -88,7 +90,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
               {user.role === 'admin' && (
                 <Link
                   to={createPageUrl('Admin')}
-                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 px-3.5 py-1.5 cursor-pointer transition-all hover:border-green-500 hover:bg-green-500/5 clip-btn no-underline flex items-center"
+                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 px-3 py-1.5 cursor-pointer transition-all hover:border-green-500 hover:bg-green-500/5 clip-btn no-underline flex items-center whitespace-nowrap"
                 >
                   ADMIN
                 </Link>
