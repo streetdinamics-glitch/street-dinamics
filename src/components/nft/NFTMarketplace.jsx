@@ -248,19 +248,19 @@ export default function NFTMarketplace({ lang = 'en' }) {
                   {card.status === 'upcoming' ? (
                     <div className="text-center py-3 bg-fire-3/10 border border-fire-3/20">
                       <div className="font-mono text-xs text-fire-3/60 tracking-[1px]">
-                        DROP: {new Date(card.drop_date).toLocaleDateString()}
+                        {t('nft_drop')}: {new Date(card.drop_date).toLocaleDateString()}
                       </div>
                     </div>
                   ) : availability === 0 ? (
                     <div className="text-center py-3 bg-red-500/10 border border-red-500/30">
                       <div className="font-mono text-xs text-red-400 tracking-[1px] uppercase">
-                        SOLD OUT
+                        {t('nft_sold_out')}
                       </div>
                     </div>
                   ) : isOwned ? (
                     <div className="text-center py-3 bg-cyan/10 border border-cyan/30">
                       <div className="font-mono text-xs text-cyan tracking-[1px] uppercase">
-                        ✓ OWNED
+                        {t('nft_owned')}
                       </div>
                     </div>
                   ) : (
@@ -270,7 +270,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
                       className="btn-fire w-full text-xs flex items-center justify-center gap-2"
                     >
                       <ShoppingCart size={14} />
-                      {mintNFTMutation.isPending ? 'MINTING...' : 'MINT NOW'}
+                      {mintNFTMutation.isPending ? t('nft_minting') : t('nft_mint_now')}
                     </button>
                   )}
                 </div>
