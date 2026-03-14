@@ -216,10 +216,10 @@ export default function SecondaryMarket({ lang = 'en' }) {
                   <span className="font-orbitron font-black text-3xl text-fire-5">
                     €{listing.listing_price.toFixed(2)}
                   </span>
-                  <span className="font-mono text-xs text-fire-3/60">per unit</span>
+                  <span className="font-mono text-xs text-fire-3/60">{t('secondary_per_unit')}</span>
                 </div>
                 <div className="font-mono text-sm text-fire-4">
-                  Total: €{listing.total_value.toFixed(2)}
+                  {t('secondary_total')}: €{listing.total_value.toFixed(2)}
                 </div>
               </div>
 
