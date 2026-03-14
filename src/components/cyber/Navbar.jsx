@@ -36,6 +36,11 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   
   const navLinks = user?.role === 'athlete' || user?.role === 'admin' ? [
     { label: '📊 Analytics', path: '/Analytics' },
+    { label: '💎 NFT Portfolio', path: '/NFTDashboard' },
+  ] : [];
+
+  const userNavLinks = user ? [
+    { label: '💎 NFT Portfolio', path: '/NFTDashboard' },
   ] : [];
 
   return (
