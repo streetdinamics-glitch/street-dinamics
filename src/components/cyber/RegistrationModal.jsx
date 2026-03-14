@@ -23,6 +23,8 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
   const [ageCategory, setAgeCategory] = useState(null);
   const [gdprConsents, setGdprConsents] = useState({});
   const [parentalConsent, setParentalConsent] = useState(null);
+  const [referralSource, setReferralSource] = useState('direct');
+  const [referralSourceDetail, setReferralSourceDetail] = useState('');
   const canvasRef = useRef(null);
   const parentCanvasRef = useRef(null);
   const isDrawing = useRef(false);
@@ -34,6 +36,13 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
   });
 
   const handleChange = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
+
+  // Capture UTM parameters from URL
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('utm_source')) setReferralSource(params.get('utm_source'));
+    if (params.get('utm_medium')) setReferralSourceDetail(params.get('utm_medium'));
+  }, []);
 
 
 
@@ -64,6 +73,7 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
     // Save participant signature
     const signatureUrl = canvasRef.current?.toDataURL('image/png');
     
+    const params = new URLSearchParams(window.location.search);
     const regData = {
       event_id: event.id,
       type,
@@ -89,6 +99,12 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
       gdpr_consent_date: new Date().toISOString(),
       contract_version: '1.2',
       ip_address: 'REDACTED', // Would be captured server-side
+      // Referral tracking
+      referral_source: referralSource,
+      referral_source_detail: referralSourceDetail,
+      utm_source: params.get('utm_source') || undefined,
+      utm_medium: params.get('utm_medium') || undefined,
+      utm_campaign: params.get('utm_campaign') || undefined,
     };
     
     createReg.mutate(regData, {
@@ -271,6 +287,37 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
                 onError={(err) => console.error('Upload error:', err)}
               />
             </div>
+
+            {/* Referral Source */}
+            <div className="mb-4">
+              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">How did you find this event?</label>
+              <select 
+                value={referralSource}
+                onChange={(e) => setReferralSource(e.target.value)}
+                className="cyber-input"
+              >
+                <option value="direct">Direct / Word of Mouth</option>
+                <option value="social_media">Social Media</option>
+                <option value="paid_ads">Paid Ads</option>
+                <option value="email">Email Campaign</option>
+                <option value="referral">Referred by Friend</option>
+                <option value="event_page">Event Page / Website</option>
+                <option value="organic">Organic Search</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {(referralSource === 'social_media' || referralSource === 'paid_ads' || referralSource === 'other') && (
+              <div className="mb-4">
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Details (optional)</label>
+                <input 
+                  className="cyber-input" 
+                  placeholder={referralSource === 'social_media' ? 'e.g., Instagram, TikTok' : 'e.g., Campaign name, platform'}
+                  value={referralSourceDetail}
+                  onChange={(e) => setReferralSourceDetail(e.target.value)}
+                />
+              </div>
+            )}
 
             <div className="flex gap-2.5 mt-4">
               <button
