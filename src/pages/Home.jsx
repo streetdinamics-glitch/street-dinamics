@@ -18,6 +18,8 @@ import TournamentSection from '../components/cyber/TournamentSection';
 import LiveVotingPanel from '../components/voting/LiveVotingPanel';
 import EventChatRoom from '../components/chat/EventChatRoom';
 import FanVotingModule from '../components/fan/FanVotingModule';
+import NFTMarketplace from '../components/nft/NFTMarketplace';
+import SecondaryMarket from '../components/marketplace/SecondaryMarket';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
@@ -178,6 +180,10 @@ export default function Home() {
       />
       <FireRule />
       <TokenMarketplace lang={lang} />
+      <FireRule />
+      <NFTMarketplace />
+      <FireRule />
+      <SecondaryMarket />
       <FireRule />
       <SponsorSection lang={lang} />
       <Footer lang={lang} />

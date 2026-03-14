@@ -10,6 +10,8 @@ import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import EditProfileModal from '../components/profile/EditProfileModal';
 import BadgeDisplay from '../components/profile/BadgeDisplay';
+import PerformanceScoreCard from '../components/performance/PerformanceScoreCard';
+import RoyaltyDashboard from '../components/royalty/RoyaltyDashboard';
 
 export default function AthleteProfile() {
   const [searchParams] = useSearchParams();
@@ -66,6 +68,19 @@ export default function AthleteProfile() {
     enabled: !!athleteEmail,
     initialData: [],
   });
+
+  const { data: performanceScores = [] } = useQuery({
+    queryKey: ['athlete-performance-scores', athleteEmail],
+    queryFn: () => base44.entities.AthletePerformanceScore.filter({ 
+      athlete_email: athleteEmail 
+    }),
+    enabled: !!athleteEmail,
+    initialData: [],
+  });
+
+  const latestScore = performanceScores.sort((a, b) => 
+    new Date(b.score_date) - new Date(a.score_date)
+  )[0];
 
   const isOwnProfile = currentUser?.email === athleteEmail;
 
@@ -253,11 +268,24 @@ export default function AthleteProfile() {
           </div>
         </motion.div>
 
+        {/* Performance Score */}
+        {latestScore && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-5xl mx-auto mb-12"
+          >
+            <h2 className="heading-fire text-4xl mb-8 font-black">UNIVERSAL SCORE</h2>
+            <PerformanceScoreCard score={latestScore} />
+          </motion.div>
+        )}
+
         {/* Badges Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.3 }}
           className="max-w-5xl mx-auto mb-12"
         >
           <h2 className="heading-fire text-4xl mb-8 font-black">BADGES</h2>
@@ -265,6 +293,19 @@ export default function AthleteProfile() {
             <BadgeDisplay badges={badges} />
           </div>
         </motion.div>
+
+        {/* Royalty Dashboard */}
+        {isOwnProfile && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="max-w-5xl mx-auto mb-12"
+          >
+            <h2 className="heading-fire text-4xl mb-8 font-black">ROYALTY EARNINGS</h2>
+            <RoyaltyDashboard athleteEmail={athleteEmail} />
+          </motion.div>
+        )}
 
         {/* Event History */}
         <motion.div
