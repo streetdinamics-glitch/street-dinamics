@@ -84,14 +84,24 @@ export default function Analytics() {
     revenue: tx.total_amount,
   }));
 
-  // Skills radar data
-  const skillsData = [
-    { skill: 'Performance', value: athleteStats.performance_rating || 0 },
-    { skill: 'Popularity', value: (athleteStats.fan_count || 0) / 10 },
-    { skill: 'Earnings', value: (athleteStats.total_earnings || 0) / 100 },
-    { skill: 'Events', value: (athleteStats.events_participated || 0) * 10 },
-    { skill: 'Win Rate', value: athleteStats.wins ? (athleteStats.wins / athleteStats.events_participated) * 100 : 0 },
-  ];
+  // Universal Performance Score radar data (6 criteria)
+  const skillsData = performanceScores.length > 0
+    ? [
+        { skill: 'Technical', value: performanceScores[0]?.technical_progression || 0 },
+        { skill: 'Engagement', value: performanceScores[0]?.engagement_generated || 0 },
+        { skill: 'Consistency', value: performanceScores[0]?.consistency || 0 },
+        { skill: 'Recognition', value: performanceScores[0]?.external_recognition || 0 },
+        { skill: 'Fanbase', value: performanceScores[0]?.fanbase_growth || 0 },
+        { skill: 'Leadership', value: performanceScores[0]?.behavior_leadership || 0 },
+      ]
+    : [
+        { skill: 'Technical', value: 0 },
+        { skill: 'Engagement', value: 0 },
+        { skill: 'Consistency', value: 0 },
+        { skill: 'Recognition', value: 0 },
+        { skill: 'Fanbase', value: 0 },
+        { skill: 'Leadership', value: 0 },
+      ];
 
   const StatCard = ({ icon: Icon, label, value, trend, color }) => (
     <motion.div
@@ -247,7 +257,7 @@ export default function Analytics() {
 
         {/* Skills Radar & Badges */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Skills Radar */}
+          {/* Universal Performance Score Radar */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -255,7 +265,12 @@ export default function Analytics() {
           >
             <div className="flex items-center gap-3 mb-6">
               <Target className="text-purple-400" size={20} />
-              <h3 className="font-orbitron font-bold text-lg text-purple-400 tracking-[1px] uppercase">Skills Overview</h3>
+              <h3 className="font-orbitron font-bold text-lg text-purple-400 tracking-[1px] uppercase">Universal Score (6 Criteria)</h3>
+              {performanceScores.length > 0 && (
+                <span className="ml-auto font-orbitron text-2xl font-black text-purple-300">
+                  {performanceScores[0]?.total_score.toFixed(1)} / 100
+                </span>
+              )}
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <RadarChart data={skillsData}>
