@@ -186,7 +186,7 @@ export default function UserManagementPanel() {
 
       {/* Users Table */}
       {!usersLoading && (
-      <div className="border border-fire-3/10 overflow-hidden">
+        <div className="border border-fire-3/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-fire-3/5 border-b border-fire-3/10">
@@ -272,37 +272,37 @@ export default function UserManagementPanel() {
             </tbody>
           </table>
         </div>
-        {filteredUsers.length === 0 && (
-          <div className="p-8 text-center">
-            <p className="font-mono text-sm text-fire-3/40">No users match your filters</p>
+          {filteredUsers.length === 0 && (
+            <div className="p-8 text-center">
+              <p className="font-mono text-sm text-fire-3/40">No users match your filters</p>
+            </div>
+          )}
+        </div>
+
+        {/* Pagination */}
+        {allUsers.length > pageSize && (
+          <div className="flex items-center justify-between mt-4 px-4 py-3 bg-fire-3/5 border border-fire-3/10">
+            <div className="font-mono text-[10px] text-fire-3/60">
+              Showing {page * pageSize + 1}–{Math.min((page + 1) * pageSize, allUsers.length)} of {allUsers.length} users
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPage(Math.max(0, page - 1))}
+                disabled={page === 0}
+                className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
+              >
+                ← Prev
+              </button>
+              <button
+                onClick={() => setPage(Math.min(Math.ceil(allUsers.length / pageSize) - 1, page + 1))}
+                disabled={page >= Math.ceil(allUsers.length / pageSize) - 1}
+                className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
+              >
+                Next →
+              </button>
+            </div>
           </div>
         )}
-      </div>
-
-      {/* Pagination */}
-      {!usersLoading && allUsers.length > pageSize && (
-        <div className="flex items-center justify-between mt-4 px-4 py-3 bg-fire-3/5 border border-fire-3/10">
-          <div className="font-mono text-[10px] text-fire-3/60">
-            Showing {page * pageSize + 1}–{Math.min((page + 1) * pageSize, allUsers.length)} of {allUsers.length} users
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setPage(Math.max(0, page - 1))}
-              disabled={page === 0}
-              className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
-            >
-              ← Prev
-            </button>
-            <button
-              onClick={() => setPage(Math.min(Math.ceil(allUsers.length / pageSize) - 1, page + 1))}
-              disabled={page >= Math.ceil(allUsers.length / pageSize) - 1}
-              className="btn-ghost py-1 px-3 text-[9px] disabled:opacity-30"
-            >
-              Next →
-            </button>
-          </div>
-        </div>
-      )}
       )}
 
       {/* Message Modal */}
