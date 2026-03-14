@@ -5,6 +5,8 @@ import { useTranslation } from '../translations';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import EventRegistrations from './EventRegistrations';
+import Leaderboard from './Leaderboard';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -15,10 +17,24 @@ export default function AdminPanel({ lang, onClose }) {
   const [editingVod, setEditingVod] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [viewingRegistrations, setViewingRegistrations] = useState(null);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [pendingAthletes, setPendingAthletes] = useState([]);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
     queryFn: () => base44.entities.Event.list('-created_date', 100),
+  });
+
+  const { data: users = [] } = useQuery({
+    queryKey: ['pending-athletes'],
+    queryFn: async () => {
+      const allUsers = await base44.entities.User.list('-created_date', 100);
+      return allUsers.filter(u => 
+        u.user_type === 'athlete' && 
+        u.athlete_profile?.verification_status === 'pending'
+      );
+    },
   });
 
   const updateEvent = useMutation({
@@ -34,6 +50,29 @@ export default function AdminPanel({ lang, onClose }) {
     },
     onError: (err) => {
       toast.error('Failed to update event: ' + err.message);
+    },
+  });
+
+  const deleteEvent = useMutation({
+    mutationFn: (id) => base44.entities.Event.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+      toast.success('Event deleted');
+    },
+    onError: (err) => {
+      toast.error('Failed to delete event: ' + err.message);
+    },
+  });
+
+  const updateUser = useMutation({
+    mutationFn: ({ email, data }) => base44.entities.User.update(email, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pending-athletes'] });
+      toast.success('Athlete status updated');
+    },
+    onError: (err) => {
+      toast.error('Failed to update athlete: ' + err.message);
     },
   });
 
@@ -106,6 +145,36 @@ export default function AdminPanel({ lang, onClose }) {
     }
   };
 
+  const handleDeleteEvent = (event) => {
+    if (confirm(`Delete event "${event.title}"? This cannot be undone.`)) {
+      deleteEvent.mutate(event.id);
+    }
+  };
+
+  const handleApproveAthlete = (user) => {
+    updateUser.mutate({
+      email: user.email,
+      data: {
+        athlete_profile: {
+          ...user.athlete_profile,
+          verification_status: 'verified',
+        },
+      },
+    });
+  };
+
+  const handleRejectAthlete = (user) => {
+    updateUser.mutate({
+      email: user.email,
+      data: {
+        athlete_profile: {
+          ...user.athlete_profile,
+          verification_status: 'rejected',
+        },
+      },
+    });
+  };
+
   return (
     <div className="fixed inset-0 z-[500] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
       <div className="relative w-full max-w-[1100px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-auto">
@@ -114,17 +183,69 @@ export default function AdminPanel({ lang, onClose }) {
           ✕ CLOSE
         </button>
 
-        <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-6">
+        <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2">
           {t('admin_panel')}
         </h2>
 
-        {/* Create Event Button */}
-        <Link
-          to={createPageUrl('CreateEvent')}
-          className="inline-block mb-8 btn-fire text-[11px] py-3 px-6 no-underline"
-        >
-          {t('admin_create_event')}
-        </Link>
+        {/* Quick Actions */}
+        <div className="flex flex-wrap gap-3 mb-8">
+          <Link
+            to={createPageUrl('CreateEvent')}
+            className="btn-fire text-[11px] py-2.5 px-5 no-underline inline-block"
+          >
+            + {t('admin_create_event')}
+          </Link>
+          <button
+            onClick={() => setShowLeaderboard(true)}
+            className="btn-ghost text-[11px] py-2.5 px-5"
+          >
+            🏆 Leaderboard
+          </button>
+        </div>
+
+        {/* Pending Athletes */}
+        {users.length > 0 && (
+          <div className="mb-8 p-5 bg-fire-3/5 border border-fire-3/20">
+            <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4">
+              ⏳ PENDING ATHLETE APPROVALS ({users.length})
+            </h3>
+            <div className="space-y-3">
+              {users.map(user => (
+                <div key={user.id} className="p-4 bg-black/30 border border-fire-3/10 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-fire-3/10 flex items-center justify-center overflow-hidden">
+                    {user.avatar_url ? (
+                      <img src={user.avatar_url} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-2xl">👤</span>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-orbitron font-bold text-base text-fire-4">
+                      {user.full_name}
+                    </div>
+                    <div className="font-mono text-xs text-fire-3/40">
+                      {user.athlete_profile?.sports?.join(', ') || 'No sports'}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleApproveAthlete(user)}
+                      className="btn-fire text-[9px] py-1.5 px-4"
+                    >
+                      ✓ Approve
+                    </button>
+                    <button
+                      onClick={() => handleRejectAthlete(user)}
+                      className="btn-ghost text-[9px] py-1.5 px-4"
+                    >
+                      ✕ Reject
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Events List */}
         {events.length === 0 ? (
@@ -151,6 +272,12 @@ export default function AdminPanel({ lang, onClose }) {
                   </div>
                 </div>
                 <div className="flex gap-2 flex-wrap">
+                  <button
+                    onClick={() => setViewingRegistrations(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    👥 Registrations
+                  </button>
                   {event.status === 'upcoming' && (
                     <button
                       onClick={() => handleGoLive(event)}
@@ -175,6 +302,12 @@ export default function AdminPanel({ lang, onClose }) {
                       📺 Add VOD
                     </button>
                   )}
+                  <button
+                    onClick={() => handleDeleteEvent(event)}
+                    className="btn-ghost text-[10px] py-2 px-4 border-red-500/40 text-red-400 hover:bg-red-500/5"
+                  >
+                    🗑 Delete
+                  </button>
                 </div>
               </div>
             ))}
@@ -275,6 +408,21 @@ export default function AdminPanel({ lang, onClose }) {
               </button>
             </div>
           </div>
+        )}
+
+        {/* Modals */}
+        {viewingRegistrations && (
+          <EventRegistrations
+            event={viewingRegistrations}
+            onClose={() => setViewingRegistrations(null)}
+            lang={lang}
+          />
+        )}
+        {showLeaderboard && (
+          <Leaderboard
+            onClose={() => setShowLeaderboard(false)}
+            lang={lang}
+          />
         )}
 
         {/* Change Password */}

@@ -73,15 +73,25 @@ export default function Home() {
   const handleRegisterClick = async (event, type) => {
     try {
       const currentUser = await base44.auth.me();
-      if (!currentUser?.onboarding_completed) {
-        setOnboardingOpen(true);
+      
+      // If no user or first-time user without onboarding
+      if (!currentUser || !currentUser.onboarding_completed) {
         // Store pending registration to auto-open after onboarding
         sessionStorage.setItem('pendingRegistration', JSON.stringify({ event, type }));
+        
+        // Trigger login/onboarding
+        if (!currentUser) {
+          base44.auth.redirectToLogin(window.location.pathname);
+        } else {
+          setOnboardingOpen(true);
+        }
       } else {
         setRegModal({ event, type });
       }
     } catch (err) {
-      setRegModal({ event, type });
+      // Not authenticated - redirect to login
+      sessionStorage.setItem('pendingRegistration', JSON.stringify({ event, type }));
+      base44.auth.redirectToLogin(window.location.pathname);
     }
   };
 

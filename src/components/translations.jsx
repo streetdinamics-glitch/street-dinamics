@@ -143,7 +143,7 @@ export const translations = {
     
     // Admin
     admin_panel: 'ADMIN PANEL',
-    admin_create_event: '+ CREATE EVENT',
+    admin_create_event: 'CREATE EVENT',
     admin_go_live: 'GO LIVE',
     admin_end_event: 'END EVENT',
     admin_kick_url: 'Kick Live URL',
