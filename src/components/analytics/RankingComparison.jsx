@@ -137,7 +137,7 @@ export default function RankingComparison({ athleteStats, allAthletes = [], even
               dataKey="score"
               fill="#00ffee"
               radius={[4, 4, 0, 0]}
-              shape={<CustomBar isCurrentAthlete={topCompetitors[2].isCurrentAthlete} />}
+              shape={<CustomBar isCurrentAthlete={topCompetitors[0]?.isCurrentAthlete} />}
             />
           </BarChart>
         </ResponsiveContainer>
