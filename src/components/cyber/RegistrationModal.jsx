@@ -264,45 +264,13 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
 
             {/* Document upload */}
             <div className="mb-4">
-              <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('reg_id_upload')}</label>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".jpg,.jpeg,.png,.pdf"
-                onChange={handleFileUpload}
-                className="hidden"
-                disabled={uploading}
+              <SecureFileUploader
+                label={t('reg_id_upload')}
+                placeholder={t('reg_upload_placeholder') || 'Choose File'}
+                hint={t('reg_id_hint')}
+                onSuccess={(fileUrl) => handleChange('id_document', fileUrl)}
+                onError={(err) => console.error('Upload error:', err)}
               />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
-                className={`w-full text-[11px] py-2.5 px-3 flex items-center justify-center gap-2 transition-all border ${
-                  form.id_document
-                    ? 'border-cyan/40 bg-cyan/10 text-cyan disabled:opacity-40'
-                    : 'btn-ghost disabled:opacity-40'
-                }`}
-              >
-                {form.id_document ? (
-                  <>
-                    <CheckCircle2 size={14} />
-                    Document Verified
-                  </>
-                ) : uploading ? (
-                  <>
-                    <div className="w-3 h-3 border-2 border-fire-3/30 border-t-fire-3 rounded-full animate-spin" />
-                    Uploading...
-                  </>
-                ) : (
-                  <>
-                    <Upload size={14} />
-                    Choose File
-                  </>
-                )}
-              </button>
-              <p className="font-mono text-[9px] tracking-[1px] text-fire-3/30 mt-1">{t('reg_id_hint')}</p>
-              {form.id_document && (
-                <p className="font-mono text-[9px] tracking-[1px] text-cyan/60 mt-1">✓ Document ready for submission</p>
-              )}
             </div>
 
             <div className="flex gap-2.5 mt-4">
