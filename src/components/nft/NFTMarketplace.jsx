@@ -189,7 +189,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
               >
                 {/* Rarity Badge */}
                 <div className={`absolute top-3 right-3 px-3 py-1 border ${rarityStyle.border} ${rarityStyle.text} font-mono text-xs tracking-[1px] uppercase bg-black/60 backdrop-blur-sm z-10`}>
-                  {card.rarity}
+                  {t(`nft_${card.rarity}`)}
                 </div>
 
                 {/* Image */}
