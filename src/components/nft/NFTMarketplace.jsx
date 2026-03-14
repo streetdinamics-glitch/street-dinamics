@@ -18,6 +18,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
     priceRange: [0, 1000],
     availability: 'all',
   });
+  const [selectedNFT, setSelectedNFT] = useState(null);
 
   const { data: nftCards = [] } = useQuery({
     queryKey: ['nft-cards'],
