@@ -16,6 +16,7 @@ import BetSection from '../components/cyber/BetSection';
 import TokenMarketplace from '../components/marketplace/TokenMarketplace';
 import TournamentSection from '../components/cyber/TournamentSection';
 import LiveVotingPanel from '../components/voting/LiveVotingPanel';
+import EventChatRoom from '../components/chat/EventChatRoom';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
@@ -159,6 +160,7 @@ export default function Home() {
                 </div>
                 <TournamentSection event={ev} />
                 <LiveVotingPanel event={ev} lang={lang} />
+                <EventChatRoom event={ev} lang={lang} />
               </div>
             ))}
           </div>
