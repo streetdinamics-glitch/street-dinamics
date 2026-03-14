@@ -153,6 +153,8 @@ export default function SecondaryMarket({ lang = 'en' }) {
 
   return (
     <section id="secondary-market" className="section-container">
+      <div className="absolute bottom-[-1px] left-0 right-0 h-[1px] fire-line" />
+      
       <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">
         {t('secondary_subtitle')}
       </p>
