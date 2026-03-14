@@ -31,8 +31,12 @@ import Footer from '../components/cyber/Footer';
 import SpectatorTypeModal from '../components/cyber/SpectatorTypeModal';
 import SpectatorGamificationHub from '../components/gamification/SpectatorGamificationHub';
 import WatchlistPanel from '../components/watchlist/WatchlistPanel';
+import { useNotifications } from '../components/notifications/NotificationHook';
+import InAppInbox from '../components/notifications/InAppInbox';
 
 export default function Home() {
+  useNotifications();
+  
   const [lang, setLang] = useState('en');
   const t = useTranslation(lang);
   const queryClient = useQueryClient();
@@ -43,6 +47,7 @@ export default function Home() {
   const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [watchlistOpen, setWatchlistOpen] = useState(false);
+  const [inboxOpen, setInboxOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -258,6 +263,7 @@ export default function Home() {
       {watchlistOpen && (
         <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
       )}
+      <InAppInbox isOpen={inboxOpen} onClose={() => setInboxOpen(false)} />
     </div>
   );
 }
