@@ -967,6 +967,15 @@ export const translations = {
     attendance_online_desc: 'Sehen Sie sich den Livestream aus der Ferne an. Erhalten Sie einen digitalen Pass und Zugang zu exklusiven Online-Funktionen.',
     attendance_select: 'AUSWÄHLEN',
 
+    // Secondary Market Activity
+    secondary_top_assets: 'TOP ASSETS',
+    secondary_recent_transactions: 'AKTUELLE TRANSAKTIONEN',
+    secondary_activity_empty: 'Noch keine Aktivität',
+    secondary_transactions_empty: 'Noch keine Transaktionen',
+
+    // Gamification
+    gamification_subtitle: 'Fan-Engagement-Hub',
+
     // Global Leaderboard
     leaderboard_subtitle: 'Globales Ranking-System',
     leaderboard_title: 'CHAMPIONS BOARD',
