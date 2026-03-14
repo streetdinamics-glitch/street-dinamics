@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import { useTranslation } from '../translations';
+import { Map } from 'lucide-react';
+import EventMap from '../event/EventMap';
 
 export default function EventCard({ event, index, onRegisterAthlete, onRegisterSpectator, lang }) {
   const t = useTranslation(lang);
   const [isHovered, setIsHovered] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const filled = event.filled_spots || 0;
   const max = event.max_spots || 32;
   const pct = Math.min((filled / max) * 100, 100);
@@ -198,28 +201,53 @@ export default function EventCard({ event, index, onRegisterAthlete, onRegisterS
           </motion.button>
         )}
 
-        {/* Registration buttons with 3D depth */}
-        {event.status !== 'ended' && (
-          <div className="grid grid-cols-2 gap-2" style={{ perspective: '800px' }}>
-            <motion.button 
-              onClick={() => onRegisterAthlete?.(event)} 
-              className="btn-fire text-[10px] py-2.5 px-2"
-              whileHover={{ scale: 1.05, rotateX: -5 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {t('event_register_athlete')}
-            </motion.button>
-            <motion.button 
-              onClick={() => onRegisterSpectator?.(event)} 
-              className="btn-ghost text-[10px] py-2.5 px-2"
-              whileHover={{ scale: 1.05, rotateX: -5 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {t('event_register_spectator')}
-            </motion.button>
-          </div>
-        )}
-      </div>
-    </motion.div>
-  );
-}
+        {/* Map & Registration buttons */}
+         {event.status !== 'ended' && (
+           <>
+             <motion.button
+               onClick={() => setShowMap(!showMap)}
+               className="btn-ghost text-[10px] py-2.5 px-2 mb-2 w-full flex items-center justify-center gap-1.5"
+               whileHover={{ scale: 1.05, rotateX: -5 }}
+               whileTap={{ scale: 0.98 }}
+             >
+               <Map size={12} />
+               MAP
+             </motion.button>
+             <div className="grid grid-cols-2 gap-2" style={{ perspective: '800px' }}>
+               <motion.button 
+                 onClick={() => onRegisterAthlete?.(event)} 
+                 className="btn-fire text-[10px] py-2.5 px-2"
+                 whileHover={{ scale: 1.05, rotateX: -5 }}
+                 whileTap={{ scale: 0.98 }}
+               >
+                 {t('event_register_athlete')}
+               </motion.button>
+               <motion.button 
+                 onClick={() => onRegisterSpectator?.(event)} 
+                 className="btn-ghost text-[10px] py-2.5 px-2"
+                 whileHover={{ scale: 1.05, rotateX: -5 }}
+                 whileTap={{ scale: 0.98 }}
+               >
+                 {t('event_register_spectator')}
+               </motion.button>
+             </div>
+           </>
+         )}
+
+         {/* Interactive Map */}
+         {showMap && (
+           <motion.div
+             initial={{ opacity: 0, height: 0 }}
+             animate={{ opacity: 1, height: 'auto' }}
+             exit={{ opacity: 0, height: 0 }}
+             className="mt-4 border-t border-fire-3/10 pt-4 overflow-hidden"
+           >
+             <Suspense fallback={<div className="text-center py-8 text-fire-3/40 font-mono text-xs">Loading map...</div>}>
+               <EventMap event={event} isOpen={showMap} onClose={() => setShowMap(false)} />
+             </Suspense>
+           </motion.div>
+         )}
+        </div>
+        </motion.div>
+        );
+        }
