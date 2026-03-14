@@ -129,7 +129,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
       queryClient.invalidateQueries({ queryKey: ['secondary-listings'] });
       queryClient.invalidateQueries({ queryKey: ['my-tokens'] });
       queryClient.invalidateQueries({ queryKey: ['my-nfts'] });
-      toast.success('Purchase successful!');
+      toast.success(t('secondary_purchase_success'));
     },
     onError: (error) => {
       toast.error(error.message || 'Purchase failed');
