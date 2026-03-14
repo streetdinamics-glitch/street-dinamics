@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import CreateEvent from './pages/CreateEvent';
 import AthleteProfile from './pages/AthleteProfile';
 import Analytics from './pages/Analytics';
+import NFTDashboard from './pages/NFTDashboard';
 import { Navigate } from 'react-router-dom';
 
 const AuthenticatedApp = () => {
