@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { AlertTriangle, Mail, Shield, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import DataExportTool from './DataExportTool';
 
 export default function ConsentWithdrawal({ user }) {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -220,6 +221,9 @@ export default function ConsentWithdrawal({ user }) {
         </div>
       )}
 
+      {/* Data Export Tool */}
+      <DataExportTool user={user} />
+
       {/* GDPR Rights Info */}
       <div className="bg-cyan/10 border border-cyan/30 p-5">
         <h4 className="font-orbitron font-bold text-sm text-cyan mb-3 flex items-center gap-2">
@@ -228,11 +232,13 @@ export default function ConsentWithdrawal({ user }) {
         </h4>
         <div className="font-mono text-xs text-cyan/80 space-y-2 leading-relaxed">
           <p><strong>Right to Access:</strong> Request a copy of all your data → privacy@streetdynamics.ae</p>
-          <p><strong>Right to Rectification:</strong> Correct inaccurate data via profile settings</p>
+          <p><strong>Right to Rectification:</strong> Correct inaccurate data via profile settings above</p>
           <p><strong>Right to Erasure:</strong> Request deletion (subject to legal retention) → privacy@streetdynamics.ae</p>
-          <p><strong>Right to Portability:</strong> Export your data in JSON/CSV format → Settings → Export Data</p>
+          <p><strong>Right to Portability:</strong> Use "Download My Data" button above for instant JSON export</p>
           <p><strong>Right to Object:</strong> Use the withdrawal button above</p>
-          <p><strong>Right to Lodge Complaint:</strong> UAE Data Office (DIFC) or EU supervisory authority</p>
+          <p><strong>Right to Restriction:</strong> Request processing limitation → privacy@streetdynamics.ae</p>
+          <p><strong>Right to Lodge Complaint:</strong> UAE Data Office (DIFC) or EU supervisory authority in your country</p>
+          <p><strong>Response Time:</strong> All requests answered within 30 days per GDPR Article 12</p>
         </div>
       </div>
     </div>
