@@ -20,6 +20,10 @@ export default function AdminPanel({ lang, onClose }) {
   const [viewingRegistrations, setViewingRegistrations] = useState(null);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [pendingAthletes, setPendingAthletes] = useState([]);
+  const [editingEvent, setEditingEvent] = useState(null);
+  const [editForm, setEditForm] = useState({
+    title: '', sport: '', date: '', location: '', description: '', max_spots: 50
+  });
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -175,6 +179,27 @@ export default function AdminPanel({ lang, onClose }) {
     });
   };
 
+  const handleEditEvent = (event) => {
+    setEditingEvent(event);
+    setEditForm({
+      title: event.title || '',
+      sport: event.sport || '',
+      date: event.date || '',
+      location: event.location || '',
+      description: event.description || '',
+      max_spots: event.max_spots || 50,
+    });
+  };
+
+  const handleSaveEventEdit = () => {
+    if (!editingEvent) return;
+    updateEvent.mutate({
+      id: editingEvent.id,
+      data: editForm,
+      successMessage: 'Event details updated',
+    });
+  };
+
   return (
     <div className="fixed inset-0 z-[500] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
       <div className="relative w-full max-w-[1100px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-auto">
@@ -275,6 +300,12 @@ export default function AdminPanel({ lang, onClose }) {
                 </div>
                 <div className="flex gap-2 flex-wrap">
                   <button
+                    onClick={() => handleEditEvent(event)}
+                    className="btn-cyan text-[10px] py-2 px-4"
+                  >
+                    Edit
+                  </button>
+                  <button
                     onClick={() => setViewingRegistrations(event)}
                     className="btn-cyan text-[10px] py-2 px-4"
                   >
@@ -359,6 +390,94 @@ export default function AdminPanel({ lang, onClose }) {
                 className="btn-fire py-2 px-4 text-[10px] disabled:opacity-20"
               >
                 {updateEvent.isPending ? 'Saving...' : `${t('admin_save_links')} & GO LIVE`}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Event Modal */}
+        {editingEvent && (
+          <div className="mb-8 p-6 bg-cyan/5 border border-cyan/20">
+            <h3 className="font-orbitron font-bold text-lg text-cyan mb-2">
+              Edit Event: {editingEvent.title}
+            </h3>
+            <div className="space-y-3 mb-4">
+              <div>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                  Event Title
+                </label>
+                <input
+                  className="cyber-input"
+                  value={editForm.title}
+                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                    Sport
+                  </label>
+                  <input
+                    className="cyber-input"
+                    value={editForm.sport}
+                    onChange={(e) => setEditForm({ ...editForm, sport: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                    Date
+                  </label>
+                  <input
+                    className="cyber-input"
+                    type="date"
+                    value={editForm.date}
+                    onChange={(e) => setEditForm({ ...editForm, date: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                  Location
+                </label>
+                <input
+                  className="cyber-input"
+                  value={editForm.location}
+                  onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                  Description
+                </label>
+                <textarea
+                  className="cyber-input"
+                  rows={3}
+                  value={editForm.description}
+                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
+                  Max Spots
+                </label>
+                <input
+                  className="cyber-input"
+                  type="number"
+                  value={editForm.max_spots}
+                  onChange={(e) => setEditForm({ ...editForm, max_spots: Number(e.target.value) })}
+                />
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button onClick={() => setEditingEvent(null)} className="btn-ghost py-2 px-4 text-[10px]">
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveEventEdit}
+                disabled={updateEvent.isPending || !editForm.title || !editForm.sport || !editForm.date || !editForm.location}
+                className="btn-fire py-2 px-4 text-[10px] disabled:opacity-20"
+              >
+                {updateEvent.isPending ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
           </div>
