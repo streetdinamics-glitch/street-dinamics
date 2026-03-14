@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { Menu, X, User, Star } from 'lucide-react';
+import { Menu, X, User, Star, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -16,6 +16,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
   const [watchlistOpen, setWatchlistOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -62,55 +63,89 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           STREET<span className="text-fire-3">//</span>DINAMICS
         </div>
 
-        <div className="hidden md:flex items-center gap-2">
-          {navItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => onScrollTo?.(item.id)}
-              className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap"
-            >
-              {item.label}
+        <div className="hidden md:flex items-center gap-1">
+          {/* Explore Dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap group-hover:border-fire-3 group-hover:text-fire-4 group-hover:bg-fire-3/5">
+              EXPLORE
+              <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
             </button>
-          ))}
+            <div className="absolute top-full left-0 mt-1 w-48 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
+              {navItems.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => { onScrollTo?.(item.id); }}
+                  className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 last:border-b-0"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="h-5 w-[1px] bg-fire-3/20" />
-          <WalletConnectButton minimal={true} />
-          <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
-          {user && (
-            <button
-              onClick={() => setWatchlistOpen(true)}
-              className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn"
-            >
-              <Star size={12} />
-              WATCHLIST
+
+          {/* Tools Dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap group-hover:border-fire-3 group-hover:text-fire-4 group-hover:bg-fire-3/5">
+              TOOLS
+              <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
             </button>
-          )}
+            <div className="absolute top-full left-0 mt-1 w-48 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
+              <div className="px-3 py-2 font-mono text-[9px] tracking-[1px] uppercase text-fire-3/40 border-b border-fire-3/10">Connectivity</div>
+              <div className="p-2">
+                <WalletConnectButton minimal={true} />
+              </div>
+              <div className="px-3 py-2 font-mono text-[9px] tracking-[1px] uppercase text-fire-3/40 border-t border-fire-3/10">Settings</div>
+              <div className="p-2">
+                <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
+              </div>
+            </div>
+          </div>
+
           {user && (
             <>
               <div className="h-5 w-[1px] bg-fire-3/20" />
-              <button
-                onClick={onProfileClick}
-                className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap"
-              >
-                <User size={12} />
-                PROFILE
-              </button>
-              {(user?.role === 'admin' ? navLinks : userNavLinks).map(link => (
-                <Link
-                  key={link.path}
-                  to={createPageUrl(link.path.replace('/', ''))}
-                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn no-underline flex items-center whitespace-nowrap"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              {user.role === 'admin' && (
-                <Link
-                  to={createPageUrl('Admin')}
-                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-green-500/40 text-green-400 px-3 py-1.5 cursor-pointer transition-all hover:border-green-500 hover:bg-green-500/5 clip-btn no-underline flex items-center whitespace-nowrap"
-                >
-                  ADMIN
-                </Link>
-              )}
+
+              {/* Account Dropdown */}
+              <div className="relative group">
+                <button className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn group-hover:border-fire-3 group-hover:text-fire-4 group-hover:bg-fire-3/5">
+                  <User size={12} />
+                  ACCOUNT
+                  <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
+                </button>
+                <div className="absolute top-full right-0 mt-1 w-56 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
+                  <button
+                    onClick={onProfileClick}
+                    className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
+                  >
+                    👤 My Profile
+                  </button>
+                  <button
+                    onClick={() => setWatchlistOpen(true)}
+                    className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
+                  >
+                    ⭐ Watchlist
+                  </button>
+                  {(user?.role === 'admin' ? navLinks : userNavLinks).map(link => (
+                    <Link
+                      key={link.path}
+                      to={createPageUrl(link.path.replace('/', ''))}
+                      className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-cyan/70 hover:bg-cyan/10 hover:text-cyan transition-colors border-b border-fire-3/10 no-underline block"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                  {user.role === 'admin' && (
+                    <Link
+                      to={createPageUrl('Admin')}
+                      className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-green-400/70 hover:bg-green-500/10 hover:text-green-400 transition-colors no-underline block"
+                    >
+                      🔧 Admin Panel
+                    </Link>
+                  )}
+                </div>
+              </div>
             </>
           )}
         </div>
