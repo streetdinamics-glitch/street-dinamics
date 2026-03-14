@@ -132,7 +132,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
       toast.success(t('secondary_purchase_success'));
     },
     onError: (error) => {
-      toast.error(error.message || 'Purchase failed');
+      toast.error(error.message || t('secondary_purchase_error'));
     },
   });
 
