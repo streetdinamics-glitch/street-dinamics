@@ -13,13 +13,24 @@ export default function SponsorSection({ lang }) {
         <div className="absolute top-0 left-0 right-0 fire-line" />
         <div className="absolute top-0 right-0 w-[18px] h-[18px] bg-gradient-to-bl from-fire-5 to-fire-2" style={{ clipPath: 'polygon(100% 0,100% 100%,0 0)' }} />
 
-        <p className="font-rajdhani text-lg text-fire-4/60 leading-relaxed mb-5">
-          {t('sponsor_value')}
-        </p>
-
-        <div className="font-mono text-sm text-fire-3/40 mb-5 tracking-[1px]">
-          {t('sponsor_demo')}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="p-4 bg-fire-3/5 border border-fire-3/10">
+            <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">13-30</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">High-Value Youth Demographics</div>
+          </div>
+          <div className="p-4 bg-fire-3/5 border border-fire-3/10">
+            <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">50K+</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">Global Audience Reach</div>
+          </div>
+          <div className="p-4 bg-fire-3/5 border border-fire-3/10">
+            <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">UAE+EU</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">International Markets</div>
+          </div>
         </div>
+
+        <p className="font-rajdhani text-base text-fire-4/50 leading-relaxed mb-5">
+          Multi-platform visibility • Live event activation • NFT integration • Authentic Gen-Z engagement
+        </p>
 
         <div className="flex items-center gap-2 mb-4">
           <span className="font-mono text-sm text-fire-3/30">→</span>
