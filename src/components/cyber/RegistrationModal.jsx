@@ -8,6 +8,7 @@ import ComprehensiveContract from '../legal/ComprehensiveContract';
 import AgeVerification from '../legal/AgeVerification';
 import MinorConsentForm from '../legal/MinorConsentForm';
 import GDPRConsentManager from '../legal/GDPRConsentManager';
+import SecureFileUploader from '../fileupload/SecureFileUploader';
 
 export default function RegistrationModal({ event, type, attendanceMode, onClose, onSuccess, lang }) {
   const t = useTranslation(lang);
