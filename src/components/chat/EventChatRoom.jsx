@@ -264,33 +264,63 @@ export default function EventChatRoom({ event, lang }) {
               </div>
 
               {/* Message Input */}
-              {user ? (
-                <form onSubmit={handleSend} className="flex gap-2">
-                  <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Type a message..."
-                    className="flex-1 cyber-input"
-                    maxLength={500}
-                    disabled={sendMessage.isPending}
-                  />
-                  <button
-                    type="submit"
-                    disabled={!message.trim() || sendMessage.isPending}
-                    className="btn-fire text-[11px] py-2 px-5 flex items-center gap-2 disabled:opacity-30"
-                  >
-                    <Send size={14} />
-                    {sendMessage.isPending ? 'Sending...' : 'Send'}
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-4 bg-purple-500/5 border border-purple-500/20">
-                  <p className="font-mono text-sm text-purple-400/60">
-                    Sign in to join the chat
-                  </p>
-                </div>
-              )}
+               {user ? (
+                 <div className="space-y-2">
+                   <form onSubmit={(e) => handleSend(e, 'regular')} className="flex gap-2">
+                     <input
+                       type="text"
+                       value={message}
+                       onChange={(e) => setMessage(e.target.value)}
+                       placeholder="Type a message..."
+                       className="flex-1 cyber-input"
+                       maxLength={500}
+                       disabled={sendMessage.isPending}
+                     />
+                     <button
+                       type="submit"
+                       disabled={!message.trim() || sendMessage.isPending}
+                       className="btn-fire text-[11px] py-2 px-5 flex items-center gap-2 disabled:opacity-30"
+                     >
+                       <Send size={14} />
+                       {sendMessage.isPending ? 'Sending...' : 'Send'}
+                     </button>
+                   </form>
+                   {/* Admin Quick Actions */}
+                   {isAdmin && (
+                     <div className="flex gap-1">
+                       <button
+                         onClick={(e) => handleSend(e, 'announcement')}
+                         disabled={!message.trim() || sendMessage.isPending}
+                         className="flex-1 btn-ghost text-[9px] py-1.5 px-3 border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/5"
+                       >
+                         <AlertCircle size={12} className="inline mr-1" />
+                         Announce
+                       </button>
+                       <button
+                         onClick={(e) => handleSend(e, 'answer')}
+                         disabled={!message.trim() || sendMessage.isPending}
+                         className="flex-1 btn-ghost text-[9px] py-1.5 px-3 border-green-500/30 text-green-500 hover:bg-green-500/5"
+                       >
+                         <MessageSquare size={12} className="inline mr-1" />
+                         Answer
+                       </button>
+                       <button
+                         onClick={(e) => handleSend(e, 'update')}
+                         disabled={!message.trim() || sendMessage.isPending}
+                         className="flex-1 btn-ghost text-[9px] py-1.5 px-3 border-blue-500/30 text-blue-500 hover:bg-blue-500/5"
+                       >
+                         📢 Update
+                       </button>
+                     </div>
+                   )}
+                 </div>
+               ) : (
+                 <div className="text-center py-4 bg-purple-500/5 border border-purple-500/20">
+                   <p className="font-mono text-sm text-purple-400/60">
+                     Sign in to join the chat
+                   </p>
+                 </div>
+               )}
             </div>
           </motion.div>
         )}
