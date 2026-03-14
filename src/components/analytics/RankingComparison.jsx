@@ -40,16 +40,16 @@ export default function RankingComparison({ athleteStats, allAthletes = [], even
 
   return (
     <div className="space-y-6">
-      {/* Discipline Rankings */}
+      {/* Universal Performance Score Rankings */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-fire-3/20 p-6 rounded-lg"
       >
         <div className="flex items-center gap-3 mb-6">
-          <Medal className="text-fire-3" size={20} />
+          <Zap className="text-fire-3" size={20} />
           <h3 className="font-orbitron font-bold text-lg text-fire-5 tracking-[1px] uppercase">
-            Rankings by Discipline
+            Universal Performance Score
           </h3>
         </div>
 
@@ -64,30 +64,42 @@ export default function RankingComparison({ athleteStats, allAthletes = [], even
             >
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h4 className="font-rajdhani font-bold text-fire-4 mb-1">{item.discipline}</h4>
+                  <h4 className="font-rajdhani font-bold text-fire-4 mb-1">Rank #{item.rank}</h4>
                   <p className="font-mono text-xs text-fire-3/60">
-                    Rank #{item.rank} of {item.total} athletes
+                    {item.rank} of {item.total} athletes
                   </p>
                 </div>
                 <div className="text-right">
                   <div className="font-orbitron font-black text-2xl text-fire-5">{item.score}</div>
-                  <div className="font-mono text-xs text-fire-3/40">SCORE</div>
+                  <div className="font-mono text-xs text-fire-3/40">UNIVERSAL SCORE</div>
                 </div>
               </div>
 
-              {/* Progress bar */}
+              {/* Score components */}
+              <div className="grid grid-cols-2 gap-2 mb-3 text-xs">
+                <div className="bg-cyan/10 border border-cyan/20 p-2 rounded">
+                  <div className="font-mono text-cyan/60">Technical</div>
+                  <div className="font-orbitron font-bold text-cyan">{item.techProgression}%</div>
+                </div>
+                <div className="bg-fire-3/10 border border-fire-3/20 p-2 rounded">
+                  <div className="font-mono text-fire-3/60">Engagement</div>
+                  <div className="font-orbitron font-bold text-fire-3">{item.engagement}%</div>
+                </div>
+              </div>
+
+              {/* Percentile bar */}
               <div className="h-2 bg-fire-3/10 rounded overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${(item.rank / item.total) * 100}%` }}
+                  animate={{ width: `${((item.total - item.rank) / item.total) * 100}%` }}
                   transition={{ duration: 1, ease: 'easeOut' }}
                   className="h-full bg-gradient-to-r from-fire-3 to-fire-5"
                 />
               </div>
 
-              {/* Percentile */}
+              {/* Percentile text */}
               <div className="mt-2 font-mono text-xs text-fire-3/60">
-                Top {((item.total - item.rank) / item.total * 100).toFixed(0)}% in {item.discipline}
+                Top {((item.total - item.rank) / item.total * 100).toFixed(0)}% overall
               </div>
             </motion.div>
           ))}
