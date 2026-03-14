@@ -142,24 +142,20 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
   return (
     <div className="w-full max-w-6xl mx-auto space-y-8">
       {/* Header Stats */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="grid grid-cols-3 gap-4"
-      >
-        <div className="bg-gradient-to-br from-fire-3/10 to-transparent border border-fire-3/30 p-4 clip-cyber">
-          <div className="font-mono text-[10px] tracking-[2px] uppercase text-fire-3/60 mb-1">Total Points</div>
-          <div className="font-orbitron text-3xl font-bold text-fire-5">{fanPoints.total_points || 0}</div>
-        </div>
-        <div className="bg-gradient-to-br from-cyan/10 to-transparent border border-cyan/30 p-4 clip-cyber">
-          <div className="font-mono text-[10px] tracking-[2px] uppercase text-cyan/60 mb-1">UGC Submissions</div>
-          <div className="font-orbitron text-3xl font-bold text-cyan">{ugcSubmissions.length}</div>
-        </div>
-        <div className="bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-500/30 p-4 clip-cyber">
-          <div className="font-mono text-[10px] tracking-[2px] uppercase text-purple-500/60 mb-1">Rank</div>
-          <div className="font-orbitron text-3xl font-bold text-purple-400">#{fanPoints.rank || '—'}</div>
-        </div>
-      </motion.div>
+       <motion.div
+         initial={{ opacity: 0, y: 20 }}
+         animate={{ opacity: 1, y: 0 }}
+         className="grid grid-cols-2 gap-4"
+       >
+         <div className="bg-gradient-to-br from-cyan/10 to-transparent border border-cyan/30 p-4 clip-cyber">
+           <div className="font-mono text-[10px] tracking-[2px] uppercase text-cyan/60 mb-1">UGC Submissions</div>
+           <div className="font-orbitron text-3xl font-bold text-cyan">{ugcSubmissions.length}</div>
+         </div>
+         <div className="bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-500/30 p-4 clip-cyber">
+           <div className="font-mono text-[10px] tracking-[2px] uppercase text-purple-500/60 mb-1">Rank</div>
+           <div className="font-orbitron text-3xl font-bold text-purple-400">#{fanPoints.rank || '—'}</div>
+         </div>
+       </motion.div>
 
       {/* Tab Navigation */}
       <div className="flex gap-2 border-b border-fire-3/10">
@@ -263,16 +259,7 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
         </div>
       </div>
 
-      {/* Rewards Section */}
-      <div className="border border-fire-3/30 bg-gradient-to-br from-fire-3/10 to-transparent p-6 clip-cyber">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="font-orbitron font-bold text-fire-4 mb-1">Rewards Marketplace</h3>
-            <p className="font-mono text-[10px] text-fire-3/60">Redeem points for exclusive merch and NFT drops</p>
-          </div>
-          <button className="btn-fire py-2 px-6 text-[10px]">Coming Soon</button>
-        </div>
-      </div>
+
     </div>
   );
 }
