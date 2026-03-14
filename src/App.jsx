@@ -46,6 +46,7 @@ const AuthenticatedApp = () => {
       <Route path="/CreateEvent" element={<CreateEvent />} />
       <Route path="/AthleteProfile" element={<AthleteProfile />} />
       <Route path="/Analytics" element={<Analytics />} />
+      <Route path="/NFTDashboard" element={<NFTDashboard />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
