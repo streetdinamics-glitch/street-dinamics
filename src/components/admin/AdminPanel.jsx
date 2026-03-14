@@ -43,6 +43,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showRoyaltyManager, setShowRoyaltyManager] = useState(false);
   const [showMinorApprovals, setShowMinorApprovals] = useState(false);
   const [chatModeratingEvent, setChatModeratingEvent] = useState(null);
+  const [showRegistrationAnalytics, setShowRegistrationAnalytics] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
