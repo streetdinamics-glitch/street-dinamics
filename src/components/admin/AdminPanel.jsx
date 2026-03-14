@@ -713,22 +713,36 @@ export default function AdminPanel({ lang, onClose }) {
           </div>
         )}
         {chatModeratingEvent && (
-          <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
-            <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
-              <div className="absolute top-0 left-0 right-0 fire-line" />
-              <button
-                onClick={() => setChatModeratingEvent(null)}
-                className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
-              >
-                CLOSE
-              </button>
-              <h2 className="text-fire-gradient font-orbitron font-black text-2xl mb-6">
-                💬 LIVE CHAT MODERATION: {chatModeratingEvent.title}
-              </h2>
-              <ChatModerationPanel event={chatModeratingEvent} />
-            </div>
-          </div>
-        )}
+           <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+             <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 max-h-[90vh] overflow-y-auto">
+               <div className="absolute top-0 left-0 right-0 fire-line" />
+               <button
+                 onClick={() => setChatModeratingEvent(null)}
+                 className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+               >
+                 CLOSE
+               </button>
+               <h2 className="text-fire-gradient font-orbitron font-black text-2xl mb-6">
+                 💬 LIVE CHAT MODERATION: {chatModeratingEvent.title}
+               </h2>
+               <ChatModerationPanel event={chatModeratingEvent} />
+             </div>
+           </div>
+         )}
+         {showRegistrationAnalytics && (
+           <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+             <div className="relative w-full max-w-6xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+               <div className="absolute top-0 left-0 right-0 fire-line" />
+               <button
+                 onClick={() => setShowRegistrationAnalytics(false)}
+                 className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+               >
+                 CLOSE
+               </button>
+               <RegistrationAnalyticsDashboard />
+             </div>
+           </div>
+         )}
 
         {/* Change Password */}
         <div className="p-6 bg-fire-3/5 border border-fire-3/10">
