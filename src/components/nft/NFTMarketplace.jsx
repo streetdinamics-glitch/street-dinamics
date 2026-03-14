@@ -169,7 +169,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
       {liveCards.length === 0 ? (
         <div className="text-center py-20">
           <Sparkles size={48} className="text-fire-3/30 mx-auto mb-4" />
-          <p className="font-mono text-sm text-fire-3/40 tracking-[2px]">NO DROPS MATCH YOUR FILTERS</p>
+          <p className="font-mono text-sm text-fire-3/40 tracking-[2px]">{t('nft_no_drops')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
