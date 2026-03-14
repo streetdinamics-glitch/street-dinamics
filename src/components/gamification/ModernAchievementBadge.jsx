@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Zap, Heart, Share2, Compass, TrendingUp, Award } from 'lucide-react';
 
 const badgeStyles = {
-  'content-master': { icon: <Zap size={24} />, color: 'from-fire-3 to-fire-5', label: 'CONTENT MASTER', desc: '5+ UGC posts' },
-  'network-architect': { icon: <TrendingUp size={24} />, color: 'from-cyan to-purple-500', label: 'NETWORK ARCHITECT', desc: '5+ referrals' },
-  'engagement-magnet': { icon: <Heart size={24} />, color: 'from-fire-5 to-red-500', label: 'ENGAGEMENT MAGNET', desc: '250+ points' },
-  'influence-nexus': { icon: <Share2 size={24} />, color: 'from-green-500 to-cyan', label: 'INFLUENCE NEXUS', desc: '20+ viral posts' },
-  'viral-catalyst': { icon: <Compass size={24} />, color: 'from-purple-500 to-pink-500', label: 'VIRAL CATALYST', desc: '100+ total reach' },
-  'legacy-builder': { icon: <Award size={24} />, color: 'from-yellow-400 to-fire-3', label: 'LEGACY BUILDER', desc: '1000+ points' },
+  'founder': { icon: <Zap size={24} />, color: 'from-fire-3 to-fire-5', label: 'FOUNDER', desc: '5+ content pieces' },
+  'ambassador': { icon: <TrendingUp size={24} />, color: 'from-cyan to-purple-500', label: 'AMBASSADOR', desc: '5 successful referrals' },
+  'curator': { icon: <Heart size={24} />, color: 'from-fire-5 to-red-500', label: 'CURATOR', desc: '250+ points earned' },
+  'trailblazer': { icon: <Share2 size={24} />, color: 'from-green-500 to-cyan', label: 'TRAILBLAZER', desc: '100+ engagement reach' },
+  'catalyst': { icon: <Compass size={24} />, color: 'from-purple-500 to-pink-500', label: 'CATALYST', desc: '500+ total engagement' },
+  'luminary': { icon: <Award size={24} />, color: 'from-yellow-400 to-fire-3', label: 'LUMINARY', desc: '1000+ points mastery' },
 };
 
 export default function ModernAchievementBadge({ badgeId, unlocked = false, progress = 0 }) {

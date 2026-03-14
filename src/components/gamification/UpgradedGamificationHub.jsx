@@ -28,9 +28,21 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
     enabled: !!user,
   });
 
+  // Track referral conversions
+  const { data: referralStats = { total: 0, successful: 0 } } = useQuery({
+    queryKey: ['referral-stats', user?.email],
+    queryFn: async () => {
+      const registrations = await base44.entities.Registration.filter({ referral_source_detail: user?.email });
+      return {
+        total: registrations.length,
+        successful: registrations.filter(r => r.status === 'confirmed').length,
+      };
+    },
+    enabled: !!user?.email,
+  });
+
   const claimTaskMutation = useMutation({
     mutationFn: async (task) => {
-      // Award points
       const current = fanPoints[task.point_type] || 0;
       await base44.entities.FanPoints.update(fanPoints.id || await base44.entities.FanPoints.create({
         event_id: eventId,
@@ -42,7 +54,7 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
         total_points: (fanPoints.total_points || 0) + task.points,
         last_updated: new Date().toISOString(),
       });
-      toast.success(`+${task.points} points! 🔥`);
+      toast.success(`+${task.points} points awarded`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['fan-points'] });
@@ -55,7 +67,7 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
       id: 'ugc-video-master',
       icon: <Video size={20} />,
       title: 'Video Creator',
-      description: 'Record 15-30s reaction, highlight or hype clip',
+      description: 'Record and submit a 15-30s reaction or highlight clip',
       points: 250,
       point_type: 'chat_points',
       claimed: ugcSubmissions.some(s => s.type === 'video'),
@@ -66,9 +78,9 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
     {
       id: 'ugc-photo-streak',
       icon: <Aperture size={20} />,
-      title: 'Moment Capture',
-      description: 'Upload 3 unique photos from the event',
-      points: 180,
+      title: 'Visual Storyteller',
+      description: 'Submit 3 unique photos from the live event',
+      points: 200,
       point_type: 'chat_points',
       claimed: ugcSubmissions.filter(s => s.type === 'photo').length >= 3,
       progress: Math.min(ugcSubmissions.filter(s => s.type === 'photo').length / 3, 1),
@@ -77,49 +89,88 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
       tier: 'premium',
     },
     {
+      id: 'ugc-series-builder',
+      icon: <Video size={20} />,
+      title: 'Content Series Creator',
+      description: 'Submit 5 total UGC posts across different types',
+      points: 350,
+      point_type: 'chat_points',
+      claimed: ugcSubmissions.length >= 5,
+      progress: Math.min(ugcSubmissions.length / 5, 1),
+      color: 'from-orange-500/20 to-orange-500/5',
+      borderColor: 'border-orange-500/30',
+      tier: 'premium',
+    },
+    {
       id: 'content-viral',
       icon: <TrendingUp size={20} />,
-      title: 'Viral Amplifier',
-      description: 'Get your UGC featured with 50+ engagement',
+      title: 'Engagement Magnet',
+      description: 'Achieve 50+ engagement on a single UGC post',
       points: 400,
       point_type: 'chat_points',
       claimed: ugcSubmissions.some(s => (s.engagement_count || 0) >= 50),
+      progress: Math.min(ugcSubmissions.filter(s => (s.engagement_count || 0) >= 50).length / 1, 1),
       color: 'from-cyan/20 to-cyan/5',
       borderColor: 'border-cyan/30',
       tier: 'elite',
     },
     {
-      id: 'referral-network',
-      icon: <Users size={20} />,
-      title: 'Network Builder',
-      description: 'Invite 5 friends to register and attend',
-      points: 500,
+      id: 'ugc-engagement-master',
+      icon: <TrendingUp size={20} />,
+      title: 'Engagement Optimizer',
+      description: 'Accumulate 500+ total engagement across all UGC',
+      points: 600,
       point_type: 'chat_points',
-      claimed: false,
-      claimed_count: 0,
-      progress: 0,
-      color: 'from-purple-500/20 to-purple-500/5',
-      borderColor: 'border-purple-500/30',
+      claimed: ugcSubmissions.reduce((sum, s) => sum + (s.engagement_count || 0), 0) >= 500,
+      progress: Math.min(ugcSubmissions.reduce((sum, s) => sum + (s.engagement_count || 0), 0) / 500, 1),
+      color: 'from-red-500/20 to-red-500/5',
+      borderColor: 'border-red-500/30',
       tier: 'elite',
     },
     {
       id: 'hashtag-campaign',
       icon: <Share2 size={20} />,
-      title: 'Hashtag Power',
-      description: 'Post with event hashtag 10 times across platforms',
-      points: 200,
+      title: 'Social Amplifier',
+      description: 'Share event content 10 times across platforms',
+      points: 300,
       point_type: 'chat_points',
-      claimed: false,
-      progress: 0,
+      claimed: ugcSubmissions.filter(s => s.social_links && Object.keys(s.social_links).length > 0).length >= 10,
+      progress: Math.min(ugcSubmissions.filter(s => s.social_links && Object.keys(s.social_links).length > 0).length / 10, 1),
       color: 'from-green-500/20 to-green-500/5',
       borderColor: 'border-green-500/30',
       tier: 'premium',
     },
     {
+      id: 'referral-network',
+      icon: <Users size={20} />,
+      title: 'Affiliate Recruiter',
+      description: 'Bring 5 successful referrals to the event',
+      points: 500,
+      point_type: 'chat_points',
+      claimed: referralStats.successful >= 5,
+      progress: Math.min(referralStats.successful / 5, 1),
+      color: 'from-purple-500/20 to-purple-500/5',
+      borderColor: 'border-purple-500/30',
+      tier: 'elite',
+    },
+    {
+      id: 'multi-referral-expert',
+      icon: <Users size={20} />,
+      title: 'Network Influence',
+      description: 'Refer 10+ users to the platform',
+      points: 700,
+      point_type: 'chat_points',
+      claimed: referralStats.total >= 10,
+      progress: Math.min(referralStats.total / 10, 1),
+      color: 'from-cyan/20 to-cyan/5',
+      borderColor: 'border-cyan/30',
+      tier: 'elite',
+    },
+    {
       id: 'prediction-streak',
       icon: <Zap size={20} />,
-      title: 'Prediction Prophet',
-      description: 'Get 5 consecutive predictions correct',
+      title: 'Prediction Master',
+      description: 'Achieve 5 consecutive correct predictions',
       points: 300,
       point_type: 'prediction_points',
       claimed: (fanPoints.correct_predictions || 0) >= 5,
@@ -131,33 +182,35 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
   ];
 
   const achievements = [
-    { id: 'content-master', unlocked: ugcSubmissions.length >= 5, progress: Math.min(ugcSubmissions.length / 5, 1) },
-    { id: 'network-architect', unlocked: false, progress: 0.3 },
-    { id: 'engagement-magnet', unlocked: (fanPoints.total_points || 0) >= 250, progress: Math.min((fanPoints.total_points || 0) / 250, 1) },
-    { id: 'influence-nexus', unlocked: false, progress: 0.5 },
-    { id: 'viral-catalyst', unlocked: ugcSubmissions.some(s => (s.engagement_count || 0) >= 100), progress: 0.8 },
-    { id: 'legacy-builder', unlocked: (fanPoints.total_points || 0) >= 1000, progress: Math.min((fanPoints.total_points || 0) / 1000, 1) },
+    { id: 'founder', unlocked: ugcSubmissions.length >= 5, progress: Math.min(ugcSubmissions.length / 5, 1) },
+    { id: 'ambassador', unlocked: referralStats.successful >= 5, progress: Math.min(referralStats.successful / 5, 1) },
+    { id: 'curator', unlocked: (fanPoints.total_points || 0) >= 250, progress: Math.min((fanPoints.total_points || 0) / 250, 1) },
+    { id: 'trailblazer', unlocked: ugcSubmissions.some(s => (s.engagement_count || 0) >= 100), progress: Math.min(ugcSubmissions.filter(s => (s.engagement_count || 0) >= 100).length / 3, 1) },
+    { id: 'catalyst', unlocked: ugcSubmissions.reduce((sum, s) => sum + (s.engagement_count || 0), 0) >= 500, progress: Math.min(ugcSubmissions.reduce((sum, s) => sum + (s.engagement_count || 0), 0) / 500, 1) },
+    { id: 'luminary', unlocked: (fanPoints.total_points || 0) >= 1000, progress: Math.min((fanPoints.total_points || 0) / 1000, 1) },
   ];
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-8">
-      {/* Header Stats */}
-       <motion.div
-         initial={{ opacity: 0, y: 20 }}
-         animate={{ opacity: 1, y: 0 }}
-         className="grid grid-cols-2 gap-4"
-       >
-         <div className="bg-gradient-to-br from-cyan/10 to-transparent border border-cyan/30 p-4 clip-cyber">
-           <div className="font-mono text-[10px] tracking-[2px] uppercase text-cyan/60 mb-1">UGC Submissions</div>
-           <div className="font-orbitron text-3xl font-bold text-cyan">{ugcSubmissions.length}</div>
-         </div>
-         <div className="bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-500/30 p-4 clip-cyber">
-           <div className="font-mono text-[10px] tracking-[2px] uppercase text-purple-500/60 mb-1">Rank</div>
-           <div className="font-orbitron text-3xl font-bold text-purple-400">#{fanPoints.rank || '—'}</div>
-         </div>
-       </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="grid grid-cols-3 gap-4"
+      >
+        <div className="bg-gradient-to-br from-cyan/10 to-transparent border border-cyan/30 p-4 clip-cyber">
+          <div className="font-mono text-[10px] tracking-[2px] uppercase text-cyan/60 mb-1">Content Submitted</div>
+          <div className="font-orbitron text-3xl font-bold text-cyan">{ugcSubmissions.length}</div>
+        </div>
+        <div className="bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-500/30 p-4 clip-cyber">
+          <div className="font-mono text-[10px] tracking-[2px] uppercase text-purple-500/60 mb-1">Referrals Active</div>
+          <div className="font-orbitron text-3xl font-bold text-purple-400">{referralStats.total}</div>
+        </div>
+        <div className="bg-gradient-to-br from-fire-3/10 to-transparent border border-fire-3/30 p-4 clip-cyber">
+          <div className="font-mono text-[10px] tracking-[2px] uppercase text-fire-3/60 mb-1">Total Points</div>
+          <div className="font-orbitron text-3xl font-bold text-fire-5">{fanPoints.total_points || 0}</div>
+        </div>
+      </motion.div>
 
-      {/* Tab Navigation */}
       <div className="flex gap-2 border-b border-fire-3/10">
         {['tasks', 'badges'].map((tab) => (
           <button
@@ -174,7 +227,6 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
         ))}
       </div>
 
-      {/* Tasks Tab */}
       {activeTab === 'tasks' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {tasks.map((task) => (
@@ -222,7 +274,6 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
         </div>
       )}
 
-      {/* Badges Tab */}
       {activeTab === 'badges' && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {achievements.map((ach) => (
@@ -236,10 +287,9 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
         </div>
       )}
 
-      {/* Referral Link Section */}
       <div className="border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-transparent p-6 clip-cyber">
-        <h3 className="font-orbitron font-bold text-purple-400 mb-2">Your Referral Link</h3>
-        <p className="font-mono text-[10px] text-purple-500/60 mb-3">Share & earn points for each friend who registers and attends</p>
+        <h3 className="font-orbitron font-bold text-purple-400 mb-2">Referral Program</h3>
+        <p className="font-mono text-[10px] text-purple-500/60 mb-3">Share your link and earn rewards for each successful referral</p>
         <div className="flex gap-2">
           <input
             type="text"
@@ -250,16 +300,14 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
           <button
             onClick={() => {
               navigator.clipboard.writeText(`https://streetdinamics.com/events/${eventId}?ref=${user?.email}`);
-              toast.success('Link copied!');
+              toast.success('Referral link copied');
             }}
             className="btn-fire py-2 px-4 text-[10px]"
           >
-            Copy
+            Copy Link
           </button>
         </div>
       </div>
-
-
     </div>
   );
 }
