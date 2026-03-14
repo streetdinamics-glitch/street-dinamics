@@ -171,7 +171,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
           className="btn-fire flex items-center gap-2"
         >
           <Tag size={16} />
-          LIST FOR SALE
+          {t('secondary_list_for_sale')}
         </button>
       </div>
 
