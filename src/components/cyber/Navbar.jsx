@@ -76,6 +76,15 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                 <User size={12} />
                 PROFILE
               </button>
+              {navLinks.map(link => (
+                <Link
+                  key={link.path}
+                  to={createPageUrl(link.path.replace('/', ''))}
+                  className="font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3.5 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn no-underline flex items-center"
+                >
+                  {link.label}
+                </Link>
+              ))}
               {user.role === 'admin' && (
                 <Link
                   to={createPageUrl('Admin')}
@@ -126,6 +135,16 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             >
               {item.label}
             </button>
+          ))}
+          {navLinks.map(link => (
+            <Link
+              key={link.path}
+              to={createPageUrl(link.path.replace('/', ''))}
+              className="font-orbitron text-[10px] font-bold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/60 py-2.5 px-3.5 text-left transition-all hover:border-fire-3 hover:text-fire-3 w-full no-underline block"
+              onClick={() => setMobileOpen(false)}
+            >
+              {link.label}
+            </Link>
           ))}
           {user?.role === 'admin' && (
             <Link
