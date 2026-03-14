@@ -308,6 +308,11 @@ export default function NFTMarketplace({ lang = 'en' }) {
         </div>
       )}
 
+      {/* Analytics Modal */}
+      {selectedNFT && (
+        <NFTAnalyticsModal nft={selectedNFT} onClose={() => setSelectedNFT(null)} />
+      )}
+
       {/* My Collection Preview */}
       {myNFTs.length > 0 && (
         <div className="mt-16">
