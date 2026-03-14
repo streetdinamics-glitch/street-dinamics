@@ -138,7 +138,7 @@ export default function SecondaryMarket({ lang = 'en' }) {
 
   const handleCreateListing = () => {
     if (!selectedAsset || !listingPrice || listingPrice <= 0) {
-      toast.error('Please fill in all fields');
+      toast.error(t('secondary_fill_fields'));
       return;
     }
 
