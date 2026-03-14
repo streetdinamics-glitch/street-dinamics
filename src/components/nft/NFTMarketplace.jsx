@@ -247,14 +247,21 @@ export default function NFTMarketplace({ lang = 'en' }) {
                     </div>
                   </div>
 
-                  {/* Watchlist Button */}
-                  <div className="mb-3">
+                  {/* Analytics & Watchlist */}
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    <button
+                      onClick={() => setSelectedNFT(card)}
+                      className="btn-cyan text-xs flex items-center justify-center gap-1"
+                    >
+                      <BarChart3 size={12} />
+                      Analytics
+                    </button>
                     <WatchlistButton
                       assetType="nft_drop"
                       assetId={card.id}
                       assetName={card.athlete_name}
                       price={card.mint_price}
-                      className="w-full justify-center border border-fire-3/20 hover:border-fire-3/40 py-2 px-3 text-xs"
+                      className="border border-fire-3/20 hover:border-fire-3/40 py-2 px-2 text-xs justify-center"
                     />
                   </div>
 
