@@ -28,9 +28,36 @@ export default function SponsorSection({ lang }) {
           </div>
         </div>
 
-        <p className="font-rajdhani text-base text-fire-4/50 leading-relaxed mb-5">
-          Multi-platform visibility • Live event activation • NFT integration • Authentic Gen-Z engagement
-        </p>
+        <div className="mb-6 space-y-3">
+          <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
+            <span className="text-fire-3 text-lg">⚡</span>
+            <div>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">MULTI-PLATFORM VISIBILITY</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">Brand exposure across live events, digital streams, and social media channels</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
+            <span className="text-fire-3 text-lg">🎯</span>
+            <div>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">DIRECT YOUTH ENGAGEMENT</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">Authentic connection with 13-30 year-old athletes and fans who drive culture</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
+            <span className="text-fire-3 text-lg">🌍</span>
+            <div>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">GLOBAL REACH</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">Presence in UAE, Europe, and expanding international markets with high engagement</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
+            <span className="text-fire-3 text-lg">💎</span>
+            <div>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">NFT & TOKEN INTEGRATION</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">Innovative digital assets that keep your brand at the forefront of Web3 culture</p>
+            </div>
+          </div>
+        </div>
 
         <div className="flex items-center gap-2 mb-4">
           <span className="font-mono text-sm text-fire-3/30">→</span>
