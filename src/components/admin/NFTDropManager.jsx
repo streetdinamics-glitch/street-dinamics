@@ -88,10 +88,38 @@ export default function NFTDropManager({ event }) {
   });
 
   const handleSubmit = () => {
+    // Validation
     if (!formData.athlete_email || !formData.event_moment || !formData.mint_price || !formData.total_supply) {
       toast.error('Please fill in all required fields');
       return;
     }
+
+    // Price validation
+    const mintPrice = parseFloat(formData.mint_price);
+    if (isNaN(mintPrice) || mintPrice <= 0) {
+      toast.error('Mint price must be a positive number');
+      return;
+    }
+
+    // Supply validation
+    const totalSupply = parseInt(formData.total_supply);
+    if (isNaN(totalSupply) || totalSupply < 1) {
+      toast.error('Total supply must be at least 1');
+      return;
+    }
+
+    // Drop date validation
+    if (!formData.drop_date) {
+      toast.error('Drop date is required');
+      return;
+    }
+
+    const dropDate = new Date(formData.drop_date);
+    if (isNaN(dropDate.getTime())) {
+      toast.error('Invalid drop date format');
+      return;
+    }
+
     createNFTMutation.mutate(formData);
   };
 

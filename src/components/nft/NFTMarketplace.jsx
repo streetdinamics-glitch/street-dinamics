@@ -28,22 +28,31 @@ export default function NFTMarketplace() {
     mutationFn: async ({ nftId, cardData }) => {
       const user = await base44.auth.me();
 
-      // Create ownership record
+      // Refetch latest card data to prevent race condition
+      const latestCard = await base44.entities.NFTCollectionCard.filter({ id: nftId });
+      const card = latestCard[0];
+
+      if (!card) throw new Error('NFT card not found');
+      if (card.minted_count >= card.total_supply) throw new Error('Sold out');
+      if (card.status !== 'live') throw new Error('Drop is not live');
+
+      // Create ownership record with immutable reference
       const ownership = await base44.entities.NFTOwnership.create({
         nft_id: nftId,
-        athlete_name: cardData.athlete_name,
-        card_number: cardData.card_number,
-        serial_number: cardData.minted_count + 1,
-        rarity: cardData.rarity,
-        purchase_price: cardData.mint_price,
+        athlete_name: card.athlete_name, // Reference from card
+        card_number: card.card_number,
+        serial_number: card.minted_count + 1, // Incremental serial
+        rarity: card.rarity,
+        purchase_price: card.mint_price,
         purchase_type: 'mint',
         minted_at: new Date().toISOString(),
+        buyer_email: user.email,
       });
 
       // Update card minted count
       await base44.entities.NFTCollectionCard.update(nftId, {
-        minted_count: cardData.minted_count + 1,
-        status: cardData.minted_count + 1 >= cardData.total_supply ? 'sold_out' : cardData.status,
+        minted_count: card.minted_count + 1,
+        status: card.minted_count + 1 >= card.total_supply ? 'sold_out' : card.status,
       });
 
       return ownership;
@@ -58,16 +67,28 @@ export default function NFTMarketplace() {
     },
   });
 
-  const handleMint = (card) => {
-    if (card.status !== 'live') {
-      toast.error('This drop is not live yet');
-      return;
+  const handleMint = async (card) => {
+    try {
+      const user = await base44.auth.me();
+
+      // Client-side validation
+      if (card.status !== 'live') {
+        toast.error('This drop is not live yet');
+        return;
+      }
+      if (card.minted_count >= card.total_supply) {
+        toast.error('Sold out!');
+        return;
+      }
+      if (card.mint_price <= 0) {
+        toast.error('Invalid mint price');
+        return;
+      }
+
+      mintNFTMutation.mutate({ nftId: card.id, cardData: card });
+    } catch (err) {
+      toast.error('Failed to initiate mint');
     }
-    if (card.minted_count >= card.total_supply) {
-      toast.error('Sold out!');
-      return;
-    }
-    mintNFTMutation.mutate({ nftId: card.id, cardData: card });
   };
 
   const rarityColors = {
