@@ -190,34 +190,9 @@ export default function UserProfile({ lang, onClose }) {
           </div>
         )}
 
-        {/* Tokens Tab */}
-        {activeTab === 'tokens' && (
-          <div>
-            {tokens.length === 0 ? (
-              <div className="text-center py-10">
-                <span className="text-3xl block mb-2">🎫</span>
-                <div className="font-mono text-xs text-fire-3/30">No athlete tokens owned</div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {tokens.map(token => (
-                  <div key={token.id} className="p-4 bg-fire-3/5 border border-fire-3/10">
-                    <div className="font-rajdhani font-bold text-lg text-fire-4 mb-2">{token.athlete_name}</div>
-                    <div className="flex justify-between items-center">
-                      <span className={`text-xs uppercase font-mono tracking-[2px] ${
-                        token.token_tier === 'legendary' ? 'text-purple-400' :
-                        token.token_tier === 'rare' ? 'text-fire-5' :
-                        token.token_tier === 'uncommon' ? 'text-cyan' : 'text-fire-3/60'
-                      }`}>
-                        {token.token_tier}
-                      </span>
-                      <span className="text-xs text-fire-3/40">€{token.purchase_price}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+        {/* Digital Vault Tab */}
+        {activeTab === 'vault' && (
+          <MyDigitalVault user={user} />
         )}
 
         {/* Bets Tab */}
