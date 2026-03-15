@@ -55,6 +55,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showRewardStore, setShowRewardStore] = useState(false);
   const [settlingBetsEvent, setSettlingBetsEvent] = useState(null);
   const [showFanStatusMgr, setShowFanStatusMgr] = useState(false);
+  const [showSportCatMgr, setShowSportCatMgr] = useState(false);
 
   // Lazy load components
   const UserManagementPanel = React.lazy(() => import('./UserManagementPanel'));

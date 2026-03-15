@@ -7,6 +7,14 @@ import { toast } from 'sonner';
 
 export default function CreateEvent() {
   const navigate = useNavigate();
+
+  const { data: sportCategories = [] } = useQuery({
+    queryKey: ['sport-categories'],
+    queryFn: () => base44.entities.SportCategory.list('name', 100),
+    initialData: [],
+  });
+  const activeSports = sportCategories.filter(c => c.is_active);
+
   const [form, setForm] = useState({
     title: '',
     sport: '',
