@@ -3,33 +3,37 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Users, Trophy, Zap } from 'lucide-react';
 
 const TIER_CONFIG = {
-  common: {
+  rising_star: {
     gradient: 'from-slate-600 to-slate-800',
     glow: 'rgba(148, 163, 184, 0.4)',
     border: 'border-slate-500/30',
     accent: 'text-slate-400',
-    badgeBg: 'bg-slate-500/20'
+    badgeBg: 'bg-slate-500/20',
+    label: 'Rising Star'
   },
-  rare: {
+  breakout_talent: {
     gradient: 'from-blue-600 to-purple-700',
     glow: 'rgba(147, 51, 234, 0.4)',
     border: 'border-purple-500/30',
     accent: 'text-purple-400',
-    badgeBg: 'bg-purple-500/20'
+    badgeBg: 'bg-purple-500/20',
+    label: 'Breakout Talent'
   },
-  epic: {
+  elite_performer: {
     gradient: 'from-cyan-500 to-cyan-700',
     glow: 'rgba(0, 255, 238, 0.4)',
     border: 'border-cyan/30',
     accent: 'text-cyan',
-    badgeBg: 'bg-cyan/20'
+    badgeBg: 'bg-cyan/20',
+    label: 'Elite Performer'
   },
-  legendary: {
+  living_legend: {
     gradient: 'from-yellow-500 via-orange-500 to-red-600',
     glow: 'rgba(255, 150, 0, 0.6)',
     border: 'border-fire-3/40',
     accent: 'text-fire-5',
-    badgeBg: 'bg-fire-3/30'
+    badgeBg: 'bg-fire-3/30',
+    label: 'Living Legend'
   }
 };
 
@@ -60,7 +64,7 @@ export default function TokenCard({ token, onBuy }) {
 
       {/* Tier badge */}
       <div className={`absolute top-3 right-3 z-10 font-orbitron text-[8px] font-black tracking-[2px] uppercase px-2.5 py-1 bg-gradient-to-r ${config.gradient} ${config.accent} clip-btn`}>
-        {token.token_tier}
+        {config.label}
       </div>
 
       {/* Athlete avatar */}

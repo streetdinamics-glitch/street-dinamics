@@ -10,10 +10,10 @@ import PointsConverter from './PointsConverter';
 import TokenBalanceWidget from './TokenBalanceWidget';
 
 const TIER_CONFIG = {
-  common: { bg: 'from-slate-600 to-slate-800', glow: 'rgba(148, 163, 184, 0.4)', border: 'border-slate-500/30', accent: 'text-slate-400' },
-  rare: { bg: 'from-blue-600 to-purple-700', glow: 'rgba(147, 51, 234, 0.4)', border: 'border-purple-500/30', accent: 'text-purple-400' },
-  epic: { bg: 'from-cyan-500 to-cyan-700', glow: 'rgba(0, 255, 238, 0.4)', border: 'border-cyan/30', accent: 'text-cyan' },
-  legendary: { bg: 'from-yellow-500 via-orange-500 to-red-600', glow: 'rgba(255, 150, 0, 0.6)', border: 'border-fire-3/40', accent: 'text-fire-5' },
+  rising_star: { bg: 'from-slate-600 to-slate-800', glow: 'rgba(148, 163, 184, 0.4)', border: 'border-slate-500/30', accent: 'text-slate-400', label: 'Rising Star' },
+  breakout_talent: { bg: 'from-blue-600 to-purple-700', glow: 'rgba(147, 51, 234, 0.4)', border: 'border-purple-500/30', accent: 'text-purple-400', label: 'Breakout Talent' },
+  elite_performer: { bg: 'from-cyan-500 to-cyan-700', glow: 'rgba(0, 255, 238, 0.4)', border: 'border-cyan/30', accent: 'text-cyan', label: 'Elite Performer' },
+  living_legend: { bg: 'from-yellow-500 via-orange-500 to-red-600', glow: 'rgba(255, 150, 0, 0.6)', border: 'border-fire-3/40', accent: 'text-fire-5', label: 'Living Legend' },
 };
 
 export default function TokenStore() {
@@ -188,7 +188,7 @@ export default function TokenStore() {
           <Star size={16} className="text-fire-3/60" />
           <span className="font-mono text-xs text-fire-3/60 uppercase">Rarity:</span>
         </div>
-        {['all', 'common', 'rare', 'epic', 'legendary'].map(rarity => (
+        {['all', 'rising_star', 'breakout_talent', 'elite_performer', 'living_legend'].map(rarity => (
           <button
             key={rarity}
             onClick={() => setRarityFilter(rarity)}
@@ -198,7 +198,7 @@ export default function TokenStore() {
                 : 'border-fire-3/20 text-fire-3/40 hover:border-fire-3/40'
             }`}
           >
-            {rarity}
+            {rarity === 'all' ? 'all' : TIER_CONFIG[rarity]?.label || rarity}
           </button>
         ))}
       </div>
