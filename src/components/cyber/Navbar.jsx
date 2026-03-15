@@ -8,6 +8,8 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../translations';
 import WalletConnectButton from '../web3/WalletConnectButton';
 import WatchlistPanel from '../watchlist/WatchlistPanel';
+import NotificationDashboard from '../notifications/NotificationDashboard';
+import { Bell } from 'lucide-react';
 
 const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
@@ -16,12 +18,23 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
   const [watchlistOpen, setWatchlistOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
   });
+
+  const { data: notifications = [] } = useQuery({
+    queryKey: ['notifications', user?.email],
+    queryFn: () => base44.entities.Notification.filter({ user_email: user.email }, '-created_date', 50),
+    enabled: !!user,
+    initialData: [],
+    refetchInterval: 30000,
+  });
+
+  const unreadCount = notifications.filter(n => !n.is_read).length;
 
   useEffect(() => {
     const interval = setInterval(() => {
