@@ -55,6 +55,7 @@ export default function Home() {
   const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [watchlistOpen, setWatchlistOpen] = useState(false);
+  const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
