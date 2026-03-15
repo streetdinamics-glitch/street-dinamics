@@ -22,6 +22,7 @@ import RewardStoreManager from './RewardStoreManager';
 import BetSettlementPanel from './BetSettlementPanel';
 import FanStatusManager from './FanStatusManager';
 import SportCategoryManager from './SportCategoryManager';
+import Web3ConfigPanel from './Web3ConfigPanel';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
