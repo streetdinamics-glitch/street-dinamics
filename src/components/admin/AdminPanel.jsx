@@ -913,6 +913,20 @@ export default function AdminPanel({ lang, onClose }) {
               </div>
             </div>
           )}
+         {showSportCatMgr && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setShowSportCatMgr(false)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <SportCategoryManager />
+              </div>
+            </div>
+          )}
 
         {/* Change Password */}
         <div className="p-6 bg-fire-3/5 border border-fire-3/10">
