@@ -32,7 +32,6 @@ import UserProfile from '../components/profile/UserProfile';
 import Footer from '../components/cyber/Footer';
 import SpectatorTypeModal from '../components/cyber/SpectatorTypeModal';
 import SpectatorGamificationHub from '../components/gamification/SpectatorGamificationHub';
-import WatchlistPanel from '../components/watchlist/WatchlistPanel';
 import { useNotifications } from '../components/notifications/NotificationHook';
 import FanStatusDashboard from '../components/progression/FanStatusDashboard';
 import { useLang } from '../components/useLang';
