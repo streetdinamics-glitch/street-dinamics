@@ -157,9 +157,28 @@ export default function Home() {
         <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2 opacity-0 animate-[fadeUp_0.7s_ease_forwards]">
           {t('events_subtitle')}
         </p>
-        <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-14 font-black opacity-0 animate-[fadeUp_0.8s_ease_0.1s_forwards]">
+        <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-6 font-black opacity-0 animate-[fadeUp_0.8s_ease_0.1s_forwards]">
           {t('events_title')}
         </h2>
+
+        {/* My Subscriptions toggle */}
+        {user && (
+          <div className="flex justify-center mb-10">
+            <button
+              onClick={() => setSubscriptionsOpen(true)}
+              className="flex items-center gap-2 px-5 py-2.5 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 hover:border-purple-400/60 transition-all font-orbitron text-[10px] tracking-[2px] uppercase text-purple-300"
+              style={{ clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)' }}
+            >
+              <span className="text-sm">🔔</span>
+              My Subscriptions
+              {subs.subscriptions.length > 0 && (
+                <span className="bg-purple-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+                  {subs.subscriptions.length}
+                </span>
+              )}
+            </button>
+          </div>
+        )}
 
         <FlowSteps lang={lang} />
 
