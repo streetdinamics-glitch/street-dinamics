@@ -14,16 +14,30 @@ export default function AchievementClaimModal({ achievement, onClose }) {
   const submitClaimMutation = useMutation({
     mutationFn: async (claimData) => {
       const user = await base44.auth.me();
-      return base44.entities.AchievementClaim.create({
+      const claim = await base44.entities.AchievementClaim.create({
         ...claimData,
         user_email: user.email,
         user_name: user.full_name,
         status: 'pending',
         claimed_at: new Date().toISOString(),
       });
+      
+      await base44.entities.Notification.create({
+        user_email: user.email,
+        type: 'milestone',
+        title: '📋 Achievement Claim Submitted',
+        message: `Your claim for "${claimData.achievement_name}" has been submitted and is awaiting review.`,
+        related_entity_id: claim.id,
+        related_entity_type: 'AchievementClaim',
+        is_read: false,
+        created_at: new Date().toISOString(),
+      });
+      
+      return claim;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['achievement-claims'] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast.success('Achievement claim submitted for review');
       onClose();
     },

@@ -47,14 +47,28 @@ export default function BettingInterface({ eventId, lang = 'en' }) {
 
   const placeBetMutation = useMutation({
     mutationFn: async (betData) => {
-      return base44.entities.Bet.create({
+      const bet = await base44.entities.Bet.create({
         ...betData,
         created_by: user.email,
       });
+      
+      await base44.entities.Notification.create({
+        user_email: user.email,
+        type: 'deal',
+        title: '✅ Bet Placed',
+        message: `You wagered ${betData.amount} tokens on ${betData.outcome.replace('_', ' ').toUpperCase()}`,
+        related_entity_id: bet.id,
+        related_entity_type: 'Bet',
+        is_read: false,
+        created_at: new Date().toISOString(),
+      });
+      
+      return bet;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-bets'] });
       queryClient.invalidateQueries({ queryKey: ['event-bets', eventId] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast.success(`Bet placed: ${betAmount} tokens on ${selectedOutcome}`);
       setBetAmount(100);
       setSelectedOutcome(null);

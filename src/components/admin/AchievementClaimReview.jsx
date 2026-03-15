@@ -53,6 +53,11 @@ Return JSON: {confidence: number, recommendation: string, reasoning: string, con
         ai_confidence_score: result.confidence,
       });
 
+      await base44.functions.invoke('notifyAchievementClaim', {
+        claimId: claim.id,
+        status: 'under_review',
+      });
+
       return result;
     },
     onSuccess: (result, claim) => {
@@ -88,9 +93,15 @@ Return JSON: {confidence: number, recommendation: string, reasoning: string, con
           earned_at: new Date().toISOString(),
         });
       }
+
+      await base44.functions.invoke('notifyAchievementClaim', {
+        claimId,
+        status: approved ? 'approved' : 'rejected',
+      });
     },
     onSuccess: (_, { approved }) => {
       queryClient.invalidateQueries({ queryKey: ['achievement-claims'] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast.success(approved ? 'Claim approved and badge awarded' : 'Claim rejected');
       setSelectedClaim(null);
       setAdminNotes('');
