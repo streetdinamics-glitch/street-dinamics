@@ -140,6 +140,17 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                   >
                     ⭐ Watchlist
                   </button>
+                  <button
+                    onClick={() => setNotificationsOpen(true)}
+                    className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 relative"
+                  >
+                    🔔 Notifications
+                    {unreadCount > 0 && (
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-0.5 bg-fire-3 text-black text-[9px] font-bold rounded-full">
+                        {unreadCount}
+                      </span>
+                    )}
+                  </button>
                   {(user?.role === 'admin' ? navLinks : userNavLinks).map(link => (
                     <Link
                       key={link.path}
@@ -174,6 +185,17 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                 className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all"
               >
                 <Star size={16} className="text-fire-3" />
+              </button>
+              <button
+                onClick={() => setNotificationsOpen(true)}
+                className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all relative"
+              >
+                <Bell size={16} className="text-fire-3" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-fire-3 text-black text-[8px] font-bold rounded-full flex items-center justify-center">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
               </button>
             </>
           )}
@@ -267,6 +289,11 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
           </Suspense>
         </>
+      )}
+
+      {/* Notification Dashboard */}
+      {notificationsOpen && (
+        <NotificationDashboard onClose={() => setNotificationsOpen(false)} />
       )}
     </>
   );
