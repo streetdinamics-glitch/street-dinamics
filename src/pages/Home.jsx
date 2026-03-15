@@ -24,6 +24,7 @@ import FanLeaderboard from '../components/fan/FanLeaderboard';
 import NFTMarketplace from '../components/nft/NFTMarketplace';
 import SecondaryMarket from '../components/marketplace/SecondaryMarket';
 import GlobalLeaderboard from '../components/leaderboard/GlobalLeaderboard';
+import TokenStore from '../components/store/TokenStore';
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
@@ -208,6 +209,8 @@ export default function Home() {
       <NFTMarketplace />
       <FireRule />
       <SecondaryMarket />
+      <FireRule />
+      <TokenStore />
       <FireRule />
       <GlobalLeaderboard lang={lang} />
       <FireRule />
