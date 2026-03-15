@@ -10,10 +10,11 @@ import FireRule from '../components/cyber/FireRule';
 import EngagementAnalyticsDashboard from '../components/analytics/EngagementAnalyticsDashboard';
 import VotingAnalyticsDashboard from '../components/analytics/VotingAnalyticsDashboard';
 import BettingAnalyticsDashboard from '../components/analytics/BettingAnalyticsDashboard';
+import { useLang } from '../components/useLang';
 
 export default function Analytics() {
   const [activeTab, setActiveTab] = useState('engagement');
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useLang();
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],

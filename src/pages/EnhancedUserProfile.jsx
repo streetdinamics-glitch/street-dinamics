@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Trophy, Star, Download, Heart, Eye } from 'lucide-react';
 import BettingHistoryLog from '../components/betting/BettingHistoryLog';
 import ModernAchievementBadge from '../components/gamification/ModernAchievementBadge';
+import { useLang } from '../components/useLang';
 
 export default function EnhancedUserProfile() {
   const [activeTab, setActiveTab] = useState('overview');

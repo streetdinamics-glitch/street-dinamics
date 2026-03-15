@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Award, TrendingUp, Star, Calendar, Target, Zap } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useLang } from '../components/useLang';
 
 export default function AthleteProfilePage() {
   const { athleteEmail } = useParams();

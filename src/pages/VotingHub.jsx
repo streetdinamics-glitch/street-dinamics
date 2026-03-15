@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import VotingCampaignManager from '../components/voting/VotingCampaignManager';
 import TokenBasedVotingInterface from '../components/voting/TokenBasedVotingInterface';
 import VotingLeaderboard from '../components/voting/VotingLeaderboard';
+import { useLang } from '../components/useLang';
 
 export default function VotingHub() {
   const [selectedEvent, setSelectedEvent] = useState(null);
