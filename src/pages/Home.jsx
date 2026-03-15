@@ -139,7 +139,7 @@ export default function Home() {
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <ParticleField />
-      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} onProfileClick={() => setProfileOpen(true)} onWatchlistClick={() => setWatchlistOpen(true)} />
+      <Navbar onScrollTo={scrollTo} lang={lang} onLangSwitch={setLang} onProfileClick={() => setProfileOpen(true)} />
 
       <HeroSection onScrollTo={scrollTo} lang={lang} />
       <FireRule />
@@ -294,10 +294,6 @@ export default function Home() {
       {profileOpen && (
         <UserProfile lang={lang} onClose={() => setProfileOpen(false)} />
       )}
-      {watchlistOpen && (
-        <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
-      )}
-
       {/* My Subscriptions Panel */}
       <AnimatePresence>
         {subscriptionsOpen && user && (
