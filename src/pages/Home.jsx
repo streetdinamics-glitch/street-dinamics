@@ -186,19 +186,21 @@ export default function Home() {
           <div className="space-y-12">
             {events.map((ev, i) => (
               <div key={ev.id} className="space-y-6">
-                <div className="relative inline-block w-full max-w-sm">
-                  <EventCard
-                    event={ev}
-                    index={i}
-                    lang={lang}
-                    onRegisterAthlete={(e) => handleRegisterClick(e, 'athlete')}
-                    onRegisterSpectator={(e) => handleRegisterClick(e, 'spectator')}
-                  />
-                  {ev.status === 'upcoming' && ev.date && (
-                    <div className="absolute bottom-3 left-3 px-2 py-1 bg-black/70 border border-fire-3/20">
-                      <EventCountdown date={ev.date} compact />
-                    </div>
-                  )}
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                  <div className="relative">
+                    <EventCard
+                      event={ev}
+                      index={i}
+                      lang={lang}
+                      onRegisterAthlete={(e) => handleRegisterClick(e, 'athlete')}
+                      onRegisterSpectator={(e) => handleRegisterClick(e, 'spectator')}
+                    />
+                    {ev.status === 'upcoming' && ev.date && (
+                      <div className="absolute bottom-3 left-3 px-2 py-1 bg-black/70 border border-fire-3/20">
+                        <EventCountdown date={ev.date} compact />
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <TournamentSection event={ev} />
                 <FanVotingModule event={ev} />
