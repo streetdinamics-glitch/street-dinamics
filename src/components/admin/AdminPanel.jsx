@@ -57,6 +57,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [settlingBetsEvent, setSettlingBetsEvent] = useState(null);
   const [showFanStatusMgr, setShowFanStatusMgr] = useState(false);
   const [showSportCatMgr, setShowSportCatMgr] = useState(false);
+  const [showWeb3Config, setShowWeb3Config] = useState(false);
 
   // Lazy load components
   const UserManagementPanel = React.lazy(() => import('./UserManagementPanel'));
@@ -327,6 +328,12 @@ export default function AdminPanel({ lang, onClose }) {
             className="btn-fire text-[11px] py-2.5 px-5"
           >
             🏷️ Sport Categories
+          </button>
+          <button
+            onClick={() => setShowWeb3Config(true)}
+            className="btn-cyan text-[11px] py-2.5 px-5"
+          >
+            ⛓️ Web3 Config
           </button>
           {events.find(e => e.status === 'live') && (
             <button
@@ -925,6 +932,21 @@ export default function AdminPanel({ lang, onClose }) {
                   CLOSE
                 </button>
                 <SportCategoryManager />
+              </div>
+            </div>
+          )}
+
+         {showWeb3Config && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-2xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-cyan/30 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan/60 to-transparent" />
+                <button
+                  onClick={() => setShowWeb3Config(false)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-cyan/40 hover:text-cyan"
+                >
+                  CLOSE
+                </button>
+                <Web3ConfigPanel />
               </div>
             </div>
           )}
