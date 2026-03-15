@@ -40,7 +40,7 @@ function StreamBadge({ event }) {
   );
 }
 
-export default function LiveEventSidebar({ event }) {
+export default function LiveEventSidebar({ event, hidden = false }) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState('chat');
@@ -173,7 +173,8 @@ export default function LiveEventSidebar({ event }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen(o => !o)}
-        className="fixed bottom-6 right-6 z-[501] flex items-center gap-2 px-4 py-3 bg-purple-700 border border-purple-400/40 shadow-[0_0_30px_rgba(155,0,255,0.4)] hover:shadow-[0_0_50px_rgba(155,0,255,0.7)] transition-all font-orbitron text-[10px] tracking-[2px] uppercase text-white"
+        style={{ display: hidden ? 'none' : undefined }}
+        className="fixed bottom-6 right-6 z-[490] flex items-center gap-2 px-4 py-3 bg-purple-700 border border-purple-400/40 shadow-[0_0_30px_rgba(155,0,255,0.4)] hover:shadow-[0_0_50px_rgba(155,0,255,0.7)] transition-all font-orbitron text-[10px] tracking-[2px] uppercase text-white safe-bottom"
         style={{ clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)' }}
       >
         <Radio size={14} className="text-red-400 animate-pulse" />
