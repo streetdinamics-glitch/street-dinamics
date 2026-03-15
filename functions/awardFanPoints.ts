@@ -62,6 +62,13 @@ Deno.serve(async (req) => {
     // Check if rewards should be unlocked
     await checkAndAwardRewards(base44, event_id, fan_email, updated.total_points);
 
+    // Trigger fan status check if significant points awarded
+    if (points >= 50) {
+      base44.asServiceRole.functions.invoke('updateFanStatus', { 
+        userEmail: fan_email 
+      }).catch(err => console.error('Fan status update failed:', err));
+    }
+
     return Response.json({ success: true, record: updated });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
