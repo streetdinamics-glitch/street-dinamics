@@ -36,6 +36,7 @@ import WatchlistPanel from '../components/watchlist/WatchlistPanel';
 import { useNotifications } from '../components/notifications/NotificationHook';
 import FanStatusDashboard from '../components/progression/FanStatusDashboard';
 import { useLang } from '../components/useLang';
+import LiveEventSidebar from '../components/chat/LiveEventSidebar';
 
 
 export default function Home() {
