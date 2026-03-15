@@ -54,7 +54,6 @@ export default function Home() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [onboardingOpen, setOnboardingOpen] = useState(false); // kept for future use / external triggers
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
-  const [watchlistOpen, setWatchlistOpen] = useState(false);
   const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
 
   const { data: user } = useQuery({
