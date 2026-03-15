@@ -273,6 +273,11 @@ export default function Home() {
       {watchlistOpen && (
         <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
       )}
+
+      {/* Live event sidebar — shows for the first live event found */}
+      {events.filter(e => e.status === 'live').map(liveEvent => (
+        <LiveEventSidebar key={liveEvent.id} event={liveEvent} />
+      )).slice(0, 1)}
     </div>
   );
 }
