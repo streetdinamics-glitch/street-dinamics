@@ -10,6 +10,7 @@ import { useLang } from '../components/useLang';
 export default function AthleteProfilePage() {
   const { athleteEmail } = useParams();
   const [selectedPeriod, setSelectedPeriod] = useState('all');
+  const [lang, setLang] = useLang();
 
   // Fetch athlete info
   const { data: athlete } = useQuery({

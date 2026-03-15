@@ -9,6 +9,7 @@ import { useLang } from '../components/useLang';
 
 export default function EnhancedUserProfile() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [lang, setLang] = useLang();
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],

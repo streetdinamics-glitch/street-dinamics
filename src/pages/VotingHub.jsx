@@ -10,6 +10,7 @@ import { useLang } from '../components/useLang';
 export default function VotingHub() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [activeTab, setActiveTab] = useState('vote');
+  const [lang, setLang] = useLang();
 
   // Fetch current user
   const { data: user } = useQuery({
