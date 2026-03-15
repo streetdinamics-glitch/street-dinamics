@@ -17,6 +17,7 @@ import RoyaltyDistributionManager from './RoyaltyDistributionManager';
 import MinorRegistrationApproval from './MinorRegistrationApproval';
 import ChatModerationPanel from '../chat/ChatModerationPanel';
 import RegistrationAnalyticsDashboard from './RegistrationAnalyticsDashboard';
+import AchievementClaimReview from './AchievementClaimReview';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -46,6 +47,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showRegistrationAnalytics, setShowRegistrationAnalytics] = useState(false);
   const [venueMapEvent, setVenueMapEvent] = useState(null);
   const [showUserMgmt, setShowUserMgmt] = useState(false);
+  const [showAchievementReview, setShowAchievementReview] = useState(false);
 
   // Lazy load components
   const VenueMapManager = React.lazy(() => import('./VenueMapManager'));
@@ -286,6 +288,12 @@ export default function AdminPanel({ lang, onClose }) {
             className="btn-ghost text-[11px] py-2.5 px-5"
           >
             👥 User Management
+          </button>
+          <button
+            onClick={() => setShowAchievementReview(true)}
+            className="btn-cyan text-[11px] py-2.5 px-5"
+          >
+            🏆 Achievement Claims
           </button>
           {events.find(e => e.status === 'live') && (
             <button
@@ -819,6 +827,20 @@ export default function AdminPanel({ lang, onClose }) {
                 <Suspense fallback={<div className="text-fire-3/40 text-center py-8">Loading...</div>}>
                   <UserManagementPanel />
                 </Suspense>
+              </div>
+            </div>
+          )}
+         {showAchievementReview && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-5xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setShowAchievementReview(false)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <AchievementClaimReview />
               </div>
             </div>
           )}
