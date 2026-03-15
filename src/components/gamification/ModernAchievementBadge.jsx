@@ -11,8 +11,9 @@ const badgeStyles = {
   'luminary': { icon: <Award size={24} />, color: 'from-yellow-400 to-fire-3', label: 'LUMINARY', desc: '1000+ points mastery' },
 };
 
-export default function ModernAchievementBadge({ badgeId, unlocked = false, progress = 0 }) {
+export default function ModernAchievementBadge({ badgeId, unlocked = false, progress = 0, onClaim }) {
   const badge = badgeStyles[badgeId] || badgeStyles['superfan'];
+  const canClaim = !unlocked && progress >= 0.95;
 
   return (
     <motion.div
@@ -20,12 +21,16 @@ export default function ModernAchievementBadge({ badgeId, unlocked = false, prog
       animate={{ opacity: 1, scale: 1 }}
       className="group relative"
     >
-      <div className={`w-28 h-28 rounded-lg border-2 ${unlocked ? 'border-fire-3/60' : 'border-fire-3/20'} bg-gradient-to-br ${badge.color} p-0.5 transition-all ${unlocked ? 'shadow-[0_0_20px_rgba(255,100,0,0.6)]' : 'opacity-40'}`}>
+      <button
+        onClick={canClaim ? () => onClaim?.({ id: badgeId, name: badge.label, description: badge.desc }) : undefined}
+        disabled={!canClaim}
+        className={`w-28 h-28 rounded-lg border-2 ${unlocked ? 'border-fire-3/60' : canClaim ? 'border-fire-5 animate-pulse' : 'border-fire-3/20'} bg-gradient-to-br ${badge.color} p-0.5 transition-all ${unlocked ? 'shadow-[0_0_20px_rgba(255,100,0,0.6)]' : canClaim ? 'shadow-[0_0_30px_rgba(255,200,0,0.8)] cursor-pointer hover:scale-105' : 'opacity-40'}`}
+      >
         <div className={`w-full h-full rounded-lg flex flex-col items-center justify-center gap-1 text-white font-orbitron ${unlocked ? 'bg-gradient-to-br from-black/40 to-black/60' : 'bg-black/80'}`}>
           {badge.icon}
           <span className="text-[8px] font-bold tracking-[1px] text-center leading-tight px-1">{badge.label}</span>
         </div>
-      </div>
+      </button>
       
       {!unlocked && (
         <div className="absolute inset-0 rounded-lg flex items-center justify-center">
@@ -53,6 +58,9 @@ export default function ModernAchievementBadge({ badgeId, unlocked = false, prog
         <div className="bg-black/95 border border-fire-3/40 rounded px-3 py-2 text-center whitespace-nowrap">
           <p className="font-orbitron text-[10px] font-bold text-fire-4">{badge.label}</p>
           <p className="font-mono text-[8px] text-fire-3/60">{badge.desc}</p>
+          {canClaim && (
+            <p className="font-mono text-[8px] text-fire-5 mt-1 font-bold">Click to claim!</p>
+          )}
         </div>
       </div>
     </motion.div>

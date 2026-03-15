@@ -5,10 +5,12 @@ import { motion } from 'framer-motion';
 import { Zap, Share2, Video, Aperture, Users, TrendingUp, Gift, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import ModernAchievementBadge from './ModernAchievementBadge';
+import AchievementClaimModal from './AchievementClaimModal';
 
 export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
   const [activeTab, setActiveTab] = useState('tasks');
   const [claimingTask, setClaimingTask] = useState(null);
+  const [claimModal, setClaimModal] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: user } = useQuery({
