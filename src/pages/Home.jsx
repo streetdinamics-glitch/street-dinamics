@@ -37,6 +37,9 @@ import { useNotifications } from '../components/notifications/NotificationHook';
 import FanStatusDashboard from '../components/progression/FanStatusDashboard';
 import { useLang } from '../components/useLang';
 import LiveEventSidebar from '../components/chat/LiveEventSidebar';
+import { useSubscriptions } from '../components/subscriptions/useSubscriptions';
+import MySubscriptionsPanel from '../components/subscriptions/MySubscriptionsPanel';
+import EventCountdown from '../components/subscriptions/EventCountdown';
 
 
 export default function Home() {
