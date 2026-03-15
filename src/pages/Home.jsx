@@ -17,6 +17,7 @@ import BetSection from '../components/cyber/BetSection';
 import TokenMarketplace from '../components/marketplace/TokenMarketplace';
 import MetricsVisualizationDashboard from '../components/dashboard/MetricsVisualizationDashboard';
 import TournamentSection from '../components/cyber/TournamentSection';
+import AthletePerformanceDashboard from '../components/analytics/AthletePerformanceDashboard';
 import LiveVotingPanel from '../components/voting/LiveVotingPanel';
 import EventChatRoom from '../components/chat/EventChatRoom';
 import FanVotingModule from '../components/fan/FanVotingModule';
@@ -203,6 +204,8 @@ export default function Home() {
       />
       <FireRule />
       {user && <MetricsVisualizationDashboard lang={lang} />}
+      <FireRule />
+      <AthletePerformanceDashboard lang={lang} />
       <FireRule />
       <TokenMarketplace lang={lang} />
       <FireRule />
