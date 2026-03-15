@@ -287,9 +287,17 @@ export default function UpgradedGamificationHub({ eventId, lang = 'en' }) {
               badgeId={ach.id}
               unlocked={ach.unlocked}
               progress={ach.progress}
+              onClaim={(achievement) => setClaimModal(achievement)}
             />
           ))}
         </div>
+      )}
+
+      {claimModal && (
+        <AchievementClaimModal
+          achievement={claimModal}
+          onClose={() => setClaimModal(null)}
+        />
       )}
 
       <div className="border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-transparent p-6 clip-cyber">

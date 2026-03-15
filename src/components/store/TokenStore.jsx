@@ -6,6 +6,8 @@ import { ShoppingBag, Star, Zap, Filter, Package, Gift } from 'lucide-react';
 import { toast } from 'sonner';
 import RewardItemCard from './RewardItemCard';
 import UserInventoryPanel from './UserInventoryPanel';
+import PointsConverter from './PointsConverter';
+import TokenBalanceWidget from './TokenBalanceWidget';
 
 const TIER_CONFIG = {
   common: { bg: 'from-slate-600 to-slate-800', glow: 'rgba(148, 163, 184, 0.4)', border: 'border-slate-500/30', accent: 'text-slate-400' },
@@ -19,10 +21,17 @@ export default function TokenStore() {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [rarityFilter, setRarityFilter] = useState('all');
   const [showInventory, setShowInventory] = useState(false);
+  const [showConverter, setShowConverter] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
+  });
+
+  const { data: events = [] } = useQuery({
+    queryKey: ['events'],
+    queryFn: () => base44.entities.Event.list('-created_date', 10),
+    initialData: [],
   });
 
   const { data: rewardItems = [] } = useQuery({
@@ -31,25 +40,13 @@ export default function TokenStore() {
     initialData: [],
   });
 
-  const { data: tokenOwnership = [] } = useQuery({
-    queryKey: ['token-ownership', user?.email],
-    queryFn: () => base44.entities.TokenOwnership.filter({ created_by: user?.email }),
+  const { data: tokenBalance } = useQuery({
+    queryKey: ['token-balance', user?.email],
+    queryFn: () => base44.entities.TokenBalance.filter({ user_email: user?.email }).then(r => r[0] || { total_tokens: 0 }),
     enabled: !!user,
-    initialData: [],
   });
 
-  const { data: fanPoints = [] } = useQuery({
-    queryKey: ['fan-points-all', user?.email],
-    queryFn: () => base44.entities.FanPoints.filter({ fan_email: user?.email }),
-    enabled: !!user,
-    initialData: [],
-  });
-
-  const totalTokens = useMemo(() => {
-    const fromOwnership = tokenOwnership.length * 100;
-    const fromPoints = fanPoints.reduce((sum, fp) => sum + (fp.total_points || 0), 0);
-    return fromOwnership + fromPoints;
-  }, [tokenOwnership, fanPoints]);
+  const totalTokens = tokenBalance?.total_tokens || 0;
 
   const filteredItems = useMemo(() => {
     return rewardItems.filter(item => {
@@ -61,7 +58,9 @@ export default function TokenStore() {
 
   const redeemItemMutation = useMutation({
     mutationFn: async (item) => {
-      if (totalTokens < item.token_cost) {
+      const currentBalance = await base44.entities.TokenBalance.filter({ user_email: user.email }).then(r => r[0]);
+      
+      if (!currentBalance || currentBalance.total_tokens < item.token_cost) {
         throw new Error('Insufficient tokens');
       }
 
@@ -87,6 +86,17 @@ export default function TokenStore() {
         });
       }
 
+      // Deduct tokens via centralized function
+      await base44.functions.invoke('updateTokenBalance', {
+        userEmail: user.email,
+        userName: user.full_name,
+        amount: -item.token_cost,
+        type: 'reward_redeemed',
+        description: `Redeemed ${item.item_name}`,
+        relatedEntityId: inventoryItem.id,
+        relatedEntityType: 'UserInventory',
+      });
+
       await base44.entities.Notification.create({
         user_email: user.email,
         type: 'reward',
@@ -103,6 +113,7 @@ export default function TokenStore() {
     onSuccess: (data, item) => {
       queryClient.invalidateQueries({ queryKey: ['reward-items'] });
       queryClient.invalidateQueries({ queryKey: ['user-inventory'] });
+      queryClient.invalidateQueries({ queryKey: ['token-balance'] });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast.success(`Redeemed: ${item.item_name}`);
     },
@@ -124,20 +135,16 @@ export default function TokenStore() {
         Redeem your earned tokens for exclusive rewards, badges, and event access passes
       </p>
 
+      {/* Points Converter */}
+      {events[0] && (
+        <div className="max-w-2xl mx-auto mb-8">
+          <PointsConverter eventId={events[0].id} />
+        </div>
+      )}
+
       {/* Token Balance & Inventory */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-fire-3/10 to-transparent border border-fire-3/30 p-6 clip-cyber"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <Zap size={24} className="text-fire-5" />
-            <div className="font-mono text-[10px] tracking-[2px] uppercase text-fire-3/60">Your Balance</div>
-          </div>
-          <div className="font-orbitron text-4xl font-bold text-fire-5">{totalTokens.toLocaleString()}</div>
-          <div className="font-mono text-xs text-fire-3/40 mt-1">Available Tokens</div>
-        </motion.div>
+        <TokenBalanceWidget />
 
         <motion.button
           initial={{ opacity: 0, y: 20 }}

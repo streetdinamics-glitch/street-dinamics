@@ -36,14 +36,13 @@ export default function BettingInterface({ eventId, lang = 'en' }) {
     staleTime: 30000,
   });
 
-  const { data: userTokens = 0 } = useQuery({
-    queryKey: ['user-token-balance', user?.email],
-    queryFn: async () => {
-      const tokens = await base44.entities.TokenOwnership.filter({ created_by: user?.email }).catch(() => []);
-      return tokens.length > 0 ? tokens.length * 100 : 0;
-    },
+  const { data: tokenBalance } = useQuery({
+    queryKey: ['token-balance', user?.email],
+    queryFn: () => base44.entities.TokenBalance.filter({ user_email: user?.email }).then(r => r[0] || { total_tokens: 0 }),
     enabled: !!user?.email,
   });
+
+  const userTokens = tokenBalance?.total_tokens || 0;
 
   const placeBetMutation = useMutation({
     mutationFn: async (betData) => {
@@ -52,6 +51,17 @@ export default function BettingInterface({ eventId, lang = 'en' }) {
         created_by: user.email,
       });
       
+      // Deduct tokens
+      await base44.functions.invoke('updateTokenBalance', {
+        userEmail: user.email,
+        userName: user.full_name,
+        amount: -betData.amount,
+        type: 'bet_placed',
+        description: `Bet on ${betData.outcome.replace('_', ' ')}`,
+        relatedEntityId: bet.id,
+        relatedEntityType: 'Bet',
+      });
+
       await base44.entities.Notification.create({
         user_email: user.email,
         type: 'deal',
@@ -68,6 +78,7 @@ export default function BettingInterface({ eventId, lang = 'en' }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-bets'] });
       queryClient.invalidateQueries({ queryKey: ['event-bets', eventId] });
+      queryClient.invalidateQueries({ queryKey: ['token-balance'] });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       toast.success(`Bet placed: ${betAmount} tokens on ${selectedOutcome}`);
       setBetAmount(100);

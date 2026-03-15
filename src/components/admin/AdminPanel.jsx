@@ -19,6 +19,7 @@ import ChatModerationPanel from '../chat/ChatModerationPanel';
 import RegistrationAnalyticsDashboard from './RegistrationAnalyticsDashboard';
 import AchievementClaimReview from './AchievementClaimReview';
 import RewardStoreManager from './RewardStoreManager';
+import BetSettlementPanel from './BetSettlementPanel';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -50,6 +51,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showUserMgmt, setShowUserMgmt] = useState(false);
   const [showAchievementReview, setShowAchievementReview] = useState(false);
   const [showRewardStore, setShowRewardStore] = useState(false);
+  const [settlingBetsEvent, setSettlingBetsEvent] = useState(null);
 
   // Lazy load components
   const VenueMapManager = React.lazy(() => import('./VenueMapManager'));
@@ -426,6 +428,14 @@ export default function AdminPanel({ lang, onClose }) {
                   >
                     NFT Drops
                   </button>
+                  {event.status === 'ended' && (
+                    <button
+                      onClick={() => setSettlingBetsEvent(event)}
+                      className="btn-fire text-[10px] py-2 px-4"
+                    >
+                      💰 Settle Bets
+                    </button>
+                  )}
                   <button
                     onClick={() => setVenueMapEvent(event)}
                     className="btn-cyan text-[10px] py-2 px-4"
@@ -863,6 +873,20 @@ export default function AdminPanel({ lang, onClose }) {
                   CLOSE
                 </button>
                 <RewardStoreManager />
+              </div>
+            </div>
+          )}
+         {settlingBetsEvent && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-center justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-3xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setSettlingBetsEvent(null)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <BetSettlementPanel event={settlingBetsEvent} onClose={() => setSettlingBetsEvent(null)} />
               </div>
             </div>
           )}
