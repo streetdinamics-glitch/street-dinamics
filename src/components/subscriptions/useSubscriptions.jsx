@@ -34,8 +34,7 @@ export function useSubscriptions(user, events = []) {
         notifiedRef.current.add(event.id);
 
         // In-app toast
-        const sub = sportSub;
-        if (!sub || sub.in_app_alerts) {
+        if (sportSub.in_app_alerts) {
           toast.success(`🔴 LIVE: ${event.title}`, {
             description: `${event.sport} · ${event.location}`,
             duration: 8000,
@@ -56,15 +55,17 @@ export function useSubscriptions(user, events = []) {
 
   // ── CRUD ────────────────────────────────────────────────────────────────
   const addSub = useMutation({
-    mutationFn: ({ type, value, label }) =>
-      base44.entities.Subscription.create({
+    mutationFn: ({ type, value, label }) => {
+      if (!user?.email) throw new Error('Not authenticated');
+      return base44.entities.Subscription.create({
         user_email: user.email,
         type,
         value,
         label,
         browser_alerts: true,
         in_app_alerts: true,
-      }),
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subscriptions', user?.email] });
       toast.success('Subscribed!');
