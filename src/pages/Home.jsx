@@ -306,6 +306,18 @@ export default function Home() {
         <WatchlistPanel lang={lang} onClose={() => setWatchlistOpen(false)} />
       )}
 
+      {/* My Subscriptions Panel */}
+      <AnimatePresence>
+        {subscriptionsOpen && user && (
+          <MySubscriptionsPanel
+            user={user}
+            events={events}
+            onClose={() => setSubscriptionsOpen(false)}
+            {...subs}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Live event sidebar — shows for the first live event found */}
       {events.filter(e => e.status === 'live').map(liveEvent => (
         <LiveEventSidebar key={liveEvent.id} event={liveEvent} />
