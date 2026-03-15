@@ -80,24 +80,32 @@ export function useNotifications() {
 
         // Subscribe to NFT drops
         const unsubNFT = base44.entities.NFTCollectionCard?.subscribe?.((event) => {
-          if (event.type === 'create' || (event.type === 'update' && event.data.status === 'live')) {
-            toast.success(`🎨 New NFT Drop Live!`, {
-              description: `${event.data.athlete_name} - ${event.data.event_moment}`,
-              action: { label: 'View', onClick: () => window.location.hash = '#nft-marketplace' },
-            });
+          try {
+            if (event.type === 'create' || (event.type === 'update' && event.data.status === 'live')) {
+              toast.success(`🎨 New NFT Drop Live!`, {
+                description: `${event.data.athlete_name} - ${event.data.event_moment}`,
+                action: { label: 'View', onClick: () => window.location.hash = '#nft-marketplace' },
+              });
+            }
+          } catch (err) {
+            console.error('NFT subscription error:', err);
           }
         });
 
         // Subscribe to fan status tier changes
         const unsubFanStatus = base44.entities.FanStatus?.subscribe?.((event) => {
-          if (event.type === 'update' && event.data.user_email === user.email) {
-            const oldTier = event.old_data?.current_tier;
-            const newTier = event.data.current_tier;
-            if (oldTier && newTier && oldTier !== newTier) {
-              toast.success(`🎉 Tier Unlocked: ${newTier.toUpperCase()}`, {
-                description: `${event.data.current_multiplier}x earnings multiplier activated!`,
-              });
+          try {
+            if (event.type === 'update' && event.data.user_email === user.email) {
+              const oldTier = event.old_data?.current_tier;
+              const newTier = event.data.current_tier;
+              if (oldTier && newTier && oldTier !== newTier) {
+                toast.success(`🎉 Tier Unlocked: ${newTier.toUpperCase().replace(/_/g, ' ')}`, {
+                  description: `${event.data.current_multiplier}x earnings multiplier activated!`,
+                });
+              }
             }
+          } catch (err) {
+            console.error('Fan status subscription error:', err);
           }
         });
 

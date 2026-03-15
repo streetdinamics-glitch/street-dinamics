@@ -55,8 +55,8 @@ Deno.serve(async (req) => {
     };
 
     const rarityScore = [
-      ...nfts.map(n => rarityPoints[n.rarity] || 0),
-      ...tokens.map(t => rarityPoints[t.rarity] || 0)
+      ...nfts.map(n => rarityPoints[n.rarity || 'rising_star'] || 0),
+      ...tokens.map(t => rarityPoints[t.token_tier || t.rarity || 'rising_star'] || 0)
     ].reduce((sum, score) => sum + score, 0);
 
     // Determine new tier

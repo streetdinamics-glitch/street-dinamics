@@ -30,8 +30,15 @@ Deno.serve(async (req) => {
       last_updated: new Date().toISOString(),
     });
 
-    // Add tokens (1:1 conversion)
-    const tokensEarned = pointsToConvert;
+    // Apply tier multiplier to token conversion
+    const multiplierResult = await base44.asServiceRole.functions.invoke('applyTierMultiplier', {
+      userEmail: user.email,
+      baseAmount: pointsToConvert,
+      type: 'points_conversion'
+    });
+
+    const tokensEarned = multiplierResult.data.multipliedAmount || pointsToConvert;
+    
     await base44.functions.invoke('updateTokenBalance', {
       userEmail: user.email,
       userName: user.full_name,

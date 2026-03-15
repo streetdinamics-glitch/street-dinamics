@@ -20,6 +20,7 @@ import RegistrationAnalyticsDashboard from './RegistrationAnalyticsDashboard';
 import AchievementClaimReview from './AchievementClaimReview';
 import RewardStoreManager from './RewardStoreManager';
 import BetSettlementPanel from './BetSettlementPanel';
+import FanStatusManager from './FanStatusManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -52,6 +53,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showAchievementReview, setShowAchievementReview] = useState(false);
   const [showRewardStore, setShowRewardStore] = useState(false);
   const [settlingBetsEvent, setSettlingBetsEvent] = useState(null);
+  const [showFanStatusMgr, setShowFanStatusMgr] = useState(false);
 
   // Lazy load components
   const UserManagementPanel = React.lazy(() => import('./UserManagementPanel'));
@@ -303,6 +305,12 @@ export default function AdminPanel({ lang, onClose }) {
             className="btn-ghost text-[11px] py-2.5 px-5"
           >
             🎁 Reward Store
+          </button>
+          <button
+            onClick={() => setShowFanStatusMgr(true)}
+            className="btn-cyan text-[11px] py-2.5 px-5"
+          >
+            🏆 Fan Status
           </button>
           {events.find(e => e.status === 'live') && (
             <button
@@ -866,6 +874,20 @@ export default function AdminPanel({ lang, onClose }) {
                   CLOSE
                 </button>
                 <BetSettlementPanel event={settlingBetsEvent} onClose={() => setSettlingBetsEvent(null)} />
+              </div>
+            </div>
+          )}
+         {showFanStatusMgr && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-6xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setShowFanStatusMgr(false)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <FanStatusManager />
               </div>
             </div>
           )}
