@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { toast } from 'sonner';
-import SportCategorySelect from '../components/admin/SportCategorySelect';
 
 export default function CreateEvent() {
   const navigate = useNavigate();
@@ -62,12 +61,13 @@ export default function CreateEvent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
-                  Sport / Discipline *
+                  Sport *
                 </label>
-                <SportCategorySelect
+                <input
+                  className="cyber-input"
                   required
                   value={form.sport}
-                  onChange={(val) => setForm({ ...form, sport: val })}
+                  onChange={(e) => setForm({ ...form, sport: e.target.value })}
                 />
               </div>
               <div>
