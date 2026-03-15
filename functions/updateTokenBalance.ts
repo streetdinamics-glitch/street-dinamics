@@ -57,6 +57,13 @@ Deno.serve(async (req) => {
       timestamp: new Date().toISOString(),
     });
 
+    // Update fan status asynchronously
+    if (type === 'reward_redeemed' || type === 'spend') {
+      base44.asServiceRole.functions.invoke('updateFanStatus', { userEmail }).catch(err =>
+        console.error('Failed to update fan status:', err)
+      );
+    }
+
     return Response.json({ success: true, newBalance: newTotal });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
