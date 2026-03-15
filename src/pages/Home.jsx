@@ -75,6 +75,8 @@ export default function Home() {
   });
 
   // Check if user owns any tokens
+  const subs = useSubscriptions(user, events);
+
   const { data: tokens = [] } = useQuery({
     queryKey: ['my-tokens'],
     queryFn: async () => {
