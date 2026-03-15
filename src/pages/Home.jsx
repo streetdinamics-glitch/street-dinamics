@@ -68,13 +68,6 @@ export default function Home() {
     initialData: [],
   });
 
-  const { data: registrations = [] } = useQuery({
-    queryKey: ['registrations'],
-    queryFn: () => base44.entities.Registration.list('-created_date', 100),
-    initialData: [],
-  });
-
-  // Check if user owns any tokens
   const subs = useSubscriptions(user, events);
 
   const { data: tokens = [] } = useQuery({

@@ -27,14 +27,14 @@ export function useSubscriptions(user, events = []) {
     liveEvents.forEach(event => {
       if (notifiedRef.current.has(event.id)) return;
 
-      const sportMatch = subscriptions.some(s => s.type === 'sport' && s.value === event.sport);
-      const athleteMatch = subscriptions.some(s => s.type === 'athlete'); // rough match — fine for in-app
+      const sportSub = subscriptions.find(s => s.type === 'sport' && s.value === event.sport);
+      const matches = !!sportSub;
 
-      if (sportMatch || athleteMatch) {
+      if (matches) {
         notifiedRef.current.add(event.id);
 
         // In-app toast
-        const sub = subscriptions.find(s => s.type === 'sport' && s.value === event.sport);
+        const sub = sportSub;
         if (!sub || sub.in_app_alerts) {
           toast.success(`🔴 LIVE: ${event.title}`, {
             description: `${event.sport} · ${event.location}`,
@@ -44,7 +44,7 @@ export function useSubscriptions(user, events = []) {
         }
 
         // Browser notification
-        if (sub?.browser_alerts && 'Notification' in window && Notification.permission === 'granted') {
+        if (sportSub?.browser_alerts && 'Notification' in window && Notification.permission === 'granted') {
           new Notification(`🔴 LIVE: ${event.title}`, {
             body: `${event.sport} at ${event.location} is now live!`,
             icon: '/favicon.ico',
