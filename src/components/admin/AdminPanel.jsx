@@ -321,6 +321,12 @@ export default function AdminPanel({ lang, onClose }) {
           >
             🏆 Fan Status
           </button>
+          <button
+            onClick={() => setShowSportCatMgr(true)}
+            className="btn-fire text-[11px] py-2.5 px-5"
+          >
+            🏷️ Sport Categories
+          </button>
           {events.find(e => e.status === 'live') && (
             <button
               onClick={() => setChatModeratingEvent(events.find(e => e.status === 'live'))}
@@ -567,13 +573,20 @@ export default function AdminPanel({ lang, onClose }) {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
-                    Sport
+                    Sport / Discipline
                   </label>
-                  <input
+                  <select
                     className="cyber-input"
                     value={editForm.sport}
                     onChange={(e) => setEditForm({ ...editForm, sport: e.target.value })}
-                  />
+                  >
+                    <option value="">— Select discipline —</option>
+                    {activeSports.map(cat => (
+                      <option key={cat.id} value={cat.name}>
+                        {cat.emoji ? `${cat.emoji} ` : ''}{cat.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
