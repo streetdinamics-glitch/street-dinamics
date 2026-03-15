@@ -16,6 +16,7 @@ import { useTranslation } from '../translations';
 import NFTFilterPanel from './NFTFilterPanel';
 import WatchlistButton from '../watchlist/WatchlistButton';
 import NFTAnalyticsModal from './NFTAnalyticsModal';
+import EarlyAccessGate from '../marketplace/EarlyAccessGate';
 
 export default function NFTMarketplace({ lang = 'en' }) {
   const t = useTranslation(lang);
@@ -41,6 +42,17 @@ export default function NFTMarketplace({ lang = 'en' }) {
       return base44.entities.NFTOwnership.filter({ created_by: user.email });
     },
     initialData: [],
+  });
+
+  const { data: user } = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => base44.auth.me(),
+  });
+
+  const { data: fanStatus } = useQuery({
+    queryKey: ['fan-status', user?.email],
+    queryFn: () => base44.entities.FanStatus.filter({ user_email: user?.email }).then(r => r[0]),
+    enabled: !!user,
   });
 
   const mintNFTMutation = useMutation({
@@ -203,6 +215,13 @@ export default function NFTMarketplace({ lang = 'en' }) {
                 transition={{ delay: i * 0.1 }}
                 className={`relative bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border ${tierStyle.border} overflow-hidden group clip-cyber`}
               >
+                {/* Early Access Gate */}
+                <EarlyAccessGate 
+                  dropDate={card.drop_date} 
+                  fanTier={fanStatus?.current_tier}
+                  requiredTier="superfan"
+                />
+
                 {/* Tier glow */}
                 <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `radial-gradient(circle at 50% 0%, ${tierStyle.glow}, transparent 70%)` }} />
                 
