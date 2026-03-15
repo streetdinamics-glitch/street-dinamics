@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ShoppingBag, Sparkles } from 'lucide-react';
 
 export default function RewardItemCard({ item, index, userTokens, onRedeem, isRedeeming, tierConfig }) {
-  const tierStyle = tierConfig[item.rarity];
+  const tierStyle = tierConfig[item.rarity] || tierConfig['rising_star'];
   const canAfford = userTokens >= item.token_cost;
   const inStock = item.stock_quantity === -1 || item.stock_quantity > 0;
 
@@ -21,7 +21,7 @@ export default function RewardItemCard({ item, index, userTokens, onRedeem, isRe
 
       {/* Rarity Badge */}
       <div className={`absolute top-3 right-3 px-3 py-1 border font-orbitron text-[8px] tracking-[2px] uppercase bg-gradient-to-r ${tierStyle.bg} ${tierStyle.accent} clip-btn z-10`}>
-        {item.rarity}
+        {tierStyle.label || item.rarity}
       </div>
 
       {/* Image */}
@@ -105,8 +105,8 @@ export default function RewardItemCard({ item, index, userTokens, onRedeem, isRe
         )}
       </div>
 
-      {/* Legendary Glow */}
-      {item.rarity === 'legendary' && (
+      {/* Living Legend Glow */}
+      {item.rarity === 'living_legend' && (
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-radial from-fire-5/20 via-transparent to-transparent animate-pulse" />
         </div>
