@@ -41,7 +41,7 @@ import { useLang } from '../components/useLang';
 export default function Home() {
   useNotifications();
   
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useLang();
   const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [regModal, setRegModal] = useState(null);
