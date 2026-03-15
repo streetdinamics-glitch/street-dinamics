@@ -76,9 +76,19 @@ export default function NFTMarketplace({ lang = 'en' }) {
 
       return ownership;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['nft-cards'] });
       queryClient.invalidateQueries({ queryKey: ['my-nfts'] });
+      queryClient.invalidateQueries({ queryKey: ['fan-status'] });
+      
+      // Update fan status after NFT mint
+      try {
+        const user = await base44.auth.me();
+        await base44.functions.invoke('updateFanStatus', { userEmail: user.email });
+      } catch (err) {
+        console.error('Failed to update fan status:', err);
+      }
+      
       toast.success('NFT minted successfully!');
     },
     onError: () => {

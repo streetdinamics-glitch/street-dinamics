@@ -29,10 +29,11 @@ export default function PurchaseModal({ token, onClose, onSuccess }) {
         payment_method: paymentMethod,
       });
 
-      // Create ownership record
+      // Create ownership record with rarity
       await base44.entities.TokenOwnership.create({
         athlete_name: token.athlete_name,
         token_tier: token.token_tier,
+        rarity: token.token_tier,
         purchase_price: token.current_price || token.base_price,
         purchase_date: new Date().toISOString().split('T')[0],
       });
@@ -64,9 +65,18 @@ export default function PurchaseModal({ token, onClose, onSuccess }) {
     purchaseMutation.mutate(
       { email: buyerEmail, name: buyerName, quantity },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           queryClient.invalidateQueries({ queryKey: ['tokens'] });
           queryClient.invalidateQueries({ queryKey: ['my-tokens'] });
+          queryClient.invalidateQueries({ queryKey: ['fan-status'] });
+          
+          // Update fan status after purchase
+          if (buyerEmail) {
+            base44.functions.invoke('updateFanStatus', { userEmail: buyerEmail }).catch(err =>
+              console.error('Failed to update fan status:', err)
+            );
+          }
+          
           onSuccess?.(data);
         },
       }

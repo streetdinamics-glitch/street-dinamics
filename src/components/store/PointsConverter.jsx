@@ -30,6 +30,7 @@ export default function PointsConverter({ eventId }) {
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['fan-points'] });
       queryClient.invalidateQueries({ queryKey: ['token-balance'] });
+      queryClient.invalidateQueries({ queryKey: ['fan-status'] });
       toast.success(`Converted ${pointsToConvert} points to ${response.data.tokensEarned} tokens!`);
       setPointsToConvert(0);
     },

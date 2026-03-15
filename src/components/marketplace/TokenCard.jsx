@@ -39,7 +39,7 @@ const TIER_CONFIG = {
 
 export default function TokenCard({ token, onBuy }) {
   const [showPaymentChoice, setShowPaymentChoice] = useState(false);
-  const config = TIER_CONFIG[token.token_tier];
+  const config = TIER_CONFIG[token.token_tier] || TIER_CONFIG.rising_star;
   const soldOutPercentage = ((token.total_supply - token.available_supply) / token.total_supply) * 100;
 
   const handleBuyClick = () => {

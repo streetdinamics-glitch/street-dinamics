@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Star, Zap, Filter, Package, Gift } from 'lucide-react';
 import { toast } from 'sonner';
-import RewardItemCard from './RewardItemCard';
+import EnhancedRewardItemCard from './EnhancedRewardItemCard';
 import UserInventoryPanel from './UserInventoryPanel';
 import PointsConverter from './PointsConverter';
 import TokenBalanceWidget from './TokenBalanceWidget';
@@ -43,6 +43,12 @@ export default function TokenStore() {
   const { data: tokenBalance } = useQuery({
     queryKey: ['token-balance', user?.email],
     queryFn: () => base44.entities.TokenBalance.filter({ user_email: user?.email }).then(r => r[0] || { total_tokens: 0 }),
+    enabled: !!user,
+  });
+
+  const { data: fanStatus } = useQuery({
+    queryKey: ['fan-status', user?.email],
+    queryFn: () => base44.entities.FanStatus.filter({ user_email: user?.email }).then(r => r[0]),
     enabled: !!user,
   });
 
@@ -212,14 +218,15 @@ export default function TokenStore() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item, i) => (
-            <RewardItemCard
+            <EnhancedRewardItemCard
               key={item.id}
               item={item}
               index={i}
               userTokens={totalTokens}
-              onRedeem={() => redeemItemMutation.mutate(item)}
+              onRedeem={(adjustedItem) => redeemItemMutation.mutate(adjustedItem)}
               isRedeeming={redeemItemMutation.isPending}
               tierConfig={TIER_CONFIG}
+              fanStatus={fanStatus}
             />
           ))}
         </div>
