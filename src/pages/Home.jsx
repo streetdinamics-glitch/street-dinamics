@@ -207,6 +207,8 @@ export default function Home() {
       <FireRule />
       <AthletePerformanceDashboard lang={lang} />
       <FireRule />
+      <FanStatusDashboard lang={lang} />
+      <FireRule />
       <TokenMarketplace lang={lang} />
       <FireRule />
       <NFTMarketplace />
