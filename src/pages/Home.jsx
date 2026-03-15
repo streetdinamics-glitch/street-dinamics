@@ -313,7 +313,7 @@ export default function Home() {
 
       {/* Live event sidebar — shows for the first live event found */}
       {events.filter(e => e.status === 'live').map(liveEvent => (
-        <LiveEventSidebar key={liveEvent.id} event={liveEvent} />
+        <LiveEventSidebar key={liveEvent.id} event={liveEvent} hidden={subscriptionsOpen} />
       )).slice(0, 1)}
     </div>
   );
