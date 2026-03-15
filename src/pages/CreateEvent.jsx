@@ -69,14 +69,24 @@ export default function CreateEvent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">
-                  Sport *
+                  Sport / Discipline *
                 </label>
-                <input
+                <select
                   className="cyber-input"
                   required
                   value={form.sport}
                   onChange={(e) => setForm({ ...form, sport: e.target.value })}
-                />
+                >
+                  <option value="">— Select discipline —</option>
+                  {activeSports.map(cat => (
+                    <option key={cat.id} value={cat.name}>
+                      {cat.emoji ? `${cat.emoji} ` : ''}{cat.name}
+                    </option>
+                  ))}
+                </select>
+                {activeSports.length === 0 && (
+                  <p className="font-mono text-[9px] text-fire-3/40 mt-1">No sport categories defined yet — add them in Admin → Sport Categories.</p>
+                )}
               </div>
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">

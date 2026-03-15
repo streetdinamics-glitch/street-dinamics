@@ -65,6 +65,13 @@ export default function AdminPanel({ lang, onClose }) {
     queryFn: () => base44.entities.Event.list('-created_date', 100),
   });
 
+  const { data: sportCategories = [] } = useQuery({
+    queryKey: ['sport-categories'],
+    queryFn: () => base44.entities.SportCategory.list('name', 100),
+    initialData: [],
+  });
+  const activeSports = sportCategories.filter(c => c.is_active);
+
   const { data: users = [] } = useQuery({
     queryKey: ['pending-athletes'],
     queryFn: async () => {
