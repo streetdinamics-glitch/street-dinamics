@@ -178,7 +178,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
         <div className="flex items-center gap-2 md:hidden">
           {user && (
             <>
-              <button onClick={onProfileClick} className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all">
+              <button onClick={() => navigate('/UserProfile')} className="p-2 border border-fire-3/20 bg-transparent hover:bg-fire-3/5 transition-all">
                 <User size={16} className="text-fire-3" />
               </button>
               <button
