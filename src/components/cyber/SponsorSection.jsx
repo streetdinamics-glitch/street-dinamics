@@ -16,15 +16,15 @@ export default function SponsorSection({ lang }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="p-4 bg-fire-3/5 border border-fire-3/10">
             <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">13-30</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">High-Value Youth Demographics</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">{t('sponsor_demographics')}</div>
           </div>
           <div className="p-4 bg-fire-3/5 border border-fire-3/10">
             <div className="font-orbitron font-bold text-2xl text-fire-4 mb-1">ONLINE & IRL</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">Multiplatform Presence</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">{t('sponsor_platform')}</div>
           </div>
           <div className="p-4 bg-fire-3/5 border border-fire-3/10">
             <div className="font-orbitron font-bold text-3xl text-fire-4 mb-1">GLOBAL</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">Worldwide Presence</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px]">{t('sponsor_worldwide')}</div>
           </div>
         </div>
 
@@ -32,29 +32,29 @@ export default function SponsorSection({ lang }) {
           <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
             <span className="text-fire-3 text-lg">⚡</span>
             <div>
-              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">MULTI-PLATFORM VISIBILITY</h4>
-              <p className="font-rajdhani text-sm text-fire-4/60">Brand exposure across live events, digital streams, and social media channels</p>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">{t('sponsor_visibility_title')}</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">{t('sponsor_visibility_desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
             <span className="text-fire-3 text-lg">🎯</span>
             <div>
-              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">DIRECT YOUTH ENGAGEMENT</h4>
-              <p className="font-rajdhani text-sm text-fire-4/60">Authentic connection with 13-30 year-old athletes and fans who drive culture</p>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">{t('sponsor_engagement_title')}</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">{t('sponsor_engagement_desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
             <span className="text-fire-3 text-lg">🌍</span>
             <div>
-              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">GLOBAL REACH</h4>
-              <p className="font-rajdhani text-sm text-fire-4/60">Presence in UAE, Europe, and expanding international markets with high engagement</p>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">{t('sponsor_global_title')}</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">{t('sponsor_global_desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 p-3 bg-fire-3/10 border-l-2 border-fire-3">
             <span className="text-fire-3 text-lg">💎</span>
             <div>
-              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">NFT & TOKEN INTEGRATION</h4>
-              <p className="font-rajdhani text-sm text-fire-4/60">Innovative digital assets that keep your brand at the forefront of Web3 culture</p>
+              <h4 className="font-orbitron font-bold text-sm text-fire-4 mb-1">{t('sponsor_nft_title')}</h4>
+              <p className="font-rajdhani text-sm text-fire-4/60">{t('sponsor_nft_desc')}</p>
             </div>
           </div>
         </div>
