@@ -161,7 +161,7 @@ export default function Home() {
               style={{ clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)' }}
             >
               <span className="text-sm">🔔</span>
-              My Subscriptions
+              {t('my_subscriptions')}
               {subs.subscriptions.length > 0 && (
                 <span className="bg-purple-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
                   {subs.subscriptions.length}

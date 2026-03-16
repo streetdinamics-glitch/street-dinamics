@@ -11,10 +11,12 @@ import EngagementAnalyticsDashboard from '../components/analytics/EngagementAnal
 import VotingAnalyticsDashboard from '../components/analytics/VotingAnalyticsDashboard';
 import BettingAnalyticsDashboard from '../components/analytics/BettingAnalyticsDashboard';
 import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 export default function Analytics() {
   const [activeTab, setActiveTab] = useState('engagement');
   const [lang, setLang] = useLang();
+  const t = useTranslation(lang);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -37,24 +39,22 @@ export default function Analytics() {
           className="text-center mb-12"
         >
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 mb-2">
-            {isAdmin ? 'ADMIN ANALYTICS' : 'PERSONAL ANALYTICS'}
+            {isAdmin ? t('analytics_admin') : t('analytics_personal')}
           </p>
           <h1 className="heading-fire text-[clamp(36px,7vw,88px)] leading-none mb-4 font-black">
-            PERFORMANCE METRICS
+            {t('analytics_title')}
           </h1>
           <p className="font-rajdhani text-lg text-fire-4/70 max-w-2xl mx-auto">
-            {isAdmin 
-              ? 'Monitor platform-wide engagement, voting trends, and betting performance' 
-              : 'Track your engagement, voting accuracy, and betting performance over time'}
+            {isAdmin ? t('analytics_admin_desc') : t('analytics_personal_desc')}
           </p>
         </motion.div>
 
         {/* Tabs */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {[
-            { id: 'engagement', label: 'Engagement', icon: BarChart3 },
-            { id: 'voting', label: 'Voting', icon: Vote },
-            { id: 'betting', label: 'Betting', icon: DollarSign },
+            { id: 'engagement', label: t('analytics_engagement'), icon: BarChart3 },
+            { id: 'voting', label: t('analytics_voting'), icon: Vote },
+            { id: 'betting', label: t('analytics_betting'), icon: DollarSign },
           ].map(tab => {
             const Icon = tab.icon;
             return (
