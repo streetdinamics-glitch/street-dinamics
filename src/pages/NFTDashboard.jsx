@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, Zap, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import NFTPriceChart from '../components/nft/NFTPriceChart';
+import NFTRarityBreakdown from '../components/nft/NFTRarityBreakdown';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 
