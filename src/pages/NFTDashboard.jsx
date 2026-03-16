@@ -172,6 +172,9 @@ export default function NFTDashboard() {
           </motion.div>
         </div>
 
+        {/* Portfolio Growth Chart */}
+        <NFTPortfolioGrowthChart enrichedNFTs={enrichedNFTs} />
+
         {/* Rarity Breakdown */}
         <NFTRarityBreakdown enrichedNFTs={enrichedNFTs} />
 
