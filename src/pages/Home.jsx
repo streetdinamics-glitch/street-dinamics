@@ -219,28 +219,6 @@ export default function Home() {
         lang={lang}
       />
       <FireRule />
-      {user && <MetricsVisualizationDashboard lang={lang} />}
-      <FireRule />
-      <AthletePerformanceDashboard lang={lang} />
-      <FireRule />
-      <FanStatusDashboard lang={lang} />
-      <FireRule />
-      <TokenMarketplace lang={lang} />
-      <FireRule />
-      <NFTMarketplace />
-      <FireRule />
-      <SecondaryMarket />
-      <FireRule />
-      <TokenStore />
-      <FireRule />
-      <GlobalLeaderboard lang={lang} />
-      <FireRule />
-      {events.length > 0 && (
-        <>
-          <SpectatorGamificationHub eventId={events[0]?.id} lang={lang} />
-          <FireRule />
-        </>
-      )}
       <SponsorSection lang={lang} />
       <Footer lang={lang} />
 
