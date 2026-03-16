@@ -128,12 +128,12 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                   <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
                 </button>
                 <div className="absolute top-full right-0 mt-1 w-56 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
-                  <button
-                    onClick={onProfileClick}
-                    className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
+                  <Link
+                    to="/UserProfile"
+                    className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 no-underline block"
                   >
                     👤 My Profile
-                  </button>
+                  </Link>
                   <button
                     onClick={() => setWatchlistOpen(true)}
                     className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
