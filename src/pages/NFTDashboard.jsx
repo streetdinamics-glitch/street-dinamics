@@ -363,7 +363,6 @@ export default function NFTDashboard() {
           </motion.div>
         )}
       </div>
-    </div>
 
       {/* NFT Watchlist Sidebar */}
       <NFTWatchlistSidebar
