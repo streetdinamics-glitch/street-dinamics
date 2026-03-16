@@ -46,7 +46,6 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
 
   const navItems = [
     { label: t('nav_events'), id: 'events' },
-    { label: t('nav_tokens'), id: 'tokens' },
     { label: t('nav_bet'), id: 'gamification' },
     { label: t('nav_social'), id: 'social' },
   ];
