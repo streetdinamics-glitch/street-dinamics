@@ -60,9 +60,6 @@ export default function AdminPanel({ lang, onClose }) {
   const [showSportCatMgr, setShowSportCatMgr] = useState(false);
   const [showWeb3Config, setShowWeb3Config] = useState(false);
 
-  // Lazy load components
-  const UserManagementPanel = React.lazy(() => import('./UserManagementPanel'));
-
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
     queryFn: () => base44.entities.Event.list('-created_date', 100),
