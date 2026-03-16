@@ -6,10 +6,12 @@ import { Trophy, Star, Download, Heart, Eye } from 'lucide-react';
 import BettingHistoryLog from '../components/betting/BettingHistoryLog';
 import ModernAchievementBadge from '../components/gamification/ModernAchievementBadge';
 import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 export default function EnhancedUserProfile() {
   const [activeTab, setActiveTab] = useState('overview');
   const [lang, setLang] = useLang();
+  const t = useTranslation(lang);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -79,7 +81,7 @@ export default function EnhancedUserProfile() {
     return (
       <div className="min-h-screen bg-cyber-void flex items-center justify-center p-4">
         <div className="text-center">
-          <p className="font-mono text-fire-3/40 mb-4">Loading profile...</p>
+          <p className="font-mono text-fire-3/40 mb-4">{t('enhanced_loading')}</p>
         </div>
       </div>
     );
@@ -109,10 +111,10 @@ export default function EnhancedUserProfile() {
               <p className="font-mono text-fire-3/60 mb-4">{user.email}</p>
               <div className="flex flex-wrap gap-4">
                 {[
-                  { label: 'UGC Submissions', value: userStats.ugcCount, icon: Download },
-                  { label: 'Total Engagement', value: userStats.totalEngagement, icon: Heart },
-                  { label: 'Points Earned', value: userStats.totalPoints, icon: Star },
-                  { label: 'Tokens Owned', value: userStats.tokenCount, icon: Trophy },
+                  { label: t('enhanced_ugc_label'), value: userStats.ugcCount, icon: Download },
+                  { label: t('enhanced_engagement_label'), value: userStats.totalEngagement, icon: Heart },
+                  { label: t('enhanced_points_label'), value: userStats.totalPoints, icon: Star },
+                  { label: t('enhanced_tokens_label'), value: userStats.tokenCount, icon: Trophy },
                 ].map((stat) => {
                   const Icon = stat.icon;
                   return (
@@ -132,17 +134,23 @@ export default function EnhancedUserProfile() {
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 border-b border-fire-3/10">
-          {['overview', 'ugc', 'badges', 'events', 'betting'].map(tab => (
+          {[
+            { id: 'overview', label: t('enhanced_tab_overview') },
+            { id: 'ugc', label: t('enhanced_tab_ugc') },
+            { id: 'badges', label: t('enhanced_tab_badges') },
+            { id: 'events', label: t('enhanced_tab_events') },
+            { id: 'betting', label: t('enhanced_tab_betting') },
+          ].map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-3 font-orbitron text-[11px] tracking-[2px] uppercase border-b-2 transition-all ${
-                activeTab === tab
+                activeTab === tab.id
                   ? 'border-fire-3 text-fire-4'
                   : 'border-transparent text-fire-3/40 hover:text-fire-3'
               }`}
             >
-              {tab}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -153,9 +161,9 @@ export default function EnhancedUserProfile() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
-                  { label: 'Content Creator Level', value: 'Intermediate', color: 'from-cyan/20 to-cyan/5' },
-                  { label: 'Engagement Score', value: userStats.totalEngagement, color: 'from-fire-3/20 to-fire-3/5' },
-                  { label: 'Rewards Unlocked', value: userStats.rewardsUnlocked, color: 'from-purple-500/20 to-purple-500/5' },
+                  { label: t('enhanced_creator_level'), value: 'Intermediate', color: 'from-cyan/20 to-cyan/5' },
+                  { label: t('enhanced_engagement_score'), value: userStats.totalEngagement, color: 'from-fire-3/20 to-fire-3/5' },
+                  { label: t('enhanced_rewards_unlocked'), value: userStats.rewardsUnlocked, color: 'from-purple-500/20 to-purple-500/5' },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -174,10 +182,10 @@ export default function EnhancedUserProfile() {
 
           {activeTab === 'ugc' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <h2 className="font-orbitron font-bold text-2xl text-fire-4 mb-6">UGC SUBMISSION HISTORY</h2>
+              <h2 className="font-orbitron font-bold text-2xl text-fire-4 mb-6">{t('enhanced_ugc_title')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {ugcHistory.length === 0 ? (
-                  <p className="text-fire-3/40">No UGC submissions yet</p>
+                  <p className="text-fire-3/40">{t('enhanced_no_ugc')}</p>
                 ) : (
                   ugcHistory.map((ugc, i) => (
                     <motion.div
@@ -210,7 +218,7 @@ export default function EnhancedUserProfile() {
 
           {activeTab === 'badges' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <h2 className="font-orbitron font-bold text-2xl text-fire-4 mb-6">ACHIEVEMENTS & BADGES</h2>
+              <h2 className="font-orbitron font-bold text-2xl text-fire-4 mb-6">{t('enhanced_badges_title')}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
                 {['founder', 'ambassador', 'curator', 'trailblazer', 'catalyst', 'luminary'].map((badge, i) => (
                   <ModernAchievementBadge
@@ -226,9 +234,9 @@ export default function EnhancedUserProfile() {
 
           {activeTab === 'events' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <h2 className="font-orbitron font-bold text-2xl text-fire-4 mb-6">SAVED EVENTS & INTERESTS</h2>
+              <h2 className="font-orbitron font-bold text-2xl text-fire-4 mb-6">{t('enhanced_events_title')}</h2>
               {savedEvents.length === 0 ? (
-                <p className="text-fire-3/40">No saved events yet</p>
+                <p className="text-fire-3/40">{t('enhanced_no_events')}</p>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {savedEvents.map((event, i) => (
