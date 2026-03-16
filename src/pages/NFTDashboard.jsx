@@ -12,6 +12,7 @@ import { useTranslation } from '../components/translations';
 
 export default function NFTDashboard() {
   const [sortBy, setSortBy] = useState('value');
+  const [watchlistOpen, setWatchlistOpen] = useState(false);
   const [lang] = useLang();
   const t = useTranslation(lang);
 
