@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { Menu, X, User, Star, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
