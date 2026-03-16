@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, Zap, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import NFTPriceChart from '../components/nft/NFTPriceChart';
 import NFTRarityBreakdown from '../components/nft/NFTRarityBreakdown';
+import NFTPortfolioGrowthChart from '../components/nft/NFTPortfolioGrowthChart';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 
