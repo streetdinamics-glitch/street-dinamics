@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Trophy, TrendingUp, Zap, Crown, Star, Gift, Clock, Sparkles } from 'lucide-react';
+import { useTranslation } from '../translations';
 
 const TIER_CONFIG = {
   rookie: {
@@ -63,6 +64,7 @@ const TIER_CONFIG = {
 };
 
 export default function FanStatusDashboard({ lang = 'en' }) {
+  const t = useTranslation(lang);
   const { data: user } = useQuery({
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
@@ -142,7 +144,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
   if (!user) {
     return (
       <section className="section-container text-center py-20">
-        <p className="font-mono text-sm text-fire-3/40">Login to view your fan status</p>
+        <p className="font-mono text-sm text-fire-3/40">{t('fsd_login_prompt')}</p>
       </section>
     );
   }
@@ -150,14 +152,14 @@ export default function FanStatusDashboard({ lang = 'en' }) {
   return (
     <section className="section-container">
       <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3 text-center mb-2">
-        FAN PROGRESSION
+        {t('fsd_fan_progression')}
       </p>
       <h2 className="heading-fire text-[clamp(36px,7vw,88px)] text-center leading-none mb-4 font-black">
-        YOUR STATUS
+        {t('fsd_your_status')}
       </h2>
 
       <p className="text-center font-rajdhani text-lg text-fire-4/70 max-w-3xl mx-auto mb-12">
-        Earn tokens, collect NFTs, and unlock exclusive perks as you progress through the tiers
+        {t('fsd_subtitle')}
       </p>
 
       {/* Current Tier Display */}
@@ -176,11 +178,11 @@ export default function FanStatusDashboard({ lang = 'en' }) {
               </div>
               <div>
                 <div className="font-orbitron text-3xl font-black text-white mb-1">{tierConfig.name}</div>
-                <div className={`font-mono text-sm ${tierConfig.accent}`}>Level {currentTierIndex + 1} of {tierList.length}</div>
+                <div className={`font-mono text-sm ${tierConfig.accent}`}>{t('fsd_level')} {currentTierIndex + 1} {t('fsd_of')} {tierList.length}</div>
               </div>
             </div>
             <div className="text-right">
-              <div className="font-mono text-xs text-fire-3/60 mb-1">EARNINGS MULTIPLIER</div>
+              <div className="font-mono text-xs text-fire-3/60 mb-1">{t('fsd_earnings_multiplier')}</div>
               <div className="font-orbitron text-4xl font-black text-fire-5">{tierConfig.multiplier}x</div>
             </div>
           </div>
@@ -188,19 +190,19 @@ export default function FanStatusDashboard({ lang = 'en' }) {
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
-              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">Tokens Spent</div>
+              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_tokens_spent')}</div>
               <div className="font-orbitron font-bold text-fire-5">{(fanStatus?.total_tokens_spent || 0).toLocaleString()}</div>
             </div>
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
-              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">Rarity Score</div>
+              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_rarity_score')}</div>
               <div className="font-orbitron font-bold text-cyan">{rarityScore}</div>
             </div>
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
-              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">NFTs Owned</div>
+              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_nfts_owned')}</div>
               <div className="font-orbitron font-bold text-purple-400">{nftOwnership.length}</div>
             </div>
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
-              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">Rewards</div>
+              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_rewards')}</div>
               <div className="font-orbitron font-bold text-fire-4">{inventory.length}</div>
             </div>
           </div>
@@ -209,7 +211,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
           {nextTierConfig && (
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs text-fire-3/60">Progress to {nextTierConfig.name}</span>
+                <span className="font-mono text-xs text-fire-3/60">{t('fsd_progress_to')} {nextTierConfig.name}</span>
                 <span className="font-mono text-xs text-fire-4">{progress.toFixed(0)}%</span>
               </div>
               <div className="h-3 bg-black/40 border border-fire-3/20 overflow-hidden mb-2">
@@ -221,7 +223,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                 />
               </div>
               <div className="font-mono text-xs text-fire-3/40">
-                {nextTierConfig.requirement - (fanStatus?.total_tokens_spent || 0)} tokens until {nextTierConfig.name}
+                {nextTierConfig.requirement - (fanStatus?.total_tokens_spent || 0)} {t('fsd_tokens_until')} {nextTierConfig.name}
               </div>
             </div>
           )}
@@ -232,7 +234,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
       <div className="max-w-4xl mx-auto mb-12">
         <h3 className="font-orbitron font-bold text-2xl text-fire-5 mb-6 flex items-center gap-2">
           <Gift size={24} className="text-fire-3" />
-          Active Perks
+          {t('fsd_active_perks')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {tierConfig.perks.map((perk, i) => (
@@ -254,7 +256,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
       <div className="max-w-6xl mx-auto">
         <h3 className="font-orbitron font-bold text-2xl text-fire-5 mb-6 flex items-center gap-2">
           <Trophy size={24} className="text-cyan" />
-          All Tiers
+          {t('fsd_all_tiers')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Object.entries(TIER_CONFIG).map(([tier, config], i) => {
@@ -274,7 +276,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
               >
                 {isCurrent && (
                   <div className="absolute top-3 right-3 px-2 py-1 bg-fire-3/20 border border-fire-3/40 font-mono text-[8px] tracking-[1px] uppercase text-fire-3">
-                    Current
+                    {t('fsd_current')}
                   </div>
                 )}
 
@@ -284,19 +286,19 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                   </div>
                   <div>
                     <div className={`font-orbitron font-bold text-lg ${config.accent}`}>{config.name}</div>
-                    <div className="font-mono text-xs text-fire-3/60">{config.multiplier}x multiplier</div>
+                    <div className="font-mono text-xs text-fire-3/60">{config.multiplier}x {t('fsd_multiplier')}</div>
                   </div>
                 </div>
 
                 <div className="mb-3">
-                  <div className="font-mono text-[9px] text-fire-3/60 mb-2">REQUIREMENT</div>
+                  <div className="font-mono text-[9px] text-fire-3/60 mb-2">{t('fsd_requirement')}</div>
                   <div className="font-rajdhani text-sm text-fire-4">
-                    {config.requirement === 0 ? 'Starting tier' : `${config.requirement.toLocaleString()} tokens spent`}
+                    {config.requirement === 0 ? t('fsd_starting_tier') : `${config.requirement.toLocaleString()} ${t('fsd_tokens_spent_req')}`}
                   </div>
                 </div>
 
                 <div>
-                  <div className="font-mono text-[9px] text-fire-3/60 mb-2">PERKS</div>
+                  <div className="font-mono text-[9px] text-fire-3/60 mb-2">{t('fsd_perks')}</div>
                   <ul className="space-y-1">
                     {config.perks.slice(0, 3).map((perk, j) => (
                       <li key={j} className="font-mono text-xs text-fire-4/70 flex items-start gap-1.5">
@@ -305,7 +307,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                       </li>
                     ))}
                     {config.perks.length > 3 && (
-                      <li className="font-mono text-xs text-fire-3/40">+{config.perks.length - 3} more...</li>
+                      <li className="font-mono text-xs text-fire-3/40">+{config.perks.length - 3} {t('fsd_more')}</li>
                     )}
                   </ul>
                 </div>
