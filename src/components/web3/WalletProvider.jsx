@@ -7,7 +7,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
-class WalletErrorBoundary extends React.Component {
+class Web3ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -16,31 +16,38 @@ class WalletErrorBoundary extends React.Component {
     return { hasError: true };
   }
   render() {
-    if (this.state.hasError) return this.props.children;
+    if (this.state.hasError) {
+      // Web3 failed to init — render children without Web3 context
+      return this.props.fallback || null;
+    }
     return this.props.children;
   }
 }
 
+function Web3Providers({ children }) {
+  return (
+    <WagmiProvider config={web3Config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider
+          theme={darkTheme({
+            accentColor: '#ff6600',
+            accentColorForeground: 'black',
+            borderRadius: 'none',
+            fontStack: 'system',
+          })}
+          showRecentTransactions={true}
+        >
+          {children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+}
+
 export default function WalletProvider({ children }) {
-  try {
-    return (
-      <WagmiProvider config={web3Config}>
-        <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider
-            theme={darkTheme({
-              accentColor: '#ff6600',
-              accentColorForeground: 'black',
-              borderRadius: 'none',
-              fontStack: 'system',
-            })}
-            showRecentTransactions={true}
-          >
-            <WalletErrorBoundary>{children}</WalletErrorBoundary>
-          </RainbowKitProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
-    );
-  } catch {
-    return <>{children}</>;
-  }
+  return (
+    <Web3ErrorBoundary fallback={children}>
+      <Web3Providers>{children}</Web3Providers>
+    </Web3ErrorBoundary>
+  );
 }
