@@ -364,5 +364,12 @@ export default function NFTDashboard() {
         )}
       </div>
     </div>
+
+      {/* NFT Watchlist Sidebar */}
+      <NFTWatchlistSidebar
+        isOpen={watchlistOpen}
+        onToggle={() => setWatchlistOpen(o => !o)}
+      />
+    </div>
   );
 }
