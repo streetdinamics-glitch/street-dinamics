@@ -36,8 +36,6 @@ export default function UserProfile() {
       <FireRule />
       <FanStatusDashboard lang={lang} />
       <FireRule />
-      <AthletePerformanceDashboard lang={lang} />
-      <FireRule />
       <TokenMarketplace lang={lang} />
       <FireRule />
       <NFTMarketplace lang={lang} />
@@ -47,12 +45,6 @@ export default function UserProfile() {
       <TokenStore lang={lang} />
       <FireRule />
       <GlobalLeaderboard lang={lang} />
-      {events.length > 0 && (
-        <>
-          <FireRule />
-          <SpectatorGamificationHub eventId={events[0]?.id} lang={lang} />
-        </>
-      )}
       <FireRule />
       <Footer lang={lang} />
     </div>
