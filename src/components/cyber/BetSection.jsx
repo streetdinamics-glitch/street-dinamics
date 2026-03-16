@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../translations';
 
 export default function BetSection({ hasToken, onScrollToTokens, onScrollToSocial, lang }) {
+  const navigate = useNavigate();
   const t = useTranslation(lang);
 
   if (!hasToken) {
@@ -21,7 +23,7 @@ export default function BetSection({ hasToken, onScrollToTokens, onScrollToSocia
           <div className="font-rajdhani text-base text-fire-4/50 mb-6 leading-relaxed">
             {t('bet_locked_msg')}
           </div>
-          <button onClick={onScrollToTokens} className="btn-fire text-[11px] py-3 px-6 mb-3">{t('bet_locked_cta')}</button>
+          <button onClick={() => navigate('/UserProfile')} className="btn-fire text-[11px] py-3 px-6 mb-3">{t('bet_locked_cta')}</button>
         </div>
 
         {/* Spectator alternative */}
