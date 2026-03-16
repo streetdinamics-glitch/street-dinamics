@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import NFTWatchlistSidebar from '../components/nft/NFTWatchlistSidebar';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
