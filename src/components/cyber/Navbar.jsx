@@ -15,6 +15,7 @@ const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/publ
 
 export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick }) {
   const t = useTranslation(lang);
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [time, setTime] = useState('');
   const [watchlistOpen, setWatchlistOpen] = useState(false);
