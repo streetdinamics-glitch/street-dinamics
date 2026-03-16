@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../translations';
 
 const SD_LOGO_LARGE = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
 export default function HeroSection({ onScrollTo, lang }) {
   const t = useTranslation(lang);
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
@@ -148,7 +150,7 @@ export default function HeroSection({ onScrollTo, lang }) {
           <span className="relative z-10">{t('hero_cta_spectator')}</span>
         </motion.button>
         <motion.button
-          onClick={() => onScrollTo?.('tokens')}
+          onClick={() => navigate('/UserProfile')}
           className="btn-ghost text-[clamp(11px,1.5vw,13px)] tracking-[3px] px-8 py-3.5 relative overflow-hidden"
           whileHover={{
             scale: 1.08,
