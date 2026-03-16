@@ -111,8 +111,10 @@ export default function NFTDashboard() {
           >
             <div className="flex items-center justify-between mb-3">
               <p className="font-mono text-[9px] tracking-[2px] uppercase text-cyan/60">{t('nft_dashboard_total_value')}</p>
-              ...
-              <p className="font-mono text-[10px] text-cyan/40">{enrichedNFTs.length} {t('nft_dashboard_nfts')}</p>
+              <DollarSign className="text-cyan" size={20} />
+            </div>
+            <div className="font-orbitron font-black text-3xl text-cyan mb-1">€{totalValue.toFixed(2)}</div>
+            <p className="font-mono text-[10px] text-cyan/40">{enrichedNFTs.length} {t('nft_dashboard_nfts')}</p>
           </motion.div>
 
           <motion.div

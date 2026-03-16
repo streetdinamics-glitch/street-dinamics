@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -17,7 +19,7 @@ export default function AthleteProfile() {
   const [searchParams] = useSearchParams();
   const athleteEmail = searchParams.get('email');
   const [editOpen, setEditOpen] = useState(false);
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useLang();
 
   const { data: currentUser } = useQuery({
     queryKey: ['current-user'],
@@ -83,6 +85,7 @@ export default function AthleteProfile() {
   )[0];
 
   const isOwnProfile = currentUser?.email === athleteEmail;
+  const t = useTranslation(lang);
 
   if (athleteLoading) {
     return (
@@ -96,8 +99,8 @@ export default function AthleteProfile() {
     return (
       <div className="min-h-screen bg-cyber-void text-foreground flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-orbitron font-black text-fire-gradient mb-4">ATHLETE NOT FOUND</h1>
-          <p className="text-fire-3/40 font-mono">Invalid profile link</p>
+          <h1 className="text-4xl font-orbitron font-black text-fire-gradient mb-4">{t('athlete_not_found')}</h1>
+          <p className="text-fire-3/40 font-mono">{t('athlete_invalid_link')}</p>
         </div>
       </div>
     );
@@ -160,7 +163,7 @@ export default function AthleteProfile() {
                       onClick={() => setEditOpen(true)}
                       className="btn-ghost text-[10px] py-2 px-4"
                     >
-                      EDIT PROFILE
+                      {t('athlete_edit_profile')}
                     </button>
                   )}
                 </div>
@@ -246,25 +249,25 @@ export default function AthleteProfile() {
           <div className="bg-fire-3/5 border border-fire-3/20 p-5 text-center">
             <Calendar className="w-8 h-8 text-fire-4 mx-auto mb-2" />
             <div className="font-orbitron font-black text-3xl text-fire-5">{athleteEvents.length}</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">Events</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">{t('athlete_events_stat')}</div>
           </div>
 
           <div className="bg-fire-3/5 border border-fire-3/20 p-5 text-center">
             <Trophy className="w-8 h-8 text-fire-4 mx-auto mb-2" />
             <div className="font-orbitron font-black text-3xl text-fire-5">{stats[0]?.wins || 0}</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">Wins</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">{t('athlete_wins_stat')}</div>
           </div>
 
           <div className="bg-fire-3/5 border border-fire-3/20 p-5 text-center">
             <Medal className="w-8 h-8 text-fire-4 mx-auto mb-2" />
             <div className="font-orbitron font-black text-3xl text-fire-5">{stats[0]?.podium_finishes || 0}</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">Podiums</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">{t('athlete_podiums_stat')}</div>
           </div>
 
           <div className="bg-fire-3/5 border border-fire-3/20 p-5 text-center">
             <Award className="w-8 h-8 text-fire-4 mx-auto mb-2" />
             <div className="font-orbitron font-black text-3xl text-fire-5">{stats[0]?.performance_rating || 0}</div>
-            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">Rating</div>
+            <div className="font-mono text-xs text-fire-3/40 tracking-[1px] uppercase">{t('athlete_rating_stat')}</div>
           </div>
         </motion.div>
 
@@ -276,7 +279,7 @@ export default function AthleteProfile() {
             transition={{ delay: 0.2 }}
             className="max-w-5xl mx-auto mb-12"
           >
-            <h2 className="heading-fire text-4xl mb-8 font-black">UNIVERSAL SCORE</h2>
+            <h2 className="heading-fire text-4xl mb-8 font-black">{t('athlete_universal_score')}</h2>
             <PerformanceScoreCard score={latestScore} />
           </motion.div>
         )}
@@ -288,7 +291,7 @@ export default function AthleteProfile() {
           transition={{ delay: 0.3 }}
           className="max-w-5xl mx-auto mb-12"
         >
-          <h2 className="heading-fire text-4xl mb-8 font-black">BADGES</h2>
+          <h2 className="heading-fire text-4xl mb-8 font-black">{t('athlete_badges')}</h2>
           <div className="bg-gradient-to-br from-[rgba(10,4,18,0.97)] to-[rgba(4,2,8,0.99)] border border-fire-3/20 clip-cyber p-6">
             <BadgeDisplay badges={badges} />
           </div>
@@ -302,7 +305,7 @@ export default function AthleteProfile() {
             transition={{ delay: 0.4 }}
             className="max-w-5xl mx-auto mb-12"
           >
-            <h2 className="heading-fire text-4xl mb-8 font-black">ROYALTY EARNINGS</h2>
+            <h2 className="heading-fire text-4xl mb-8 font-black">{t('athlete_royalty')}</h2>
             <RoyaltyDashboard athleteEmail={athleteEmail} />
           </motion.div>
         )}
@@ -314,12 +317,12 @@ export default function AthleteProfile() {
           transition={{ delay: 0.3 }}
           className="max-w-5xl mx-auto"
         >
-          <h2 className="heading-fire text-4xl mb-8 font-black">EVENT HISTORY</h2>
+          <h2 className="heading-fire text-4xl mb-8 font-black">{t('athlete_event_history')}</h2>
           
           {athleteEvents.length === 0 ? (
             <div className="text-center py-16 bg-fire-3/5 border border-fire-3/10">
               <Calendar size={48} className="text-fire-3/30 mx-auto mb-4" />
-              <p className="font-mono text-sm text-fire-3/30 tracking-[2px]">NO EVENTS YET</p>
+              <p className="font-mono text-sm text-fire-3/30 tracking-[2px]">{t('athlete_no_events')}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -365,7 +368,7 @@ export default function AthleteProfile() {
             transition={{ delay: 0.5 }}
             className="max-w-5xl mx-auto mt-12"
           >
-            <h2 className="heading-fire text-4xl mb-8 font-black">ACHIEVEMENTS</h2>
+            <h2 className="heading-fire text-4xl mb-8 font-black">{t('athlete_achievements')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {athlete.achievements.map((achievement, i) => (
                 <motion.div
