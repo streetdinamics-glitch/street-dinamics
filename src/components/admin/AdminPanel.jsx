@@ -857,9 +857,7 @@ export default function AdminPanel({ lang, onClose }) {
                 >
                   CLOSE
                 </button>
-                <Suspense fallback={<div className="text-fire-3/40 text-center py-8">Loading...</div>}>
-                  <UserManagementPanel />
-                </Suspense>
+                <UserManagementPanel />
               </div>
             </div>
           )}
