@@ -51,12 +51,14 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   ];
   
   const navLinks = user?.role === 'athlete' || user?.role === 'admin' ? [
-    { label: '📊 Analytics', path: '/Analytics' },
-    { label: '💎 NFT Portfolio', path: '/NFTDashboard' },
+    { label: `📊 ${t('nav_analytics')}`, path: '/Analytics' },
+    { label: `💎 ${t('nav_nft_portfolio')}`, path: '/NFTDashboard' },
+    { label: `⛓️ ${t('nav_web3')}`, path: '/Web3' },
   ] : [];
 
   const userNavLinks = user ? [
-    { label: '💎 NFT Portfolio', path: '/NFTDashboard' },
+    { label: `💎 ${t('nav_nft_portfolio')}`, path: '/NFTDashboard' },
+    { label: `⛓️ ${t('nav_web3')}`, path: '/Web3' },
   ] : [];
 
   return (
@@ -80,7 +82,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           {/* Explore Dropdown */}
           <div className="relative group">
             <button className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap group-hover:border-fire-3 group-hover:text-fire-4 group-hover:bg-fire-3/5">
-              EXPLORE
+              {t('nav_explore')}
               <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
             </button>
             <div className="absolute top-full left-0 mt-1 w-48 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
@@ -101,15 +103,11 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           {/* Tools Dropdown */}
           <div className="relative group">
             <button className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn whitespace-nowrap group-hover:border-fire-3 group-hover:text-fire-4 group-hover:bg-fire-3/5">
-              TOOLS
+              {t('nav_tools')}
               <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
             </button>
             <div className="absolute top-full left-0 mt-1 w-48 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
-              <div className="px-3 py-2 font-mono text-[9px] tracking-[1px] uppercase text-fire-3/40 border-b border-fire-3/10">Connectivity</div>
-              <div className="p-2">
-                <WalletConnectButton minimal={true} />
-              </div>
-              <div className="px-3 py-2 font-mono text-[9px] tracking-[1px] uppercase text-fire-3/40 border-t border-fire-3/10">Settings</div>
+              <div className="px-3 py-2 font-mono text-[9px] tracking-[1px] uppercase text-fire-3/40 border-b border-fire-3/10">{t('nav_language')}</div>
               <div className="p-2">
                 <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
               </div>
@@ -124,7 +122,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
               <div className="relative group">
                 <button className="flex items-center gap-1.5 font-orbitron text-[9px] font-semibold tracking-[2px] uppercase bg-transparent border border-fire-3/20 text-fire-3/40 px-3 py-1.5 cursor-pointer transition-all hover:border-fire-3 hover:text-fire-4 hover:bg-fire-3/5 clip-btn group-hover:border-fire-3 group-hover:text-fire-4 group-hover:bg-fire-3/5">
                   <User size={12} />
-                  ACCOUNT
+                  {t('nav_account')}
                   <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
                 </button>
                 <div className="absolute top-full right-0 mt-1 w-56 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
@@ -132,19 +130,19 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                     to="/UserProfile"
                     className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 no-underline block"
                   >
-                    👤 My Profile
+                    👤 {t('nav_my_profile')}
                   </Link>
                   <button
                     onClick={() => setWatchlistOpen(true)}
                     className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
                   >
-                    ⭐ Watchlist
+                    ⭐ {t('nav_watchlist')}
                   </button>
                   <button
                     onClick={() => setNotificationsOpen(true)}
                     className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 relative"
                   >
-                    🔔 Notifications
+                    🔔 {t('nav_notifications')}
                     {unreadCount > 0 && (
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 px-2 py-0.5 bg-fire-3 text-black text-[9px] font-bold rounded-full">
                         {unreadCount}
@@ -165,8 +163,8 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                       to={createPageUrl('Admin')}
                       className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-green-400/70 hover:bg-green-500/10 hover:text-green-400 transition-colors no-underline block"
                     >
-                      🔧 Admin Panel
-                    </Link>
+                      🔧 {t('nav_admin')}
+                      </Link>
                   )}
                 </div>
               </div>
@@ -224,7 +222,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
           <div className="p-4 space-y-3">
             {/* Navigation Section */}
             <div className="mb-4">
-              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Navigation</div>
+              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">{t('nav_navigation')}</div>
               {navItems.map(item => (
                 <button
                   key={item.id}
@@ -238,13 +236,9 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
 
             {/* Wallet & Language Section */}
             <div className="mb-4">
-              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Settings</div>
-              <div className="bg-fire-3/5 border border-fire-3/20 p-3 mb-2">
-                <div className="font-mono text-[9px] tracking-[1px] uppercase text-fire-3/60 mb-2">Wallet</div>
-                <WalletConnectButton minimal={false} />
-              </div>
+              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">{t('nav_settings')}</div>
               <div className="bg-fire-3/5 border border-fire-3/20 p-3">
-                <div className="font-mono text-[9px] tracking-[1px] uppercase text-fire-3/60 mb-2">Language</div>
+                <div className="font-mono text-[9px] tracking-[1px] uppercase text-fire-3/60 mb-2">{t('nav_language')}</div>
                 <LanguageSwitcher currentLang={lang} onSwitch={onLangSwitch} />
               </div>
             </div>
@@ -252,13 +246,13 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             {/* User Actions Section */}
             {user && (
               <div className="mb-4">
-                <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Account</div>
+                <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">{t('nav_account')}</div>
                 <Link
                   to="/UserProfile"
                   className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-fire-3/10 to-transparent border-l-2 border-fire-3/40 text-fire-4 py-3 px-4 text-left transition-all hover:border-fire-3 hover:from-fire-3/20 w-full no-underline block mb-2"
                   onClick={() => setMobileOpen(false)}
                 >
-                  👤 MY PROFILE
+                  👤 {t('nav_my_profile')}
                 </Link>
                 {(user?.role === 'admin' ? navLinks : userNavLinks).map(link => (
                   <Link
@@ -276,7 +270,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                     className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-green-500/10 to-transparent border-l-2 border-green-500/40 text-green-400 py-3 px-4 text-left transition-all hover:border-green-500 hover:from-green-500/20 w-full no-underline block"
                     onClick={() => setMobileOpen(false)}
                   >
-                    🔧 ADMIN PANEL
+                    🔧 {t('nav_admin')}
                   </Link>
                 )}
               </div>
