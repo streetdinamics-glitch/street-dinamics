@@ -7,22 +7,40 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
+class WalletErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return this.props.children;
+    return this.props.children;
+  }
+}
+
 export default function WalletProvider({ children }) {
-  return (
-    <WagmiProvider config={web3Config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider
-          theme={darkTheme({
-            accentColor: '#ff6600',
-            accentColorForeground: 'black',
-            borderRadius: 'none',
-            fontStack: 'system',
-          })}
-          showRecentTransactions={true}
-        >
-          {children}
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
+  try {
+    return (
+      <WagmiProvider config={web3Config}>
+        <QueryClientProvider client={queryClient}>
+          <RainbowKitProvider
+            theme={darkTheme({
+              accentColor: '#ff6600',
+              accentColorForeground: 'black',
+              borderRadius: 'none',
+              fontStack: 'system',
+            })}
+            showRecentTransactions={true}
+          >
+            <WalletErrorBoundary>{children}</WalletErrorBoundary>
+          </RainbowKitProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    );
+  } catch {
+    return <>{children}</>;
+  }
 }
