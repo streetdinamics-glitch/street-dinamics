@@ -5,7 +5,10 @@ import { motion } from 'framer-motion';
 import { Wallet, Gift, TrendingUp, Copy, Check } from 'lucide-react';
 import { toast } from 'sonner';
 
-export default function UserProfileDashboard() {
+import { useTranslation } from '../translations';
+
+export default function UserProfileDashboard({ lang = 'en' }) {
+  const t = useTranslation(lang);
   const queryClient = useQueryClient();
   const [copiedWallet, setCopiedWallet] = useState(null);
 
@@ -48,20 +51,20 @@ export default function UserProfileDashboard() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['current-user'] });
-      toast.success('Wallets updated');
+      toast.success(t('upd_wallet_updated'));
     },
     onError: (err) => {
-      toast.error('Failed to update wallets: ' + err.message);
+      toast.error(t('upd_wallet_update_fail') + ': ' + err.message);
     },
   });
 
   const handleAddWallet = async () => {
-    const walletAddress = prompt('Enter wallet address (Ethereum/Polygon):');
+    const walletAddress = prompt(t('upd_wallet_prompt'));
     if (!walletAddress) return;
 
     const currentWallets = user?.crypto_wallets || [];
     if (currentWallets.some(w => w.address === walletAddress)) {
-      toast.error('Wallet already linked');
+      toast.error(t('upd_wallet_exists'));
       return;
     }
 
@@ -76,7 +79,7 @@ export default function UserProfileDashboard() {
   };
 
   const handleRemoveWallet = (address) => {
-    if (confirm('Remove this wallet?')) {
+    if (confirm(t('upd_remove_confirm'))) {
       const updated = (user?.crypto_wallets || []).filter(w => w.address !== address);
       updateUserWallets.mutate(updated);
     }
@@ -117,7 +120,7 @@ export default function UserProfileDashboard() {
             <p className="font-mono text-sm text-fire-3/60">{user?.email}</p>
             {user?.role === 'athlete' && (
               <span className="inline-block mt-2 px-3 py-1 bg-cyan/10 border border-cyan/30 text-cyan text-[9px] font-mono tracking-[2px] uppercase">
-                ✓ Verified Athlete
+                {t('upd_verified_athlete')}
               </span>
             )}
           </div>
@@ -136,10 +139,10 @@ export default function UserProfileDashboard() {
             <div className="w-10 h-10 rounded-lg bg-cyan/20 flex items-center justify-center">
               <TrendingUp size={20} className="text-cyan" />
             </div>
-            <div className="font-mono text-[9px] text-cyan/60 tracking-[2px] uppercase">Collection Value</div>
+            <div className="font-mono text-[9px] text-cyan/60 tracking-[2px] uppercase">{t('upd_collection_value')}</div>
           </div>
           <div className="font-orbitron font-black text-4xl text-cyan">€{collectionValue.toFixed(0)}</div>
-          <p className="font-mono text-[9px] text-cyan/40 mt-2">{nftOwnership.length} NFTs owned</p>
+          <p className="font-mono text-[9px] text-cyan/40 mt-2">{nftOwnership.length} {t('upd_nfts_owned')}</p>
         </motion.div>
 
         {/* Rewards Earned */}
@@ -153,10 +156,10 @@ export default function UserProfileDashboard() {
             <div className="w-10 h-10 rounded-lg bg-fire-3/20 flex items-center justify-center">
               <Gift size={20} className="text-fire-5" />
             </div>
-            <div className="font-mono text-[9px] text-fire-3/60 tracking-[2px] uppercase">Rewards Earned</div>
+            <div className="font-mono text-[9px] text-fire-3/60 tracking-[2px] uppercase">{t('upd_rewards_earned')}</div>
           </div>
           <div className="font-orbitron font-black text-4xl text-fire-5">{totalRewardsEarned}</div>
-          <p className="font-mono text-[9px] text-fire-3/40 mt-2">{rewards.length} total rewards</p>
+          <p className="font-mono text-[9px] text-fire-3/40 mt-2">{rewards.length} {t('upd_total_rewards')}</p>
         </motion.div>
 
         {/* Wallets Connected */}
@@ -170,10 +173,10 @@ export default function UserProfileDashboard() {
             <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
               <Wallet size={20} className="text-purple-400" />
             </div>
-            <div className="font-mono text-[9px] text-purple-400/60 tracking-[2px] uppercase">Web3 Wallets</div>
+            <div className="font-mono text-[9px] text-purple-400/60 tracking-[2px] uppercase">{t('upd_web3_wallets')}</div>
           </div>
           <div className="font-orbitron font-black text-4xl text-purple-400">{(user?.crypto_wallets || []).length}</div>
-          <p className="font-mono text-[9px] text-purple-400/40 mt-2">Connected wallets</p>
+          <p className="font-mono text-[9px] text-purple-400/40 mt-2">{t('upd_connected_wallets')}</p>
         </motion.div>
       </div>
 
@@ -185,7 +188,7 @@ export default function UserProfileDashboard() {
           transition={{ delay: 0.3 }}
           className="bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 p-8 clip-cyber"
         >
-          <h2 className="font-orbitron font-black text-2xl text-fire-5 mb-6">Your NFT Collection</h2>
+          <h2 className="font-orbitron font-black text-2xl text-fire-5 mb-6">{t('upd_nft_collection')}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {nftOwnership.map((nft, i) => {
               const tierColors = {
@@ -221,7 +224,7 @@ export default function UserProfileDashboard() {
           transition={{ delay: 0.4 }}
           className="bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 p-8 clip-cyber"
         >
-          <h2 className="font-orbitron font-black text-2xl text-fire-5 mb-6">Reward History</h2>
+          <h2 className="font-orbitron font-black text-2xl text-fire-5 mb-6">{t('upd_reward_history')}</h2>
           <div className="space-y-3">
             {rewards.slice(0, 5).map((reward) => (
               <div key={reward.id} className="flex items-center justify-between p-4 bg-fire-3/5 border border-fire-3/10 hover:border-fire-3/30 transition-all">
@@ -235,7 +238,7 @@ export default function UserProfileDashboard() {
                       ? 'border-green-500/40 bg-green-500/10 text-green-400'
                       : 'border-yellow-500/40 bg-yellow-500/10 text-yellow-400'
                   }`}>
-                    {reward.redeemed ? '✓ Redeemed' : 'Pending'}
+                    {reward.redeemed ? t('upd_redeemed') : t('upd_pending')}
                   </div>
                   <p className="font-mono text-[9px] text-fire-3/40 mt-1">
                     {new Date(reward.earned_at).toLocaleDateString()}
@@ -244,7 +247,7 @@ export default function UserProfileDashboard() {
               </div>
             ))}
             {rewards.length > 5 && (
-              <p className="font-mono text-xs text-fire-3/40 text-center pt-4">+{rewards.length - 5} more rewards</p>
+              <p className="font-mono text-xs text-fire-3/40 text-center pt-4">+{rewards.length - 5} {t('upd_more_rewards')}</p>
             )}
           </div>
         </motion.div>
@@ -258,20 +261,20 @@ export default function UserProfileDashboard() {
         className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/30 p-8 clip-cyber"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-orbitron font-black text-2xl text-purple-400">Web3 Wallet Management</h2>
+          <h2 className="font-orbitron font-black text-2xl text-purple-400">{t('upd_wallet_management')}</h2>
           <button
             onClick={handleAddWallet}
             disabled={updateUserWallets.isPending}
             className="btn-fire py-2 px-4 text-xs"
           >
-            + Add Wallet
+            {t('upd_add_wallet')}
           </button>
         </div>
 
         {(user?.crypto_wallets || []).length === 0 ? (
           <div className="text-center py-8">
-            <p className="font-mono text-sm text-purple-400/60">No wallets connected yet</p>
-            <p className="font-mono text-xs text-purple-400/40 mt-2">Link your Ethereum/Polygon wallet for Web3 transactions</p>
+            <p className="font-mono text-sm text-purple-400/60">{t('upd_no_wallets')}</p>
+            <p className="font-mono text-xs text-purple-400/40 mt-2">{t('upd_no_wallets_desc')}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -299,7 +302,7 @@ export default function UserProfileDashboard() {
                     disabled={updateUserWallets.isPending}
                     className="px-3 py-1 text-xs border border-red-500/40 text-red-400 hover:bg-red-500/10 transition-all"
                   >
-                    Remove
+                    {t('upd_remove')}
                   </button>
                 </div>
               </div>
