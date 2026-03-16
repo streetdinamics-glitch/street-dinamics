@@ -7,8 +7,6 @@ import NFTMarketplace from '../components/nft/NFTMarketplace';
 import SecondaryMarket from '../components/marketplace/SecondaryMarket';
 import TokenStore from '../components/store/TokenStore';
 import GlobalLeaderboard from '../components/leaderboard/GlobalLeaderboard';
-import AthletePerformanceDashboard from '../components/analytics/AthletePerformanceDashboard';
-import SpectatorGamificationHub from '../components/gamification/SpectatorGamificationHub';
 import FireRule from '../components/cyber/FireRule';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';

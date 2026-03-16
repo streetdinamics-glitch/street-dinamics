@@ -41,7 +41,7 @@ export default function Home() {
   const [regModal, setRegModal] = useState(null);
   const [successModal, setSuccessModal] = useState(null);
   const [socialOpen, setSocialOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false); // kept for legacy modal triggers
   const [onboardingOpen, setOnboardingOpen] = useState(false); // kept for future use / external triggers
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
