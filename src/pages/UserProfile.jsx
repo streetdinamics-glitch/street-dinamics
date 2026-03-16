@@ -7,15 +7,27 @@ import NFTMarketplace from '../components/nft/NFTMarketplace';
 import SecondaryMarket from '../components/marketplace/SecondaryMarket';
 import TokenStore from '../components/store/TokenStore';
 import GlobalLeaderboard from '../components/leaderboard/GlobalLeaderboard';
+import BetSection from '../components/cyber/BetSection';
 import FireRule from '../components/cyber/FireRule';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import { useLang } from '../components/useLang';
-
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 export default function UserProfile() {
   const [lang, setLang] = useLang();
+
+  const { data: tokens = [] } = useQuery({
+    queryKey: ['my-tokens'],
+    queryFn: async () => {
+      const user = await base44.auth.me();
+      return base44.entities.TokenOwnership.filter({ created_by: user.email });
+    },
+    initialData: [],
+  });
+  const hasToken = tokens.length > 0;
 
 
 
@@ -44,6 +56,8 @@ export default function UserProfile() {
       <TokenStore lang={lang} />
       <FireRule />
       <GlobalLeaderboard lang={lang} />
+      <FireRule />
+      <BetSection hasToken={hasToken} onScrollToTokens={() => {}} onScrollToSocial={() => {}} lang={lang} />
       <FireRule />
       <Footer lang={lang} />
     </div>
