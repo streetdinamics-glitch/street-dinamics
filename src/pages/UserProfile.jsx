@@ -12,8 +12,7 @@ import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import { useLang } from '../components/useLang';
-import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+
 
 export default function UserProfile() {
   const [lang, setLang] = useLang();
