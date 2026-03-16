@@ -4,9 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, Zap, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import NFTPriceChart from '../components/nft/NFTPriceChart';
+import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 export default function NFTDashboard() {
   const [sortBy, setSortBy] = useState('value');
+  const [lang] = useLang();
+  const t = useTranslation(lang);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -91,9 +95,9 @@ export default function NFTDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-2">// PORTFOLIO //</p>
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-2">{t('nft_dashboard_portfolio')}</p>
           <h1 className="heading-fire text-[clamp(36px,6vw,72px)] leading-none font-black mb-4">
-            NFT COLLECTION
+            {t('nft_dashboard_title')}
           </h1>
           <div className="h-[2px] bg-gradient-to-r from-fire-3 via-fire-5 to-transparent" />
         </motion.div>
@@ -106,11 +110,9 @@ export default function NFTDashboard() {
             className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-cyan/20 p-6 clip-cyber"
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="font-mono text-[9px] tracking-[2px] uppercase text-cyan/60">Total Value</p>
-              <DollarSign className="text-cyan" size={20} />
-            </div>
-            <div className="font-orbitron font-black text-3xl text-cyan mb-1">€{totalValue.toFixed(2)}</div>
-            <p className="font-mono text-[10px] text-cyan/40">{enrichedNFTs.length} NFTs</p>
+              <p className="font-mono text-[9px] tracking-[2px] uppercase text-cyan/60">{t('nft_dashboard_total_value')}</p>
+              ...
+              <p className="font-mono text-[10px] text-cyan/40">{enrichedNFTs.length} {t('nft_dashboard_nfts')}</p>
           </motion.div>
 
           <motion.div
@@ -120,11 +122,11 @@ export default function NFTDashboard() {
             className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-fire-3/20 p-6 clip-cyber"
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/60">Total Invested</p>
+              <p className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/60">{t('nft_dashboard_invested')}</p>
               <Zap className="text-fire-3" size={20} />
             </div>
             <div className="font-orbitron font-black text-3xl text-fire-5 mb-1">€{totalInvested.toFixed(2)}</div>
-            <p className="font-mono text-[10px] text-fire-3/40">Purchase price</p>
+            <p className="font-mono text-[10px] text-fire-3/40">{t('nft_dashboard_purchase')}</p>
           </motion.div>
 
           <motion.div
@@ -138,7 +140,7 @@ export default function NFTDashboard() {
             } p-6 clip-cyber`}
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="font-mono text-[9px] tracking-[2px] uppercase text-green-400/60">Profit / Loss</p>
+              <p className="font-mono text-[9px] tracking-[2px] uppercase text-green-400/60">{t('nft_dashboard_profit')}</p>
               <TrendingUp className={totalProfitLoss >= 0 ? 'text-green-400' : 'text-red-400'} size={20} />
             </div>
             <div className={`font-orbitron font-black text-3xl mb-1 ${
@@ -158,11 +160,11 @@ export default function NFTDashboard() {
             className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-purple-500/20 p-6 clip-cyber"
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="font-mono text-[9px] tracking-[2px] uppercase text-purple-400/60">Transactions</p>
+              <p className="font-mono text-[9px] tracking-[2px] uppercase text-purple-400/60">{t('nft_dashboard_transactions')}</p>
               <TrendingUp className="text-purple-400" size={20} />
             </div>
             <div className="font-orbitron font-black text-3xl text-purple-400 mb-1">{transactions.length}</div>
-            <p className="font-mono text-[10px] text-purple-400/40">Buy & Sell</p>
+            <p className="font-mono text-[10px] text-purple-400/40">{t('nft_dashboard_buy_sell')}</p>
           </motion.div>
         </div>
 
@@ -173,22 +175,22 @@ export default function NFTDashboard() {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl">MY NFTS</h2>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl">{t('nft_dashboard_my_nfts')}</h2>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-black/50 border border-fire-3/20 text-fire-4 font-mono text-xs p-2 outline-none focus:border-fire-3/50 transition-all"
             >
-              <option value="value">Sort by Value</option>
-              <option value="profit">Sort by Profit</option>
-              <option value="recent">Sort by Recent</option>
+              <option value="value">{t('nft_dashboard_sort_value')}</option>
+              <option value="profit">{t('nft_dashboard_sort_profit')}</option>
+              <option value="recent">{t('nft_dashboard_sort_recent')}</option>
             </select>
           </div>
 
           {enrichedNFTs.length === 0 ? (
             <div className="text-center py-20 bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-fire-3/20">
               <Zap className="text-fire-3/30 mx-auto mb-4" size={48} />
-              <p className="font-mono text-sm text-fire-3/40 tracking-[1px]">You haven't owned any NFTs yet</p>
+              <p className="font-mono text-sm text-fire-3/40 tracking-[1px]">{t('nft_dashboard_empty')}</p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -226,23 +228,23 @@ export default function NFTDashboard() {
                       {/* Stats Grid */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="bg-black/30 border border-fire-3/10 p-3">
-                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">PURCHASE</p>
+                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">{t('nft_dashboard_purchase_label')}</p>
                           <p className="font-orbitron font-bold text-fire-4">€{nft.purchase_price}</p>
                         </div>
                         <div className="bg-black/30 border border-fire-3/10 p-3">
-                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">CURRENT</p>
+                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">{t('nft_dashboard_current')}</p>
                           <p className="font-orbitron font-bold text-cyan">€{nft.currentValue.toFixed(2)}</p>
                         </div>
                         <div className={`bg-black/30 border p-3 ${
                           nft.profitLoss >= 0 ? 'border-green-500/20' : 'border-red-500/20'
                         }`}>
-                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">P/L</p>
+                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">{t('nft_dashboard_pl')}</p>
                           <p className={`font-orbitron font-bold ${nft.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                             {nft.profitLoss >= 0 ? '+' : ''}€{nft.profitLoss.toFixed(2)}
                           </p>
                         </div>
                         <div className="bg-black/30 border border-fire-3/10 p-3">
-                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">MINTED</p>
+                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-1">{t('nft_dashboard_minted')}</p>
                           <p className="font-orbitron font-bold text-fire-5">
                             {new Date(nft.minted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                           </p>
@@ -253,7 +255,7 @@ export default function NFTDashboard() {
                     {/* Right: Quick Stats */}
                     <div className="lg:w-48 flex flex-col justify-between">
                       <div>
-                        <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-2 uppercase">Return</p>
+                        <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-2 uppercase">{t('nft_dashboard_return')}</p>
                         <div className="text-3xl font-orbitron font-black mb-2">
                           <span className={nft.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'}>
                             {nft.profitLoss >= 0 ? '+' : ''}{((nft.profitLoss / nft.purchase_price) * 100).toFixed(1)}%
@@ -262,7 +264,7 @@ export default function NFTDashboard() {
                       </div>
                       {nft.transactions.length > 0 && (
                         <div>
-                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-2 uppercase">Last Trade</p>
+                          <p className="font-mono text-[9px] text-fire-3/60 tracking-[1px] mb-2 uppercase">{t('nft_dashboard_last_trade')}</p>
                           <p className="font-mono text-sm text-fire-4">
                             {new Date(nft.transactions[0].created_date).toLocaleDateString('en-US', { 
                               month: 'short', 
@@ -293,16 +295,16 @@ export default function NFTDashboard() {
             transition={{ delay: 0.2 }}
             className="mb-8"
           >
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl mb-6">TRANSACTION HISTORY</h2>
+            <h2 className="text-fire-gradient font-orbitron font-black text-2xl mb-6">{t('nft_dashboard_history')}</h2>
             <div className="bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="bg-fire-3/10 border-b border-fire-3/20">
-                      <th className="px-6 py-4 text-left font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">CARD</th>
-                      <th className="px-6 py-4 text-left font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">TYPE</th>
-                      <th className="px-6 py-4 text-right font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">PRICE</th>
-                      <th className="px-6 py-4 text-center font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">DATE</th>
+                      <th className="px-6 py-4 text-left font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">{t('nft_dashboard_card')}</th>
+                      <th className="px-6 py-4 text-left font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">{t('nft_dashboard_type')}</th>
+                      <th className="px-6 py-4 text-right font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">{t('nft_dashboard_price')}</th>
+                      <th className="px-6 py-4 text-center font-orbitron font-bold text-fire-4 text-xs tracking-[1px]">{t('nft_dashboard_date')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-fire-3/10">
