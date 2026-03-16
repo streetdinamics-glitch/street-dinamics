@@ -13,12 +13,11 @@ import EventCard from '../components/cyber/EventCard';
 import RegistrationModal from '../components/cyber/RegistrationModal';
 import SuccessModal from '../components/cyber/SuccessModal';
 import SponsorSection from '../components/cyber/SponsorSection';
-import BetSection from '../components/cyber/BetSection';
 import TournamentSection from '../components/cyber/TournamentSection';
 import LiveVotingPanel from '../components/voting/LiveVotingPanel';
 import EventChatRoom from '../components/chat/EventChatRoom';
 import FanVotingModule from '../components/fan/FanVotingModule';
-import FanLeaderboard from '../components/fan/FanLeaderboard';
+
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import UserProfile from '../components/profile/UserProfile';
@@ -58,16 +57,6 @@ export default function Home() {
   });
 
   const subs = useSubscriptions(user, events);
-
-  const { data: tokens = [] } = useQuery({
-    queryKey: ['my-tokens'],
-    queryFn: async () => {
-      const user = await base44.auth.me();
-      return base44.entities.TokenOwnership.filter({ created_by: user.email });
-    },
-    initialData: [],
-  });
-  const hasToken = tokens.length > 0;
 
   const scrollTo = useCallback((id) => {
     if (id === 'social') {
@@ -195,29 +184,13 @@ export default function Home() {
                 <FanVotingModule event={ev} />
                 <LiveVotingPanel event={ev} lang={lang} />
                 <EventChatRoom event={ev} lang={lang} />
-                {ev.status === 'live' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-8 mb-12"
-                  >
-                    <h3 className="heading-fire text-3xl mb-6 font-black">FAN LEADERBOARD</h3>
-                    <FanLeaderboard event={ev} />
-                  </motion.div>
-                )}
+
               </div>
             ))}
           </div>
         )}
       </section>
 
-      <FireRule />
-      <BetSection
-        hasToken={hasToken}
-        onScrollToTokens={() => scrollTo('marketplace')}
-        onScrollToSocial={() => scrollTo('social')}
-        lang={lang}
-      />
       <FireRule />
       <SponsorSection lang={lang} />
       <Footer lang={lang} />
