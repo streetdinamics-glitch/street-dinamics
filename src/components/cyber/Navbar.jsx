@@ -253,6 +253,13 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             {user && (
               <div className="mb-4">
                 <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">Account</div>
+                <Link
+                  to="/UserProfile"
+                  className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-fire-3/10 to-transparent border-l-2 border-fire-3/40 text-fire-4 py-3 px-4 text-left transition-all hover:border-fire-3 hover:from-fire-3/20 w-full no-underline block mb-2"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  👤 MY PROFILE
+                </Link>
                 {(user?.role === 'admin' ? navLinks : userNavLinks).map(link => (
                   <Link
                     key={link.path}
