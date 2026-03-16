@@ -6,11 +6,13 @@ import VotingCampaignManager from '../components/voting/VotingCampaignManager';
 import TokenBasedVotingInterface from '../components/voting/TokenBasedVotingInterface';
 import VotingLeaderboard from '../components/voting/VotingLeaderboard';
 import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 export default function VotingHub() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [activeTab, setActiveTab] = useState('vote');
   const [lang, setLang] = useLang();
+  const t = useTranslation(lang);
 
   // Fetch current user
   const { data: user } = useQuery({
@@ -37,12 +39,12 @@ export default function VotingHub() {
     return (
       <div className="min-h-screen bg-cyber-void p-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-orbitron font-black text-3xl text-fire-5 mb-8">Voting Hub</h1>
+          <h1 className="font-orbitron font-black text-3xl text-fire-5 mb-8">{t('voting_hub_title')}</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {events.length === 0 ? (
               <div className="col-span-full text-center py-12">
-                <p className="font-mono text-fire-3/40">No live events available</p>
+                <p className="font-mono text-fire-3/40">{t('voting_no_live')}</p>
               </div>
             ) : (
               events.map((event) => (
@@ -58,7 +60,7 @@ export default function VotingHub() {
                     <span className="px-2 py-1 text-[8px] font-mono tracking-[1px] uppercase border border-green-500/40 bg-green-500/10 text-green-400">
                       🔴 LIVE
                     </span>
-                    <span className="text-xs font-rajdhani text-fire-4">View Votes →</span>
+                    <span className="text-xs font-rajdhani text-fire-4">{t('voting_view')}</span>
                   </div>
                 </motion.button>
               ))
@@ -78,7 +80,7 @@ export default function VotingHub() {
             onClick={() => setSelectedEvent(null)}
             className="font-mono text-xs text-fire-3/60 hover:text-fire-3 mb-4"
           >
-            ← Back to Events
+            {t('voting_back')}
           </button>
           <h1 className="font-orbitron font-black text-3xl text-fire-5 mb-2">{selectedEvent.title}</h1>
           <p className="font-mono text-sm text-fire-3/60">{selectedEvent.sport} • {selectedEvent.location}</p>
@@ -94,7 +96,7 @@ export default function VotingHub() {
                 : 'border-transparent text-fire-3/60 hover:text-fire-3'
             }`}
           >
-            Voting Campaigns
+            {t('voting_campaigns')}
           </button>
           <button
             onClick={() => setActiveTab('leaderboard')}
@@ -104,7 +106,7 @@ export default function VotingHub() {
                 : 'border-transparent text-fire-3/60 hover:text-fire-3'
             }`}
           >
-            Leaderboard
+            {t('voting_leaderboard')}
           </button>
           {isAthlete && (
             <button
@@ -115,7 +117,7 @@ export default function VotingHub() {
                   : 'border-transparent text-fire-3/60 hover:text-fire-3'
               }`}
             >
-              Manage Campaigns
+              {t('voting_manage')}
             </button>
           )}
         </div>
@@ -125,7 +127,7 @@ export default function VotingHub() {
           <div className="space-y-6">
             {campaigns.length === 0 ? (
               <div className="text-center py-12 bg-fire-3/5 border border-fire-3/10">
-                <p className="font-mono text-fire-3/40">No active voting campaigns</p>
+                <p className="font-mono text-fire-3/40">{t('voting_no_campaigns')}</p>
               </div>
             ) : (
               campaigns.map((campaign) => (
