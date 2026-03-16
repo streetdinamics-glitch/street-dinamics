@@ -107,14 +107,14 @@ export default function GlobalLeaderboard({ lang = 'en' }) {
           <div>
             <label className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/60 block mb-2">
               <Filter size={12} className="inline mr-1" />
-              Sport
+              {t('lb_sport')}
             </label>
             <select
               value={filterSport}
               onChange={(e) => setFilterSport(e.target.value)}
               className="w-full cyber-input text-sm"
             >
-              <option value="all">All Sports</option>
+              <option value="all">{t('lb_all_sports')}</option>
               {sports.map(sport => (
                 <option key={sport} value={sport}>{sport}</option>
               ))}
@@ -124,15 +124,15 @@ export default function GlobalLeaderboard({ lang = 'en' }) {
           <div>
             <label className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/60 block mb-2">
               <Globe size={12} className="inline mr-1" />
-              Sort
+              {t('lb_sort')}
             </label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="w-full cyber-input text-sm"
             >
-              <option value="score">Top Score</option>
-              <option value="trend">Trending Up</option>
+              <option value="score">{t('lb_top_score')}</option>
+              <option value="trend">{t('lb_trending_up')}</option>
             </select>
           </div>
 
@@ -179,7 +179,7 @@ export default function GlobalLeaderboard({ lang = 'en' }) {
                   {athlete.trend === 'up' && (
                     <div className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/10 border border-green-500/30 rounded text-green-400 text-xs font-mono">
                       <TrendingUp size={12} />
-                      Trending
+                      {t('lb_trending')}
                     </div>
                   )}
                 </div>
@@ -187,11 +187,11 @@ export default function GlobalLeaderboard({ lang = 'en' }) {
                 {/* Score breakdown */}
                 <div className="mt-6 pt-4 border-t border-fire-3/20 space-y-1 text-xs font-mono text-fire-3/60">
                   <div className="flex justify-between">
-                    <span>Tech</span>
+                    <span>{t('lb_tech')}</span>
                     <span className="text-fire-4">{athlete.technical_progression.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Engagement</span>
+                    <span>{t('lb_engagement')}</span>
                     <span className="text-cyan">{athlete.engagement_generated.toFixed(0)}</span>
                   </div>
                 </div>
@@ -207,10 +207,10 @@ export default function GlobalLeaderboard({ lang = 'en' }) {
           <div className="bg-gradient-to-br from-fire-3/5 to-transparent border border-fire-3/20">
             {/* Header */}
             <div className="grid grid-cols-12 gap-4 p-4 border-b border-fire-3/20 font-mono text-[9px] tracking-[1px] uppercase text-fire-3/60">
-              <div className="col-span-1">Rank</div>
-              <div className="col-span-5">Athlete</div>
-              <div className="col-span-3">Score</div>
-              <div className="col-span-3">Sport</div>
+              <div className="col-span-1">{t('lb_rank')}</div>
+              <div className="col-span-5">{t('lb_athlete')}</div>
+              <div className="col-span-3">{t('lb_score')}</div>
+              <div className="col-span-3">{t('lb_sport')}</div>
             </div>
 
             {/* Rows */}
