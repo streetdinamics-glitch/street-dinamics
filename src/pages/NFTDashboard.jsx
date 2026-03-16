@@ -171,6 +171,9 @@ export default function NFTDashboard() {
           </motion.div>
         </div>
 
+        {/* Rarity Breakdown */}
+        <NFTRarityBreakdown enrichedNFTs={enrichedNFTs} />
+
         {/* NFT Collection */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
