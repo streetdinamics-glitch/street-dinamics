@@ -58,7 +58,7 @@ export const it = {
   sponsor_global_title: 'PORTATA GLOBALE',
   sponsor_global_desc: 'Presenza negli EAU, Europa e mercati internazionali in espansione con alto coinvolgimento',
   sponsor_nft_title: 'INTEGRAZIONE NFT & TOKEN',
-  sponsor_nft_desc: 'Asset digitali innovativi che mantengono il tuo brand all\'avanguardia della cultura Web3',
+  sponsor_nft_desc: "Asset digitali innovativi che mantengono il tuo brand all'avanguardia della cultura Web3",
   social_modal_title: 'STREET DINAMICS', social_modal_subtitle: 'Seguici Ovunque',
   social_instagram: 'Instagram', social_tiktok: 'TikTok', social_youtube: 'YouTube',
   social_kick: 'Kick — Live Stream', social_snapchat: 'Snapchat',
