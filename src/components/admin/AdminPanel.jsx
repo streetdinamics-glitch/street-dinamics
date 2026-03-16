@@ -23,6 +23,7 @@ import BetSettlementPanel from './BetSettlementPanel';
 import FanStatusManager from './FanStatusManager';
 import SportCategoryManager from './SportCategoryManager';
 import Web3ConfigPanel from './Web3ConfigPanel';
+import UserManagementPanel from './UserManagementPanel';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
