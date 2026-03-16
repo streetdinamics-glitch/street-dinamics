@@ -18,11 +18,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function UserProfile() {
   const [lang, setLang] = useLang();
 
-  const { data: events = [] } = useQuery({
-    queryKey: ['events'],
-    queryFn: () => base44.entities.Event.list('-created_date', 50),
-    initialData: [],
-  });
+
 
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
