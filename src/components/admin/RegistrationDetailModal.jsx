@@ -229,7 +229,7 @@ export default function RegistrationDetailModal({ registration: reg, event, onCl
 
               <p><strong className="text-fire-4">ARTICLE 2 — LIABILITY WAIVER:</strong> {reg.type === 'athlete' ? 'Participant acknowledges athletic competition involves inherent physical risks and voluntarily assumes all such risks.' : 'Participant acknowledges attending live sports events involves risks and voluntarily attends at their own risk.'} Release of liability granted to Street Dynamics Holding FZE except in cases of gross negligence.</p>
 
-              <p><strong className="text-fire-4">ARTICLE 3 — IMAGE RIGHTS:</strong> Participant grants Street Dynamics a worldwide, royalty-free license to capture, publish, and create derivative works from their image and performance data, including NFT minting {gdpr?.imageRights ? '(CONSENT GRANTED)' : '(CONSENT NOT GIVEN)'}.</p>
+              <p><strong className="text-fire-4">ARTICLE 3 — IMAGE RIGHTS:</strong> Participant grants Street Dinamics a worldwide, royalty-free license to capture, publish, and create derivative works from their image and performance data, including NFT minting {gdpr?.imageRights ? '(CONSENT GRANTED)' : '(CONSENT NOT GIVEN)'}.</p>
 
               <p><strong className="text-fire-4">ARTICLE 4 — DATA PROTECTION:</strong> Personal data processed under GDPR (EU) 2016/679 and UAE Data Protection Law. GDPR Consent recorded: {reg.gdpr_consent_date ? format(new Date(reg.gdpr_consent_date), 'dd MMM yyyy HH:mm:ss') : '—'}. Marketing consent: {reg.marketing_consent ? 'YES' : 'NO'}. Cross-border transfers: {reg.cross_border_consent ? 'YES' : 'NO'}.</p>
 
