@@ -83,7 +83,7 @@ export default function ConsentWithdrawal({ user }) {
             </p>
 
             <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,100,0,0.2);">
-              <p style="font-size: 10px; color: #2a1500;">© 2026 Street Dynamics Holding FZE — GDPR & UAE Data Protection Compliant</p>
+              <p style="font-size: 10px; color: #2a1500;">© 2026 Street Dynamics FZE — GDPR & UAE Data Protection Compliant</p>
             </div>
           </div>
         `,
