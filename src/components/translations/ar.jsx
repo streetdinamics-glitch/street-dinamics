@@ -5,7 +5,7 @@ export const ar = {
   nav_admin: 'لوحة الإدارة', nav_navigation: 'التنقل', nav_settings: 'الإعدادات',
   nav_language: 'اللغة', nav_analytics: 'التحليلات', nav_nft_portfolio: 'محفظة NFT', nav_web3: 'Web3 والمحفظة',
   hud_system: 'النظام متصل', hud_ai: 'السكرتيرة الذكية: نشطة',
-  hero_eyebrow: '// منصة رياضية عالمية //', hero_tagline: 'البطولات · الكشف · المجتمع · 13–30',
+  hero_eyebrow: '// منصة رياضية عالمية //', hero_tagline: 'ENERGY. VIBES. COMMUNITY. LIFE.',
   hero_cta_athlete: 'انضم كرياضي', hero_cta_spectator: 'شاهد كمتفرج',
   hero_cta_tokens: '🎫 احصل على الرموز', hero_scroll: '↓ مرر للفعاليات',
   events_title: 'الفعاليات', events_subtitle: 'الدائرة المباشرة والرقمية',

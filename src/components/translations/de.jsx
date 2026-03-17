@@ -5,7 +5,7 @@ export const de = {
   nav_admin: 'Admin-Panel', nav_navigation: 'Navigation', nav_settings: 'Einstellungen',
   nav_language: 'Sprache', nav_analytics: 'Analytik', nav_nft_portfolio: 'NFT-Portfolio', nav_web3: 'Web3 & Wallet',
   hud_system: 'System Online', hud_ai: 'KI-Sekretärin: Aktiv',
-  hero_eyebrow: '// Globale Sport-Plattform //', hero_tagline: 'Turniere · Scouting · Community · 13–30',
+  hero_eyebrow: '// Globale Sport-Plattform //', hero_tagline: 'ENERGY. VIBES. COMMUNITY. LIFE.',
   hero_cta_athlete: 'ALS ATHLET BEITRETEN', hero_cta_spectator: 'ALS ZUSCHAUER ANSEHEN',
   hero_cta_tokens: '🎫 TOKEN ERHALTEN', hero_scroll: '↓ SCROLLEN FÜR EVENTS',
   events_title: 'VERANSTALTUNGEN', events_subtitle: 'Live- und Digital-Circuit',

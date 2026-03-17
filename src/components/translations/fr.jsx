@@ -5,7 +5,7 @@ export const fr = {
   nav_admin: 'Panneau Admin', nav_navigation: 'Navigation', nav_settings: 'Paramètres',
   nav_language: 'Langue', nav_analytics: 'Analytiques', nav_nft_portfolio: 'Portfolio NFT', nav_web3: 'Web3 & Wallet',
   hud_system: 'Système en Ligne', hud_ai: 'Secrétaire IA : Active',
-  hero_eyebrow: '// Plateforme Sportive Mondiale //', hero_tagline: 'Tournois · Scouting · Communauté · 13–30',
+  hero_eyebrow: '// Plateforme Sportive Mondiale //', hero_tagline: 'ENERGY. VIBES. COMMUNITY. LIFE.',
   hero_cta_athlete: 'REJOINDRE COMME ATHLÈTE', hero_cta_spectator: 'REGARDER COMME SPECTATEUR',
   hero_cta_tokens: '🎫 OBTENIR JETONS', hero_scroll: '↓ DÉFILER POUR ÉVÉNEMENTS',
   events_title: 'ÉVÉNEMENTS', events_subtitle: 'Circuit en Direct et Numérique',

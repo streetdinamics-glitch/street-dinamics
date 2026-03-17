@@ -5,7 +5,7 @@ export const es = {
   nav_admin: 'Panel Admin', nav_navigation: 'Navegación', nav_settings: 'Configuración',
   nav_language: 'Idioma', nav_analytics: 'Analíticas', nav_nft_portfolio: 'Portfolio NFT', nav_web3: 'Web3 & Wallet',
   hud_system: 'Sistema en Línea', hud_ai: 'Secretaria IA: Activa',
-  hero_eyebrow: '// Plataforma Deportiva Global //', hero_tagline: 'Torneos · Scouting · Comunidad · 13–30',
+  hero_eyebrow: '// Plataforma Deportiva Global //', hero_tagline: 'ENERGY. VIBES. COMMUNITY. LIFE.',
   hero_cta_athlete: 'ÚNETE COMO ATLETA', hero_cta_spectator: 'VER COMO ESPECTADOR',
   hero_cta_tokens: '🎫 OBTENER TOKENS', hero_scroll: '↓ DESPLÁZATE PARA EVENTOS',
   events_title: 'EVENTOS', events_subtitle: 'Circuito en Vivo y Digital',
