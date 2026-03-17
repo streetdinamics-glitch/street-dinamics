@@ -80,7 +80,7 @@ export default function AthleteVerificationFlow({ eventId, onVerified }) {
               </div>
 
               <div style="text-align: center; padding-top: 15px; border-top: 1px solid rgba(255,100,0,0.2);">
-                <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px; margin: 3px 0;">© 2026 STREET DYNAMICS HOLDING FZE</p>
+                <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px; margin: 3px 0;">© 2026 STREET DYNAMICS FZE</p>
               </div>
             </div>
           `,
