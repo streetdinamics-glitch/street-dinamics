@@ -55,7 +55,7 @@ export default function AgeVerification({ dateOfBirth, onVerified }) {
             AGE RESTRICTION — REGISTRATION NOT PERMITTED
           </h4>
           <p className="font-rajdhani text-sm text-red-300 leading-relaxed mb-3">
-            Street Dynamics events are open to participants aged 13-30 years. 
+            Street Dinamics events are open to participants aged 13-30 years. 
             You are currently {ageCategory.age} years old and do not meet the minimum age requirement.
           </p>
           <p className="font-mono text-xs text-red-400/80">
