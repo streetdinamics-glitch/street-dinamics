@@ -17,7 +17,7 @@ export default function Footer({ lang }) {
         {t('footer_rights')}
       </p>
       <p className="font-mono text-[8px] tracking-[2px] uppercase text-fire-3/12">
-        Operated by Street Dynamics Holding FZE — IFZA Business Park, Dubai, UAE
+        Operated by Entretain Holding FZE — IFZA Business Park, Dubai, UAE
       </p>
       <p className="font-mono text-[7px] tracking-[2px] text-fire-3/10 mt-1">
         License: [IFZA-TBD] • Global Platform • Blockchain-Powered
