@@ -9,7 +9,7 @@ export default function ComprehensiveContract({ type, isMinor = false }) {
         <h5 className="font-orbitron font-black text-base tracking-[3px] text-fire-3 uppercase mb-2">
           COMPREHENSIVE PARTICIPATION AGREEMENT
         </h5>
-        <p className="text-xs text-fire-3/60">Street Dynamics Holding FZE (IFZA, Dubai, UAE)</p>
+        <p className="text-xs text-fire-3/60">Street Dinamics FZE (IFZA, Dubai, UAE)</p>
         <p className="text-xs text-fire-3/60">Version 1.2 — Effective Date: {currentDate}</p>
       </div>
 
