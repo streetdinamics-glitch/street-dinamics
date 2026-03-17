@@ -59,7 +59,7 @@ export const ar = {
   social_modal_title: 'ستريت ديناميكس', social_modal_subtitle: 'تابعنا في كل مكان',
   social_instagram: 'إنستغرام', social_tiktok: 'تيك توك', social_youtube: 'يوتيوب',
   social_kick: 'كيك — البث المباشر', social_snapchat: 'سناب شات',
-  footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, دبي، الإمارات) — جميع الحقوق محفوظة',
+  footer_rights: '© 2026 Street Dinamics FZE (IFZA, دبي، الإمارات) — جميع الحقوق محفوظة',
   onboard_welcome: 'مرحباً بك في ستريت ديناميكس', onboard_choose: 'اختر مسارك',
   onboard_athlete: 'رياضي', onboard_athlete_desc: 'شارك في الفعاليات، ابنِ ملفك الشخصي، اكسب الرموز',
   onboard_spectator: 'متفرج', onboard_spectator_desc: 'شاهد الفعاليات، ادعم الرياضيين، اجمع الرموز',
