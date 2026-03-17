@@ -45,7 +45,7 @@ export default function ComprehensiveContract({ type, isMinor = false }) {
         </h5>
         <p>
           <strong className="text-fire-4">2.1</strong> This Agreement governs the Participant's {type === 'athlete' ? 'active participation as an athlete/competitor' : 'attendance as a spectator'} 
-          in events organized, branded, or licensed by Street Dynamics Holding FZE ("the Platform").
+          in events organized, branded, or licensed by Street Dinamics FZE ("the Platform").
         </p>
         <p>
           <strong className="text-fire-4">2.2</strong> Registration constitutes full and unconditional acceptance of: (a) these Terms and Conditions, 
