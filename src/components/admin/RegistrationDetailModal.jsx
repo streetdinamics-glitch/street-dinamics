@@ -190,7 +190,7 @@ export default function RegistrationDetailModal({ registration: reg, event, onCl
               {/* Header */}
               <div className="text-center border-b border-fire-3/20 pb-4 mb-4">
                 <h4 className="font-orbitron font-black text-base tracking-[3px] text-fire-3 uppercase mb-1">COMPREHENSIVE PARTICIPATION AGREEMENT</h4>
-                <p className="text-xs text-fire-3/60">Street Dynamics Holding FZE (IFZA, Dubai, UAE)</p>
+                <p className="text-xs text-fire-3/60">Street Dinamics FZE (IFZA, Dubai, UAE)</p>
                 <p className="text-xs text-fire-3/60">Version {reg.contract_version || '1.2'} — Signed: {reg.gdpr_consent_date ? format(new Date(reg.gdpr_consent_date), 'dd MMM yyyy HH:mm') : '—'}</p>
               </div>
 
