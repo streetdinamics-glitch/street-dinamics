@@ -3,7 +3,7 @@ import { mainnet, polygon, arbitrum, optimism, base } from 'wagmi/chains';
 
 export const web3Config = getDefaultConfig({
   appName: 'Street Dinamics',
-  projectId: 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6', // Default WalletConnect ID
+  projectId: '2f05ae7f1116030fde2d36508f472bfb', // WalletConnect Cloud project ID
   chains: [mainnet, polygon, arbitrum, optimism, base],
   ssr: false,
 });

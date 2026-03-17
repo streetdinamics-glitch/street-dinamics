@@ -6,10 +6,9 @@ export default function FlowSteps({ lang }) {
   
   const steps = [
     { label: t('reg_step_info'), num: 1 },
-    { label: t('reg_step_upload'), num: 2 },
+    { label: 'GDPR', num: 2 },
     { label: t('reg_step_contract'), num: 3 },
     { label: t('reg_step_signature'), num: 4 },
-    { label: t('reg_step_confirm'), num: 5 },
   ];
 
   return (
