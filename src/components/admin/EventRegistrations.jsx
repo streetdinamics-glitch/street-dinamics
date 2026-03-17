@@ -108,22 +108,24 @@ export default function EventRegistrations({ event, onClose, lang }) {
                       Code: {reg.ticket_code}
                     </div>
                   )}
-                  {reg.status === 'pending' && (
-                    <div className="flex gap-2 mt-3">
-                      <button
-                        onClick={() => handleApprove(reg)}
-                        className="btn-fire text-[9px] py-1.5 px-3 flex-1"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleReject(reg)}
-                        className="btn-ghost text-[9px] py-1.5 px-3 flex-1"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  )}
+                  <div className="flex gap-2 mt-3 flex-wrap">
+                    <button
+                      onClick={() => setViewingReg(reg)}
+                      className="btn-cyan text-[9px] py-1.5 px-3 flex-1"
+                    >
+                      📁 View File
+                    </button>
+                    {reg.status === 'pending' && (
+                      <>
+                        <button onClick={() => handleApprove(reg)} className="btn-fire text-[9px] py-1.5 px-3 flex-1">
+                          Approve
+                        </button>
+                        <button onClick={() => handleReject(reg)} className="btn-ghost text-[9px] py-1.5 px-3 flex-1">
+                          Reject
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -169,12 +171,26 @@ export default function EventRegistrations({ event, onClose, lang }) {
                       Code: {reg.ticket_code}
                     </div>
                   )}
+                  <button
+                    onClick={() => setViewingReg(reg)}
+                    className="btn-cyan text-[9px] py-1.5 px-3 w-full mt-2"
+                  >
+                    📁 View File
+                  </button>
                 </div>
               ))}
             </div>
           )}
         </div>
       </div>
+
+      {viewingReg && (
+        <RegistrationDetailModal
+          registration={viewingReg}
+          event={event}
+          onClose={() => setViewingReg(null)}
+        />
+      )}
     </div>
   );
 }
