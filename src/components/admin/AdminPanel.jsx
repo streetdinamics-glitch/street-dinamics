@@ -36,7 +36,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [viewingRegistrations, setViewingRegistrations] = useState(null);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
-  const [pendingAthletes, setPendingAthletes] = useState([]);
+
   const [editingEvent, setEditingEvent] = useState(null);
   const [editForm, setEditForm] = useState({
     title: '', sport: '', date: '', location: '', description: '', max_spots: 50
@@ -89,6 +89,7 @@ export default function AdminPanel({ lang, onClose }) {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       queryClient.invalidateQueries({ queryKey: ['events'] });
       setSelectedEvent(null);
+      setShowScanner(false);
       setEditingVod(null);
       setLiveLinks({ kick: '', youtube: '' });
       setVodLinks({ kick: '', youtube: '' });
@@ -112,7 +113,7 @@ export default function AdminPanel({ lang, onClose }) {
   });
 
   const updateUser = useMutation({
-    mutationFn: ({ email, data }) => base44.entities.User.update(email, data),
+    mutationFn: ({ id, data }) => base44.entities.User.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['pending-athletes'] });
       toast.success('Athlete status updated');
@@ -199,7 +200,7 @@ export default function AdminPanel({ lang, onClose }) {
 
   const handleApproveAthlete = (user) => {
     updateUser.mutate({
-      email: user.email,
+      id: user.id,
       data: {
         athlete_profile: {
           ...user.athlete_profile,
@@ -211,7 +212,7 @@ export default function AdminPanel({ lang, onClose }) {
 
   const handleRejectAthlete = (user) => {
     updateUser.mutate({
-      email: user.email,
+      id: user.id,
       data: {
         athlete_profile: {
           ...user.athlete_profile,

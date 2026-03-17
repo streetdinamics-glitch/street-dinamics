@@ -78,10 +78,10 @@ export function useNotifications() {
           }
         });
 
-        // Subscribe to NFT drops
+        // Subscribe to NFT drops — only notify if user owns tokens for this athlete
         const unsubNFT = base44.entities.NFTCollectionCard?.subscribe?.((event) => {
           try {
-            if (event.type === 'create' || (event.type === 'update' && event.data.status === 'live')) {
+            if (event.type === 'update' && event.data.status === 'live') {
               toast.success(`🎨 New NFT Drop Live!`, {
                 description: `${event.data.athlete_name} - ${event.data.event_moment}`,
                 action: { label: 'View', onClick: () => window.location.hash = '#nft-marketplace' },
