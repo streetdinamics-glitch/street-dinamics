@@ -147,7 +147,7 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
                 </div>
                 
                 <div style="text-align: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,100,0,0.2);">
-                  <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px; margin: 3px 0;">© 2026 STREET DYNAMICS HOLDING FZE — ALL RIGHTS RESERVED</p>
+                  <p style="font-size: 10px; color: #2a1500; letter-spacing: 2px; margin: 3px 0;">© 2026 STREET DYNAMICS FZE — ALL RIGHTS RESERVED</p>
                   <p style="font-size: 9px; color: #2a1500; margin: 2px 0;">IFZA Business Park, Dubai, UAE — License: [TBD]</p>
                   <p style="font-size: 8px; color: #2a1500; margin: 2px 0;">Global Platform • Blockchain-Powered • Youth Sports 13-30</p>
                 </div>
