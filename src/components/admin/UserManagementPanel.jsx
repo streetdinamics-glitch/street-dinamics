@@ -152,7 +152,7 @@ export default function UserManagementPanel() {
           <p style="font-size: 14px; line-height: 1.6; margin: 0;">${messageText}</p>
         </div>
         <div style="text-align: center; font-size: 12px; color: #664422;">
-          <p>© 2026 Street Dynamics — Admin Message</p>
+          <p>© 2026 Street Dinamics — Admin Message</p>
         </div>
       </div>`,
     });
