@@ -133,7 +133,7 @@ export default function OnboardingTerms({ userType }) {
 
       <div className="bg-cyan/10 border border-cyan/30 p-4 mt-4">
         <p className="font-mono text-[10px] text-cyan/80 leading-relaxed">
-          <strong>GDPR TRANSPARENCY:</strong> Data Controller: Street Dynamics Holding FZE, IFZA Business Park, Dubai, UAE. 
+          <strong>GDPR TRANSPARENCY:</strong> Data Controller: Street Dynamics FZE, IFZA Business Park, Dubai, UAE. 
           DPO: privacy@streetdynamics.ae. You may lodge complaints with UAE Data Office or your local EU supervisory authority. 
           Cross-border transfers use Standard Contractual Clauses (SCC). Data retention: 7-10 years per legal requirements.
         </p>
@@ -141,7 +141,7 @@ export default function OnboardingTerms({ userType }) {
 
       <div className="text-center mt-4 pt-3 border-t border-fire-3/20">
         <p className="text-[9px] text-fire-3/40">
-          © 2026 Street Dynamics Holding FZE — All Rights Reserved<br/>
+          © 2026 Street Dynamics FZE — All Rights Reserved<br/>
           IFZA License [TBD] — Dubai, United Arab Emirates
         </p>
       </div>
