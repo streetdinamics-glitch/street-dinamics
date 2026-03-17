@@ -5,7 +5,7 @@ import { Plus, Trash2, Edit2, Check, X, Dumbbell } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// The 6 official Street Dynamics disciplines from the business plan
+// The 6 official Street Dinamics disciplines from the business plan
 const DEFAULT_CATEGORIES = [
   { name: 'Skateboarding', emoji: '🛹', description: 'Street and park skateboarding disciplines' },
   { name: 'BMX', emoji: '🚲', description: 'Freestyle BMX — street, park, flatland' },
