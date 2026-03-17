@@ -81,7 +81,7 @@ export default function AgeVerification({ dateOfBirth, onVerified }) {
             ATHLETE AGE LIMIT EXCEEDED
           </h4>
           <p className="font-rajdhani text-sm text-fire-4 leading-relaxed mb-3">
-            Street Dynamics competitive events are designed for youth athletes aged 13-30. 
+            Street Dinamics competitive events are designed for youth athletes aged 13-30. 
             You are currently {ageCategory.age} years old. You may still register as a spectator.
           </p>
           <p className="font-mono text-xs text-fire-3/60">
