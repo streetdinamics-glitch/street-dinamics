@@ -62,7 +62,7 @@ export const it = {
   social_modal_title: 'STREET DINAMICS', social_modal_subtitle: 'Seguici Ovunque',
   social_instagram: 'Instagram', social_tiktok: 'TikTok', social_youtube: 'YouTube',
   social_kick: 'Kick — Live Stream', social_snapchat: 'Snapchat',
-  footer_rights: '© 2026 Street Dynamics Holding FZE (IFZA, Dubai, UAE) — Tutti i Diritti Riservati',
+  footer_rights: '© 2026 Street Dinamics FZE (IFZA, Dubai, UAE) — Tutti i Diritti Riservati',
   onboard_welcome: 'BENVENUTO A STREET DINAMICS', onboard_choose: 'Scegli il Tuo Percorso',
   onboard_athlete: 'ATLETA', onboard_athlete_desc: 'Gareggia negli eventi, costruisci il tuo profilo, guadagna token e fai crescere la tua fanbase',
   onboard_spectator: 'SPETTATORE', onboard_spectator_desc: 'Guarda gli eventi, supporta gli atleti, colleziona token e vinci premi',
