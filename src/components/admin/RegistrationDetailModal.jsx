@@ -225,7 +225,7 @@ export default function RegistrationDetailModal({ registration: reg, event, onCl
               )}
 
               {/* Contract body — abbreviated key articles with participant data */}
-              <p><strong className="text-fire-4">ARTICLE 1 — SCOPE:</strong> This Agreement governs the Participant's {reg.type === 'athlete' ? 'active participation as an athlete/competitor' : 'attendance as a spectator'} in "{event.title}" ({event.date}, {event.location}), organized by Street Dynamics Holding FZE.</p>
+              <p><strong className="text-fire-4">ARTICLE 1 — SCOPE:</strong> This Agreement governs the Participant's {reg.type === 'athlete' ? 'active participation as an athlete/competitor' : 'attendance as a spectator'} in "{event.title}" ({event.date}, {event.location}), organized by Street Dinamics FZE.</p>
 
               <p><strong className="text-fire-4">ARTICLE 2 — LIABILITY WAIVER:</strong> {reg.type === 'athlete' ? 'Participant acknowledges athletic competition involves inherent physical risks and voluntarily assumes all such risks.' : 'Participant acknowledges attending live sports events involves risks and voluntarily attends at their own risk.'} Release of liability granted to Street Dynamics Holding FZE except in cases of gross negligence.</p>
 
