@@ -3,10 +3,12 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import QRCode from 'qrcode';
 import { toast } from 'sonner';
+import RegistrationDetailModal from './RegistrationDetailModal';
 
 export default function EventRegistrations({ event, onClose, lang }) {
   const queryClient = useQueryClient();
   const [qrCodes, setQrCodes] = useState({});
+  const [viewingReg, setViewingReg] = useState(null);
 
   const { data: registrations = [] } = useQuery({
     queryKey: ['event-registrations', event.id],
