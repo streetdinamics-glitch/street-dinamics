@@ -11,6 +11,11 @@ export default function GDPRConsentManager({ onConsentChange, type }) {
     crossBorder: false,
   });
 
+  // Fire initial state to parent on mount so canProceedStep2 is satisfied
+  React.useEffect(() => {
+    onConsentChange(consents);
+  }, []);
+
   const handleToggle = (key) => {
     if (key === 'necessary') return; // Cannot opt-out
     
@@ -125,7 +130,7 @@ export default function GDPRConsentManager({ onConsentChange, type }) {
                       disabled={item.required}
                       className="sr-only peer"
                     />
-                    <div className={`w-14 h-7 rounded-full peer transition-all ${
+                    <div className={`relative w-14 h-7 rounded-full peer transition-all ${
                       consents[item.key]
                         ? `bg-${item.color} border-2 border-${item.color}`
                         : 'bg-fire-3/10 border-2 border-fire-3/30'

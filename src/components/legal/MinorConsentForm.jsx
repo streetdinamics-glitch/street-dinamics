@@ -45,7 +45,7 @@ export default function MinorConsentForm({
 
   const endDraw = () => {
     isDrawing.current = false;
-    if (canvasRef.current) {
+    if (canvasRef.current && isFormComplete) {
       const signatureUrl = canvasRef.current.toDataURL('image/png');
       onParentSign({ ...parentForm, signature_url: signatureUrl });
     }

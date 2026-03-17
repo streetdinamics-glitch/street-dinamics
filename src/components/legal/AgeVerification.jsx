@@ -30,9 +30,8 @@ export default function AgeVerification({ dateOfBirth, onVerified }) {
     
     if (category.legalStatus === 'too_young') {
       onVerified(false, category);
-    } else if (category.legalStatus === 'over_age') {
-      onVerified(false, category);
     } else {
+      // over_age adults can still register as spectators; let parent decide
       setVerified(true);
       onVerified(true, category);
     }
