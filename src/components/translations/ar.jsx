@@ -44,7 +44,7 @@ export const ar = {
   sponsor_title: 'كن شريكاً', sponsor_subtitle: 'اصل للجيل الجديد',
   sponsor_value: 'ستريت ديناميكس تربط علامتك التجارية برياضيين ومشجعين من عمر 13-30 على مستوى العالم.',
   sponsor_demo: 'الأعمار 13–30 • 50 ألف+ وصول عالمي • فعاليات مباشرة ورقمية • تكامل الرموز',
-  sponsor_cta: 'partnerships@streetdinamics.ae', sponsor_note: 'نجيب خلال 48 ساعة. حزم إعلامية متاحة عند الطلب.',
+  sponsor_cta: 'streetdinamics@gmail.com', sponsor_note: 'نجيب خلال 48 ساعة. حزم إعلامية متاحة عند الطلب.',
   sponsor_demographics: 'بيانات ديموغرافية شبابية عالية القيمة',
   sponsor_platform: 'حضور متعدد المنصات',
   sponsor_worldwide: 'حضور عالمي',
