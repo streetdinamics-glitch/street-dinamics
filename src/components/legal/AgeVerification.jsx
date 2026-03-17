@@ -67,7 +67,7 @@ export default function AgeVerification({ dateOfBirth, onVerified }) {
     );
   }
 
-  // Over age (over 30)
+  // Over age (over 30) — can still register as spectator
   if (ageCategory.legalStatus === 'over_age') {
     return (
       <motion.div
@@ -78,14 +78,13 @@ export default function AgeVerification({ dateOfBirth, onVerified }) {
         <AlertCircle size={32} className="text-fire-3 flex-shrink-0" />
         <div>
           <h4 className="font-orbitron font-bold text-lg text-fire-3 mb-2">
-            AGE RESTRICTION — ATHLETE REGISTRATION CLOSED
+            ATHLETE AGE LIMIT EXCEEDED
           </h4>
           <p className="font-rajdhani text-sm text-fire-4 leading-relaxed mb-3">
             Street Dynamics competitive events are designed for youth athletes aged 13-30. 
-            You are currently {ageCategory.age} years old.
+            You are currently {ageCategory.age} years old. You may still register as a spectator.
           </p>
           <p className="font-mono text-xs text-fire-3/60">
-            You may still attend as a spectator, purchase tokens/NFTs, and engage with the platform. 
             For exhibition matches or coaching opportunities, contact: partnerships@streetdynamics.ae
           </p>
         </div>
