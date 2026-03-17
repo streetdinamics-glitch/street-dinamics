@@ -47,7 +47,7 @@ export const it = {
   sponsor_title: 'COLLABORA CON NOI', sponsor_subtitle: 'Raggiungi la Nuova Generazione',
   sponsor_value: 'Street Dinamics collega il tuo brand con atleti e fan di 13–30 anni a livello globale. Visibilità multi-piattaforma, eventi dal vivo, NFT drop e coinvolgimento autentico in UAE, Europa e mercati internazionali.',
   sponsor_demo: 'Età 13–30 • 50K+ reach globale • Eventi live & digitali • Integrazione token',
-  sponsor_cta: 'partnerships@streetdinamics.ae', sponsor_note: 'Rispondiamo entro 48h. Kit media disponibili su richiesta.',
+  sponsor_cta: 'streetdinamics@gmail.com', sponsor_note: 'Rispondiamo entro 48h. Kit media disponibili su richiesta.',
   sponsor_demographics: 'Dati Demografici Giovanili di Alto Valore',
   sponsor_platform: 'Presenza Multipiattaforma',
   sponsor_worldwide: 'Presenza Mondiale',
