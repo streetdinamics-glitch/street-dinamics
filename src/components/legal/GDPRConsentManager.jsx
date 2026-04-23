@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Mail, Database, Globe, Image, Coins } from 'lucide-react';
 
-export default function GDPRConsentManager({ onConsentChange, type }) {
+export default function GDPRConsentManager({ onConsentChange, type, fireInitial = true }) {
   const [consents, setConsents] = useState({
     necessary: true, // Always required
     marketing: false,
@@ -11,9 +11,11 @@ export default function GDPRConsentManager({ onConsentChange, type }) {
     crossBorder: false,
   });
 
-  // Fire initial state to parent on mount so canProceedStep2 is satisfied
+  // Only fire initial state if explicitly requested (registration modal needs it, onboarding doesn't)
   React.useEffect(() => {
-    onConsentChange(consents);
+    if (fireInitial) {
+      onConsentChange(consents);
+    }
   }, []);
 
   const handleToggle = (key) => {
@@ -82,7 +84,7 @@ export default function GDPRConsentManager({ onConsentChange, type }) {
           DATA PROTECTION & CONSENT PREFERENCES
         </h4>
         <p className="font-mono text-xs text-cyan/70 leading-relaxed">
-          Street Dynamics is committed to protecting your privacy under GDPR (EU) 2016/679 and UAE Data Protection Law. 
+          Street Dinamics is committed to protecting your privacy under GDPR (EU) 2016/679 and UAE Data Protection Law. 
           Please review and customize your consent preferences below.
         </p>
       </div>
@@ -177,7 +179,7 @@ export default function GDPRConsentManager({ onConsentChange, type }) {
           ))}
         </div>
         <p className="font-mono text-[10px] text-fire-3/60 mt-4 leading-relaxed">
-          Data Protection Officer: privacy@streetdynamics.ae | 
+          Data Protection Officer: streetdinamics@gmail.com | 
           Supervisory Authority: UAE Data Office (DIFC) | 
           EU Representative: [To Be Appointed if required]
         </p>

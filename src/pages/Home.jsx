@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,6 +49,13 @@ export default function Home() {
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
   });
+
+  // Auto-open onboarding for users who haven't completed it
+  React.useEffect(() => {
+    if (user && user.onboarding_completed === false) {
+      setOnboardingOpen(true);
+    }
+  }, [user]);
 
   const { data: events = [], isLoading: eventsLoading } = useQuery({
     queryKey: ['events'],

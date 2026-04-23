@@ -106,28 +106,6 @@ export default function LiveEventSidebar({ event, hidden = false }) {
     if (open) setLastSeenCount(messages.length);
   }, [open, messages.length]);
 
-  if (event.status !== 'live') return null;
-
-  const isAdmin = user?.role === 'admin';
-  const unreadCount = Math.max(0, messages.length - lastSeenCount);
-  const uniqueUsers = new Set(messages.map(m => m.user_email)).size;
-  const orderedMessages = [...messages].reverse(); // oldest → newest for display
-  const pinnedMessages = messages.filter(m => m.is_pinned);
-
-  // Build vote stats from EventVote choices
-  const voteStats = voteCampaigns.flatMap(campaign =>
-    (campaign.choices || []).map(choice => ({
-      label: choice.label,
-      count: choice.votes || choice.vote_count || 0,
-      total: campaign.total_votes || 0,
-    }))
-  );
-
-  // Bet pool breakdown
-  const betPool = { team_a: 0, team_b: 0, draw: 0 };
-  bets.forEach(b => { if (b.outcome) betPool[b.outcome] = (betPool[b.outcome] || 0) + (b.amount || 0); });
-  const totalPool = Object.values(betPool).reduce((s, n) => s + n, 0);
-
   const sendMsg = useMutation({
     mutationFn: async ({ text, type }) => {
       const u = await base44.auth.me();
@@ -157,6 +135,26 @@ export default function LiveEventSidebar({ event, hidden = false }) {
     mutationFn: ({ id, pin }) => base44.entities.ChatMessage.update(id, { is_pinned: pin }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['chat-messages', event.id] }),
   });
+
+  if (event.status !== 'live') return null;
+
+  const isAdmin = user?.role === 'admin';
+  const unreadCount = Math.max(0, messages.length - lastSeenCount);
+  const uniqueUsers = new Set(messages.map(m => m.user_email)).size;
+  const orderedMessages = [...messages].reverse();
+  const pinnedMessages = messages.filter(m => m.is_pinned);
+
+  const voteStats = voteCampaigns.flatMap(campaign =>
+    (campaign.choices || []).map(choice => ({
+      label: choice.label,
+      count: choice.votes || choice.vote_count || 0,
+      total: campaign.total_votes || 0,
+    }))
+  );
+
+  const betPool = { team_a: 0, team_b: 0, draw: 0 };
+  bets.forEach(b => { if (b.outcome) betPool[b.outcome] = (betPool[b.outcome] || 0) + (b.amount || 0); });
+  const totalPool = Object.values(betPool).reduce((s, n) => s + n, 0);
 
   const handleSend = (e, type = 'regular') => {
     e.preventDefault();

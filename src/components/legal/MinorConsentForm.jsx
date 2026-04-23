@@ -46,6 +46,11 @@ export default function MinorConsentForm({
   const endDraw = () => {
     isDrawing.current = false;
     if (canvasRef.current && isFormComplete) {
+      // Verify canvas is not blank by checking pixel data
+      const ctx = canvasRef.current.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
+      const hasContent = imageData.data.some((val, idx) => idx % 4 !== 3 && val > 0);
+      if (!hasContent) return; // Canvas is blank, don't save
       const signatureUrl = canvasRef.current.toDataURL('image/png');
       onParentSign({ ...parentForm, signature_url: signatureUrl });
     }
@@ -206,14 +211,14 @@ export default function MinorConsentForm({
         <div className="space-y-2 font-mono text-xs text-fire-3/60">
           <p>✓ I confirm I am the parent/legal guardian of the minor participant listed above;</p>
           <p>✓ I have read, understood, and accept all terms of the Participation Agreement on behalf of the minor;</p>
-          <p>✓ I grant permission for the minor to participate in Street Dynamics events and associated activities;</p>
+          <p>✓ I grant permission for the minor to participate in Street Dinamics events and associated activities;</p>
           <p>✓ I consent to the processing of the minor's personal data per GDPR Article 8 and UAE Data Protection Law;</p>
           <p>✓ I grant image rights and content licensing permissions for the minor's photos, videos, and performance data;</p>
           <p>✓ I understand the minor CANNOT purchase tokens, NFTs, or participate in revenue-sharing until age 18;</p>
           <p>✓ I acknowledge the minor's safety is my responsibility outside of official event hours;</p>
           <p>✓ I authorize emergency medical treatment if I cannot be reached;</p>
           <p>✓ I confirm the emergency contact information provided is accurate and reachable;</p>
-          <p>✓ I may revoke this consent at any time by written notice to privacy@streetdynamics.ae.</p>
+          <p>✓ I may revoke this consent at any time by written notice to streetdinamics@gmail.com.</p>
         </div>
       </div>
 

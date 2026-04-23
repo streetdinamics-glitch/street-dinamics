@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/toaster"
-import { QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { base44 } from '@/api/base44Client'
 import { queryClientInstance } from '@/lib/query-client'
 import WalletProvider from './components/web3/WalletProvider.jsx'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -18,6 +19,15 @@ import VotingHub from './pages/VotingHub';
 import EnhancedUserProfile from './pages/EnhancedUserProfile';
 import Web3Page from './pages/Web3';
 import { Navigate } from 'react-router-dom';
+
+const AdminGuard = ({ children }) => {
+  const { data: user, isLoading } = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => base44.auth.me(),
+  });
+  if (isLoading) return null;
+  return user?.role === 'admin' ? children : <Navigate to="/Home" replace />;
+};
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -47,7 +57,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route path="/" element={<Navigate to="/Home" replace />} />
       <Route path="/Home" element={<Home />} />
-      <Route path="/Admin" element={<Admin />} />
+      <Route path="/Admin" element={<AdminGuard><Admin /></AdminGuard>} />
       <Route path="/CreateEvent" element={<CreateEvent />} />
       <Route path="/AthleteProfile" element={<AthleteProfile />} />
       <Route path="/AthleteProfilePage/:athleteEmail" element={<AthleteProfilePage />} />

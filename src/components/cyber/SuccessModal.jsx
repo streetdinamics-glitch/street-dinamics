@@ -14,14 +14,8 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
 
   useEffect(() => {
     // Generate QR code
-    const qrData = JSON.stringify({
-      ticket_code: registration.ticket_code,
-      event_id: registration.event_id,
-      email: registration.email,
-      type: registration.type,
-      name: `${registration.first_name} ${registration.last_name}`,
-      seat_zone: registration.seat_zone
-    });
+    // Use same format as EventRegistrations QR scanner for check-in compatibility
+    const qrData = `SD-TICKET|${registration.ticket_code}|${registration.event_id}|${registration.email}`;
 
     QRCode.toDataURL(qrData, {
       width: 200,

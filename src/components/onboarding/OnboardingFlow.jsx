@@ -29,14 +29,13 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
   const updateUser = useMutation({
     mutationFn: (data) => base44.auth.updateMe(data),
     onSuccess: () => {
-      setStep(3);
+      onComplete?.();
     },
   });
 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
     setUploading(true);
     try {
       const { file_url } = await base44.integrations.Core.UploadFile({ file });
@@ -49,16 +48,10 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
   };
 
   const handleSubmit = () => {
-    if (!termsAccepted) {
-      alert('You must accept the Terms of Service to continue.');
-      return;
-    }
-
     if (!ageVerified || !ageCategory) {
       alert('Age verification is required.');
       return;
     }
-
     if (ageCategory.isMinor) {
       alert('Minors cannot complete self-registration. Parental consent is required during event registration.');
       return;
@@ -75,7 +68,6 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
       city: formData.city,
       avatar_url: formData.avatar_url,
       onboarding_completed: true,
-      // GDPR compliance
       gdpr_consents: gdprConsents,
       marketing_consent: gdprConsents.marketing || false,
       image_rights_consent: gdprConsents.imageRights || false,
@@ -113,9 +105,9 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
     <div className="fixed inset-0 z-[500] bg-black/98 backdrop-blur-2xl flex items-center justify-center overflow-y-auto p-4">
       <div className="relative w-full max-w-[700px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-auto">
         <div className="absolute top-0 left-0 right-0 fire-line" />
-        
+
         {/* Step 1: Terms of Service */}
-        {step === 1 && userType === '' && (
+        {step === 1 && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2 text-center">
               TERMS OF SERVICE
@@ -123,11 +115,9 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-6 text-center">
               Please Read Carefully
             </p>
-
             <div className="bg-black/60 border border-fire-3/10 p-4 max-h-[320px] overflow-y-auto mb-4">
               <OnboardingTerms userType="general" />
             </div>
-
             <label className="flex items-start gap-3 cursor-pointer mb-6">
               <input
                 type="checkbox"
@@ -136,11 +126,10 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 className="w-4 h-4 mt-1 accent-fire-3"
               />
               <span className="text-sm text-fire-3/40 leading-snug">
-                I have read, understood, and accept the Street Dynamics Terms of Service, Privacy Policy, 
+                I have read, understood, and accept the Street Dinamics Terms of Service, Privacy Policy,
                 and agree to comply with all platform rules and regulations.
               </span>
             </label>
-
             <button
               disabled={!termsAccepted}
               onClick={() => setStep(2)}
@@ -152,7 +141,7 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
         )}
 
         {/* Step 2: Choose Type */}
-        {step === 2 && userType === '' && (
+        {step === 2 && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-3xl tracking-[2px] mb-2 text-center">
               {t('onboard_welcome')}
@@ -160,7 +149,6 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-8 text-center">
               {t('onboard_choose')}
             </p>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               <button
                 onClick={() => { setUserType('athlete'); setStep(3); }}
@@ -168,27 +156,22 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
               >
                 <div className="text-5xl mb-4">🏅</div>
                 <div className="font-orbitron font-bold text-xl text-fire-4 mb-2">{t('onboard_athlete')}</div>
-                <div className="font-rajdhani text-sm text-fire-3/40 leading-relaxed">
-                  {t('onboard_athlete_desc')}
-                </div>
+                <div className="font-rajdhani text-sm text-fire-3/40 leading-relaxed">{t('onboard_athlete_desc')}</div>
               </button>
-
               <button
                 onClick={() => { setUserType('spectator'); setStep(3); }}
                 className="relative group p-8 bg-gradient-to-br from-cyan/10 to-cyan/5 border-2 border-cyan/20 hover:border-cyan transition-all"
               >
                 <div className="text-5xl mb-4">🎫</div>
                 <div className="font-orbitron font-bold text-xl text-cyan mb-2">{t('onboard_spectator')}</div>
-                <div className="font-rajdhani text-sm text-cyan/60 leading-relaxed">
-                  {t('onboard_spectator_desc')}
-                </div>
+                <div className="font-rajdhani text-sm text-cyan/60 leading-relaxed">{t('onboard_spectator_desc')}</div>
               </button>
             </div>
           </div>
         )}
 
         {/* Step 3: GDPR Consents */}
-        {step === 3 && userType && !updateUser.isSuccess && (
+        {step === 3 && userType && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2 text-center">
               DATA PROTECTION
@@ -196,18 +179,17 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-6 text-center">
               GDPR Consent Preferences
             </p>
-
             <div className="max-h-[400px] overflow-y-auto mb-6">
               <GDPRConsentManager
                 type={userType}
                 onConsentChange={setGdprConsents}
+                fireInitial={false}
               />
             </div>
-
             <div className="flex gap-3">
-              <button onClick={() => setStep(2)} className="btn-ghost py-3 px-5">← Back</button>
+              <button onClick={() => { setUserType(''); setStep(2); }} className="btn-ghost py-3 px-5">← Back</button>
               <button
-                disabled={Object.keys(gdprConsents).length === 0}
+                disabled={!gdprConsents.necessary}
                 onClick={() => setStep(4)}
                 className="btn-fire flex-1 py-3 disabled:opacity-20"
               >
@@ -218,30 +200,10 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
         )}
 
         {/* Step 4: Profile Info */}
-        {step === 4 && userType && !updateUser.isSuccess && (
-          <div className="animate-[fadeUp_0.35s_ease] text-center py-8">
-            <div className="text-6xl mb-6">✓</div>
-            <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-3">
-              {t('onboard_complete').toUpperCase()}
-            </h2>
-            <p className="font-rajdhani text-base text-fire-4/60 mb-6 leading-relaxed max-w-md mx-auto">
-              {userType === 'athlete' 
-                ? 'Your athlete profile is ready! You can now register for events and start competing.'
-                : 'Your spectator profile is ready! You can now get tickets and support your favorite athletes.'}
-            </p>
-            <button
-              onClick={() => onComplete?.()}
-              className="btn-fire py-3 px-8"
-            >
-              START EXPLORING →
-            </button>
-          </div>
-        )}
-
-
+        {step === 4 && userType && (
           <div className="animate-[fadeUp_0.35s_ease]">
             <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1">
-              {userType === 'athlete' ? t('onboard_athlete').toUpperCase() : t('onboard_spectator').toUpperCase()} {t('onboard_profile_title').split(' ')[0].toUpperCase()}
+              {userType === 'athlete' ? t('onboard_athlete').toUpperCase() : t('onboard_spectator').toUpperCase()} — {t('onboard_profile_title').toUpperCase()}
             </h2>
             <p className="font-mono text-[11px] tracking-[3px] uppercase text-fire-3/30 mb-6">
               {t('onboard_profile_title')}
@@ -256,55 +218,32 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                   <span className="text-3xl">👤</span>
                 )}
               </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
-                className="btn-ghost text-[10px] py-2 px-4"
-              >
-                {uploading ? '⏳...' : formData.avatar_url ? '✓' : `📸 ${t('onboard_photo')}`}
+              <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+              <button onClick={() => fileInputRef.current?.click()} disabled={uploading} className="btn-ghost text-[10px] py-2 px-4">
+                {uploading ? '⏳...' : formData.avatar_url ? '✓ Photo Added' : `📸 ${t('onboard_photo')}`}
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_phone')}</label>
-                <input
-                  type="tel"
-                  className="cyber-input"
-                  value={formData.phone}
+                <input type="tel" className="cyber-input" value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+971 XX XXX XXXX"
-                />
+                  placeholder="+971 XX XXX XXXX" />
               </div>
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_dob')} *</label>
-                <input
-                  type="date"
-                  className="cyber-input"
-                  value={formData.date_of_birth}
+                <input type="date" className="cyber-input" value={formData.date_of_birth}
                   onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
-                  max={new Date().toISOString().split('T')[0]}
-                  required
-                />
+                  max={new Date().toISOString().split('T')[0]} />
               </div>
             </div>
 
-            {/* Age Verification */}
             {formData.date_of_birth && (
               <div className="mb-4">
                 <AgeVerification
                   dateOfBirth={formData.date_of_birth}
-                  onVerified={(verified, category) => {
-                    setAgeVerified(verified);
-                    setAgeCategory(category);
-                  }}
+                  onVerified={(verified, category) => { setAgeVerified(verified); setAgeCategory(category); }}
                 />
               </div>
             )}
@@ -312,19 +251,11 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_country')}</label>
-                <input
-                  className="cyber-input"
-                  value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                />
+                <input className="cyber-input" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} />
               </div>
               <div>
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_city')}</label>
-                <input
-                  className="cyber-input"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                />
+                <input className="cyber-input" value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} />
               </div>
             </div>
 
@@ -332,21 +263,14 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
               <>
                 <div className="mb-4">
                   <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_sports')}</label>
-                  <input
-                    className="cyber-input"
-                    placeholder={t('onboard_sports_placeholder')}
+                  <input className="cyber-input" placeholder={t('onboard_sports_placeholder')}
                     value={formData.sports.join(', ')}
-                    onChange={(e) => setFormData({ ...formData, sports: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-                  />
+                    onChange={(e) => setFormData({ ...formData, sports: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })} />
                 </div>
                 <div className="mb-4">
                   <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_bio')}</label>
-                  <textarea
-                    className="cyber-input h-24"
-                    placeholder={t('onboard_bio_placeholder')}
-                    value={formData.bio}
-                    onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                  />
+                  <textarea className="cyber-input h-24" placeholder={t('onboard_bio_placeholder')}
+                    value={formData.bio} onChange={(e) => setFormData({ ...formData, bio: e.target.value })} />
                 </div>
               </>
             )}
@@ -354,12 +278,9 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
             {userType === 'spectator' && (
               <div className="mb-4">
                 <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">{t('onboard_fav_sports')}</label>
-                <input
-                  className="cyber-input"
-                  placeholder={t('onboard_sports_placeholder')}
+                <input className="cyber-input" placeholder={t('onboard_sports_placeholder')}
                   value={formData.favorite_sports.join(', ')}
-                  onChange={(e) => setFormData({ ...formData, favorite_sports: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-                />
+                  onChange={(e) => setFormData({ ...formData, favorite_sports: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })} />
               </div>
             )}
 
@@ -373,7 +294,7 @@ export default function OnboardingFlow({ user, onComplete, lang }) {
                 {updateUser.isPending ? t('onboard_creating') : `✓ ${t('onboard_complete')}`}
               </button>
             </div>
-            
+
             {ageCategory?.isMinor && (
               <p className="text-center font-mono text-xs text-red-400 mt-3">
                 Minors cannot complete independent onboarding. Please register through an event with parental consent.

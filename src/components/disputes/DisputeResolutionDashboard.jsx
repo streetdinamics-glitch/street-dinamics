@@ -21,18 +21,6 @@ export default function DisputeResolutionDashboard() {
     queryFn: () => base44.auth.me(),
   });
 
-  // Verify user is admin
-  if (user?.role !== 'admin') {
-    return (
-      <div className="min-h-screen bg-cyber-void flex items-center justify-center">
-        <div className="text-center">
-          <AlertTriangle size={48} className="text-red-500 mx-auto mb-4" />
-          <p className="font-orbitron text-xl text-red-400">Admin access required</p>
-        </div>
-      </div>
-    );
-  }
-
   const { data: disputes = [] } = useQuery({
     queryKey: ['disputes'],
     queryFn: () => base44.entities.Dispute.list('-created_at', 100),
@@ -51,6 +39,18 @@ export default function DisputeResolutionDashboard() {
       totalAmount: disputes.reduce((sum, d) => sum + d.amount_disputed, 0),
     }),
   });
+
+  // Verify user is admin
+  if (user && user.role !== 'admin') {
+    return (
+      <div className="min-h-screen bg-cyber-void flex items-center justify-center">
+        <div className="text-center">
+          <AlertTriangle size={48} className="text-red-500 mx-auto mb-4" />
+          <p className="font-orbitron text-xl text-red-400">Admin access required</p>
+        </div>
+      </div>
+    );
+  }
 
   // Filter disputes
   let filtered = disputes;
