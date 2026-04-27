@@ -18,6 +18,11 @@ import UserProfile from './pages/UserProfile';
 import VotingHub from './pages/VotingHub';
 import EnhancedUserProfile from './pages/EnhancedUserProfile';
 import Web3Page from './pages/Web3';
+import ComeFunziona from './pages/ComeFunziona';
+import Discipline from './pages/Discipline';
+import FormatoEvento from './pages/FormatoEvento';
+import WindowChallengePage from './pages/WindowChallenge';
+import Scarsita from './pages/Scarsita';
 import { Navigate } from 'react-router-dom';
 
 const AdminGuard = ({ children }) => {
@@ -67,6 +72,11 @@ const AuthenticatedApp = () => {
       <Route path="/VotingHub" element={<VotingHub />} />
       <Route path="/EnhancedUserProfile" element={<EnhancedUserProfile />} />
       <Route path="/Web3" element={<Web3Page />} />
+      <Route path="/come-funziona" element={<ComeFunziona />} />
+      <Route path="/discipline" element={<Discipline />} />
+      <Route path="/formato-evento" element={<FormatoEvento />} />
+      <Route path="/window-challenge" element={<WindowChallengePage />} />
+      <Route path="/scarsita" element={<Scarsita />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
