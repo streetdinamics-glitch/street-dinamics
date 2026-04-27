@@ -23,6 +23,9 @@ import Discipline from './pages/Discipline';
 import FormatoEvento from './pages/FormatoEvento';
 import WindowChallengePage from './pages/WindowChallenge';
 import Scarsita from './pages/Scarsita';
+import DashboardFan from './pages/DashboardFan';
+import DashboardAtleta from './pages/DashboardAtleta';
+import DashboardAdmin from './pages/DashboardAdmin';
 import { Navigate } from 'react-router-dom';
 
 const AdminGuard = ({ children }) => {
@@ -77,6 +80,9 @@ const AuthenticatedApp = () => {
       <Route path="/formato-evento" element={<FormatoEvento />} />
       <Route path="/window-challenge" element={<WindowChallengePage />} />
       <Route path="/scarsita" element={<Scarsita />} />
+      <Route path="/dashboard-fan" element={<DashboardFan />} />
+      <Route path="/dashboard-atleta" element={<DashboardAtleta />} />
+      <Route path="/dashboard-admin" element={<AdminGuard><DashboardAdmin /></AdminGuard>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

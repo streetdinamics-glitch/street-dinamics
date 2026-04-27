@@ -126,12 +126,18 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                   <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
                 </button>
                 <div className="absolute top-full right-0 mt-1 w-56 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
-                  <Link
-                    to="/UserProfile"
-                    className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 no-underline block"
-                  >
-                    👤 {t('nav_my_profile')}
-                  </Link>
+                 <Link
+                   to={user?.role === 'admin' ? '/dashboard-admin' : user?.role === 'athlete' ? '/dashboard-atleta' : '/dashboard-fan'}
+                   className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-5 hover:bg-fire-3/15 hover:text-fire-5 transition-colors border-b border-fire-3/20 no-underline block font-bold"
+                 >
+                   🏠 Dashboard
+                 </Link>
+                 <Link
+                   to="/UserProfile"
+                   className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 no-underline block"
+                 >
+                   👤 {t('nav_my_profile')}
+                 </Link>
                   <button
                     onClick={() => setWatchlistOpen(true)}
                     className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
@@ -247,6 +253,13 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
             {user && (
               <div className="mb-4">
                 <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">{t('nav_account')}</div>
+                <Link
+                  to={user?.role === 'admin' ? '/dashboard-admin' : user?.role === 'athlete' ? '/dashboard-atleta' : '/dashboard-fan'}
+                  className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-fire-5/15 to-transparent border-l-2 border-fire-5/60 text-fire-5 py-3 px-4 text-left transition-all hover:border-fire-5 hover:from-fire-5/25 w-full no-underline block mb-2"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  🏠 Dashboard
+                </Link>
                 <Link
                   to="/UserProfile"
                   className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-fire-3/10 to-transparent border-l-2 border-fire-3/40 text-fire-4 py-3 px-4 text-left transition-all hover:border-fire-3 hover:from-fire-3/20 w-full no-underline block mb-2"
