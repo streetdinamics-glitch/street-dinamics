@@ -20,6 +20,7 @@ import FanVotingModule from '../components/fan/FanVotingModule';
 
 import SocialLinksModal from '../components/cyber/SocialLinksModal';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
+import SiteOnboarding, { useSiteOnboarding } from '../components/onboarding/SiteOnboarding';
 import UserProfile from '../components/profile/UserProfile';
 import Footer from '../components/cyber/Footer';
 import SpectatorTypeModal from '../components/cyber/SpectatorTypeModal';
@@ -42,6 +43,7 @@ export default function Home() {
   const [socialOpen, setSocialOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false); // kept for legacy modal triggers
   const [onboardingOpen, setOnboardingOpen] = useState(false); // kept for future use / external triggers
+  const siteOnboarding = useSiteOnboarding();
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
 
@@ -238,6 +240,9 @@ export default function Home() {
       )}
       {profileOpen && (
         <UserProfile lang={lang} onClose={() => setProfileOpen(false)} />
+      )}
+      {siteOnboarding.show && (
+        <SiteOnboarding onComplete={siteOnboarding.complete} />
       )}
       {/* My Subscriptions Panel */}
       <AnimatePresence>
