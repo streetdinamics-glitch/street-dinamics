@@ -242,7 +242,7 @@ export default function Home() {
         <UserProfile lang={lang} onClose={() => setProfileOpen(false)} />
       )}
       {siteOnboarding.show && (
-        <SiteOnboarding onComplete={siteOnboarding.complete} />
+        <SiteOnboarding lang={lang} onComplete={siteOnboarding.complete} />
       )}
       {/* My Subscriptions Panel */}
       <AnimatePresence>
