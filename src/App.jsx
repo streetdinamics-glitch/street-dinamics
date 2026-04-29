@@ -16,7 +16,6 @@ import Analytics from './pages/Analytics';
 import NFTDashboard from './pages/NFTDashboard';
 import UserProfile from './pages/UserProfile';
 import VotingHub from './pages/VotingHub';
-import EnhancedUserProfile from './pages/EnhancedUserProfile';
 import Web3Page from './pages/Web3';
 import ComeFunziona from './pages/ComeFunziona';
 import Discipline from './pages/Discipline';
@@ -73,7 +72,7 @@ const AuthenticatedApp = () => {
       <Route path="/NFTDashboard" element={<NFTDashboard />} />
       <Route path="/UserProfile" element={<UserProfile />} />
       <Route path="/VotingHub" element={<VotingHub />} />
-      <Route path="/EnhancedUserProfile" element={<EnhancedUserProfile />} />
+      <Route path="/EnhancedUserProfile" element={<Navigate to="/UserProfile" replace />} />
       <Route path="/Web3" element={<Web3Page />} />
       <Route path="/come-funziona" element={<ComeFunziona />} />
       <Route path="/discipline" element={<Discipline />} />
