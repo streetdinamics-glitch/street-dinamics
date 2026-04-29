@@ -1,5 +1,7 @@
 export const en = {
   nav_events: 'Events', nav_tokens: 'Tokens', nav_bet: 'Bet', nav_social: 'Social',
+  nav_how_it_works: 'How it Works', nav_disciplines: 'Disciplines', nav_event_format: 'Event Format',
+  nav_window_challenge: 'Window Challenge', nav_scarcity: 'Scarcity & Investment',
   nav_explore: 'Explore', nav_tools: 'Tools', nav_account: 'Account',
   nav_my_profile: 'My Profile', nav_watchlist: 'Watchlist', nav_notifications: 'Notifications',
   nav_admin: 'Admin Panel', nav_navigation: 'Navigation', nav_settings: 'Settings',

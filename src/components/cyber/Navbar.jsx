@@ -49,6 +49,14 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
     { label: t('nav_bet'), id: 'gamification' },
     { label: t('nav_social'), id: 'social' },
   ];
+
+  const infoLinks = [
+    { label: '🃏 ' + (t('nav_how_it_works') || 'Come Funziona'), path: '/come-funziona' },
+    { label: '🏆 ' + (t('nav_disciplines') || 'Discipline'), path: '/discipline' },
+    { label: '📋 ' + (t('nav_event_format') || 'Formato Evento'), path: '/formato-evento' },
+    { label: '👑 ' + (t('nav_window_challenge') || 'Window Challenge'), path: '/window-challenge' },
+    { label: '📊 ' + (t('nav_scarcity') || 'Scarsità & Investimento'), path: '/scarsita' },
+  ];
   
   const navLinks = user?.role === 'athlete' || user?.role === 'admin' ? [
     { label: `📊 ${t('nav_analytics')}`, path: '/Analytics' },
@@ -85,15 +93,25 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
               {t('nav_explore')}
               <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />
             </button>
-            <div className="absolute top-full left-0 mt-1 w-48 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
+            <div className="absolute top-full left-0 mt-1 w-56 bg-black/95 border border-fire-3/30 clip-cyber opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[300]">
               {navItems.map(item => (
                 <button
                   key={item.id}
                   onClick={() => { onScrollTo?.(item.id); }}
-                  className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 last:border-b-0"
+                  className="w-full text-left px-4 py-2.5 font-rajdhani text-sm text-fire-3/70 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10"
                 >
                   {item.label}
                 </button>
+              ))}
+              <div className="px-3 py-1.5 font-mono text-[8px] tracking-[1px] uppercase text-fire-3/30 border-b border-fire-3/10">INFO</div>
+              {infoLinks.map(link => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="w-full text-left px-4 py-2 font-rajdhani text-sm text-fire-3/60 hover:bg-fire-3/10 hover:text-fire-3 transition-colors border-b border-fire-3/10 last:border-b-0 no-underline block"
+                >
+                  {link.label}
+                </Link>
               ))}
             </div>
           </div>
@@ -237,6 +255,21 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
                 >
                   {item.label}
                 </button>
+              ))}
+            </div>
+
+            {/* Info Pages */}
+            <div className="mb-4">
+              <div className="font-mono text-[9px] tracking-[2px] uppercase text-fire-3/40 mb-2 px-2">INFO</div>
+              {infoLinks.map(link => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="font-orbitron text-sm font-bold tracking-[1px] uppercase bg-gradient-to-r from-fire-3/10 to-transparent border-l-2 border-fire-3/40 text-fire-4 py-3 px-4 text-left transition-all hover:border-fire-3 hover:from-fire-3/20 hover:text-fire-5 w-full no-underline block mb-2"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
               ))}
             </div>
 

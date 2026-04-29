@@ -9,6 +9,69 @@ import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 
+const DASH_LABELS = {
+  it: { subtitle: 'la tua carriera SD', badges: 'I TUOI BADGE', cards: 'LE TUE CARD EMESSE', quickAccess: 'ACCESSO RAPIDO', links: [
+    { to: '/AthleteProfile', emoji: '👤', label: 'Il mio profilo atleta', desc: 'Gestisci bio, sport, stats', color: 'cyan' },
+    { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, fan, revenue', color: 'cyan' },
+    { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Card', desc: 'Gestisci le tue card emesse', color: 'purple' },
+    { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'Sfida il campione', color: 'fire' },
+    { to: '/discipline', emoji: '🏆', label: 'Discipline', desc: 'Regole e formato degli eventi', color: 'fire' },
+    { to: '/Home', emoji: '📅', label: 'Prossimi eventi', desc: 'Registrati al prossimo torneo', color: 'fire' },
+    { to: '/come-funziona', emoji: '🃏', label: 'Come funziona', desc: 'Il sistema card e royalty', color: 'purple' },
+    { to: '/formato-evento', emoji: '📋', label: 'Formato evento', desc: 'Come sono strutturati i tornei', color: 'fire' },
+  ]},
+  en: { subtitle: 'your SD career', badges: 'YOUR BADGES', cards: 'YOUR ISSUED CARDS', quickAccess: 'QUICK ACCESS', links: [
+    { to: '/AthleteProfile', emoji: '👤', label: 'My athlete profile', desc: 'Manage bio, sports, stats', color: 'cyan' },
+    { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, fans, revenue', color: 'cyan' },
+    { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Manage your issued cards', color: 'purple' },
+    { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'Challenge the champion', color: 'fire' },
+    { to: '/discipline', emoji: '🏆', label: 'Disciplines', desc: 'Rules and event format', color: 'fire' },
+    { to: '/Home', emoji: '📅', label: 'Upcoming events', desc: 'Register for the next tournament', color: 'fire' },
+    { to: '/come-funziona', emoji: '🃏', label: 'How it works', desc: 'Cards and royalty system', color: 'purple' },
+    { to: '/formato-evento', emoji: '📋', label: 'Event format', desc: 'How tournaments are structured', color: 'fire' },
+  ]},
+  es: { subtitle: 'tu carrera SD', badges: 'TUS BADGES', cards: 'TUS CARDS EMITIDAS', quickAccess: 'ACCESO RÁPIDO', links: [
+    { to: '/AthleteProfile', emoji: '👤', label: 'Mi perfil de atleta', desc: 'Gestiona bio, deporte, stats', color: 'cyan' },
+    { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Rendimiento, fans, ingresos', color: 'cyan' },
+    { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Gestiona tus cards emitidas', color: 'purple' },
+    { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'Desafía al campeón', color: 'fire' },
+    { to: '/discipline', emoji: '🏆', label: 'Disciplinas', desc: 'Reglas y formato del evento', color: 'fire' },
+    { to: '/Home', emoji: '📅', label: 'Próximos eventos', desc: 'Regístrate en el próximo torneo', color: 'fire' },
+    { to: '/come-funziona', emoji: '🃏', label: 'Cómo funciona', desc: 'Sistema de cards y regalías', color: 'purple' },
+    { to: '/formato-evento', emoji: '📋', label: 'Formato del evento', desc: 'Cómo se estructuran los torneos', color: 'fire' },
+  ]},
+  fr: { subtitle: 'ta carrière SD', badges: 'TES BADGES', cards: 'TES CARDS ÉMISES', quickAccess: 'ACCÈS RAPIDE', links: [
+    { to: '/AthleteProfile', emoji: '👤', label: 'Mon profil athlète', desc: 'Gérer bio, sport, stats', color: 'cyan' },
+    { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, fans, revenus', color: 'cyan' },
+    { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Gérer tes cards émises', color: 'purple' },
+    { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'Défie le champion', color: 'fire' },
+    { to: '/discipline', emoji: '🏆', label: 'Disciplines', desc: 'Règles et format des événements', color: 'fire' },
+    { to: '/Home', emoji: '📅', label: 'Prochains événements', desc: 'Inscris-toi au prochain tournoi', color: 'fire' },
+    { to: '/come-funziona', emoji: '🃏', label: 'Comment ça marche', desc: 'Système de cards et royalties', color: 'purple' },
+    { to: '/formato-evento', emoji: '📋', label: 'Format d\'événement', desc: 'Comment les tournois sont structurés', color: 'fire' },
+  ]},
+  ar: { subtitle: 'مسيرتك في SD', badges: 'شاراتك', cards: 'بطاقاتك الصادرة', quickAccess: 'وصول سريع', links: [
+    { to: '/AthleteProfile', emoji: '👤', label: 'ملفي الرياضي', desc: 'إدارة السيرة والرياضة والإحصاءات', color: 'cyan' },
+    { to: '/Analytics', emoji: '📊', label: 'التحليلات', desc: 'الأداء والمشجعون والإيرادات', color: 'cyan' },
+    { to: '/NFTDashboard', emoji: '💎', label: 'NFT والبطاقات', desc: 'إدارة بطاقاتك الصادرة', color: 'purple' },
+    { to: '/window-challenge', emoji: '👑', label: 'تحدي النافذة', desc: 'تحدى البطل', color: 'fire' },
+    { to: '/discipline', emoji: '🏆', label: 'التخصصات', desc: 'القواعد وتنسيق الأحداث', color: 'fire' },
+    { to: '/Home', emoji: '📅', label: 'الأحداث القادمة', desc: 'سجّل في البطولة القادمة', color: 'fire' },
+    { to: '/come-funziona', emoji: '🃏', label: 'كيف يعمل', desc: 'نظام البطاقات والإتاوات', color: 'purple' },
+    { to: '/formato-evento', emoji: '📋', label: 'تنسيق الحدث', desc: 'كيف تُبنى البطولات', color: 'fire' },
+  ]},
+  de: { subtitle: 'deine SD-Karriere', badges: 'DEINE BADGES', cards: 'DEINE AUSGEGEBENEN CARDS', quickAccess: 'SCHNELLZUGRIFF', links: [
+    { to: '/AthleteProfile', emoji: '👤', label: 'Mein Athletenprofil', desc: 'Bio, Sport, Stats verwalten', color: 'cyan' },
+    { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, Fans, Einnahmen', color: 'cyan' },
+    { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Deine ausgegebenen Cards verwalten', color: 'purple' },
+    { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'Den Champion herausfordern', color: 'fire' },
+    { to: '/discipline', emoji: '🏆', label: 'Disziplinen', desc: 'Regeln und Eventformat', color: 'fire' },
+    { to: '/Home', emoji: '📅', label: 'Bevorstehende Events', desc: 'Für das nächste Turnier anmelden', color: 'fire' },
+    { to: '/come-funziona', emoji: '🃏', label: 'Wie es funktioniert', desc: 'Card- und Royalty-System', color: 'purple' },
+    { to: '/formato-evento', emoji: '📋', label: 'Eventformat', desc: 'Wie Turniere aufgebaut sind', color: 'fire' },
+  ]},
+};
+
 function StatCard({ emoji, label, value, sub }) {
   return (
     <div className="border border-cyan-500/20 bg-cyan-500/5 p-4" style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
@@ -48,6 +111,7 @@ function QuickLink({ to, emoji, label, desc, color = 'fire' }) {
 
 export default function DashboardAtleta() {
   const [lang, setLang] = useLang();
+  const DL = DASH_LABELS[lang] || DASH_LABELS.it;
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -98,7 +162,7 @@ export default function DashboardAtleta() {
           <h1 className="font-orbitron font-black text-[clamp(32px,6vw,64px)] leading-none mb-1" style={{ background: 'linear-gradient(135deg, #00ffee, #0099ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             ATLETA
           </h1>
-          <p className="font-rajdhani text-base text-white/40">Ciao, <span className="text-cyan-400">{user?.full_name || 'Atleta'}</span> — la tua carriera SD.</p>
+          <p className="font-rajdhani text-base text-white/40">👋 <span className="text-cyan-400">{user?.full_name || 'Atleta'}</span> — {DL.subtitle}</p>
         </motion.div>
 
         {/* Stats */}
@@ -112,7 +176,7 @@ export default function DashboardAtleta() {
         {/* Badges */}
         {badges.length > 0 && (
           <div className="mb-8">
-            <p className="font-mono text-[10px] tracking-[5px] uppercase text-cyan-400/40 mb-4">I TUOI BADGE</p>
+            <p className="font-mono text-[10px] tracking-[5px] uppercase text-cyan-400/40 mb-4">{DL.badges}</p>
             <div className="flex flex-wrap gap-2">
               {badges.map(b => (
                 <div key={b.id} className="px-3 py-1.5 border border-cyan-500/30 bg-cyan-500/5 flex items-center gap-2" title={b.badge_description}>
@@ -132,7 +196,7 @@ export default function DashboardAtleta() {
         {/* Card emesse */}
         {tokens.length > 0 && (
           <div className="mb-8">
-            <p className="font-mono text-[10px] tracking-[5px] uppercase text-cyan-400/40 mb-4">LE TUE CARD EMESSE</p>
+            <p className="font-mono text-[10px] tracking-[5px] uppercase text-cyan-400/40 mb-4">{DL.cards}</p>
             <div className="space-y-2">
               {tokens.map(t => {
                 const tierColors = {
@@ -161,14 +225,9 @@ export default function DashboardAtleta() {
 
         {/* Quick links */}
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-cyan-400/40 mb-4">ACCESSO RAPIDO</p>
+          <p className="font-mono text-[10px] tracking-[5px] uppercase text-cyan-400/40 mb-4">{DL.quickAccess}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <QuickLink to="/AthleteProfile" emoji="👤" label="Il mio profilo atleta" desc="Gestisci bio, sport, stats" color="cyan" />
-            <QuickLink to="/Analytics" emoji="📊" label="Analytics" desc="Performance, fan, revenue" color="cyan" />
-            <QuickLink to="/NFTDashboard" emoji="💎" label="NFT & Card" desc="Gestisci le tue card emesse" color="purple" />
-            <QuickLink to="/window-challenge" emoji="👑" label="Window Challenge" desc="Sfida il campione" color="fire" />
-            <QuickLink to="/discipline" emoji="🏆" label="Discipline" desc="Regole e formato degli eventi" color="fire" />
-            <QuickLink to="/Home" emoji="📅" label="Prossimi eventi" desc="Registrati al prossimo torneo" color="fire" />
+            {DL.links.map(l => <QuickLink key={l.to} to={l.to} emoji={l.emoji} label={l.label} desc={l.desc} color={l.color} />)}
           </div>
         </div>
       </div>

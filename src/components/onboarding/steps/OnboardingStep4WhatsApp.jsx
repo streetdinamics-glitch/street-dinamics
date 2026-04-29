@@ -9,7 +9,8 @@ const LABELS = {
     sub: 'Riceverai questo messaggio subito dopo la registrazione.',
     minor: '⚠️ Sei minorenne — invieremo un messaggio al numero inserito per la conferma del genitore/tutore.',
     phoneReminder: 'Il messaggio arriverà al numero:',
-    openWa: 'Apri WhatsApp',
+    openWa: '📲 Scrivi all\'Agente SD su WhatsApp',
+    waNote: 'Il messaggio verrà inviato all\'agente SD. Ti risponderà entro poco.',
     continue: 'Continua →',
     msgs_athlete: (name, disc) => [
       `🏆 Ciao ${name || 'atleta'}! Benvenuto in Street Dinamics.`,
@@ -29,7 +30,8 @@ const LABELS = {
     sub: 'You will receive this message right after registration.',
     minor: '⚠️ You are a minor — we will send a message to the number provided for parental consent.',
     phoneReminder: 'Message will be sent to:',
-    openWa: 'Open WhatsApp',
+    openWa: '📲 Message the SD Agent on WhatsApp',
+    waNote: 'The message will be sent to the SD agent. They will reply shortly.',
     continue: 'Continue →',
     msgs_athlete: (name, disc) => [
       `🏆 Hi ${name || 'athlete'}! Welcome to Street Dinamics.`,
@@ -49,7 +51,8 @@ const LABELS = {
     sub: 'Recibirás este mensaje justo después del registro.',
     minor: '⚠️ Eres menor de edad — enviaremos un mensaje al número proporcionado para el consentimiento parental.',
     phoneReminder: 'El mensaje llegará al número:',
-    openWa: 'Abrir WhatsApp',
+    openWa: '📲 Escribir al Agente SD en WhatsApp',
+    waNote: 'El mensaje será enviado al agente SD. Te responderá pronto.',
     continue: 'Continuar →',
     msgs_athlete: (name, disc) => [
       `🏆 ¡Hola ${name || 'atleta'}! Bienvenido a Street Dinamics.`,
@@ -69,7 +72,8 @@ const LABELS = {
     sub: 'Tu recevras ce message juste après l\'inscription.',
     minor: '⚠️ Tu es mineur — nous enverrons un message au numéro fourni pour le consentement parental.',
     phoneReminder: 'Le message arrivera au numéro :',
-    openWa: 'Ouvrir WhatsApp',
+    openWa: '📲 Écrire à l\'Agent SD sur WhatsApp',
+    waNote: 'Le message sera envoyé à l\'agent SD. Il répondra rapidement.',
     continue: 'Continuer →',
     msgs_athlete: (name, disc) => [
       `🏆 Salut ${name || 'athlète'} ! Bienvenue sur Street Dinamics.`,
@@ -89,7 +93,8 @@ const LABELS = {
     sub: 'ستتلقى هذه الرسالة فور التسجيل.',
     minor: '⚠️ أنت قاصر — سنرسل رسالة إلى الرقم المقدم للحصول على موافقة الوالدين.',
     phoneReminder: 'ستصل الرسالة إلى الرقم:',
-    openWa: 'فتح واتساب',
+    openWa: '📲 راسل وكيل SD على واتساب',
+    waNote: 'سيتم إرسال الرسالة إلى وكيل SD. سيرد عليك قريباً.',
     continue: 'استمر →',
     msgs_athlete: (name, disc) => [
       `🏆 مرحباً ${name || 'رياضي'}! أهلاً بك في Street Dinamics.`,
@@ -109,7 +114,8 @@ const LABELS = {
     sub: 'Du erhältst diese Nachricht direkt nach der Registrierung.',
     minor: '⚠️ Du bist minderjährig — wir senden eine Nachricht an die angegebene Nummer für die elterliche Zustimmung.',
     phoneReminder: 'Die Nachricht kommt an die Nummer:',
-    openWa: 'WhatsApp öffnen',
+    openWa: '📲 SD-Agent auf WhatsApp schreiben',
+    waNote: 'Die Nachricht wird an den SD-Agent gesendet. Er antwortet bald.',
     continue: 'Weiter →',
     msgs_athlete: (name, disc) => [
       `🏆 Hallo ${name || 'Athlet'}! Willkommen bei Street Dinamics.`,
@@ -127,7 +133,9 @@ const LABELS = {
 
 export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' }) {
   const L = LABELS[lang] || LABELS.it;
-  const { name, role, discipline, phone, isMinor } = userData;
+  // support both 'name' (new) and 'nome' (legacy)
+  const name = userData.name || userData.nome || '';
+  const { role, discipline, phone, isMinor } = userData;
   const isAthlete = role === 'athlete';
 
   const [tick, setTick] = useState(0);
@@ -143,9 +151,18 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
   const visibleMessages = messages.slice(0, Math.min(tick + 1, messages.length));
   const allShown = visibleMessages.length >= messages.length;
 
-  const waLink = phone
-    ? `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`SD System - Account attivato per ${name || ''}. Attendi il messaggio dell'agente.`)}`
-    : null;
+  // SD business WhatsApp — user sends a message to the SD agent
+  const SD_WA_NUMBER = '971000000000'; // Replace with real SD WhatsApp business number
+  const waMessages = {
+    it: `SD Sistema - Nuovo account attivato!\nNome: ${name || ''}\nTelefono: ${phone || ''}\nRuolo: ${role === 'athlete' ? 'Atleta' : 'Fan'}\nDisciplina: ${discipline || ''}`,
+    en: `SD System - New account activated!\nName: ${name || ''}\nPhone: ${phone || ''}\nRole: ${role === 'athlete' ? 'Athlete' : 'Fan'}\nDiscipline: ${discipline || ''}`,
+    es: `SD Sistema - ¡Nueva cuenta activada!\nNombre: ${name || ''}\nTeléfono: ${phone || ''}\nRol: ${role === 'athlete' ? 'Atleta' : 'Fan'}\nDisciplina: ${discipline || ''}`,
+    fr: `SD Système - Nouveau compte activé!\nNom: ${name || ''}\nTéléphone: ${phone || ''}\nRôle: ${role === 'athlete' ? 'Athlète' : 'Fan'}\nDiscipline: ${discipline || ''}`,
+    ar: `نظام SD - تم تفعيل الحساب!\nالاسم: ${name || ''}\nالهاتف: ${phone || ''}\nالدور: ${role === 'athlete' ? 'رياضي' : 'مشجع'}\nالتخصص: ${discipline || ''}`,
+    de: `SD System - Neues Konto aktiviert!\nName: ${name || ''}\nTelefon: ${phone || ''}\nRolle: ${role === 'athlete' ? 'Athlet' : 'Fan'}\nDisziplin: ${discipline || ''}`,
+  };
+  const waText = waMessages[lang] || waMessages.it;
+  const waLink = `https://wa.me/${SD_WA_NUMBER}?text=${encodeURIComponent(waText)}`;
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-full px-5 py-12 max-w-lg mx-auto w-full text-center">
@@ -206,10 +223,12 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
       {phone && (
         <p className="font-mono text-[10px] text-white/30 mb-6">
           {L.phoneReminder} <span className="text-fire-3">{phone}</span>
+          <br/>
+          <span className="text-white/20">{L.waNote}</span>
         </p>
       )}
 
-      {waLink && allShown && (
+      {allShown && (
         <motion.a
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
