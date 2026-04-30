@@ -43,7 +43,8 @@ export default function Home() {
   const [socialOpen, setSocialOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false); // kept for legacy modal triggers
   const [onboardingOpen, setOnboardingOpen] = useState(false); // kept for future use / external triggers
-  const siteOnboarding = useSiteOnboarding();
+  // Pass true when the logged-in user has already completed onboarding (any device)
+  const siteOnboarding = useSiteOnboarding(user?.onboarding_completed === true);
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
 
@@ -52,12 +53,9 @@ export default function Home() {
     queryFn: () => base44.auth.me(),
   });
 
-  // Auto-open onboarding for users who haven't completed it
-  React.useEffect(() => {
-    if (user && user.onboarding_completed === false) {
-      setOnboardingOpen(true);
-    }
-  }, [user]);
+  // NOTE: SiteOnboarding (SiteOnboarding.jsx) is the canonical onboarding flow.
+  // The old OnboardingFlow modal is kept for future use but NOT auto-triggered here —
+  // doing so caused a dual-onboarding conflict (both flows firing simultaneously).
 
   const { data: events = [], isLoading: eventsLoading } = useQuery({
     queryKey: ['events'],

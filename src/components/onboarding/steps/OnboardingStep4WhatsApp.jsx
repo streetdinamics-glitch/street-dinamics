@@ -140,9 +140,14 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
 
   const [tick, setTick] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setTick(p => p + 1), 800);
+    const t = setInterval(() => {
+      setTick(p => {
+        if (p + 1 >= messages.length) clearInterval(t);
+        return p + 1;
+      });
+    }, 800);
     return () => clearInterval(t);
-  }, []);
+  }, [messages.length]);
 
   const messages = isAthlete
     ? L.msgs_athlete(name, discipline)

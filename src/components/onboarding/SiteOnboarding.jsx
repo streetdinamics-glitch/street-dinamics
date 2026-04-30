@@ -8,13 +8,21 @@ import OnboardingStep5Welcome from './steps/OnboardingStep5Welcome.jsx';
 
 const STORAGE_KEY = 'sd_onboarding_complete';
 
-export function useSiteOnboarding() {
+// Pass `userAlreadyDone=true` when the authenticated user has onboarding_completed===true
+// so returning users on a new device are not shown the flow again.
+export function useSiteOnboarding(userAlreadyDone = false) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    if (userAlreadyDone) {
+      // Sync localStorage so future checks are instant
+      localStorage.setItem(STORAGE_KEY, 'true');
+      setShow(false);
+      return;
+    }
     const done = localStorage.getItem(STORAGE_KEY);
     if (!done) setShow(true);
-  }, []);
+  }, [userAlreadyDone]);
 
   const complete = () => {
     localStorage.setItem(STORAGE_KEY, 'true');
@@ -23,8 +31,6 @@ export function useSiteOnboarding() {
 
   return { show, complete };
 }
-
-const TOTAL_STEPS = 4; // steps 2-5 (step 1 is splash)
 
 export default function SiteOnboarding({ onComplete, lang = 'it' }) {
   const [step, setStep] = useState(1);
@@ -40,8 +46,10 @@ export default function SiteOnboarding({ onComplete, lang = 'it' }) {
     onComplete?.();
   };
 
-  // Steps 2,3,4 are the trackable ones (1 = splash, 5 = welcome/finish)
-  const progressStep = step >= 2 && step <= 4 ? step - 1 : null; // 1,2,3
+  // Steps 2-5 are the trackable ones (1 = splash only)
+  // progressStep: step2→1, step3→2, step4→3, step5→4
+  const progressStep = step >= 2 && step <= 5 ? step - 1 : null; // 1,2,3,4
+  const TOTAL_PROGRESS = 4;
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden">
@@ -49,11 +57,11 @@ export default function SiteOnboarding({ onComplete, lang = 'it' }) {
       <div className="cyber-scanlines" />
       <div className="cyber-vignette" />
 
-      {/* Progress — dots + bar, only steps 2-4, NOT clickable */}
+      {/* Progress — dots + bar, steps 2-5, NOT clickable */}
       {progressStep !== null && (
-        <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 w-48">
+        <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 w-52">
           <div className="flex gap-2">
-            {[1, 2, 3].map(i => (
+            {[1, 2, 3, 4].map(i => (
               <div
                 key={i}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
@@ -65,7 +73,7 @@ export default function SiteOnboarding({ onComplete, lang = 'it' }) {
           <div className="h-[2px] w-full bg-white/5 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-fire-3 to-fire-5 transition-all duration-500"
-              style={{ width: `${(progressStep / 3) * 100}%` }}
+              style={{ width: `${(progressStep / TOTAL_PROGRESS) * 100}%` }}
             />
           </div>
         </div>
