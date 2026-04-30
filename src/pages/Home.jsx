@@ -43,8 +43,6 @@ export default function Home() {
   const [socialOpen, setSocialOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false); // kept for legacy modal triggers
   const [onboardingOpen, setOnboardingOpen] = useState(false); // kept for future use / external triggers
-  // Pass true when the logged-in user has already completed onboarding (any device)
-  const siteOnboarding = useSiteOnboarding(user?.onboarding_completed === true);
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
 
@@ -52,6 +50,9 @@ export default function Home() {
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
   });
+
+  // Pass true when the logged-in user has already completed onboarding (any device)
+  const siteOnboarding = useSiteOnboarding(user?.onboarding_completed === true);
 
   // NOTE: SiteOnboarding (SiteOnboarding.jsx) is the canonical onboarding flow.
   // The old OnboardingFlow modal is kept for future use but NOT auto-triggered here —
