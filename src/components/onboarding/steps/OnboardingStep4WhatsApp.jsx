@@ -152,7 +152,8 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
   const allShown = visibleMessages.length >= messages.length;
 
   // SD business WhatsApp — user sends a message to the SD agent
-  const SD_WA_NUMBER = '971000000000'; // Replace with real SD WhatsApp business number
+  // Replace with the real SD WhatsApp Business number (digits only, no + or spaces)
+  const SD_WA_NUMBER = '393200000000'; // ← replace with real number
   const waMessages = {
     it: `SD Sistema - Nuovo account attivato!\nNome: ${name || ''}\nTelefono: ${phone || ''}\nRuolo: ${role === 'athlete' ? 'Atleta' : 'Fan'}\nDisciplina: ${discipline || ''}`,
     en: `SD System - New account activated!\nName: ${name || ''}\nPhone: ${phone || ''}\nRole: ${role === 'athlete' ? 'Athlete' : 'Fan'}\nDiscipline: ${discipline || ''}`,
@@ -162,6 +163,7 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
     de: `SD System - Neues Konto aktiviert!\nName: ${name || ''}\nTelefon: ${phone || ''}\nRolle: ${role === 'athlete' ? 'Athlet' : 'Fan'}\nDisziplin: ${discipline || ''}`,
   };
   const waText = waMessages[lang] || waMessages.it;
+  // wa.me works on both mobile (opens app) and desktop (opens web.whatsapp.com)
   const waLink = `https://wa.me/${SD_WA_NUMBER}?text=${encodeURIComponent(waText)}`;
 
   return (
