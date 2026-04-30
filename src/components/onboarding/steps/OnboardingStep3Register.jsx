@@ -11,20 +11,19 @@ const DISCIPLINES = [
   'Tennis', 'Ping Pong', 'Kendo', 'Biliardo', 'Freccette', 'Badminton',
 ];
 
-// International dial codes
 const DIAL_CODES = [
-  { code: '+39', flag: '🇮🇹', name: 'Italy' },
-  { code: '+44', flag: '🇬🇧', name: 'UK' },
-  { code: '+1', flag: '🇺🇸', name: 'USA' },
-  { code: '+33', flag: '🇫🇷', name: 'France' },
-  { code: '+49', flag: '🇩🇪', name: 'Germany' },
-  { code: '+34', flag: '🇪🇸', name: 'Spain' },
-  { code: '+971', flag: '🇦🇪', name: 'UAE' },
-  { code: '+966', flag: '🇸🇦', name: 'Saudi Arabia' },
-  { code: '+55', flag: '🇧🇷', name: 'Brazil' },
-  { code: '+52', flag: '🇲🇽', name: 'Mexico' },
-  { code: '+81', flag: '🇯🇵', name: 'Japan' },
-  { code: '+86', flag: '🇨🇳', name: 'China' },
+  { code: '+39', flag: '🇮🇹' },
+  { code: '+44', flag: '🇬🇧' },
+  { code: '+1',  flag: '🇺🇸' },
+  { code: '+33', flag: '🇫🇷' },
+  { code: '+49', flag: '🇩🇪' },
+  { code: '+34', flag: '🇪🇸' },
+  { code: '+971', flag: '🇦🇪' },
+  { code: '+966', flag: '🇸🇦' },
+  { code: '+55', flag: '🇧🇷' },
+  { code: '+52', flag: '🇲🇽' },
+  { code: '+81', flag: '🇯🇵' },
+  { code: '+86', flag: '🇨🇳' },
 ];
 
 const LABELS = {
@@ -50,15 +49,17 @@ const LABELS = {
     fanSub: 'segue gli eventi',
     terms: 'Accetto i Termini di Servizio',
     privacy: 'Accetto la Privacy Policy',
+    termsError: 'Devi accettare i Termini',
+    privacyError: 'Devi accettare la Privacy Policy',
     register: 'Continua →',
     registering: 'Salvataggio...',
     errorGeneric: 'Errore di rete. Riprova.',
-    note: 'Documenti e dati anagrafici saranno richiesti solo al momento dell\'iscrizione a un evento.',
+    note: "Documenti e dati anagrafici saranno richiesti solo al momento dell'iscrizione a un evento.",
   },
   en: {
     step: 'STEP 2 OF 4',
     title: 'WHO ARE YOU?',
-    sub: 'No documents. Just what\'s needed.',
+    sub: "No documents. Just what's needed.",
     name: 'Full name *',
     namePlaceholder: 'Marco Rossi',
     nameError: 'Enter your name',
@@ -77,6 +78,8 @@ const LABELS = {
     fanSub: 'follow events',
     terms: 'I accept the Terms of Service',
     privacy: 'I accept the Privacy Policy',
+    termsError: 'You must accept the Terms',
+    privacyError: 'You must accept the Privacy Policy',
     register: 'Continue →',
     registering: 'Saving...',
     errorGeneric: 'Network error. Try again.',
@@ -104,6 +107,8 @@ const LABELS = {
     fanSub: 'sigue los eventos',
     terms: 'Acepto los Términos de Servicio',
     privacy: 'Acepto la Política de Privacidad',
+    termsError: 'Debes aceptar los Términos',
+    privacyError: 'Debes aceptar la Política de Privacidad',
     register: 'Continuar →',
     registering: 'Guardando...',
     errorGeneric: 'Error de red. Inténtalo de nuevo.',
@@ -112,7 +117,7 @@ const LABELS = {
   fr: {
     step: 'ÉTAPE 2 SUR 4',
     title: 'QUI ES-TU ?',
-    sub: 'Aucun document. Juste l\'essentiel.',
+    sub: "Aucun document. Juste l'essentiel.",
     name: 'Nom complet *',
     namePlaceholder: 'Marco Rossi',
     nameError: 'Entrez votre nom',
@@ -129,12 +134,14 @@ const LABELS = {
     athleteSub: 'participe aux compétitions',
     fan: 'Fan / Visiteur',
     fanSub: 'suit les événements',
-    terms: 'J\'accepte les Conditions d\'utilisation',
+    terms: "J'accepte les Conditions d'utilisation",
     privacy: 'J\'accepte la Politique de confidentialité',
+    termsError: 'Tu dois accepter les Conditions',
+    privacyError: 'Tu dois accepter la Politique de confidentialité',
     register: 'Continuer →',
     registering: 'Enregistrement...',
     errorGeneric: 'Erreur réseau. Réessaie.',
-    note: 'Les documents ne seront demandés que lors de l\'inscription à un événement.',
+    note: "Les documents ne seront demandés que lors de l'inscription à un événement.",
   },
   ar: {
     step: 'الخطوة 2 من 4',
@@ -158,6 +165,8 @@ const LABELS = {
     fanSub: 'يتابع الأحداث',
     terms: 'أوافق على شروط الخدمة',
     privacy: 'أوافق على سياسة الخصوصية',
+    termsError: 'يجب قبول الشروط',
+    privacyError: 'يجب قبول سياسة الخصوصية',
     register: 'استمر →',
     registering: 'جارٍ الحفظ...',
     errorGeneric: 'خطأ في الشبكة. حاول مجدداً.',
@@ -185,23 +194,14 @@ const LABELS = {
     fanSub: 'verfolgt Events',
     terms: 'Ich akzeptiere die Nutzungsbedingungen',
     privacy: 'Ich akzeptiere die Datenschutzrichtlinie',
+    termsError: 'Du musst die Bedingungen akzeptieren',
+    privacyError: 'Du musst die Datenschutzrichtlinie akzeptieren',
     register: 'Weiter →',
     registering: 'Speichern...',
     errorGeneric: 'Netzwerkfehler. Versuch es nochmal.',
     note: 'Ausweisdokumente werden nur bei der Event-Anmeldung abgefragt.',
   },
 };
-
-function getPasswordStrength(pw) {
-  if (!pw) return 0;
-  let score = 0;
-  if (pw.length >= 8) score++;
-  if (pw.length >= 12) score++;
-  if (/[A-Z]/.test(pw)) score++;
-  if (/[0-9]/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-  return score; // 0-5
-}
 
 function isValidPhone(num) {
   const digits = num.replace(/\D/g, '');
@@ -223,31 +223,38 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const touch = (k) => setTouched(t => ({ ...t, [k]: true }));
 
-  const errors = {
-    name: !form.name.trim() ? L.nameError : '',
-    phone: !isValidPhone(form.phone) ? L.phoneError : '',
-    discipline: !form.discipline ? L.discError : '',
-    role: !form.role ? L.roleError : '',
-  };
+  // Computed errors from current form state
+  const getErrors = (f) => ({
+    name: !f.name.trim() ? L.nameError : '',
+    phone: !isValidPhone(f.phone) ? L.phoneError : '',
+    discipline: !f.discipline ? L.discError : '',
+    role: !f.role ? L.roleError : '',
+    terms: !f.terms ? L.termsError : '',
+    privacy: !f.privacy ? L.privacyError : '',
+  });
 
-  const canSubmit =
-    !errors.name && !errors.phone && !errors.discipline && !errors.role &&
-    form.terms && form.privacy;
+  const errors = getErrors(form);
+  const hasErrors = Object.values(errors).some(Boolean);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Touch all fields to show errors
-    setTouched({ name: true, phone: true, discipline: true, role: true });
-    if (!canSubmit) return;
+    // Mark all fields as touched to display all errors at once
+    setTouched({ name: true, phone: true, discipline: true, role: true, terms: true, privacy: true });
+    // Re-evaluate errors against current form (avoids stale state race)
+    if (Object.values(getErrors(form)).some(Boolean)) return;
+
     setLoading(true);
     setError('');
     const fullPhone = `${form.dialCode}${form.phone.replace(/\s/g, '')}`;
     try {
+      // NOTE: full_name is read-only (managed by auth), so we save name as display_name
+      // and save all other profile data as custom fields
       await base44.auth.updateMe({
-        full_name: form.name.trim(),
+        display_name: form.name.trim(),   // custom writable field
         role: form.role === 'athlete' ? 'athlete' : 'user',
         phone: fullPhone,
         discipline: form.discipline,
+        onboarding_step: 'completed',
         onboarding_completed: true,
       });
       onNext({
@@ -271,7 +278,7 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         <p className="font-rajdhani text-sm text-white/40">{L.sub}</p>
       </motion.div>
 
-      <form onSubmit={handleSubmit} className="w-full space-y-4">
+      <form onSubmit={handleSubmit} className="w-full space-y-4" noValidate>
         {/* Name */}
         <div>
           <label className="font-mono text-[9px] uppercase tracking-[2px] text-fire-3/50 block mb-1">{L.name}</label>
@@ -281,18 +288,19 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
             onChange={e => set('name', e.target.value)}
             onBlur={() => touch('name')}
             placeholder={L.namePlaceholder}
+            autoComplete="name"
           />
           {touched.name && errors.name && (
             <p className="font-mono text-[9px] text-red-400 mt-1">⚠ {errors.name}</p>
           )}
         </div>
 
-        {/* WhatsApp with dial code selector */}
+        {/* WhatsApp with dial code */}
         <div>
           <label className="font-mono text-[9px] uppercase tracking-[2px] text-fire-3/50 block mb-1">{L.phone}</label>
           <div className="flex gap-2">
             <select
-              className="cyber-input w-[110px] flex-shrink-0 text-sm"
+              className="cyber-input w-[100px] flex-shrink-0 text-sm"
               value={form.dialCode}
               onChange={e => set('dialCode', e.target.value)}
             >
@@ -304,9 +312,10 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
               className="cyber-input flex-1"
               type="tel"
               value={form.phone}
-              onChange={e => set('phone', e.target.value.replace(/[^\d\s]/g, ''))}
+              onChange={e => set('phone', e.target.value.replace(/[^\d\s\-]/g, ''))}
               onBlur={() => touch('phone')}
               placeholder={L.phonePlaceholder}
+              autoComplete="tel"
             />
           </div>
           <p className="font-mono text-[8px] text-fire-3/30 mt-1">💬 {L.phoneSub}</p>
@@ -331,13 +340,13 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
           )}
         </div>
 
-        {/* Role — always 2-column grid */}
+        {/* Role — always 2-column, never scrollable */}
         <div>
           <label className="font-mono text-[9px] uppercase tracking-[2px] text-fire-3/50 block mb-2">{L.role}</label>
           <div className="grid grid-cols-2 gap-3">
             {[
               { id: 'athlete', emoji: '🏆', label: L.athlete, sub: L.athleteSub },
-              { id: 'fan', emoji: '👀', label: L.fan, sub: L.fanSub },
+              { id: 'fan',     emoji: '👀', label: L.fan,     sub: L.fanSub     },
             ].map(r => (
               <button
                 key={r.id}
@@ -351,7 +360,7 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
                 style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
               >
                 {form.role === r.id && (
-                  <span className="absolute top-2 right-2 text-fire-3 text-xs font-bold">✓</span>
+                  <span className="absolute top-2 right-2 text-fire-3 text-xs font-bold leading-none">✓</span>
                 )}
                 <div className="text-2xl mb-1">{r.emoji}</div>
                 <div className="font-orbitron font-bold text-sm text-fire-4">{r.label}</div>
@@ -367,24 +376,29 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         {/* Consents */}
         <div className="space-y-2 pt-1">
           {[
-            { key: 'terms', label: L.terms },
-            { key: 'privacy', label: L.privacy },
+            { key: 'terms',   label: L.terms,   err: errors.terms   },
+            { key: 'privacy', label: L.privacy, err: errors.privacy },
           ].map(c => (
-            <label key={c.key} className="flex items-center gap-3 cursor-pointer group">
-              <div
-                onClick={() => set(c.key, !form[c.key])}
-                className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 transition-all ${
-                  form[c.key] ? 'border-fire-3 bg-fire-3/20' : 'border-white/20 group-hover:border-fire-3/40'
-                }`}
-              >
-                {form[c.key] && <span className="text-fire-3 text-xs font-bold">✓</span>}
-              </div>
-              <span className="font-rajdhani text-sm text-white/60">{c.label}</span>
-            </label>
+            <div key={c.key}>
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div
+                  onClick={() => { set(c.key, !form[c.key]); touch(c.key); }}
+                  className={`w-5 h-5 border flex items-center justify-center flex-shrink-0 transition-all ${
+                    form[c.key] ? 'border-fire-3 bg-fire-3/20' : 'border-white/20 group-hover:border-fire-3/40'
+                  }`}
+                >
+                  {form[c.key] && <span className="text-fire-3 text-xs font-bold leading-none">✓</span>}
+                </div>
+                <span className="font-rajdhani text-sm text-white/60">{c.label}</span>
+              </label>
+              {touched[c.key] && c.err && (
+                <p className="font-mono text-[9px] text-red-400 mt-1 pl-8">⚠ {c.err}</p>
+              )}
+            </div>
           ))}
         </div>
 
-        {/* Note */}
+        {/* Info note */}
         <div className="px-3 py-2.5 bg-fire-3/5 border border-fire-3/15">
           <p className="font-mono text-[9px] text-fire-3/50 leading-relaxed">ℹ️ {L.note}</p>
         </div>

@@ -37,45 +37,100 @@ const SLIDES_BY_LANG = {
 };
 
 const LABELS = {
-  it: { welcome: 'BENVENUTO', next: 'Prossima →', enter: '🔥 Entra nella Piattaforma', athlete: 'Il tuo profilo atleta è attivo. Ti avviseremo via WhatsApp per i prossimi eventi.', fan: 'Sei nel sistema. Ti terremo aggiornato sugli eventi SD.', slideHint: 'Scorri tutte e 3 le slide per continuare' },
-  en: { welcome: 'WELCOME', next: 'Next →', enter: '🔥 Enter the Platform', athlete: 'Your athlete profile is active. We\'ll notify you via WhatsApp for upcoming events.', fan: 'You\'re in the system. We\'ll keep you updated on SD events.', slideHint: 'View all 3 slides to continue' },
-  es: { welcome: 'BIENVENIDO', next: 'Siguiente →', enter: '🔥 Entrar a la Plataforma', athlete: 'Tu perfil de atleta está activo. Te avisaremos por WhatsApp para los próximos eventos.', fan: 'Estás en el sistema. Te mantendremos al día con los eventos SD.', slideHint: 'Ve las 3 diapositivas para continuar' },
-  fr: { welcome: 'BIENVENUE', next: 'Suivant →', enter: '🔥 Entrer sur la Plateforme', athlete: 'Ton profil athlète est actif. On te préviendra par WhatsApp pour les prochains événements.', fan: 'Tu es dans le système. On te tiendra informé des événements SD.', slideHint: 'Vois les 3 slides pour continuer' },
-  ar: { welcome: 'أهلاً بك', next: 'التالي →', enter: '🔥 أدخل المنصة', athlete: 'ملفك الرياضي نشط. سنخطرك عبر واتساب للأحداث القادمة.', fan: 'أنت في النظام. سنبقيك على اطلاع بأحداث SD.', slideHint: 'اعرض الشرائح الثلاث للمتابعة' },
-  de: { welcome: 'WILLKOMMEN', next: 'Weiter →', enter: '🔥 Plattform betreten', athlete: 'Dein Athletenprofil ist aktiv. Wir benachrichtigen dich per WhatsApp für kommende Events.', fan: 'Du bist im System. Wir halten dich über SD-Events auf dem Laufenden.', slideHint: 'Sieh alle 3 Slides um fortzufahren' },
+  it: {
+    greeting: (name) => name ? `CIAO, ${name.toUpperCase().split(' ')[0]}!` : 'SEI DENTRO!',
+    sub_athlete: 'Il tuo profilo atleta è attivo. Ti avviseremo via WhatsApp per i prossimi eventi.',
+    sub_fan: 'Sei nel sistema. Ti terremo aggiornato sugli eventi SD.',
+    next: 'Prossima →',
+    enter: '🔥 Entra nella Piattaforma',
+    slideHint: 'Scorri tutte e 3 le slide per continuare',
+  },
+  en: {
+    greeting: (name) => name ? `HEY, ${name.toUpperCase().split(' ')[0]}!` : "YOU'RE IN!",
+    sub_athlete: "Your athlete profile is active. We'll notify you via WhatsApp for upcoming events.",
+    sub_fan: "You're in the system. We'll keep you updated on SD events.",
+    next: 'Next →',
+    enter: '🔥 Enter the Platform',
+    slideHint: 'View all 3 slides to continue',
+  },
+  es: {
+    greeting: (name) => name ? `¡HOLA, ${name.toUpperCase().split(' ')[0]}!` : '¡ESTÁS DENTRO!',
+    sub_athlete: 'Tu perfil de atleta está activo. Te avisaremos por WhatsApp para los próximos eventos.',
+    sub_fan: 'Estás en el sistema. Te mantendremos al día con los eventos SD.',
+    next: 'Siguiente →',
+    enter: '🔥 Entrar a la Plataforma',
+    slideHint: 'Ve las 3 diapositivas para continuar',
+  },
+  fr: {
+    greeting: (name) => name ? `SALUT, ${name.toUpperCase().split(' ')[0]} !` : 'TU ES DEDANS !',
+    sub_athlete: "Ton profil athlète est actif. On te préviendra par WhatsApp pour les prochains événements.",
+    sub_fan: "Tu es dans le système. On te tiendra informé des événements SD.",
+    next: 'Suivant →',
+    enter: '🔥 Entrer sur la Plateforme',
+    slideHint: 'Vois les 3 slides pour continuer',
+  },
+  ar: {
+    greeting: (name) => name ? `أهلاً، ${name.split(' ')[0]}!` : 'أنت داخل!',
+    sub_athlete: 'ملفك الرياضي نشط. سنخطرك عبر واتساب للأحداث القادمة.',
+    sub_fan: 'أنت في النظام. سنبقيك على اطلاع بأحداث SD.',
+    next: 'التالي →',
+    enter: '🔥 أدخل المنصة',
+    slideHint: 'اعرض الشرائح الثلاث للمتابعة',
+  },
+  de: {
+    greeting: (name) => name ? `HEY, ${name.toUpperCase().split(' ')[0]}!` : 'DU BIST DRIN!',
+    sub_athlete: 'Dein Athletenprofil ist aktiv. Wir benachrichtigen dich per WhatsApp für kommende Events.',
+    sub_fan: 'Du bist im System. Wir halten dich über SD-Events auf dem Laufenden.',
+    next: 'Weiter →',
+    enter: '🔥 Plattform betreten',
+    slideHint: 'Sieh alle 3 Slides um fortzufahren',
+  },
 };
 
 export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it' }) {
   const L = LABELS[lang] || LABELS.it;
   const SLIDES = SLIDES_BY_LANG[lang] || SLIDES_BY_LANG.it;
-  const { name, role } = userData;
+  const { name, role } = userData || {};
   const [slide, setSlide] = useState(0);
   const [allSeen, setAllSeen] = useState(false);
 
   useEffect(() => {
     if (slide >= SLIDES.length - 1) setAllSeen(true);
-  }, [slide]);
+  }, [slide, SLIDES.length]);
+
+  const goNext = () => {
+    if (slide < SLIDES.length - 1) setSlide(s => s + 1);
+  };
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-full px-5 py-12 max-w-lg mx-auto w-full text-center">
-      <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className="mb-8">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="mb-8"
+      >
         <motion.img
           src={SD_LOGO}
           alt="SD"
           className="w-20 h-20 rounded-xl object-cover mx-auto mb-4"
           style={{ filter: 'drop-shadow(0 0 20px rgba(255,100,0,0.7))' }}
-          animate={{ filter: ['drop-shadow(0 0 20px rgba(255,100,0,0.7))', 'drop-shadow(0 0 35px rgba(255,150,0,1))', 'drop-shadow(0 0 20px rgba(255,100,0,0.7))'] }}
+          animate={{ filter: [
+            'drop-shadow(0 0 20px rgba(255,100,0,0.7))',
+            'drop-shadow(0 0 35px rgba(255,150,0,1))',
+            'drop-shadow(0 0 20px rgba(255,100,0,0.7))',
+          ]}}
           transition={{ duration: 2.5, repeat: Infinity }}
         />
-        <p className="font-mono text-[9px] tracking-[6px] uppercase text-fire-3/40 mb-2">{L.welcome}</p>
         <h2 className="heading-fire text-[clamp(28px,6vw,52px)] font-black leading-none mb-2">
-          {name ? `CIAO, ${name.toUpperCase().split(' ')[0]}!` : 'SEI DENTRO!'}
+          {L.greeting(name)}
         </h2>
         <p className="font-rajdhani text-base text-white/50">
-          {role === 'athlete' ? L.athlete : L.fan}
+          {role === 'athlete' ? L.sub_athlete : L.sub_fan}
         </p>
       </motion.div>
 
+      {/* Slides — dots NOT clickable to prevent skipping */}
       <div className="w-full max-w-sm mb-8">
         <AnimatePresence mode="wait">
           <motion.div
@@ -92,18 +147,21 @@ export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it'
             <p className="font-rajdhani text-base text-white/60 leading-relaxed">{SLIDES[slide].text}</p>
           </motion.div>
         </AnimatePresence>
+
         <div className="flex items-center justify-between mt-4">
+          {/* Visual-only dots — NOT clickable (prevents skipping) */}
           <div className="flex gap-2">
             {SLIDES.map((_, i) => (
-              <button
+              <div
                 key={i}
-                onClick={() => { setSlide(i); if (i >= SLIDES.length - 1) setAllSeen(true); }}
-                className={`w-6 h-1 transition-all duration-300 ${i === slide ? 'bg-fire-3' : i < slide ? 'bg-fire-3/40' : 'bg-white/10'}`}
+                className={`w-6 h-1 transition-all duration-300 ${
+                  i === slide ? 'bg-fire-3' : i < slide ? 'bg-fire-3/40' : 'bg-white/10'
+                }`}
               />
             ))}
           </div>
           {slide < SLIDES.length - 1 && (
-            <button onClick={() => setSlide(s => s + 1)} className="btn-ghost text-[10px] tracking-[2px] px-4 py-2">
+            <button onClick={goNext} className="btn-ghost text-[10px] tracking-[2px] px-4 py-2">
               {L.next}
             </button>
           )}
@@ -121,7 +179,10 @@ export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it'
           {L.enter}
         </motion.button>
       </motion.div>
-      {!allSeen && <p className="font-mono text-[9px] text-white/20 mt-3">{L.slideHint}</p>}
+
+      {!allSeen && (
+        <p className="font-mono text-[9px] text-white/20 mt-3">{L.slideHint}</p>
+      )}
     </div>
   );
 }

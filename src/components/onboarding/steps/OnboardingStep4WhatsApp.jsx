@@ -246,10 +246,11 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
         </motion.a>
       )}
 
+      {/* Continue is always reachable once messages are shown — WA click is optional */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: allShown ? 1 : 0.4 }}
-        onClick={allShown ? onNext : undefined}
+        onClick={onNext}
         disabled={!allShown}
         className={`btn-fire text-[12px] tracking-[3px] px-10 py-3.5 ${!allShown ? 'opacity-30 cursor-not-allowed' : ''}`}
       >
