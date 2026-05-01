@@ -9,6 +9,8 @@ import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
+import EthicBettingPanel from '../components/gamification/EthicBettingPanel';
+import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 
 const DASH_LABELS = {
   it: { subtitle: 'il tuo spazio', lastEvents: 'ULTIMI EVENTI', noReg: 'Nessuna registrazione ancora.', explore: 'Esplora gli eventi →', quickAccess: 'ACCESSO RAPIDO', links: [
@@ -160,6 +162,12 @@ export default function DashboardFan() {
           <StatCard emoji="🗳️" label="Voti espressi" value={votes.length} />
           <StatCard emoji="🃏" label="Card possedute" value={tokens.length} />
         </div>
+
+        {/* Ethical Betting */}
+        <EthicBettingPanel lang={lang} userEmail={user?.email} />
+
+        {/* Live Tournament Leaderboard */}
+        <LiveTournamentLeaderboard lang={lang} />
 
         {/* Recent registrations */}
         <div className="mb-8">

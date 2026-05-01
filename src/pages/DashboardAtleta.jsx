@@ -8,6 +8,8 @@ import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
+import AthleteXPBar from '../components/gamification/AthleteXPBar';
+import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 
 const DASH_LABELS = {
   it: { subtitle: 'la tua carriera SD', badges: 'I TUOI BADGE', cards: 'LE TUE CARD EMESSE', quickAccess: 'ACCESSO RAPIDO', links: [
@@ -165,6 +167,9 @@ export default function DashboardAtleta() {
           <p className="font-rajdhani text-base text-white/40">👋 <span className="text-cyan-400">{user?.full_name || 'Atleta'}</span> — {DL.subtitle}</p>
         </motion.div>
 
+        {/* XP Progression */}
+        <AthleteXPBar stats={latestStats} badges={badges} tokens={tokens} />
+
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           <StatCard emoji="⚔️" label="Tornei partecipati" value={latestStats?.events_participated || registrations.length} />
@@ -222,6 +227,9 @@ export default function DashboardAtleta() {
             </div>
           </div>
         )}
+
+        {/* Live Tournament Leaderboard */}
+        <LiveTournamentLeaderboard lang={lang} />
 
         {/* Quick links */}
         <div className="mb-8">
