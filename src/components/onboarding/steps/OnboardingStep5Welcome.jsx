@@ -38,7 +38,7 @@ const SLIDES_BY_LANG = {
 
 const LABELS = {
   it: {
-    greeting: (name) => name ? `CIAO, ${name.toUpperCase().split(' ')[0]}!` : 'SEI DENTRO!',
+    greeting: (name) => name ? `CIAO, ${String(name).toUpperCase().split(' ')[0]}!` : 'SEI DENTRO!',
     sub_athlete: 'Il tuo profilo atleta è attivo. Ti avviseremo via WhatsApp per i prossimi eventi.',
     sub_fan: 'Sei nel sistema. Ti terremo aggiornato sugli eventi SD.',
     next: 'Prossima →',
@@ -46,7 +46,7 @@ const LABELS = {
     slideHint: 'Scorri tutte e 3 le slide per continuare',
   },
   en: {
-    greeting: (name) => name ? `HEY, ${name.toUpperCase().split(' ')[0]}!` : "YOU'RE IN!",
+    greeting: (name) => name ? `HEY, ${String(name).toUpperCase().split(' ')[0]}!` : "YOU'RE IN!",
     sub_athlete: "Your athlete profile is active. We'll notify you via WhatsApp for upcoming events.",
     sub_fan: "You're in the system. We'll keep you updated on SD events.",
     next: 'Next →',
@@ -54,7 +54,7 @@ const LABELS = {
     slideHint: 'View all 3 slides to continue',
   },
   es: {
-    greeting: (name) => name ? `¡HOLA, ${name.toUpperCase().split(' ')[0]}!` : '¡ESTÁS DENTRO!',
+    greeting: (name) => name ? `¡HOLA, ${String(name).toUpperCase().split(' ')[0]}!` : '¡ESTÁS DENTRO!',
     sub_athlete: 'Tu perfil de atleta está activo. Te avisaremos por WhatsApp para los próximos eventos.',
     sub_fan: 'Estás en el sistema. Te mantendremos al día con los eventos SD.',
     next: 'Siguiente →',
@@ -62,7 +62,7 @@ const LABELS = {
     slideHint: 'Ve las 3 diapositivas para continuar',
   },
   fr: {
-    greeting: (name) => name ? `SALUT, ${name.toUpperCase().split(' ')[0]} !` : 'TU ES DEDANS !',
+    greeting: (name) => name ? `SALUT, ${String(name).toUpperCase().split(' ')[0]} !` : 'TU ES DEDANS !',
     sub_athlete: "Ton profil athlète est actif. On te préviendra par WhatsApp pour les prochains événements.",
     sub_fan: "Tu es dans le système. On te tiendra informé des événements SD.",
     next: 'Suivant →',
@@ -70,7 +70,7 @@ const LABELS = {
     slideHint: 'Vois les 3 slides pour continuer',
   },
   ar: {
-    greeting: (name) => name ? `أهلاً، ${name.split(' ')[0]}!` : 'أنت داخل!',
+    greeting: (name) => name ? `أهلاً، ${String(name).split(' ')[0]}!` : 'أنت داخل!',
     sub_athlete: 'ملفك الرياضي نشط. سنخطرك عبر واتساب للأحداث القادمة.',
     sub_fan: 'أنت في النظام. سنبقيك على اطلاع بأحداث SD.',
     next: 'التالي →',
@@ -78,7 +78,7 @@ const LABELS = {
     slideHint: 'اعرض الشرائح الثلاث للمتابعة',
   },
   de: {
-    greeting: (name) => name ? `HEY, ${name.toUpperCase().split(' ')[0]}!` : 'DU BIST DRIN!',
+    greeting: (name) => name ? `HEY, ${String(name).toUpperCase().split(' ')[0]}!` : 'DU BIST DRIN!',
     sub_athlete: 'Dein Athletenprofil ist aktiv. Wir benachrichtigen dich per WhatsApp für kommende Events.',
     sub_fan: 'Du bist im System. Wir halten dich über SD-Events auf dem Laufenden.',
     next: 'Weiter →',

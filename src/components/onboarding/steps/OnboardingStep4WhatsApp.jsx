@@ -138,20 +138,22 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
   const { role, discipline, phone, isMinor } = userData;
   const isAthlete = role === 'athlete';
 
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => {
-      setTick(p => {
-        if (p + 1 >= messages.length) clearInterval(t);
-        return p + 1;
-      });
-    }, 800);
-    return () => clearInterval(t);
-  }, [messages.length]);
-
   const messages = isAthlete
     ? L.msgs_athlete(name, discipline)
     : L.msgs_fan(name);
+
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTick(p => {
+        const next = p + 1;
+        if (next >= messages.length) clearInterval(id);
+        return next;
+      });
+    }, 800);
+    return () => clearInterval(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const visibleMessages = messages.slice(0, Math.min(tick + 1, messages.length));
   const allShown = visibleMessages.length >= messages.length;
