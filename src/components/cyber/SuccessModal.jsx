@@ -93,12 +93,14 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
           >
             <div className="flex items-center gap-2 justify-center mb-2">
               <span className="text-2xl">💬</span>
-              <span className="font-orbitron text-sm font-bold text-green-400 tracking-[1px]">CANALE WHATSAPP</span>
+              <span className="font-orbitron text-sm font-bold text-green-400 tracking-[1px]">
+                {t('success_wa_channel') || 'WHATSAPP CHANNEL'}
+              </span>
             </div>
             <p className="font-rajdhani text-sm text-green-300/80 mb-3">
               {isAthlete
-                ? 'Unisciti al canale WhatsApp ufficiale per ricevere tutte le istruzioni, l\'orario di check-in, le regole e gli aggiornamenti dell\'evento.'
-                : 'Unisciti al canale WhatsApp per ricevere aggiornamenti in tempo reale sull\'evento, accesso stream e notizie esclusive.'}
+                ? (t('success_wa_athlete_msg') || 'Join the official WhatsApp channel to receive check-in instructions, rules, and event updates.')
+                : (t('success_wa_fan_msg') || 'Join the WhatsApp channel for real-time event updates, stream access, and exclusive news.')}
             </p>
             <a
               href={whatsappLink}
@@ -108,7 +110,7 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
               style={{ clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)' }}
             >
               <span>💬</span>
-              UNISCITI AL CANALE
+              {t('success_wa_join') || 'JOIN CHANNEL'}
             </a>
           </motion.div>
         )}

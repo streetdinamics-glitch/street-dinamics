@@ -1,7 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare, X, CheckCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+
+const STEPS = [
+  { icon: '🎯', label: 'Confirm your sport discipline' },
+  { icon: '🎥', label: 'Send a video proof (min 1 minute)' },
+  { icon: '🏷️', label: 'Team name or competition nickname' },
+  { icon: '✅', label: 'Instant approval decision' },
+];
 
 export default function AthleteInterviewPrompt({ registration, event, onClose }) {
   const whatsappLink = base44.agents.getWhatsAppConnectURL('athlete_secretary');
@@ -11,82 +18,71 @@ export default function AthleteInterviewPrompt({ registration, event, onClose })
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="relative w-full max-w-[550px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8"
+        className="relative w-full max-w-[520px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-7"
       >
         <div className="absolute top-0 left-0 right-0 fire-line" />
-        
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-4 font-mono text-xs text-fire-3/30 hover:text-fire-3"
-        >
+
+        <button onClick={onClose} className="absolute top-3 right-4 text-fire-3/30 hover:text-fire-3 transition-colors">
           <X size={18} />
         </button>
 
-        <div className="text-center mb-6">
+        {/* Header */}
+        <div className="text-center mb-5">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring' }}
-            className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan/20 to-cyan/10 border border-cyan/30 flex items-center justify-center"
+            className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-green-500/20 to-green-500/10 border border-green-500/30 flex items-center justify-center text-3xl"
           >
-            <MessageSquare size={36} className="text-cyan" />
+            💬
           </motion.div>
-
-          <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-2 uppercase">
+          <h2 className="text-fire-gradient font-orbitron font-black text-xl tracking-[2px] mb-1 uppercase">
             AI Secretary Interview
           </h2>
-          <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-4">
-            Final Step: Registration Approval
+          <p className="font-mono text-[10px] tracking-[4px] uppercase text-fire-3/30">
+            Athlete Verification · WhatsApp
           </p>
         </div>
 
-        <div className="bg-cyan/5 border border-cyan/15 p-5 mb-6">
-          <h3 className="font-orbitron font-bold text-sm text-cyan mb-3 tracking-[1px] uppercase">
-            What to Expect
-          </h3>
-          <ul className="space-y-2 font-rajdhani text-sm text-fire-4/60">
-            <li className="flex items-start gap-2">
-              <span className="text-cyan mt-0.5">•</span>
-              <span>Quick 5-minute interview via WhatsApp</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-cyan mt-0.5">•</span>
-              <span>Questions about your experience and commitment</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-cyan mt-0.5">•</span>
-              <span>Instant approval decision from AI Secretary</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-cyan mt-0.5">•</span>
-              <span>If approved: Receive event WhatsApp channel link</span>
-            </li>
-          </ul>
+        {/* Application summary */}
+        <div className="bg-fire-3/5 border border-fire-3/15 p-3 mb-4 grid grid-cols-3 gap-2 text-center">
+          {[
+            { label: 'Event', value: event?.title || '—' },
+            { label: 'Athlete', value: `${registration?.first_name || ''} ${registration?.last_name || ''}`.trim() || '—' },
+            { label: 'Sport', value: registration?.sport || '—' },
+          ].map(item => (
+            <div key={item.label}>
+              <div className="font-mono text-[8px] text-fire-3/30 uppercase tracking-[1px]">{item.label}</div>
+              <div className="font-rajdhani text-sm text-fire-4 font-semibold truncate">{item.value}</div>
+            </div>
+          ))}
         </div>
 
-        <div className="bg-fire-3/5 border border-fire-3/10 p-4 mb-6">
-          <div className="font-mono text-[9px] text-fire-3/40 tracking-[2px] uppercase mb-2">
-            Your Application
-          </div>
-          <div className="space-y-1 font-rajdhani text-sm text-fire-4/50">
-            <div><strong>Event:</strong> {event?.title}</div>
-            <div><strong>Name:</strong> {registration?.first_name} {registration?.last_name}</div>
-            <div><strong>Sport:</strong> {registration?.sport}</div>
-          </div>
+        {/* Steps */}
+        <div className="border border-white/5 bg-white/2 p-4 mb-5 space-y-2">
+          <p className="font-mono text-[9px] tracking-[3px] uppercase text-white/30 mb-3">Interview steps</p>
+          {STEPS.map((s, i) => (
+            <div key={i} className="flex items-center gap-3">
+              <span className="text-base w-6 text-center">{s.icon}</span>
+              <span className="font-rajdhani text-sm text-white/60">{s.label}</span>
+            </div>
+          ))}
         </div>
 
+        {/* CTA */}
         <a
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-fire w-full text-[11px] py-3.5 flex items-center justify-center gap-2 no-underline"
+          className="flex items-center justify-center gap-2 w-full py-3.5 bg-green-600 hover:bg-green-500 text-white font-orbitron text-[11px] tracking-[2px] uppercase transition-all no-underline mb-3"
+          style={{ clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)' }}
         >
-          <MessageSquare size={16} />
-          START INTERVIEW ON WHATSAPP
+          <MessageSquare size={15} />
+          OPEN WHATSAPP INTERVIEW
         </a>
 
-        <p className="font-mono text-[8px] text-fire-3/30 text-center mt-4 leading-relaxed">
-          The AI Secretary will guide you through the process. Be honest and enthusiastic!
+        <p className="font-mono text-[8px] text-fire-3/25 text-center leading-relaxed">
+          The AI Secretary will guide you step-by-step. Have your video ready before starting.
         </p>
       </motion.div>
     </div>
