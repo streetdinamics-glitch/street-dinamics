@@ -13,7 +13,7 @@ import TokenStore from '../components/store/TokenStore';
 import GlobalLeaderboard from '../components/leaderboard/GlobalLeaderboard';
 import BetSection from '../components/cyber/BetSection';
 import BettingHistoryLog from '../components/betting/BettingHistoryLog';
-import ModernAchievementBadge from '../components/gamification/ModernAchievementBadge';
+
 import FireRule from '../components/cyber/FireRule';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
@@ -55,7 +55,7 @@ export default function UserProfile() {
         base44.entities.UGCSubmission.filter({ creator_email: user.email }).catch(() => []),
         base44.entities.FanReward.filter({ fan_email: user.email }).catch(() => []),
         base44.entities.FanPoints.filter({ fan_email: user.email }).catch(() => []),
-        base44.entities.Bet.filter({ created_by: user.email }).catch(() => []),
+        base44.entities.Bet.filter({ user_email: user.email }).catch(() => []),
       ]);
       return {
         ugcCount: ugc.length,
@@ -164,16 +164,27 @@ export default function UserProfile() {
 
             {activeTab === 'badges' && (
               <div className="mb-6">
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-                  {['founder', 'ambassador', 'curator', 'trailblazer', 'catalyst', 'luminary'].map((badge, i) => (
-                    <ModernAchievementBadge
-                      key={badge}
-                      badgeId={badge}
-                      unlocked={i < (badges.length || 1)}
-                      progress={i < badges.length ? 1 : Math.random()}
-                    />
-                  ))}
-                </div>
+                {badges.length === 0 ? (
+                  <div className="border border-white/5 p-8 text-center">
+                    <p className="font-rajdhani text-white/30">Nessun badge ancora. Partecipa agli eventi per guadagnarli!</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {badges.map(b => (
+                      <div key={b.id} className="px-3 py-2 border border-fire-3/30 bg-fire-3/5 flex items-center gap-2" title={b.badge_description}>
+                        <span className="text-lg">{b.badge_icon || '🏅'}</span>
+                        <div>
+                          <div className="font-orbitron text-[11px] text-fire-4">{b.badge_name}</div>
+                          <div className={`font-mono text-[8px] ${
+                            b.rarity === 'legendary' ? 'text-yellow-400' :
+                            b.rarity === 'epic' ? 'text-purple-400' :
+                            b.rarity === 'rare' ? 'text-blue-400' : 'text-gray-400'
+                          }`}>{b.rarity?.toUpperCase()} · {b.earned_date}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

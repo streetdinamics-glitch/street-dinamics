@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
 // Ethical betting uses "Prediction Coins" — zero real money
@@ -35,9 +35,11 @@ function BetRow({ bet }) {
 
 export default function EthicBettingPanel({ lang = 'it', userEmail }) {
   const L = LABELS[lang] || LABELS.it;
+  const queryClient = useQueryClient();
   const [tab, setTab] = useState('active');
   const [selectedOutcome, setSelectedOutcome] = useState(null);
   const [stakeInput, setStakeInput] = useState('50');
+  const [isPlacing, setIsPlacing] = useState(false);
 
   const { data: bets = [] } = useQuery({
     queryKey: ['bets', userEmail],
@@ -125,10 +127,29 @@ export default function EthicBettingPanel({ lang = 'it', userEmail }) {
                   </div>
                 </div>
                 <button
-                  onClick={() => { setSelectedOutcome(null); setStakeInput('50'); }}
-                  className="btn-fire w-full text-[11px] tracking-[2px] py-2.5"
+                  disabled={isPlacing || stakeAmount <= 0 || stakeAmount > balance}
+                  onClick={async () => {
+                    if (!userEmail || !events[0] || stakeAmount <= 0 || stakeAmount > balance) return;
+                    setIsPlacing(true);
+                    await base44.entities.Bet.create({
+                      event_id: events[0].id,
+                      user_email: userEmail,
+                      outcome: selectedOutcome.id,
+                      amount: stakeAmount,
+                      odds: selectedOutcome.odds,
+                      potential_winnings: potential,
+                      status: 'active',
+                      result: 'pending',
+                      placed_at: new Date().toISOString(),
+                    });
+                    queryClient.invalidateQueries({ queryKey: ['bets', userEmail] });
+                    setSelectedOutcome(null);
+                    setStakeInput('50');
+                    setIsPlacing(false);
+                  }}
+                  className="btn-fire w-full text-[11px] tracking-[2px] py-2.5 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {L.confirm} — {selectedOutcome.label}
+                  {isPlacing ? '...' : `${L.confirm} — ${selectedOutcome.label}`}
                 </button>
               </motion.div>
             )}

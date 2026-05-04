@@ -12,7 +12,7 @@ import AthleteXPBar from '../components/gamification/AthleteXPBar';
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 
 const DASH_LABELS = {
-  it: { subtitle: 'la tua carriera SD', badges: 'I TUOI BADGE', cards: 'LE TUE CARD EMESSE', quickAccess: 'ACCESSO RAPIDO', links: [
+  it: { subtitle: 'la tua carriera SD', badges: 'I TUOI BADGE', cards: 'LE TUE CARD EMESSE', quickAccess: 'ACCESSO RAPIDO', statEvents: 'Tornei partecipati', statWins: 'Vittorie', statPodium: 'podi', statBadges: 'Badge guadagnati', statCards: 'Card emesse', statAvail: 'disponibili', links: [
     { to: '/AthleteProfile', emoji: '👤', label: 'Il mio profilo atleta', desc: 'Gestisci bio, sport, stats', color: 'cyan' },
     { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, fan, revenue', color: 'cyan' },
     { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Card', desc: 'Gestisci le tue card emesse', color: 'purple' },
@@ -22,7 +22,7 @@ const DASH_LABELS = {
     { to: '/come-funziona', emoji: '🃏', label: 'Come funziona', desc: 'Il sistema card e royalty', color: 'purple' },
     { to: '/formato-evento', emoji: '📋', label: 'Formato evento', desc: 'Come sono strutturati i tornei', color: 'fire' },
   ]},
-  en: { subtitle: 'your SD career', badges: 'YOUR BADGES', cards: 'YOUR ISSUED CARDS', quickAccess: 'QUICK ACCESS', links: [
+  en: { subtitle: 'your SD career', badges: 'YOUR BADGES', cards: 'YOUR ISSUED CARDS', quickAccess: 'QUICK ACCESS', statEvents: 'Tournaments', statWins: 'Wins', statPodium: 'podiums', statBadges: 'Badges earned', statCards: 'Cards issued', statAvail: 'available', links: [
     { to: '/AthleteProfile', emoji: '👤', label: 'My athlete profile', desc: 'Manage bio, sports, stats', color: 'cyan' },
     { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, fans, revenue', color: 'cyan' },
     { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Manage your issued cards', color: 'purple' },
@@ -32,7 +32,7 @@ const DASH_LABELS = {
     { to: '/come-funziona', emoji: '🃏', label: 'How it works', desc: 'Cards and royalty system', color: 'purple' },
     { to: '/formato-evento', emoji: '📋', label: 'Event format', desc: 'How tournaments are structured', color: 'fire' },
   ]},
-  es: { subtitle: 'tu carrera SD', badges: 'TUS BADGES', cards: 'TUS CARDS EMITIDAS', quickAccess: 'ACCESO RÁPIDO', links: [
+  es: { subtitle: 'tu carrera SD', badges: 'TUS BADGES', cards: 'TUS CARDS EMITIDAS', quickAccess: 'ACCESO RÁPIDO', statEvents: 'Torneos', statWins: 'Victorias', statPodium: 'podios', statBadges: 'Badges ganados', statCards: 'Cards emitidas', statAvail: 'disponibles', links: [
     { to: '/AthleteProfile', emoji: '👤', label: 'Mi perfil de atleta', desc: 'Gestiona bio, deporte, stats', color: 'cyan' },
     { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Rendimiento, fans, ingresos', color: 'cyan' },
     { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Gestiona tus cards emitidas', color: 'purple' },
@@ -42,7 +42,7 @@ const DASH_LABELS = {
     { to: '/come-funziona', emoji: '🃏', label: 'Cómo funciona', desc: 'Sistema de cards y regalías', color: 'purple' },
     { to: '/formato-evento', emoji: '📋', label: 'Formato del evento', desc: 'Cómo se estructuran los torneos', color: 'fire' },
   ]},
-  fr: { subtitle: 'ta carrière SD', badges: 'TES BADGES', cards: 'TES CARDS ÉMISES', quickAccess: 'ACCÈS RAPIDE', links: [
+  fr: { subtitle: 'ta carrière SD', badges: 'TES BADGES', cards: 'TES CARDS ÉMISES', quickAccess: 'ACCÈS RAPIDE', statEvents: 'Tournois', statWins: 'Victoires', statPodium: 'podiums', statBadges: 'Badges gagnés', statCards: 'Cards émises', statAvail: 'disponibles', links: [
     { to: '/AthleteProfile', emoji: '👤', label: 'Mon profil athlète', desc: 'Gérer bio, sport, stats', color: 'cyan' },
     { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, fans, revenus', color: 'cyan' },
     { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Gérer tes cards émises', color: 'purple' },
@@ -52,7 +52,7 @@ const DASH_LABELS = {
     { to: '/come-funziona', emoji: '🃏', label: 'Comment ça marche', desc: 'Système de cards et royalties', color: 'purple' },
     { to: '/formato-evento', emoji: '📋', label: 'Format d\'événement', desc: 'Comment les tournois sont structurés', color: 'fire' },
   ]},
-  ar: { subtitle: 'مسيرتك في SD', badges: 'شاراتك', cards: 'بطاقاتك الصادرة', quickAccess: 'وصول سريع', links: [
+  ar: { subtitle: 'مسيرتك في SD', badges: 'شاراتك', cards: 'بطاقاتك الصادرة', quickAccess: 'وصول سريع', statEvents: 'البطولات', statWins: 'الانتصارات', statPodium: 'منصة التتويج', statBadges: 'الشارات المكتسبة', statCards: 'البطاقات الصادرة', statAvail: 'متاح', links: [
     { to: '/AthleteProfile', emoji: '👤', label: 'ملفي الرياضي', desc: 'إدارة السيرة والرياضة والإحصاءات', color: 'cyan' },
     { to: '/Analytics', emoji: '📊', label: 'التحليلات', desc: 'الأداء والمشجعون والإيرادات', color: 'cyan' },
     { to: '/NFTDashboard', emoji: '💎', label: 'NFT والبطاقات', desc: 'إدارة بطاقاتك الصادرة', color: 'purple' },
@@ -62,7 +62,7 @@ const DASH_LABELS = {
     { to: '/come-funziona', emoji: '🃏', label: 'كيف يعمل', desc: 'نظام البطاقات والإتاوات', color: 'purple' },
     { to: '/formato-evento', emoji: '📋', label: 'تنسيق الحدث', desc: 'كيف تُبنى البطولات', color: 'fire' },
   ]},
-  de: { subtitle: 'deine SD-Karriere', badges: 'DEINE BADGES', cards: 'DEINE AUSGEGEBENEN CARDS', quickAccess: 'SCHNELLZUGRIFF', links: [
+  de: { subtitle: 'deine SD-Karriere', badges: 'DEINE BADGES', cards: 'DEINE AUSGEGEBENEN CARDS', quickAccess: 'SCHNELLZUGRIFF', statEvents: 'Turniere', statWins: 'Siege', statPodium: 'Podien', statBadges: 'Badges verdient', statCards: 'Ausgegebene Cards', statAvail: 'verfügbar', links: [
     { to: '/AthleteProfile', emoji: '👤', label: 'Mein Athletenprofil', desc: 'Bio, Sport, Stats verwalten', color: 'cyan' },
     { to: '/Analytics', emoji: '📊', label: 'Analytics', desc: 'Performance, Fans, Einnahmen', color: 'cyan' },
     { to: '/NFTDashboard', emoji: '💎', label: 'NFT & Cards', desc: 'Deine ausgegebenen Cards verwalten', color: 'purple' },
@@ -172,10 +172,10 @@ export default function DashboardAtleta() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <StatCard emoji="⚔️" label="Tornei partecipati" value={latestStats?.events_participated || registrations.length} />
-          <StatCard emoji="🏆" label="Vittorie" value={latestStats?.wins || 0} sub={`${latestStats?.podium_finishes || 0} podi`} />
-          <StatCard emoji="🎖️" label="Badge guadagnati" value={badges.length} />
-          <StatCard emoji="🃏" label="Card emesse" value={totalTokens} sub={`${availableTokens} disponibili`} />
+          <StatCard emoji="⚔️" label={DL.statEvents} value={latestStats?.events_participated || registrations.length} />
+          <StatCard emoji="🏆" label={DL.statWins} value={latestStats?.wins || 0} sub={`${latestStats?.podium_finishes || 0} ${DL.statPodium}`} />
+          <StatCard emoji="🎖️" label={DL.statBadges} value={badges.length} />
+          <StatCard emoji="🃏" label={DL.statCards} value={totalTokens} sub={`${availableTokens} ${DL.statAvail}`} />
         </div>
 
         {/* Badges */}

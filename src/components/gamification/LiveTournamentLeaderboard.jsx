@@ -67,11 +67,22 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
   });
 
   const leaderboard = buildLeaderboard(matches);
+  const leaderboardKey = JSON.stringify(leaderboard.map(p => p.email + p.pts));
 
-  // Detect rank changes
+  // Detect rank changes — store previous board before it changes
   useEffect(() => {
-    if (leaderboard.length > 0) setPrevBoard(leaderboard);
-  }, [JSON.stringify(leaderboard)]);
+    setPrevBoard(prev => {
+      if (prev.length === 0 && leaderboard.length > 0) return leaderboard;
+      if (JSON.stringify(prev.map(p => p.email + p.pts)) !== leaderboardKey && leaderboard.length > 0) {
+        return prev; // keep old for comparison, update happens next tick
+      }
+      return prev;
+    });
+    const timer = setTimeout(() => {
+      if (leaderboard.length > 0) setPrevBoard(leaderboard);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [leaderboardKey]);
 
   const getRankChange = (email, idx) => {
     const prevIdx = prevBoard.findIndex(p => p.email === email);
@@ -103,7 +114,7 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
 
       {leaderboard.length === 0 ? (
         <div className="border border-white/5 p-5 text-center">
-          <p className="font-mono text-[10px] text-white/25">Waiting for results...</p>
+          <p className="font-mono text-[10px] text-white/25">{L.noTournament}</p>
         </div>
       ) : (
         <div className="space-y-1.5">

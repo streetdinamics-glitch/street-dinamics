@@ -8,12 +8,12 @@ import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
-import { useTranslation } from '../components/translations';
+
 import EthicBettingPanel from '../components/gamification/EthicBettingPanel';
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 
 const DASH_LABELS = {
-  it: { subtitle: 'il tuo spazio', lastEvents: 'ULTIMI EVENTI', noReg: 'Nessuna registrazione ancora.', explore: 'Esplora gli eventi →', quickAccess: 'ACCESSO RAPIDO', links: [
+  it: { subtitle: 'il tuo spazio', lastEvents: 'ULTIMI EVENTI', noReg: 'Nessuna registrazione ancora.', explore: 'Esplora gli eventi →', quickAccess: 'ACCESSO RAPIDO', statRegs: 'Registrazioni', statRegsSub: 'eventi', statBets: 'Scommesse attive', statBetsWon: 'vinte', statVotes: 'Voti espressi', statCards: 'Card possedute', links: [
     { to: '/Home', emoji: '⚽', label: 'Prossimi eventi', desc: 'Registrati come atleta o spettatore' },
     { to: '/come-funziona', emoji: '🃏', label: 'Come funziona', desc: 'Capire il sistema delle card' },
     { to: '/discipline', emoji: '🏆', label: 'Discipline', desc: 'Regole e Window Challenge' },
@@ -23,7 +23,7 @@ const DASH_LABELS = {
     { to: '/VotingHub', emoji: '🗳️', label: 'Vota', desc: 'Esprimi il tuo voto sugli eventi live' },
     { to: '/UserProfile', emoji: '👤', label: 'Il mio profilo', desc: 'Badge, punti, cronologia' },
   ]},
-  en: { subtitle: 'your space', lastEvents: 'RECENT EVENTS', noReg: 'No registrations yet.', explore: 'Explore events →', quickAccess: 'QUICK ACCESS', links: [
+  en: { subtitle: 'your space', lastEvents: 'RECENT EVENTS', noReg: 'No registrations yet.', explore: 'Explore events →', quickAccess: 'QUICK ACCESS', statRegs: 'Registrations', statRegsSub: 'events', statBets: 'Active bets', statBetsWon: 'won', statVotes: 'Votes cast', statCards: 'Cards owned', links: [
     { to: '/Home', emoji: '⚽', label: 'Upcoming events', desc: 'Register as athlete or spectator' },
     { to: '/come-funziona', emoji: '🃏', label: 'How it works', desc: 'Understand the card system' },
     { to: '/discipline', emoji: '🏆', label: 'Disciplines', desc: 'Rules and Window Challenge' },
@@ -33,7 +33,7 @@ const DASH_LABELS = {
     { to: '/VotingHub', emoji: '🗳️', label: 'Vote', desc: 'Vote on live events' },
     { to: '/UserProfile', emoji: '👤', label: 'My profile', desc: 'Badges, points, history' },
   ]},
-  es: { subtitle: 'tu espacio', lastEvents: 'ÚLTIMOS EVENTOS', noReg: 'Sin registros aún.', explore: 'Explorar eventos →', quickAccess: 'ACCESO RÁPIDO', links: [
+  es: { subtitle: 'tu espacio', lastEvents: 'ÚLTIMOS EVENTOS', noReg: 'Sin registros aún.', explore: 'Explorar eventos →', quickAccess: 'ACCESO RÁPIDO', statRegs: 'Registros', statRegsSub: 'eventos', statBets: 'Apuestas activas', statBetsWon: 'ganadas', statVotes: 'Votos emitidos', statCards: 'Cards poseídas', links: [
     { to: '/Home', emoji: '⚽', label: 'Próximos eventos', desc: 'Regístrate como atleta o espectador' },
     { to: '/come-funziona', emoji: '🃏', label: 'Cómo funciona', desc: 'Entiende el sistema de cards' },
     { to: '/discipline', emoji: '🏆', label: 'Disciplinas', desc: 'Reglas y Window Challenge' },
@@ -43,7 +43,7 @@ const DASH_LABELS = {
     { to: '/VotingHub', emoji: '🗳️', label: 'Votar', desc: 'Vota en eventos en vivo' },
     { to: '/UserProfile', emoji: '👤', label: 'Mi perfil', desc: 'Badges, puntos, historial' },
   ]},
-  fr: { subtitle: 'ton espace', lastEvents: 'DERNIERS ÉVÉNEMENTS', noReg: 'Aucune inscription encore.', explore: 'Explorer les événements →', quickAccess: 'ACCÈS RAPIDE', links: [
+  fr: { subtitle: 'ton espace', lastEvents: 'DERNIERS ÉVÉNEMENTS', noReg: 'Aucune inscription encore.', explore: 'Explorer les événements →', quickAccess: 'ACCÈS RAPIDE', statRegs: 'Inscriptions', statRegsSub: 'événements', statBets: 'Paris actifs', statBetsWon: 'gagnés', statVotes: 'Votes exprimés', statCards: 'Cards possédées', links: [
     { to: '/Home', emoji: '⚽', label: 'Prochains événements', desc: 'Inscris-toi comme athlète ou spectateur' },
     { to: '/come-funziona', emoji: '🃏', label: 'Comment ça marche', desc: 'Comprendre le système des cards' },
     { to: '/discipline', emoji: '🏆', label: 'Disciplines', desc: 'Règles et Window Challenge' },
@@ -53,7 +53,7 @@ const DASH_LABELS = {
     { to: '/VotingHub', emoji: '🗳️', label: 'Voter', desc: 'Vote sur les événements en direct' },
     { to: '/UserProfile', emoji: '👤', label: 'Mon profil', desc: 'Badges, points, historique' },
   ]},
-  ar: { subtitle: 'مساحتك', lastEvents: 'آخر الأحداث', noReg: 'لا تسجيلات بعد.', explore: 'استكشف الأحداث →', quickAccess: 'وصول سريع', links: [
+  ar: { subtitle: 'مساحتك', lastEvents: 'آخر الأحداث', noReg: 'لا تسجيلات بعد.', explore: 'استكشف الأحداث →', quickAccess: 'وصول سريع', statRegs: 'التسجيلات', statRegsSub: 'أحداث', statBets: 'الرهانات النشطة', statBetsWon: 'فازت', statVotes: 'الأصوات المُدلى', statCards: 'البطاقات المملوكة', links: [
     { to: '/Home', emoji: '⚽', label: 'الأحداث القادمة', desc: 'سجّل كرياضي أو متفرج' },
     { to: '/come-funziona', emoji: '🃏', label: 'كيف يعمل', desc: 'افهم نظام البطاقات' },
     { to: '/discipline', emoji: '🏆', label: 'التخصصات', desc: 'القواعد وتحدي النافذة' },
@@ -63,7 +63,7 @@ const DASH_LABELS = {
     { to: '/VotingHub', emoji: '🗳️', label: 'تصويت', desc: 'صوّت على الأحداث المباشرة' },
     { to: '/UserProfile', emoji: '👤', label: 'ملفي', desc: 'الشارات والنقاط والتاريخ' },
   ]},
-  de: { subtitle: 'dein Bereich', lastEvents: 'LETZTE EVENTS', noReg: 'Noch keine Registrierungen.', explore: 'Events erkunden →', quickAccess: 'SCHNELLZUGRIFF', links: [
+  de: { subtitle: 'dein Bereich', lastEvents: 'LETZTE EVENTS', noReg: 'Noch keine Registrierungen.', explore: 'Events erkunden →', quickAccess: 'SCHNELLZUGRIFF', statRegs: 'Registrierungen', statRegsSub: 'Events', statBets: 'Aktive Wetten', statBetsWon: 'gewonnen', statVotes: 'Abgegebene Stimmen', statCards: 'Besessene Cards', links: [
     { to: '/Home', emoji: '⚽', label: 'Bevorstehende Events', desc: 'Melde dich als Athlet oder Zuschauer an' },
     { to: '/come-funziona', emoji: '🃏', label: 'Wie es funktioniert', desc: 'Das Card-System verstehen' },
     { to: '/discipline', emoji: '🏆', label: 'Disziplinen', desc: 'Regeln und Window Challenge' },
@@ -157,10 +157,10 @@ export default function DashboardFan() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <StatCard emoji="🎟️" label="Registrazioni" value={registrations.length} sub="eventi" />
-          <StatCard emoji="🎲" label="Scommesse attive" value={activeBets} sub={`${wonBets} vinte`} />
-          <StatCard emoji="🗳️" label="Voti espressi" value={votes.length} />
-          <StatCard emoji="🃏" label="Card possedute" value={tokens.length} />
+          <StatCard emoji="🎟️" label={DL.statRegs} value={registrations.length} sub={DL.statRegsSub} />
+          <StatCard emoji="🎲" label={DL.statBets} value={activeBets} sub={`${wonBets} ${DL.statBetsWon}`} />
+          <StatCard emoji="🗳️" label={DL.statVotes} value={votes.length} />
+          <StatCard emoji="🃏" label={DL.statCards} value={tokens.length} />
         </div>
 
         {/* Ethical Betting */}
@@ -194,6 +194,7 @@ export default function DashboardFan() {
             </div>
           )}
         </div>
+
 
         {/* Quick links */}
         <div className="mb-8">

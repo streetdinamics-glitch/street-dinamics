@@ -9,6 +9,15 @@ import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 
+const ADMIN_LABELS = {
+  it: { recentEvents: 'EVENTI RECENTI', tools: 'STRUMENTI ADMIN', noEvents: 'Nessun evento.', createFirst: 'Crea il primo →', subtitle: 'Controllo totale del sistema SD' },
+  en: { recentEvents: 'RECENT EVENTS', tools: 'ADMIN TOOLS', noEvents: 'No events.', createFirst: 'Create the first →', subtitle: 'Full system control' },
+  es: { recentEvents: 'EVENTOS RECIENTES', tools: 'HERRAMIENTAS ADMIN', noEvents: 'Sin eventos.', createFirst: 'Crear el primero →', subtitle: 'Control total del sistema' },
+  fr: { recentEvents: 'ÉVÉNEMENTS RÉCENTS', tools: 'OUTILS ADMIN', noEvents: 'Aucun événement.', createFirst: 'Créer le premier →', subtitle: 'Contrôle total du système' },
+  ar: { recentEvents: 'الأحداث الأخيرة', tools: 'أدوات الإدارة', noEvents: 'لا أحداث.', createFirst: 'أنشئ الأول →', subtitle: 'السيطرة الكاملة على النظام' },
+  de: { recentEvents: 'AKTUELLE EVENTS', tools: 'ADMIN-WERKZEUGE', noEvents: 'Keine Events.', createFirst: 'Erstes erstellen →', subtitle: 'Vollständige Systemkontrolle' },
+};
+
 function StatCard({ emoji, label, value, sub, color = 'green' }) {
   const colors = {
     green: 'border-green-500/20 bg-green-500/5 text-green-400',
@@ -51,6 +60,7 @@ function AdminLink({ to, emoji, label, desc, color = 'green' }) {
 
 export default function DashboardAdmin() {
   const [lang, setLang] = useLang();
+  const AL = ADMIN_LABELS[lang] || ADMIN_LABELS.it;
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -96,7 +106,7 @@ export default function DashboardAdmin() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-green-500/40 mb-1">DASHBOARD</p>
           <h1 className="font-orbitron font-black text-[clamp(32px,6vw,64px)] leading-none mb-1 text-green-400">ADMIN</h1>
-          <p className="font-rajdhani text-base text-white/40">Controllo totale del sistema SD — <span className="text-green-400">{user?.full_name}</span></p>
+          <p className="font-rajdhani text-base text-white/40">{AL.subtitle} — <span className="text-green-400">{user?.full_name}</span></p>
         </motion.div>
 
         {/* System stats */}
@@ -133,10 +143,10 @@ export default function DashboardAdmin() {
 
         {/* Recent events summary */}
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-green-500/40 mb-4">EVENTI RECENTI</p>
+          <p className="font-mono text-[10px] tracking-[5px] uppercase text-green-500/40 mb-4">{AL.recentEvents}</p>
           {events.length === 0 ? (
             <div className="border border-white/5 p-4 text-center">
-              <p className="font-rajdhani text-white/30">Nessun evento. <Link to="/CreateEvent" className="text-green-400">Crea il primo →</Link></p>
+              <p className="font-rajdhani text-white/30">{AL.noEvents} <Link to="/CreateEvent" className="text-green-400">{AL.createFirst}</Link></p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -159,7 +169,7 @@ export default function DashboardAdmin() {
 
         {/* Quick links grid */}
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-green-500/40 mb-4">STRUMENTI ADMIN</p>
+          <p className="font-mono text-[10px] tracking-[5px] uppercase text-green-500/40 mb-4">{AL.tools}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <AdminLink to="/CreateEvent" emoji="➕" label="Crea evento" desc="Nuovo torneo SD" color="green" />
             <AdminLink to="/Admin" emoji="🔧" label="Pannello Admin" desc="Tutte le funzioni admin" color="green" />
