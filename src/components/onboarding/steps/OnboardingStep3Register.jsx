@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 
 const DISCIPLINES = [
@@ -44,9 +44,11 @@ const LABELS = {
     role: 'Sei qui come... *',
     roleError: 'Seleziona un ruolo',
     athlete: 'Atleta',
-    athleteSub: 'partecipa alle competizioni',
+    athleteSub: 'Partecipa alle competizioni, crea la tua card, guadagna royalty',
+    athletePerks: ['🏆 Accesso alle gare', '🃏 Card personale', '💰 Royalty dagli sponsor', '⚡ AI Interview'],
     fan: 'Fan / Visitatore',
-    fanSub: 'segue gli eventi',
+    fanSub: 'Segui gli eventi, scommetti, colleziona card degli atleti',
+    fanPerks: ['👀 Segui live', '🃏 Colleziona card', '🎲 Scommesse etiche', '🎁 Premi community'],
     terms: 'Accetto i Termini di Servizio',
     privacy: 'Accetto la Privacy Policy',
     termsError: 'Devi accettare i Termini',
@@ -55,6 +57,7 @@ const LABELS = {
     registering: 'Salvataggio...',
     errorGeneric: 'Errore di rete. Riprova.',
     note: "Documenti e dati anagrafici saranno richiesti solo al momento dell'iscrizione a un evento.",
+    rolePreview: 'Cosa ottieni:',
   },
   en: {
     step: 'STEP 2 OF 4',
@@ -73,9 +76,11 @@ const LABELS = {
     role: 'You are here as... *',
     roleError: 'Select a role',
     athlete: 'Athlete',
-    athleteSub: 'compete in events',
+    athleteSub: 'Compete, build your card, earn royalties',
+    athletePerks: ['🏆 Access competitions', '🃏 Personal card', '💰 Sponsor royalties', '⚡ AI Interview'],
     fan: 'Fan / Visitor',
-    fanSub: 'follow events',
+    fanSub: 'Follow events, bet, collect athlete cards',
+    fanPerks: ['👀 Follow live', '🃏 Collect cards', '🎲 Ethical betting', '🎁 Community rewards'],
     terms: 'I accept the Terms of Service',
     privacy: 'I accept the Privacy Policy',
     termsError: 'You must accept the Terms',
@@ -83,7 +88,8 @@ const LABELS = {
     register: 'Continue →',
     registering: 'Saving...',
     errorGeneric: 'Network error. Try again.',
-    note: 'ID documents and personal data will only be required when registering for an event.',
+    note: 'ID documents will only be required when registering for an event.',
+    rolePreview: 'What you get:',
   },
   es: {
     step: 'PASO 2 DE 4',
@@ -102,9 +108,11 @@ const LABELS = {
     role: 'Estás aquí como... *',
     roleError: 'Selecciona un rol',
     athlete: 'Atleta',
-    athleteSub: 'participa en competiciones',
+    athleteSub: 'Compite, crea tu card, gana regalías',
+    athletePerks: ['🏆 Acceso a competiciones', '🃏 Card personal', '💰 Regalías de sponsors', '⚡ Entrevista AI'],
     fan: 'Fan / Visitante',
-    fanSub: 'sigue los eventos',
+    fanSub: 'Sigue eventos, apuesta, colecciona cards',
+    fanPerks: ['👀 Seguir en vivo', '🃏 Coleccionar cards', '🎲 Apuestas éticas', '🎁 Premios comunidad'],
     terms: 'Acepto los Términos de Servicio',
     privacy: 'Acepto la Política de Privacidad',
     termsError: 'Debes aceptar los Términos',
@@ -113,6 +121,7 @@ const LABELS = {
     registering: 'Guardando...',
     errorGeneric: 'Error de red. Inténtalo de nuevo.',
     note: 'Los documentos solo se solicitarán al inscribirse en un evento.',
+    rolePreview: 'Lo que obtienes:',
   },
   fr: {
     step: 'ÉTAPE 2 SUR 4',
@@ -131,17 +140,20 @@ const LABELS = {
     role: 'Tu es ici en tant que... *',
     roleError: 'Sélectionne un rôle',
     athlete: 'Athlète',
-    athleteSub: 'participe aux compétitions',
+    athleteSub: "Compète, crée ta card, gagne des royalties",
+    athletePerks: ['🏆 Accès compétitions', '🃏 Card personnelle', '💰 Royalties sponsors', '⚡ Interview AI'],
     fan: 'Fan / Visiteur',
-    fanSub: 'suit les événements',
+    fanSub: 'Suis les events, parie, collectionne des cards',
+    fanPerks: ['👀 Suivre en live', '🃏 Collectionner cards', '🎲 Paris éthiques', '🎁 Récompenses'],
     terms: "J'accepte les Conditions d'utilisation",
-    privacy: 'J\'accepte la Politique de confidentialité',
+    privacy: "J'accepte la Politique de confidentialité",
     termsError: 'Tu dois accepter les Conditions',
     privacyError: 'Tu dois accepter la Politique de confidentialité',
     register: 'Continuer →',
     registering: 'Enregistrement...',
     errorGeneric: 'Erreur réseau. Réessaie.',
     note: "Les documents ne seront demandés que lors de l'inscription à un événement.",
+    rolePreview: 'Ce que tu obtiens :',
   },
   ar: {
     step: 'الخطوة 2 من 4',
@@ -160,9 +172,11 @@ const LABELS = {
     role: 'أنت هنا بصفة... *',
     roleError: 'اختر دوراً',
     athlete: 'رياضي',
-    athleteSub: 'يشارك في المسابقات',
+    athleteSub: 'شارك في المسابقات واحصل على الإتاوات',
+    athletePerks: ['🏆 الوصول للمسابقات', '🃏 بطاقة شخصية', '💰 إتاوات الرعاة', '⚡ مقابلة AI'],
     fan: 'مشجع / زائر',
-    fanSub: 'يتابع الأحداث',
+    fanSub: 'تابع الأحداث وجمّع بطاقات الرياضيين',
+    fanPerks: ['👀 متابعة مباشرة', '🃏 جمع البطاقات', '🎲 رهانات أخلاقية', '🎁 مكافآت المجتمع'],
     terms: 'أوافق على شروط الخدمة',
     privacy: 'أوافق على سياسة الخصوصية',
     termsError: 'يجب قبول الشروط',
@@ -171,6 +185,7 @@ const LABELS = {
     registering: 'جارٍ الحفظ...',
     errorGeneric: 'خطأ في الشبكة. حاول مجدداً.',
     note: 'ستُطلب الوثائق فقط عند التسجيل في حدث.',
+    rolePreview: 'ما ستحصل عليه:',
   },
   de: {
     step: 'SCHRITT 2 VON 4',
@@ -189,9 +204,11 @@ const LABELS = {
     role: 'Du bist hier als... *',
     roleError: 'Wähle eine Rolle',
     athlete: 'Athlet',
-    athleteSub: 'nimmt an Wettkämpfen teil',
+    athleteSub: 'Nimm teil, erstelle deine Card, verdiene Royalties',
+    athletePerks: ['🏆 Wettkampf-Zugang', '🃏 Persönliche Card', '💰 Sponsor-Royalties', '⚡ AI Interview'],
     fan: 'Fan / Besucher',
-    fanSub: 'verfolgt Events',
+    fanSub: 'Verfolge Events, wette, sammle Karten',
+    fanPerks: ['👀 Live verfolgen', '🃏 Cards sammeln', '🎲 Ethisches Wetten', '🎁 Community-Prämien'],
     terms: 'Ich akzeptiere die Nutzungsbedingungen',
     privacy: 'Ich akzeptiere die Datenschutzrichtlinie',
     termsError: 'Du musst die Bedingungen akzeptieren',
@@ -200,6 +217,7 @@ const LABELS = {
     registering: 'Speichern...',
     errorGeneric: 'Netzwerkfehler. Versuch es nochmal.',
     note: 'Ausweisdokumente werden nur bei der Event-Anmeldung abgefragt.',
+    rolePreview: 'Was du bekommst:',
   },
 };
 
@@ -223,7 +241,6 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const touch = (k) => setTouched(t => ({ ...t, [k]: true }));
 
-  // Computed errors from current form state
   const getErrors = (f) => ({
     name: !f.name.trim() ? L.nameError : '',
     phone: !isValidPhone(f.phone) ? L.phoneError : '',
@@ -234,13 +251,10 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
   });
 
   const errors = getErrors(form);
-  const hasErrors = Object.values(errors).some(Boolean);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mark all fields as touched to display all errors at once
     setTouched({ name: true, phone: true, discipline: true, role: true, terms: true, privacy: true });
-    // Re-evaluate errors against current form (avoids stale state race)
     if (Object.values(getErrors(form)).some(Boolean)) return;
 
     setLoading(true);
@@ -262,13 +276,39 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         discipline: form.discipline,
       });
     } catch (err) {
-      // Show the actual server error if available, otherwise generic
       const msg = err?.message || err?.response?.data?.detail || L.errorGeneric;
       setError(msg);
     } finally {
       setLoading(false);
     }
   };
+
+  const ROLES = [
+    {
+      id: 'athlete',
+      emoji: '🏆',
+      label: L.athlete,
+      sub: L.athleteSub,
+      perks: L.athletePerks,
+      color: 'fire',
+      border: 'border-fire-3',
+      bg: 'bg-fire-3/10',
+      shadow: '0 0 20px rgba(255,102,0,0.25)',
+      textColor: 'text-fire-4',
+    },
+    {
+      id: 'fan',
+      emoji: '👀',
+      label: L.fan,
+      sub: L.fanSub,
+      perks: L.fanPerks,
+      color: 'cyan',
+      border: 'border-cyan-400',
+      bg: 'bg-cyan-400/10',
+      shadow: '0 0 20px rgba(0,255,238,0.2)',
+      textColor: 'text-cyan-400',
+    },
+  ];
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-start min-h-full px-5 py-8 max-w-lg mx-auto w-full overflow-y-auto">
@@ -278,7 +318,8 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         <p className="font-rajdhani text-sm text-white/40">{L.sub}</p>
       </motion.div>
 
-      <form onSubmit={handleSubmit} className="w-full space-y-4" noValidate>
+      <form onSubmit={handleSubmit} className="w-full space-y-5" noValidate>
+
         {/* Name */}
         <div>
           <label className="font-mono text-[9px] uppercase tracking-[2px] text-fire-3/50 block mb-1">{L.name}</label>
@@ -295,7 +336,7 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
           )}
         </div>
 
-        {/* WhatsApp with dial code */}
+        {/* WhatsApp */}
         <div>
           <label className="font-mono text-[9px] uppercase tracking-[2px] text-fire-3/50 block mb-1">{L.phone}</label>
           <div className="flex gap-2">
@@ -340,31 +381,58 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
           )}
         </div>
 
-        {/* Role — always 2-column, never scrollable */}
+        {/* Role selection — expanded cards with perks */}
         <div>
           <label className="font-mono text-[9px] uppercase tracking-[2px] text-fire-3/50 block mb-2">{L.role}</label>
           <div className="grid grid-cols-2 gap-3">
-            {[
-              { id: 'athlete', emoji: '🏆', label: L.athlete, sub: L.athleteSub },
-              { id: 'fan',     emoji: '👀', label: L.fan,     sub: L.fanSub     },
-            ].map(r => (
+            {ROLES.map(r => (
               <button
                 key={r.id}
                 type="button"
                 onClick={() => { set('role', r.id); touch('role'); }}
-                className={`relative p-4 border text-left transition-all ${
+                className={`relative p-4 border-2 text-left transition-all duration-200 ${
                   form.role === r.id
-                    ? 'border-fire-3 bg-fire-3/10 shadow-[0_0_14px_rgba(255,102,0,0.2)]'
-                    : 'border-white/10 hover:border-fire-3/40'
+                    ? `${r.border} ${r.bg}`
+                    : 'border-white/10 hover:border-white/25 bg-white/[0.02]'
                 }`}
-                style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
+                style={{
+                  clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
+                  boxShadow: form.role === r.id ? r.shadow : 'none',
+                }}
               >
                 {form.role === r.id && (
-                  <span className="absolute top-2 right-2 text-fire-3 text-xs font-bold leading-none">✓</span>
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className={`absolute top-2 right-2 text-xs font-bold ${r.textColor}`}
+                  >✓</motion.span>
                 )}
-                <div className="text-2xl mb-1">{r.emoji}</div>
-                <div className="font-orbitron font-bold text-sm text-fire-4">{r.label}</div>
-                <div className="font-rajdhani text-xs text-white/40">{r.sub}</div>
+                <div className="text-2xl mb-1.5">{r.emoji}</div>
+                <div className={`font-orbitron font-bold text-sm mb-0.5 ${form.role === r.id ? r.textColor : 'text-white/60'}`}>
+                  {r.label}
+                </div>
+                <div className="font-rajdhani text-[11px] text-white/35 mb-2 leading-snug">{r.sub}</div>
+
+                {/* Perks — shown when selected */}
+                <AnimatePresence>
+                  {form.role === r.id && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className={`text-[9px] font-mono uppercase tracking-[1px] mb-1 ${r.textColor} opacity-60`}>
+                        {L.rolePreview}
+                      </div>
+                      {r.perks.map((p, i) => (
+                        <div key={i} className={`font-mono text-[9px] ${r.textColor} opacity-70 leading-relaxed`}>
+                          {p}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </button>
             ))}
           </div>
@@ -403,7 +471,15 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
           <p className="font-mono text-[9px] text-fire-3/50 leading-relaxed">ℹ️ {L.note}</p>
         </div>
 
-        {error && <p className="font-mono text-[10px] text-red-400 text-center">⚠ {error}</p>}
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-[10px] text-red-400 text-center bg-red-500/10 border border-red-500/20 px-3 py-2"
+          >
+            ⚠ {error}
+          </motion.p>
+        )}
 
         <div className="pt-2 pb-8">
           <button
@@ -411,7 +487,12 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
             disabled={loading}
             className={`btn-fire w-full text-[12px] tracking-[3px] py-4 transition-all ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
           >
-            {loading ? L.registering : L.register}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-3 h-3 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                {L.registering}
+              </span>
+            ) : L.register}
           </button>
         </div>
       </form>

@@ -32,9 +32,15 @@ export function useSiteOnboarding(userAlreadyDone = false) {
   return { show, complete };
 }
 
-export default function SiteOnboarding({ onComplete, lang = 'it' }) {
+export default function SiteOnboarding({ onComplete, lang: initialLang = 'it', onLangChange }) {
   const [step, setStep] = useState(1);
   const [userData, setUserData] = useState({});
+  const [lang, setLang] = useState(initialLang);
+
+  const handleLangChange = (newLang) => {
+    setLang(newLang);
+    onLangChange?.(newLang);
+  };
 
   const next = (data = {}) => {
     setUserData(prev => ({ ...prev, ...data }));
@@ -82,7 +88,7 @@ export default function SiteOnboarding({ onComplete, lang = 'it' }) {
       <AnimatePresence mode="wait">
         {step === 1 && (
           <motion.div key="step1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -60 }} className="w-full h-full">
-            <OnboardingStep1Splash lang={lang} onNext={() => next()} />
+            <OnboardingStep1Splash lang={lang} onNext={() => next()} onLangChange={handleLangChange} />
           </motion.div>
         )}
         {step === 2 && (
