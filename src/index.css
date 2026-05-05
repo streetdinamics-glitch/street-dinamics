@@ -353,6 +353,17 @@ select.cyber-input option {
 .cyber-input::placeholder {
   color: rgba(255,160,60,0.11);
 }
+/* Kill browser autofill yellow background globally */
+.cyber-input:-webkit-autofill,
+.cyber-input:-webkit-autofill:hover,
+.cyber-input:-webkit-autofill:focus,
+.cyber-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #04020a inset !important;
+  -webkit-text-fill-color: #ffe8c0 !important;
+  caret-color: #ffe8c0;
+  border-color: rgba(255,65,0,0.14) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
 
 @media (max-width: 768px) {
   .section-container {

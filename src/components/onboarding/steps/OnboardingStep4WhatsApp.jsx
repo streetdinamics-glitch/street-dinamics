@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle, ChevronRight } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 const LABELS = {
   it: {
@@ -158,20 +159,8 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
   const visibleMessages = messages.slice(0, Math.min(tick + 1, messages.length));
   const allShown = visibleMessages.length >= messages.length;
 
-  // SD business WhatsApp — user sends a message to the SD agent
-  // Replace with the real SD WhatsApp Business number (digits only, no + or spaces)
-  const SD_WA_NUMBER = '393200000000'; // ← replace with real number
-  const waMessages = {
-    it: `SD Sistema - Nuovo account attivato!\nNome: ${name || ''}\nTelefono: ${phone || ''}\nRuolo: ${role === 'athlete' ? 'Atleta' : 'Fan'}\nDisciplina: ${discipline || ''}`,
-    en: `SD System - New account activated!\nName: ${name || ''}\nPhone: ${phone || ''}\nRole: ${role === 'athlete' ? 'Athlete' : 'Fan'}\nDiscipline: ${discipline || ''}`,
-    es: `SD Sistema - ¡Nueva cuenta activada!\nNombre: ${name || ''}\nTeléfono: ${phone || ''}\nRol: ${role === 'athlete' ? 'Atleta' : 'Fan'}\nDisciplina: ${discipline || ''}`,
-    fr: `SD Système - Nouveau compte activé!\nNom: ${name || ''}\nTéléphone: ${phone || ''}\nRôle: ${role === 'athlete' ? 'Athlète' : 'Fan'}\nDiscipline: ${discipline || ''}`,
-    ar: `نظام SD - تم تفعيل الحساب!\nالاسم: ${name || ''}\nالهاتف: ${phone || ''}\nالدور: ${role === 'athlete' ? 'رياضي' : 'مشجع'}\nالتخصص: ${discipline || ''}`,
-    de: `SD System - Neues Konto aktiviert!\nName: ${name || ''}\nTelefon: ${phone || ''}\nRolle: ${role === 'athlete' ? 'Athlet' : 'Fan'}\nDisziplin: ${discipline || ''}`,
-  };
-  const waText = waMessages[lang] || waMessages.it;
-  // wa.me works on both mobile (opens app) and desktop (opens web.whatsapp.com)
-  const waLink = `https://wa.me/${SD_WA_NUMBER}?text=${encodeURIComponent(waText)}`;
+  // Use the platform's agent WhatsApp connect URL — works on mobile (opens app) and desktop (web.whatsapp.com)
+  const waLink = base44.agents.getWhatsAppConnectURL('athlete_secretary');
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-full px-5 py-12 max-w-lg mx-auto w-full text-center">

@@ -247,14 +247,12 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
     setError('');
     const fullPhone = `${form.dialCode}${form.phone.replace(/\s/g, '')}`;
     try {
-      // NOTE: full_name is read-only (managed by auth), so we save name as display_name
-      // and save all other profile data as custom fields
       await base44.auth.updateMe({
-        display_name: form.name.trim(),   // custom writable field
+        display_name: form.name.trim(),
         role: form.role === 'athlete' ? 'athlete' : 'user',
         phone: fullPhone,
-        discipline: form.discipline,
-        onboarding_step: 'completed',
+        athlete_profile: form.role === 'athlete' ? { discipline: form.discipline } : undefined,
+        spectator_profile: form.role === 'fan' ? { interests: [form.discipline] } : undefined,
         onboarding_completed: true,
       });
       onNext({
@@ -264,7 +262,9 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         discipline: form.discipline,
       });
     } catch (err) {
-      setError(L.errorGeneric);
+      // Show the actual server error if available, otherwise generic
+      const msg = err?.message || err?.response?.data?.detail || L.errorGeneric;
+      setError(msg);
     } finally {
       setLoading(false);
     }
