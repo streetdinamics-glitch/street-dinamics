@@ -37,6 +37,8 @@ export const en = {
   success_wa_athlete_msg: 'Join the official WhatsApp channel to receive check-in instructions, schedule, rules, and event updates.',
   success_wa_fan_msg: 'Join the WhatsApp channel for real-time event updates, stream access, and exclusive news.',
   success_wa_join: 'JOIN CHANNEL',
+  success_qr_hint: 'Show this QR code at the entrance for automatic check-in',
+  success_interview_cta: 'PROCEED TO AI INTERVIEW →',
   tokens_title: 'ATHLETE TOKENS', tokens_subtitle: 'Digital Collectibles',
   tokens_intro: 'Support your favorite athletes and unlock exclusive perks. Tokens grant voting rights, betting access, and revenue sharing from athlete sponsorships.',
   tokens_soon: 'Token marketplace launching soon. Follow our social channels for the drop announcement.',

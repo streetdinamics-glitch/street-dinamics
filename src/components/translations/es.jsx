@@ -31,6 +31,8 @@ export const es = {
   success_wa_athlete_msg: 'Únete al canal oficial de WhatsApp para recibir instrucciones de check-in, horario, reglas y actualizaciones del evento.',
   success_wa_fan_msg: 'Únete al canal de WhatsApp para actualizaciones en tiempo real, acceso al stream y noticias exclusivas.',
   success_wa_join: 'UNIRSE AL CANAL',
+  success_qr_hint: 'Muestra este código QR en la entrada para el check-in automático',
+  success_interview_cta: 'PROCEDER A ENTREVISTA IA →',
   tokens_title: 'TOKENS DE ATLETA', tokens_subtitle: 'Coleccionables Digitales',
   tokens_intro: 'Apoya a tus atletas favoritos y desbloquea beneficios exclusivos.',
   tokens_soon: 'Marketplace de tokens próximamente.', tokens_cta: 'UNIRSE A LISTA',

@@ -31,6 +31,8 @@ export const fr = {
   success_wa_athlete_msg: "Rejoignez la chaîne WhatsApp officielle pour recevoir les instructions de check-in, l'horaire, les règles et les mises à jour de l'événement.",
   success_wa_fan_msg: "Rejoignez la chaîne WhatsApp pour les mises à jour en temps réel, l'accès au stream et les actualités exclusives.",
   success_wa_join: 'REJOINDRE LA CHAÎNE',
+  success_qr_hint: "Montrez ce QR code à l'entrée pour le check-in automatique",
+  success_interview_cta: 'PROCÉDER À L\'ENTRETIEN IA →',
   tokens_title: "JETONS D'ATHLÈTE", tokens_subtitle: 'Objets Numériques',
   tokens_intro: 'Soutenez vos athlètes préférés et débloquez des avantages exclusifs.',
   tokens_soon: 'Marketplace de jetons bientôt.', tokens_cta: 'REJOINDRE LISTE',

@@ -384,7 +384,7 @@ export default function RegistrationModal({ event, type, attendanceMode, onClose
               <button onClick={() => setStep(2)} className="btn-ghost py-3.5 px-5 text-[13px]">← Back</button>
               <button 
                 disabled={!canProceedStep3} 
-                onClick={() => setStep(ageCategory?.isMinor ? 4 : 4)} 
+                onClick={() => setStep(4)} 
                 className="btn-fire flex-1 text-[13px] py-3.5 disabled:opacity-20 disabled:cursor-not-allowed"
               >
                 Next →

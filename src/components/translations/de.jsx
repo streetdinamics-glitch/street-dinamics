@@ -31,6 +31,8 @@ export const de = {
   success_wa_athlete_msg: 'Trete dem offiziellen WhatsApp-Kanal bei, um Check-in-Anweisungen, Zeitplan, Regeln und Event-Updates zu erhalten.',
   success_wa_fan_msg: 'Trete dem WhatsApp-Kanal bei für Echtzeit-Updates, Stream-Zugang und exklusive Neuigkeiten.',
   success_wa_join: 'KANAL BEITRETEN',
+  success_qr_hint: 'Zeigen Sie diesen QR-Code am Eingang für automatisches Check-in',
+  success_interview_cta: 'ZUM KI-INTERVIEW FORTFAHREN →',
   tokens_title: 'ATHLETEN-TOKEN', tokens_subtitle: 'Digitale Sammlerstücke',
   tokens_intro: 'Unterstützen Sie Ihre Lieblingsathleten und entsperren Sie exklusive Vorteile.',
   tokens_soon: 'Token-Marktplatz bald verfügbar.', tokens_cta: 'WARTELISTE BEITRETEN',

@@ -77,7 +77,7 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
               </div>
             )}
             <p className="font-mono text-[9px] text-fire-3/40 tracking-[1px] mt-3 text-center">
-              Mostra il QR code all'ingresso per il check-in automatico
+              {t('success_qr_hint') || 'Show this QR code at the entrance for automatic check-in'}
             </p>
           </div>
         )}
@@ -120,10 +120,10 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
           {isAthlete ? (
             <>
               <button onClick={() => setShowInterview(true)} className="btn-fire text-[11px] py-3 px-6">
-                PROCEED TO AI INTERVIEW →
+                {t('success_interview_cta') || 'PROCEED TO AI INTERVIEW →'}
               </button>
               <button onClick={onClose} className="btn-ghost text-[11px] py-3 px-6">
-                Chiudi
+                {t('success_close')}
               </button>
             </>
           ) : (
@@ -138,6 +138,7 @@ export default function SuccessModal({ registration, event, onClose, lang }) {
         <AthleteInterviewPrompt
           registration={registration}
           event={event}
+          lang={lang}
           onClose={() => { setShowInterview(false); onClose(); }}
         />
       )}
