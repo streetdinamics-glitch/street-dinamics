@@ -163,9 +163,6 @@ export default function DashboardFan() {
           <StatCard emoji="🃏" label={DL.statCards} value={tokens.length} />
         </div>
 
-        {/* Ethical Betting */}
-        <EthicBettingPanel lang={lang} userEmail={user?.email} />
-
         {/* Live Tournament Leaderboard */}
         <LiveTournamentLeaderboard lang={lang} />
 

@@ -37,7 +37,7 @@ function buildLeaderboard(matches) {
 
 export default function LiveTournamentLeaderboard({ lang = 'it' }) {
   const L = LABELS[lang] || LABELS.it;
-  const [prevBoard, setPrevBoard] = useState([]);
+  const [prevBoard, setPrevBoard] = useState(null); // null = not yet initialized
 
   const { data: events = [] } = useQuery({
     queryKey: ['live-events'],
@@ -69,25 +69,30 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
   const leaderboard = buildLeaderboard(matches);
   const leaderboardKey = JSON.stringify(leaderboard.map(p => p.email + p.pts));
 
-  // Detect rank changes — store previous board before it changes
+  // Snapshot the board before each update so we can detect rank changes.
+  // prevBoard===null means first load — no animation yet.
   useEffect(() => {
-    setPrevBoard(prev => {
-      if (prev.length === 0 && leaderboard.length > 0) return leaderboard;
-      if (JSON.stringify(prev.map(p => p.email + p.pts)) !== leaderboardKey && leaderboard.length > 0) {
-        return prev; // keep old for comparison, update happens next tick
-      }
-      return prev;
-    });
-    const timer = setTimeout(() => {
-      if (leaderboard.length > 0) setPrevBoard(leaderboard);
-    }, 3000);
-    return () => clearTimeout(timer);
+    if (leaderboard.length === 0) return;
+    // On first data arrival, seed prevBoard with current (no diff to show)
+    if (prevBoard === null) {
+      setPrevBoard(leaderboard);
+      return;
+    }
+    // If rankings changed, keep old snapshot for 3s then advance it
+    const prevKey = prevBoard.map(p => p.email + p.pts).join(',');
+    if (prevKey !== leaderboardKey) {
+      const timer = setTimeout(() => setPrevBoard(leaderboard), 3000);
+      return () => clearTimeout(timer);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leaderboardKey]);
 
-  const getRankChange = (email, idx) => {
+  const getRankChange = (email, currentIdx) => {
+    if (!prevBoard) return null;
     const prevIdx = prevBoard.findIndex(p => p.email === email);
-    if (prevIdx === -1 || prevIdx === idx) return null;
-    return prevIdx > idx ? 'up' : 'down';
+    if (prevIdx === -1 || prevIdx === currentIdx) return null;
+    // Higher prevIdx (worse rank before) → moved up; lower prevIdx → moved down
+    return prevIdx > currentIdx ? 'up' : 'down';
   };
 
   if (!liveEvent) {

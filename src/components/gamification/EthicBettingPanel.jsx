@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
 // Ethical betting uses "Prediction Coins" — zero real money
@@ -39,7 +39,16 @@ export default function EthicBettingPanel({ lang = 'it', userEmail }) {
   const [tab, setTab] = useState('active');
   const [selectedOutcome, setSelectedOutcome] = useState(null);
   const [stakeInput, setStakeInput] = useState('50');
-  const [isPlacing, setIsPlacing] = useState(false);
+
+  const placeBet = useMutation({
+    mutationFn: (betData) => base44.entities.Bet.create(betData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bets', userEmail] });
+      queryClient.invalidateQueries({ queryKey: ['fan-bets', userEmail] });
+      setSelectedOutcome(null);
+      setStakeInput('50');
+    },
+  });
 
   const { data: bets = [] } = useQuery({
     queryKey: ['bets', userEmail],
@@ -127,11 +136,10 @@ export default function EthicBettingPanel({ lang = 'it', userEmail }) {
                   </div>
                 </div>
                 <button
-                  disabled={isPlacing || stakeAmount <= 0 || stakeAmount > balance}
-                  onClick={async () => {
+                  disabled={placeBet.isPending || stakeAmount <= 0 || stakeAmount > balance}
+                  onClick={() => {
                     if (!userEmail || !events[0] || stakeAmount <= 0 || stakeAmount > balance) return;
-                    setIsPlacing(true);
-                    await base44.entities.Bet.create({
+                    placeBet.mutate({
                       event_id: events[0].id,
                       user_email: userEmail,
                       outcome: selectedOutcome.id,
@@ -142,14 +150,10 @@ export default function EthicBettingPanel({ lang = 'it', userEmail }) {
                       result: 'pending',
                       placed_at: new Date().toISOString(),
                     });
-                    queryClient.invalidateQueries({ queryKey: ['bets', userEmail] });
-                    setSelectedOutcome(null);
-                    setStakeInput('50');
-                    setIsPlacing(false);
                   }}
                   className="btn-fire w-full text-[11px] tracking-[2px] py-2.5 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {isPlacing ? '...' : `${L.confirm} — ${selectedOutcome.label}`}
+                  {placeBet.isPending ? '...' : `${L.confirm} — ${selectedOutcome.label}`}
                 </button>
               </motion.div>
             )}

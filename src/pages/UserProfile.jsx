@@ -42,7 +42,7 @@ export default function UserProfile() {
     queryKey: ['my-tokens'],
     queryFn: async () => {
       const u = await base44.auth.me();
-      return base44.entities.TokenOwnership.filter({ created_by: u.email });
+      return base44.entities.TokenOwnership.filter({ user_email: u.email });
     },
     initialData: [],
   });
