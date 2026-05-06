@@ -12,9 +12,24 @@ export const web3Config = getDefaultConfig({
 export const CONTRACT_ADDRESSES = {
   athleteTokenNFT: {
     [mainnet.id]: '0x0000000000000000000000000000000000000000',
-    [polygon.id]: '0x0000000000000000000000000000000000000000',
+    [polygon.id]: '0x0000000000000000000000000000000000000000', // deploy AthleteNFT.sol (ERC-1155)
   },
   marketplace: {
+    [mainnet.id]: '0x0000000000000000000000000000000000000000',
+    [polygon.id]: '0x0000000000000000000000000000000000000000',
+  },
+  // P2P wager escrow — deploy contracts/AthleteWager.sol via Hardhat
+  athleteWager: {
+    [mainnet.id]: '0x0000000000000000000000000000000000000000',
+    [polygon.id]: '0x0000000000000000000000000000000000000000',
+  },
+  // Binary prediction market AMM — deploy contracts/SDPredictionMarket.sol
+  predictionMarket: {
+    [mainnet.id]: '0x0000000000000000000000000000000000000000',
+    [polygon.id]: '0x0000000000000000000000000000000000000000',
+  },
+  // $SD ERC-20 utility token
+  sdToken: {
     [mainnet.id]: '0x0000000000000000000000000000000000000000',
     [polygon.id]: '0x0000000000000000000000000000000000000000',
   },

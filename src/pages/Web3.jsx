@@ -6,6 +6,7 @@ import FireRule from '../components/cyber/FireRule';
 import Footer from '../components/cyber/Footer';
 import WalletConnectButton from '../components/web3/WalletConnectButton';
 import TokenStakingDashboard from '../components/staking/TokenStakingDashboard';
+import SD3PillarsHub from '../components/wagering/SD3PillarsHub';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 import { base44 } from '@/api/base44Client';
@@ -53,6 +54,11 @@ export default function Web3Page() {
           </p>
           <WalletConnectButton minimal={false} />
         </motion.div>
+
+        <FireRule />
+
+        {/* 3-Pillar Wagering System */}
+        <SD3PillarsHub lang={lang} />
 
         <FireRule />
 
