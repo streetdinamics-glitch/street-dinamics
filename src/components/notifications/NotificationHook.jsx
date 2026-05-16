@@ -1,9 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
+import { usePushNotifications } from './usePushNotifications';
 
 export function useNotifications() {
   const unsubscribers = useRef([]);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  // Push notifications — subscriptions for athlete-specific browser alerts
+  usePushNotifications(currentUser);
 
   useEffect(() => {
     let user;
@@ -12,6 +17,7 @@ export function useNotifications() {
       try {
         user = await base44.auth.me();
         if (!user) return;
+        setCurrentUser(user);
 
         // Subscribe to event updates
         const unsubEvent = base44.entities.Event.subscribe((event) => {

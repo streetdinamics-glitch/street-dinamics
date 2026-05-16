@@ -10,6 +10,8 @@ import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 import AthleteXPBar from '../components/gamification/AthleteXPBar';
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
+import PushPermissionBanner from '../components/notifications/PushPermissionBanner';
+import { usePushNotifications } from '../components/notifications/usePushNotifications';
 
 const DASH_LABELS = {
   it: { subtitle: 'la tua carriera SD', badges: 'I TUOI BADGE', cards: 'LE TUE CARD EMESSE', quickAccess: 'ACCESSO RAPIDO', statEvents: 'Tornei partecipati', statWins: 'Vittorie', statPodium: 'podi', statBadges: 'Badge guadagnati', statCards: 'Card emesse', statAvail: 'disponibili', links: [
@@ -119,6 +121,8 @@ export default function DashboardAtleta() {
     queryKey: ['current-user'],
     queryFn: () => base44.auth.me(),
   });
+
+  const { requestPermission, isSupported, permission } = usePushNotifications(user);
 
   const { data: stats = [] } = useQuery({
     queryKey: ['athlete-stats', user?.email],
@@ -242,6 +246,14 @@ export default function DashboardAtleta() {
 
       <FireRule />
       <Footer lang={lang} />
+
+      {/* Push notification permission banner */}
+      {isSupported && (
+        <PushPermissionBanner
+          onRequestPermission={requestPermission}
+          permission={permission}
+        />
+      )}
     </div>
   );
 }
