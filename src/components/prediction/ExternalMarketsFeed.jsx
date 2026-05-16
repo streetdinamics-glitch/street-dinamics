@@ -63,8 +63,8 @@ function PolymarketCard({ market }) {
   );
 }
 
-export default function ExternalMarketsFeed() {
-  const [source, setSource] = useState('polymarket'); // 'kalshi' | 'polymarket'
+export default function ExternalMarketsFeed({ defaultSource = 'polymarket' }) {
+  const [source, setSource] = useState(defaultSource); // 'kalshi' | 'polymarket'
 
   return (
     <div>

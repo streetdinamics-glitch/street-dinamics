@@ -30,6 +30,7 @@ import LiveEventSidebar from '../components/chat/LiveEventSidebar';
 import { useSubscriptions } from '../components/subscriptions/useSubscriptions';
 import MySubscriptionsPanel from '../components/subscriptions/MySubscriptionsPanel';
 import EventCountdown from '../components/subscriptions/EventCountdown';
+import SD3PillarsHub from '../components/wagering/SD3PillarsHub';
 
 
 export default function Home() {
@@ -196,6 +197,8 @@ export default function Home() {
         )}
       </section>
 
+      <FireRule />
+      <SD3PillarsHub lang={lang} />
       <FireRule />
       <SponsorSection lang={lang} />
       <Footer lang={lang} />

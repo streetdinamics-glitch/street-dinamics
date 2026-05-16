@@ -146,7 +146,7 @@ export default function WagerCard({ match, athleteA, athleteB, existingWager, on
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="border border-fire-3/20 bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] overflow-hidden"
+      className="relative border border-fire-3/20 bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] overflow-hidden"
       style={{ clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))' }}
     >
       <div className="absolute top-0 left-0 right-0 fire-line" />
