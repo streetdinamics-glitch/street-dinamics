@@ -4,6 +4,7 @@ import OnboardingStep1Splash from './steps/OnboardingStep1Splash.jsx';
 import OnboardingStep2Social from './steps/OnboardingStep2Social.jsx';
 import OnboardingStep3Register from './steps/OnboardingStep3Register.jsx';
 import OnboardingStep4WhatsApp from './steps/OnboardingStep4WhatsApp.jsx';
+import OnboardingStepInstallApp from './steps/OnboardingStepInstallApp.jsx';
 import OnboardingStep5Welcome from './steps/OnboardingStep5Welcome.jsx';
 import { ChevronLeft } from 'lucide-react';
 
@@ -31,12 +32,12 @@ export function useSiteOnboarding(userAlreadyDone = false) {
 }
 
 const STEP_LABELS = {
-  it: ['Community', 'Profilo', 'WhatsApp', 'Benvenuto'],
-  en: ['Community', 'Profile', 'WhatsApp', 'Welcome'],
-  es: ['Comunidad', 'Perfil', 'WhatsApp', 'Bienvenida'],
-  fr: ['Communauté', 'Profil', 'WhatsApp', 'Bienvenue'],
-  ar: ['المجتمع', 'الملف', 'واتساب', 'مرحباً'],
-  de: ['Community', 'Profil', 'WhatsApp', 'Willkommen'],
+  it: ['Community', 'Profilo', 'WhatsApp', 'App', 'Benvenuto'],
+  en: ['Community', 'Profile', 'WhatsApp', 'App', 'Welcome'],
+  es: ['Comunidad', 'Perfil', 'WhatsApp', 'App', 'Bienvenida'],
+  fr: ['Communauté', 'Profil', 'WhatsApp', 'App', 'Bienvenue'],
+  ar: ['المجتمع', 'الملف', 'واتساب', 'تطبيق', 'مرحباً'],
+  de: ['Community', 'Profil', 'WhatsApp', 'App', 'Willkommen'],
 };
 
 export default function SiteOnboarding({ onComplete, lang: initialLang = 'it', onLangChange }) {
@@ -67,9 +68,9 @@ export default function SiteOnboarding({ onComplete, lang: initialLang = 'it', o
     onComplete?.();
   };
 
-  // Steps 2-5 are progress-tracked (1 = splash only)
-  const progressStep = step >= 2 && step <= 5 ? step - 1 : null; // 1,2,3,4
-  const TOTAL = 4;
+  // Steps 2-6 are progress-tracked (1 = splash only)
+  const progressStep = step >= 2 && step <= 6 ? step - 1 : null; // 1,2,3,4,5
+  const TOTAL = 5;
   const labels = STEP_LABELS[lang] || STEP_LABELS.it;
 
   return (
@@ -112,8 +113,8 @@ export default function SiteOnboarding({ onComplete, lang: initialLang = 'it', o
         </div>
       )}
 
-      {/* Back button — steps 2-4 only (not on welcome step) */}
-      {step >= 2 && step <= 4 && (
+      {/* Back button — steps 2-5 only (not on welcome step) */}
+      {step >= 2 && step <= 5 && (
         <button
           onClick={back}
           className="absolute top-[72px] left-3 z-20 flex items-center gap-1 font-mono text-[9px] text-white/25 hover:text-white/50 transition-colors py-2 px-2"
@@ -153,6 +154,13 @@ export default function SiteOnboarding({ onComplete, lang: initialLang = 'it', o
         )}
         {step === 5 && (
           <motion.div key="step5" custom={direction}
+            initial={{ opacity: 0, x: direction * 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: direction * -60 }}
+            className="w-full h-full overflow-y-auto">
+            <OnboardingStepInstallApp lang={lang} onNext={() => next()} onSkip={() => next()} />
+          </motion.div>
+        )}
+        {step === 6 && (
+          <motion.div key="step6" custom={direction}
             initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
             className="w-full h-full overflow-y-auto">
             <OnboardingStep5Welcome lang={lang} userData={userData} onFinish={finish} />
