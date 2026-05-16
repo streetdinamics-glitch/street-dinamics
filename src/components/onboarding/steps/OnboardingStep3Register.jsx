@@ -149,7 +149,7 @@ function isValidPhone(num) {
   return num.replace(/\D/g, '').length >= 7;
 }
 
-const ROLES = (L) => [
+const getRoles = (L) => [
   { id: 'athlete', emoji: '🏆', label: L.athlete, sub: L.athleteSub, perks: L.athletePerks,
     border: 'border-fire-3', bg: 'bg-fire-3/10', shadow: '0 0 20px rgba(255,102,0,0.25)', textColor: 'text-fire-4' },
   { id: 'fan', emoji: '👀', label: L.fan, sub: L.fanSub, perks: L.fanPerks,
@@ -158,7 +158,7 @@ const ROLES = (L) => [
 
 export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
   const L = LABELS[lang] || LABELS.it;
-  const roles = ROLES(L);
+  const roles = getRoles(L);
 
   const [form, setForm] = useState({ name: '', dialCode: '+39', phone: '', discipline: '', role: '', terms: false, privacy: false });
   const [touched, setTouched] = useState({});

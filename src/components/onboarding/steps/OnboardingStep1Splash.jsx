@@ -84,7 +84,7 @@ export default function OnboardingStep1Splash({ onNext, lang = 'it', onLangChang
 
       {/* Language switcher */}
       {onLangChange && (
-        <div className="absolute top-4 right-4 flex flex-wrap gap-1 z-20 justify-end max-w-[180px]">
+        <div className="absolute top-3 right-3 flex flex-wrap gap-1 z-20 justify-end max-w-[200px]">
           {LANGS.map(l => (
             <button
               key={l.code}

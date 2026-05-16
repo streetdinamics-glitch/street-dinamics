@@ -116,7 +116,7 @@ export default function SiteOnboarding({ onComplete, lang: initialLang = 'it', o
       {step >= 2 && step <= 4 && (
         <button
           onClick={back}
-          className="absolute top-[80px] left-4 z-20 flex items-center gap-1 font-mono text-[9px] text-white/25 hover:text-white/50 transition-colors py-2 px-2"
+          className="absolute top-[72px] left-3 z-20 flex items-center gap-1 font-mono text-[9px] text-white/25 hover:text-white/50 transition-colors py-2 px-2"
         >
           <ChevronLeft size={13} /> back
         </button>

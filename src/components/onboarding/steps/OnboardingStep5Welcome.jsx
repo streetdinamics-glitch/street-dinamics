@@ -165,11 +165,13 @@ export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it'
   const [allSeen, setAllSeen] = useState(false);
   const [direction, setDirection] = useState(1);
 
+  const slidesLen = C.slides.length;
+
   // Auto-advance after 4s on each slide
   useEffect(() => {
     if (allSeen) return;
     const t = setTimeout(() => {
-      if (slide < C.slides.length - 1) {
+      if (slide < slidesLen - 1) {
         setDirection(1);
         setSlide(s => s + 1);
       } else {
@@ -177,7 +179,7 @@ export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it'
       }
     }, 4000);
     return () => clearTimeout(t);
-  }, [slide, allSeen, C.slides.length]);
+  }, [slide, allSeen, slidesLen]);
 
   const goTo = (idx) => {
     setDirection(idx > slide ? 1 : -1);
