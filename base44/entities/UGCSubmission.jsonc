@@ -1,0 +1,121 @@
+{
+  "name": "UGCSubmission",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated event ID"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete this UGC is about (optional)"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name for display"
+    },
+    "creator_email": {
+      "type": "string",
+      "description": "Fan/creator email"
+    },
+    "creator_name": {
+      "type": "string",
+      "description": "Creator display name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "video",
+        "photo",
+        "post",
+        "reel",
+        "story"
+      ],
+      "description": "Content type"
+    },
+    "title": {
+      "type": "string",
+      "description": "Content title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Content description"
+    },
+    "media_url": {
+      "type": "string",
+      "description": "URL to uploaded media"
+    },
+    "social_links": {
+      "type": "object",
+      "description": "Links to original posts (instagram, tiktok, etc)"
+    },
+    "hashtags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Associated hashtags"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether admin approved"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured on main feed"
+    },
+    "engagement_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Total likes/views/engagement"
+    },
+    "reward_type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "nft_card",
+        "token_points"
+      ],
+      "default": "none",
+      "description": "Type of reward given upon approval"
+    },
+    "reward_nft_rarity": {
+      "type": "string",
+      "enum": [
+        "rising_star",
+        "breakout_talent",
+        "elite_performer",
+        "living_legend"
+      ],
+      "description": "NFT card rarity awarded (if reward_type=nft_card)"
+    },
+    "reward_nft_id": {
+      "type": "string",
+      "description": "ID of NFTOwnership record created as reward"
+    },
+    "reward_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Points awarded (if reward_type=token_points)"
+    },
+    "reward_issued": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether reward has been dispatched"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "creator_email",
+    "creator_name",
+    "type",
+    "title",
+    "media_url"
+  ]
+}

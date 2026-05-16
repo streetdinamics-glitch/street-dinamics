@@ -15,7 +15,7 @@ const TIER_CONFIG = {
     glow: 'rgba(148, 163, 184, 0.3)',
     multiplier: 1.0,
     requirement: 0,
-    perks: ['Base token earnings', 'Access to public drops']
+    perks: ['Accesso ai drop pubblici', 'Guadagna NFT Rising Star via UGC', 'Mercato secondario NFT']
   },
   enthusiast: {
     name: 'Enthusiast',
@@ -26,7 +26,7 @@ const TIER_CONFIG = {
     glow: 'rgba(147, 51, 234, 0.4)',
     multiplier: 1.25,
     requirement: 1000,
-    perks: ['1.25x token earnings', '10% discount on rewards', 'Priority support']
+    perks: ['1.25x moltiplicatore guadagni', 'NFT Breakout Talent via UGC', '10% sconto reward store', 'Early access drop (-12h)']
   },
   superfan: {
     name: 'Superfan',
@@ -37,7 +37,7 @@ const TIER_CONFIG = {
     glow: 'rgba(0, 255, 238, 0.5)',
     multiplier: 1.5,
     requirement: 5000,
-    perks: ['1.5x token earnings', '20% discount on rewards', 'Early access (24h)', 'Exclusive badge']
+    perks: ['1.5x moltiplicatore guadagni', 'NFT Elite Performer via UGC', '20% sconto reward store', 'Early access drop (-24h)', 'Badge esclusivo profilo']
   },
   legend: {
     name: 'Legend',
@@ -48,7 +48,7 @@ const TIER_CONFIG = {
     glow: 'rgba(255, 100, 0, 0.6)',
     multiplier: 2.0,
     requirement: 15000,
-    perks: ['2x token earnings', '30% discount on rewards', 'Early access (48h)', 'VIP events access', 'Custom profile badge']
+    perks: ['2x moltiplicatore guadagni', 'NFT Living Legend via UGC', '30% sconto reward store', 'Early access drop (-48h)', 'Accesso eventi VIP', 'Royalty 0.5% sulle rivendite tue NFT']
   },
   hall_of_fame: {
     name: 'Hall of Fame',
@@ -59,7 +59,7 @@ const TIER_CONFIG = {
     glow: 'rgba(255, 215, 0, 0.7)',
     multiplier: 3.0,
     requirement: 50000,
-    perks: ['3x token earnings', '50% discount on rewards', 'Early access (72h)', 'VIP events + Meet & Greet', 'Lifetime exclusive NFTs', 'Governance voting rights']
+    perks: ['3x moltiplicatore guadagni', 'NFT Living Legend garantite ogni stagione', '50% sconto reward store', 'Early access (-72h) + drop esclusivi', 'VIP + Meet & Greet atleti', 'Governance voting rights', 'Royalty 1% su tutte le rivendite']
   }
 };
 

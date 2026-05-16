@@ -9,8 +9,9 @@ import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 
-import EthicBettingPanel from '../components/gamification/EthicBettingPanel';
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
+import FanNFTCollection from '../components/fan/FanNFTCollection';
+import UGCRewardPanel from '../components/fan/UGCRewardPanel';
 
 const DASH_LABELS = {
   it: { subtitle: 'il tuo spazio', lastEvents: 'ULTIMI EVENTI', noReg: 'Nessuna registrazione ancora.', explore: 'Esplora gli eventi →', quickAccess: 'ACCESSO RAPIDO', statRegs: 'Registrazioni', statRegsSub: 'eventi', statBets: 'Scommesse attive', statBetsWon: 'vinte', statVotes: 'Voti espressi', statCards: 'Card possedute', links: [
@@ -200,6 +201,14 @@ export default function DashboardFan() {
             {DL.links.map(l => <QuickLink key={l.to} to={l.to} emoji={l.emoji} label={l.label} desc={l.desc} />)}
           </div>
         </div>
+      </div>
+
+      {/* Fan NFT Vault */}
+      <FanNFTCollection lang={lang} />
+
+      {/* UGC → NFT Rewards */}
+      <div id="ugc-rewards">
+        <UGCRewardPanel lang={lang} />
       </div>
 
       <FireRule />

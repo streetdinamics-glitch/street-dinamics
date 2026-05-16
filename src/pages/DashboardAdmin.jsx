@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import UGCReviewPanel from '../components/admin/UGCReviewPanel';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -91,6 +92,12 @@ export default function DashboardAdmin() {
     initialData: [],
   });
 
+  const { data: ugcPending = [] } = useQuery({
+    queryKey: ['ugc-pending-count'],
+    queryFn: () => base44.entities.UGCSubmission.filter({ approved: false }),
+    initialData: [],
+  });
+
   const liveEvents = events.filter(e => e.status === 'live').length;
   const upcomingEvents = events.filter(e => e.status === 'upcoming').length;
   const pendingRegs = registrations.filter(r => r.status === 'pending').length;
@@ -179,6 +186,16 @@ export default function DashboardAdmin() {
             <AdminLink to="/Web3" emoji="⛓️" label="Web3" desc="Configurazione blockchain" color="purple" />
           </div>
         </div>
+      </div>
+
+      {/* UGC Review Panel */}
+      <div className="section-container max-w-5xl">
+        {ugcPending.length > 0 && (
+          <div className="mb-2 p-3 border border-purple-500/40 bg-purple-500/10 flex items-center justify-between">
+            <span className="font-orbitron text-sm text-purple-400">🎴 {ugcPending.length} contenuti UGC in attesa di revisione NFT</span>
+          </div>
+        )}
+        <UGCReviewPanel />
       </div>
 
       <FireRule />
