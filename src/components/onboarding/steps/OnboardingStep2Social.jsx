@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Check, Lock, ChevronRight } from 'lucide-react';
+import { ExternalLink, Check, Lock } from 'lucide-react';
+
+const AUTO_CONFIRM_DELAY = 4000; // ms after opening link → auto-confirm
 
 const SOCIALS = [
   { id: 'instagram', label: 'Instagram', handle: '@streetdinamics',      followUrl: 'https://www.instagram.com/streetdinamics/', icon: '📸', accent: '#E1306C', followers: '12K' },
@@ -81,16 +83,35 @@ export default function OnboardingStep2Social({ onNext, lang = 'it' }) {
   const L = LABELS[lang] || LABELS.it;
   const [opened, setOpened] = useState({});
   const [confirmed, setConfirmed] = useState({});
+  const [progress, setProgress] = useState({}); // 0-100 countdown per social
   const [showWhy, setShowWhy] = useState(false);
+  const timers = useRef({});
 
   const allDone = SOCIALS.every(s => confirmed[s.id]);
   const doneCount = SOCIALS.filter(s => confirmed[s.id]).length;
   const pct = Math.round((doneCount / SOCIALS.length) * 100);
 
   const handleOpen = (social) => {
+    if (confirmed[social.id]) return;
     window.open(social.followUrl, '_blank', 'noopener,noreferrer');
-    setTimeout(() => setOpened(prev => ({ ...prev, [social.id]: true })), 600);
+    setOpened(prev => ({ ...prev, [social.id]: true }));
+
+    // Animate progress bar then auto-confirm
+    const startTime = Date.now();
+    clearInterval(timers.current[social.id]);
+    timers.current[social.id] = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min(100, Math.round((elapsed / AUTO_CONFIRM_DELAY) * 100));
+      setProgress(prev => ({ ...prev, [social.id]: pct }));
+      if (pct >= 100) {
+        clearInterval(timers.current[social.id]);
+        setConfirmed(prev => ({ ...prev, [social.id]: true }));
+      }
+    }, 50);
   };
+
+  // Cleanup on unmount
+  useEffect(() => () => Object.values(timers.current).forEach(clearInterval), []);
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-start min-h-full px-5 py-8 text-center max-w-xl mx-auto w-full">
@@ -135,7 +156,9 @@ export default function OnboardingStep2Social({ onNext, lang = 'it' }) {
       </div>
 
       {/* Hint */}
-      <p className="font-mono text-[9px] text-white/25 mb-4 tracking-[1px]">{L.hint}</p>
+      <p className="font-mono text-[9px] text-white/25 mb-4 tracking-[1px]">
+        💡 Clicca ogni account — la conferma è automatica
+      </p>
 
       {/* Social list */}
       <div className="w-full space-y-2 mb-6">
@@ -167,17 +190,23 @@ export default function OnboardingStep2Social({ onNext, lang = 'it' }) {
                     <span className="text-lg">{social.icon}</span>
                     <div className="text-left">
                       <div className="font-orbitron font-bold text-sm text-fire-4">{social.label}</div>
-                      <div className="font-mono text-[8px] text-white/25">{social.handle}</div>
+                      <div className="font-mono text-[8px] text-white/30">
+                        verifica in corso… {progress[social.id] || 0}%
+                      </div>
                     </div>
                   </div>
-                  <button onClick={() => handleOpen(social)} className="font-mono text-[8px] text-white/30 underline flex items-center gap-1">
+                  <button onClick={() => handleOpen(social)} className="font-mono text-[8px] text-white/25 underline flex items-center gap-1">
                     <ExternalLink size={9} /> {L.openAgain}
                   </button>
                 </div>
-                <button onClick={() => setConfirmed(p => ({ ...p, [social.id]: true }))}
-                  className="w-full py-2.5 bg-fire-3/10 border-t border-fire-3/20 font-orbitron text-[10px] tracking-[2px] text-fire-4 hover:bg-fire-3/20 transition-all flex items-center justify-center gap-2">
-                  <Check size={12} /> {L.confirm}
-                </button>
+                {/* Auto-confirm progress bar */}
+                <div className="h-1 bg-white/5 w-full">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-fire-3 to-fire-5"
+                    style={{ width: `${progress[social.id] || 0}%` }}
+                    transition={{ ease: 'linear' }}
+                  />
+                </div>
               </div>
             ) : (
               <button onClick={() => handleOpen(social)}
