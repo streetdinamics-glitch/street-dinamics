@@ -93,7 +93,13 @@ export default function OnboardingStep2Social({ onNext, lang = 'it' }) {
 
   const handleOpen = (social) => {
     if (confirmed[social.id]) return;
-    window.open(social.followUrl, '_blank', 'noopener,noreferrer');
+    try {
+      const win = window.open(social.followUrl, '_blank', 'noopener,noreferrer');
+      // Fallback if popup blocked
+      if (!win) window.location.href = social.followUrl;
+    } catch (_) {
+      window.location.href = social.followUrl;
+    }
     setOpened(prev => ({ ...prev, [social.id]: true }));
 
     // Animate progress bar then auto-confirm
@@ -101,9 +107,9 @@ export default function OnboardingStep2Social({ onNext, lang = 'it' }) {
     clearInterval(timers.current[social.id]);
     timers.current[social.id] = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const pct = Math.min(100, Math.round((elapsed / AUTO_CONFIRM_DELAY) * 100));
-      setProgress(prev => ({ ...prev, [social.id]: pct }));
-      if (pct >= 100) {
+      const p = Math.min(100, Math.round((elapsed / AUTO_CONFIRM_DELAY) * 100));
+      setProgress(prev => ({ ...prev, [social.id]: p }));
+      if (p >= 100) {
         clearInterval(timers.current[social.id]);
         setConfirmed(prev => ({ ...prev, [social.id]: true }));
       }
