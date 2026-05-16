@@ -134,7 +134,7 @@ export default function DashboardFan() {
 
   const { data: tokens = [] } = useQuery({
     queryKey: ['fan-tokens', user?.email],
-    queryFn: () => base44.entities.TokenOwnership.filter({ user_email: user?.email }),
+    queryFn: () => base44.entities.NFTOwnership.filter({ buyer_email: user?.email }),
     enabled: !!user,
     initialData: [],
   });
