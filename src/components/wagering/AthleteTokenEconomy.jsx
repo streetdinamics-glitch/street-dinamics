@@ -1,148 +1,141 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { Shield, Crown, Star, Zap } from 'lucide-react';
-import { useTranslation } from '../translations';
+import { Globe, Map, Flag, Trophy, Info } from 'lucide-react';
 
-function TierCard({ tier, count = 0, t }) {
-  const Icon = tier.icon;
-  return (
-    <div className={`p-4 border ${tier.border} ${tier.bg} relative overflow-hidden`}
-      style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <Icon size={16} className={tier.color} />
-          <div>
-            <div className={`font-orbitron font-bold text-xs ${tier.color}`}>{tier.label}</div>
-            {tier.id === 'living_legend' && (
-              <div className="font-mono text-[7px] text-yellow-400/60 uppercase tracking-[1px]">Champion</div>
-            )}
-          </div>
-        </div>
-        {count > 0 && <span className={`font-orbitron text-sm font-black ${tier.color}`}>{count}</span>}
-      </div>
-      <div className="space-y-1.5">
-        <div className="flex justify-between">
-          <span className="font-mono text-[8px] text-white/25">{t('wag_p3_access')}</span>
-          <span className="font-mono text-[8px] text-green-400">✓</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-mono text-[8px] text-white/25">{t('wag_p3_mult')}</span>
-          <span className={`font-mono text-[8px] ${tier.color}`}>{tier.winRate}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-mono text-[8px] text-white/25">{t('wag_p3_benefit')}</span>
-          <span className={`font-mono text-[8px] ${tier.color} text-right max-w-[120px]`}>{tier.benefit}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
+const LEVELS = [
+  {
+    id: 'regional',
+    label: 'REGIONALE',
+    icon: Map,
+    color: 'text-gray-400',
+    border: 'border-gray-400/30',
+    bg: 'bg-gray-400/5',
+    card: 'Rising Star',
+    cardColor: 'text-gray-400',
+    supply: '500 card',
+    price: '€5–€15',
+    desc: 'L\'atleta partecipa a tornei regionali certificati SD. Al completamento del torneo, viene mintata una card NFT "Rising Star" con i dati reali della performance.',
+  },
+  {
+    id: 'national',
+    label: 'NAZIONALE',
+    icon: Flag,
+    color: 'text-blue-400',
+    border: 'border-blue-400/30',
+    bg: 'bg-blue-400/5',
+    card: 'Breakout Talent',
+    cardColor: 'text-blue-400',
+    supply: '200 card',
+    price: '€20–€60',
+    desc: 'L\'atleta accede alla fase nazionale. La card si aggiorna a "Breakout Talent": supply ridotta, statistiche aggiornate, valore di mercato in crescita.',
+  },
+  {
+    id: 'continental',
+    label: 'CONTINENTALE',
+    icon: Globe,
+    color: 'text-purple-400',
+    border: 'border-purple-500/35',
+    bg: 'bg-purple-500/5',
+    card: 'Elite Performer',
+    cardColor: 'text-purple-400',
+    supply: '50 card',
+    price: '€100–€350',
+    desc: 'L\'atleta compete a livello continentale. Viene mintata la card "Elite Performer" in edizione limitatissima, con accesso prioritario a eventi e revenue sharing sponsorship.',
+  },
+  {
+    id: 'world',
+    label: 'MONDIALE',
+    icon: Trophy,
+    color: 'text-yellow-400',
+    border: 'border-yellow-400/40',
+    bg: 'bg-yellow-400/8',
+    card: 'Living Legend',
+    cardColor: 'text-yellow-400',
+    supply: '10 card',
+    price: '€500+',
+    desc: 'Solo i campioni mondiali SD ottengono la card "Living Legend". Ultra-rara, include voto di governance, royalty sui torner futuri e accesso VIP lifetime agli eventi.',
+  },
+];
 
 export default function AthleteTokenEconomy({ lang = 'it' }) {
-  const t = useTranslation(lang);
-  const TIERS = [
-    { id: 'rising_star',     label: t('wag_p3_tier1'), color: 'text-gray-400',   border: 'border-gray-400/25',   bg: 'bg-gray-400/5',   icon: Star,   winRate: '—',     benefit: t('wag_p3_b1') },
-    { id: 'breakout_talent', label: t('wag_p3_tier2'), color: 'text-blue-400',   border: 'border-blue-400/25',   bg: 'bg-blue-400/5',   icon: Zap,    winRate: '+1.5x', benefit: t('wag_p3_b2') },
-    { id: 'elite_performer', label: t('wag_p3_tier3'), color: 'text-purple-400', border: 'border-purple-500/30', bg: 'bg-purple-500/5', icon: Shield, winRate: '+2x',   benefit: t('wag_p3_b3') },
-    { id: 'living_legend',   label: t('wag_p3_tier4'), color: 'text-yellow-400', border: 'border-yellow-400/40', bg: 'bg-yellow-400/8', icon: Crown,  winRate: '+3x',   benefit: t('wag_p3_b4') },
-  ];
-
-  const { data: user } = useQuery({ queryKey: ['current-user'], queryFn: () => base44.auth.me() });
-
-  const { data: myTokens = [] } = useQuery({
-    queryKey: ['my-token-economy', user?.email],
-    queryFn: () => base44.entities.TokenOwnership.filter({ user_email: user.email }),
-    enabled: !!user?.email,
-    initialData: [],
-  });
-
-  const { data: athletes = [] } = useQuery({
-    queryKey: ['athlete-tokens-market'],
-    queryFn: () => base44.entities.AthleteToken.list('-current_price', 20),
-    initialData: [],
-  });
-
-  const tierCounts = TIERS.reduce((acc, t) => {
-    acc[t.id] = myTokens.filter(tok => tok.rarity === t.id).length;
-    return acc;
-  }, {});
-
-  const champions = athletes.filter(a => a.attributes?.isChampion);
-
   return (
     <div className="mb-8">
       {/* Section header */}
       <div className="mb-5">
         <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/40">PILLAR III</p>
-        <h3 className="font-orbitron font-black text-xl text-fire-4 mt-0.5">{t('wag_p3_title')}</h3>
-        <p className="font-rajdhani text-sm text-white/40 mt-1">{t('wag_p3_desc')}</p>
-      </div>
-
-      {/* Tier grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-        {TIERS.map((tier, idx) => (
-          <motion.div key={tier.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.07 }}>
-            <TierCard tier={tier} count={tierCounts[tier.id]} t={t} />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Champion cards */}
-      {champions.length > 0 && (
-        <div className="mb-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Crown size={14} className="text-yellow-400" />
-            <p className="font-mono text-[9px] uppercase tracking-[3px] text-yellow-400/60">{t('wag_active_champions')}</p>
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            {champions.map(a => (
-              <div key={a.id} className="flex items-center gap-2 px-3 py-2 border border-yellow-400/30 bg-yellow-400/5"
-                style={{ clipPath: 'polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%)' }}>
-                <Crown size={11} className="text-yellow-400" />
-                <span className="font-orbitron text-xs text-yellow-400">{a.athlete_name}</span>
-                <span className="font-mono text-[8px] text-yellow-400/40">{a.sport}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* My portfolio summary */}
-      {myTokens.length > 0 && (
-        <div className="border border-fire-3/15 bg-fire-3/5 p-4"
-          style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 100%, 12px 100%, 0 100%)' }}>
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/50">{t('wag_your_collection')}</p>
-            <span className="font-orbitron font-bold text-fire-4">{myTokens.length} {t('wag_cards')}</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {myTokens.slice(0, 8).map(tok => (
-              <div key={tok.id} className="flex items-center gap-1.5 px-2 py-1 border border-fire-3/15 bg-black/30">
-                <span className="font-mono text-[8px] text-white/50">{tok.athlete_name}</span>
-                <span className={`font-mono text-[7px] uppercase ${
-                  tok.rarity === 'living_legend' ? 'text-yellow-400' :
-                  tok.rarity === 'elite_performer' ? 'text-purple-400' :
-                  tok.rarity === 'breakout_talent' ? 'text-blue-400' : 'text-gray-400'
-                }`}>{tok.rarity?.replace(/_/g, ' ')}</span>
-              </div>
-            ))}
-            {myTokens.length > 8 && (
-              <div className="flex items-center px-2 py-1 border border-white/5">
-                <span className="font-mono text-[8px] text-white/25">+{myTokens.length - 8} {t('wag_more')}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* On-chain metadata notice */}
-      <div className="mt-4 px-4 py-3 border border-white/5 bg-white/[0.01]">
-        <p className="font-mono text-[7px] text-white/20">
-          Card metadata: athlete stats · tournament history · win rate · wager availability · isChampion flag
-          updated on-chain each tournament cycle via oracle transaction
+        <h3 className="font-orbitron font-black text-xl text-fire-4 mt-0.5">NFT CARD ECONOMY</h3>
+        <p className="font-rajdhani text-sm text-white/40 mt-1">
+          Le card NFT degli atleti vengono mintate automaticamente in base al livello del torneo raggiunto — più avanza l'atleta, più la card diventa rara e preziosa.
         </p>
+      </div>
+
+      {/* Info banner */}
+      <div className="mb-5 flex items-start gap-3 px-4 py-3 border border-fire-3/20 bg-fire-3/5"
+        style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
+        <Info size={14} className="text-fire-3/60 mt-0.5 shrink-0" />
+        <p className="font-rajdhani text-sm text-white/50">
+          Il minting avviene <span className="text-fire-4 font-bold">al termine di ogni torneo ufficiale SD</span>. La card registra le statistiche reali della performance e viene aggiornata ad ogni avanzamento di livello. I fan possono acquistare le card prima che l'atleta avanzi — il valore cresce con lui.
+        </p>
+      </div>
+
+      {/* Tournament level cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+        {LEVELS.map((level, idx) => {
+          const Icon = level.icon;
+          return (
+            <motion.div key={level.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.07 }}>
+              <div className={`p-4 border ${level.border} ${level.bg} h-full flex flex-col`}
+                style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
+                {/* Level badge */}
+                <div className="flex items-center gap-2 mb-3">
+                  <Icon size={14} className={level.color} />
+                  <span className={`font-orbitron font-black text-[10px] tracking-[2px] ${level.color}`}>{level.label}</span>
+                </div>
+
+                {/* Card name */}
+                <div className="mb-3 pb-3 border-b border-white/8">
+                  <div className="font-mono text-[8px] text-white/25 uppercase mb-0.5">NFT Card</div>
+                  <div className={`font-orbitron font-bold text-sm ${level.cardColor}`}>{level.card}</div>
+                </div>
+
+                {/* Stats */}
+                <div className="space-y-1.5 mb-3">
+                  <div className="flex justify-between items-center">
+                    <span className="font-mono text-[8px] text-white/25">Supply</span>
+                    <span className={`font-mono text-[8px] font-bold ${level.color}`}>{level.supply}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-mono text-[8px] text-white/25">Valore</span>
+                    <span className={`font-mono text-[8px] font-bold ${level.color}`}>{level.price}</span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="font-rajdhani text-xs text-white/35 leading-relaxed mt-auto">{level.desc}</p>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Flow explanation */}
+      <div className="border border-white/8 bg-black/30 p-4"
+        style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
+        <div className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/40 mb-3">Come funziona il minting</div>
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-0">
+          {[
+            { n: '01', t: 'Torneo SD', d: 'L\'atleta si registra e compete in un torneo ufficiale Street Dinamics' },
+            { n: '02', t: 'Performance', d: 'Le statistiche reali (vittorie, punteggi, discipline) vengono registrate on-chain' },
+            { n: '03', t: 'Minting', d: 'A fine torneo, la card NFT viene mintata automaticamente con i dati aggiornati' },
+            { n: '04', t: 'Upgrade', d: 'Se l\'atleta avanza di livello, la card si aggiorna a rarità superiore — chi la possiede beneficia dell\'aumento di valore' },
+          ].map((s, i) => (
+            <div key={i} className="p-3 border border-fire-3/8 border-r-0 last:border-r">
+              <div className="font-orbitron font-black text-xl text-fire-3/12 mb-1">{s.n}</div>
+              <div className="font-orbitron text-[10px] text-fire-4/60 mb-1">{s.t}</div>
+              <div className="font-rajdhani text-xs text-white/30">{s.d}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
