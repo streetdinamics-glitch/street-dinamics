@@ -4,25 +4,25 @@ import { BarChart2, Globe, Zap } from 'lucide-react';
 import NativePredictionMarket from './NativePredictionMarket';
 import ExternalMarketsFeed from './ExternalMarketsFeed';
 import PolymarketDashboard from './PolymarketDashboard';
-
-const SOURCES = [
-  { id: 'native',     label: 'SD Native',  icon: Zap,      desc: 'On-chain AMM markets on Polygon' },
-  { id: 'polymarket', label: 'Polymarket', icon: Globe,     desc: 'External market signals' },
-  { id: 'kalshi',     label: 'Kalshi',     icon: BarChart2, desc: 'Regulated prediction exchange' },
-];
+import { useTranslation } from '../translations';
 
 export default function PredictionMarketPanel({ lang = 'it' }) {
+  const t = useTranslation(lang);
   const [activeSource, setActiveSource] = useState('native');
+
+  const SOURCES = [
+    { id: 'native',     label: 'SD Native',  icon: Zap,      desc: t('wag_p2_native_desc') },
+    { id: 'polymarket', label: 'Polymarket', icon: Globe,     desc: t('wag_p2_poly_desc') },
+    { id: 'kalshi',     label: 'Kalshi',     icon: BarChart2, desc: t('wag_p2_kalshi_desc') },
+  ];
 
   return (
     <div className="mb-8">
       {/* Section header */}
       <div className="mb-5">
         <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/40">PILLAR II</p>
-        <h3 className="font-orbitron font-black text-xl text-fire-4 mt-0.5">PREDICTION MARKETS</h3>
-        <p className="font-rajdhani text-sm text-white/40 mt-1">
-          Trade YES/NO shares on match outcomes · Native on-chain + external market signals
-        </p>
+        <h3 className="font-orbitron font-black text-xl text-fire-4 mt-0.5">{t('wag_p2_title')}</h3>
+        <p className="font-rajdhani text-sm text-white/40 mt-1">{t('wag_p2_trade')}</p>
       </div>
 
       {/* Source tabs */}

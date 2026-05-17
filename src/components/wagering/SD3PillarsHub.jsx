@@ -14,39 +14,17 @@ import { Shield, BarChart2, Layers } from 'lucide-react';
 import WageringHub from './WageringHub';
 import PredictionMarketPanel from '../prediction/PredictionMarketPanel';
 import AthleteTokenEconomy from './AthleteTokenEconomy';
-
-const PILLARS = [
-  {
-    id: 'wager',
-    num: 'I',
-    label: 'P2P Wagers',
-    sublabel: 'Token-gated · On-chain escrow',
-    icon: Shield,
-    accentClass: 'border-fire-3/60 text-fire-4',
-    activeBg: 'bg-fire-3/8',
-  },
-  {
-    id: 'prediction',
-    num: 'II',
-    label: 'Prediction Markets',
-    sublabel: 'AMM + Polymarket + Kalshi',
-    icon: BarChart2,
-    accentClass: 'border-cyan-400/60 text-cyan-400',
-    activeBg: 'bg-cyan-400/8',
-  },
-  {
-    id: 'economy',
-    num: 'III',
-    label: 'Card Economy',
-    sublabel: '4 tiers · Champion flags',
-    icon: Layers,
-    accentClass: 'border-purple-400/60 text-purple-400',
-    activeBg: 'bg-purple-400/8',
-  },
-];
+import { useTranslation } from '../translations';
 
 export default function SD3PillarsHub({ lang = 'it' }) {
+  const t = useTranslation(lang);
   const [active, setActive] = useState('wager');
+
+  const PILLARS = [
+    { id: 'wager',      num: t('wag_p1_label'), label: t('wag_p1_title'), sublabel: t('wag_p1_sub'), icon: Shield,   accentClass: 'border-fire-3/60 text-fire-4',    activeBg: 'bg-fire-3/8' },
+    { id: 'prediction', num: t('wag_p2_label'), label: t('wag_p2_title'), sublabel: t('wag_p2_sub'), icon: BarChart2, accentClass: 'border-cyan-400/60 text-cyan-400', activeBg: 'bg-cyan-400/8' },
+    { id: 'economy',    num: t('wag_p3_label'), label: t('wag_p3_title'), sublabel: t('wag_p3_sub'), icon: Layers,   accentClass: 'border-purple-400/60 text-purple-400', activeBg: 'bg-purple-400/8' },
+  ];
 
   return (
     <section id="gamification" className="section-container">
@@ -54,10 +32,10 @@ export default function SD3PillarsHub({ lang = 'it' }) {
       <div className="text-center mb-10">
         <p className="font-mono text-[9px] tracking-[8px] uppercase text-fire-3/40 mb-3">STREET DINAMICS</p>
         <h2 className="heading-fire text-[clamp(28px,5vw,56px)] font-black leading-none mb-3">
-          WAGERING SYSTEM
+          {t('wag_title')}
         </h2>
         <p className="font-rajdhani text-base text-white/40 max-w-xl mx-auto">
-          Three independent pillars. All on-chain. All non-custodial. Polygon PoS.
+          {t('wag_subtitle')}
         </p>
       </div>
 
@@ -79,9 +57,7 @@ export default function SD3PillarsHub({ lang = 'it' }) {
             >
               {isActive && <div className="absolute top-0 left-0 right-0 fire-line" />}
               <div className="flex items-start gap-3">
-                <div className={`font-orbitron font-black text-2xl leading-none ${isActive ? '' : 'opacity-20'}`}>
-                  {p.num}
-                </div>
+                <div className={`font-orbitron font-black text-2xl leading-none ${isActive ? '' : 'opacity-20'}`}>{p.num}</div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <Icon size={14} className={isActive ? '' : 'opacity-30'} />
@@ -97,26 +73,16 @@ export default function SD3PillarsHub({ lang = 'it' }) {
 
       {/* Active pillar content */}
       <AnimatePresence mode="wait">
-        <motion.div
-          key={active}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.25 }}
-        >
+        <motion.div key={active} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.25 }}>
           {active === 'wager'      && <WageringHub lang={lang} />}
           {active === 'prediction' && <PredictionMarketPanel lang={lang} />}
           {active === 'economy'    && <AthleteTokenEconomy lang={lang} />}
         </motion.div>
       </AnimatePresence>
 
-      {/* Global disclaimer */}
+      {/* Disclaimer */}
       <div className="mt-8 border border-dashed border-white/5 px-5 py-3 text-center">
-        <p className="font-mono text-[7px] text-white/15 leading-loose">
-          All wagers and predictions use $SD utility tokens or on-chain Polygon transactions.
-          No fiat currency. No custodial wallets. Smart contracts are non-upgradeable by users.
-          Operated by Entretain Holding FZE — IFZA Business Park, Dubai, UAE.
-        </p>
+        <p className="font-mono text-[7px] text-white/15 leading-loose">{t('wag_disclaimer')}</p>
       </div>
     </section>
   );

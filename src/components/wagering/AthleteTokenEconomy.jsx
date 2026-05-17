@@ -3,15 +3,9 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Shield, Crown, Star, Zap } from 'lucide-react';
+import { useTranslation } from '../translations';
 
-const TIERS = [
-  { id: 'rising_star',      label: 'Rising Star',      color: 'text-gray-400',    border: 'border-gray-400/25',  bg: 'bg-gray-400/5',    icon: Star,   wagerAccess: true,  winRate: '—',    benefit: 'Base token gating' },
-  { id: 'breakout_talent',  label: 'Breakout Talent',  color: 'text-blue-400',    border: 'border-blue-400/25',  bg: 'bg-blue-400/5',    icon: Zap,    wagerAccess: true,  winRate: '+1.5x', benefit: 'Priority match access' },
-  { id: 'elite_performer',  label: 'Elite Performer',  color: 'text-purple-400',  border: 'border-purple-500/30', bg: 'bg-purple-500/5', icon: Shield, wagerAccess: true,  winRate: '+2x',  benefit: 'Royalty share on sponsorships' },
-  { id: 'living_legend',    label: 'Living Legend',    color: 'text-yellow-400',  border: 'border-yellow-400/40', bg: 'bg-yellow-400/8', icon: Crown,  wagerAccess: true,  winRate: '+3x',  benefit: 'Champion status + Window Challenge access' },
-];
-
-function TierCard({ tier, count = 0 }) {
+function TierCard({ tier, count = 0, t }) {
   const Icon = tier.icon;
   return (
     <div className={`p-4 border ${tier.border} ${tier.bg} relative overflow-hidden`}
@@ -22,25 +16,23 @@ function TierCard({ tier, count = 0 }) {
           <div>
             <div className={`font-orbitron font-bold text-xs ${tier.color}`}>{tier.label}</div>
             {tier.id === 'living_legend' && (
-              <div className="font-mono text-[7px] text-yellow-400/60 uppercase tracking-[1px]">Champion Eligible</div>
+              <div className="font-mono text-[7px] text-yellow-400/60 uppercase tracking-[1px]">Champion</div>
             )}
           </div>
         </div>
-        {count > 0 && (
-          <span className={`font-orbitron text-sm font-black ${tier.color}`}>{count}</span>
-        )}
+        {count > 0 && <span className={`font-orbitron text-sm font-black ${tier.color}`}>{count}</span>}
       </div>
       <div className="space-y-1.5">
         <div className="flex justify-between">
-          <span className="font-mono text-[8px] text-white/25">P2P Wager Access</span>
-          <span className="font-mono text-[8px] text-green-400">✓ Enabled</span>
+          <span className="font-mono text-[8px] text-white/25">{t('wag_p3_access')}</span>
+          <span className="font-mono text-[8px] text-green-400">✓</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-mono text-[8px] text-white/25">Multiplier</span>
+          <span className="font-mono text-[8px] text-white/25">{t('wag_p3_mult')}</span>
           <span className={`font-mono text-[8px] ${tier.color}`}>{tier.winRate}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-mono text-[8px] text-white/25">Benefit</span>
+          <span className="font-mono text-[8px] text-white/25">{t('wag_p3_benefit')}</span>
           <span className={`font-mono text-[8px] ${tier.color} text-right max-w-[120px]`}>{tier.benefit}</span>
         </div>
       </div>
@@ -49,6 +41,14 @@ function TierCard({ tier, count = 0 }) {
 }
 
 export default function AthleteTokenEconomy({ lang = 'it' }) {
+  const t = useTranslation(lang);
+  const TIERS = [
+    { id: 'rising_star',     label: t('wag_p3_tier1'), color: 'text-gray-400',   border: 'border-gray-400/25',   bg: 'bg-gray-400/5',   icon: Star,   winRate: '—',     benefit: t('wag_p3_b1') },
+    { id: 'breakout_talent', label: t('wag_p3_tier2'), color: 'text-blue-400',   border: 'border-blue-400/25',   bg: 'bg-blue-400/5',   icon: Zap,    winRate: '+1.5x', benefit: t('wag_p3_b2') },
+    { id: 'elite_performer', label: t('wag_p3_tier3'), color: 'text-purple-400', border: 'border-purple-500/30', bg: 'bg-purple-500/5', icon: Shield, winRate: '+2x',   benefit: t('wag_p3_b3') },
+    { id: 'living_legend',   label: t('wag_p3_tier4'), color: 'text-yellow-400', border: 'border-yellow-400/40', bg: 'bg-yellow-400/8', icon: Crown,  winRate: '+3x',   benefit: t('wag_p3_b4') },
+  ];
+
   const { data: user } = useQuery({ queryKey: ['current-user'], queryFn: () => base44.auth.me() });
 
   const { data: myTokens = [] } = useQuery({
@@ -76,18 +76,15 @@ export default function AthleteTokenEconomy({ lang = 'it' }) {
       {/* Section header */}
       <div className="mb-5">
         <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/40">PILLAR III</p>
-        <h3 className="font-orbitron font-black text-xl text-fire-4 mt-0.5">TOKEN & CARD ECONOMY</h3>
-        <p className="font-rajdhani text-sm text-white/40 mt-1">
-          4 rarity tiers · Token gating for P2P wagers · Champion cards flagged on-chain
-        </p>
+        <h3 className="font-orbitron font-black text-xl text-fire-4 mt-0.5">{t('wag_p3_title')}</h3>
+        <p className="font-rajdhani text-sm text-white/40 mt-1">{t('wag_p3_desc')}</p>
       </div>
 
       {/* Tier grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-        {TIERS.map(tier => (
-          <motion.div key={tier.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: TIERS.indexOf(tier) * 0.07 }}>
-            <TierCard tier={tier} count={tierCounts[tier.id]} />
+        {TIERS.map((tier, idx) => (
+          <motion.div key={tier.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.07 }}>
+            <TierCard tier={tier} count={tierCounts[tier.id]} t={t} />
           </motion.div>
         ))}
       </div>
@@ -97,7 +94,7 @@ export default function AthleteTokenEconomy({ lang = 'it' }) {
         <div className="mb-5">
           <div className="flex items-center gap-2 mb-3">
             <Crown size={14} className="text-yellow-400" />
-            <p className="font-mono text-[9px] uppercase tracking-[3px] text-yellow-400/60">Active Champions</p>
+            <p className="font-mono text-[9px] uppercase tracking-[3px] text-yellow-400/60">{t('wag_active_champions')}</p>
           </div>
           <div className="flex gap-2 flex-wrap">
             {champions.map(a => (
@@ -117,8 +114,8 @@ export default function AthleteTokenEconomy({ lang = 'it' }) {
         <div className="border border-fire-3/15 bg-fire-3/5 p-4"
           style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 100%, 12px 100%, 0 100%)' }}>
           <div className="flex items-center justify-between mb-3">
-            <p className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/50">Your Collection</p>
-            <span className="font-orbitron font-bold text-fire-4">{myTokens.length} cards</span>
+            <p className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/50">{t('wag_your_collection')}</p>
+            <span className="font-orbitron font-bold text-fire-4">{myTokens.length} {t('wag_cards')}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {myTokens.slice(0, 8).map(tok => (
@@ -133,7 +130,7 @@ export default function AthleteTokenEconomy({ lang = 'it' }) {
             ))}
             {myTokens.length > 8 && (
               <div className="flex items-center px-2 py-1 border border-white/5">
-                <span className="font-mono text-[8px] text-white/25">+{myTokens.length - 8} more</span>
+                <span className="font-mono text-[8px] text-white/25">+{myTokens.length - 8} {t('wag_more')}</span>
               </div>
             )}
           </div>
