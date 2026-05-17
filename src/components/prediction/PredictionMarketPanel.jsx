@@ -8,10 +8,9 @@ import { useTranslation } from '../translations';
 
 export default function PredictionMarketPanel({ lang = 'it' }) {
   const t = useTranslation(lang);
-  const [activeSource, setActiveSource] = useState('native');
+  const [activeSource, setActiveSource] = useState('polymarket');
 
   const SOURCES = [
-    { id: 'native',     label: 'SD Native',  icon: Zap,      desc: t('wag_p2_native_desc') },
     { id: 'polymarket', label: 'Polymarket', icon: Globe,     desc: t('wag_p2_poly_desc') },
     { id: 'kalshi',     label: 'Kalshi',     icon: BarChart2, desc: t('wag_p2_kalshi_desc') },
   ];
@@ -64,9 +63,7 @@ export default function PredictionMarketPanel({ lang = 'it' }) {
             exit={{ opacity: 0, x: -16 }}
             transition={{ duration: 0.2 }}
           >
-            {activeSource === 'native' ? (
-              <NativePredictionMarket />
-            ) : activeSource === 'polymarket' ? (
+            {activeSource === 'polymarket' ? (
               <PolymarketDashboard />
             ) : (
               <ExternalMarketsFeed defaultSource={activeSource} />
