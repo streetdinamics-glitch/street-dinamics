@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart2, Globe, Zap } from 'lucide-react';
 import NativePredictionMarket from './NativePredictionMarket';
 import ExternalMarketsFeed from './ExternalMarketsFeed';
+import PolymarketDashboard from './PolymarketDashboard';
 
 const SOURCES = [
   { id: 'native',     label: 'SD Native',  icon: Zap,      desc: 'On-chain AMM markets on Polygon' },
@@ -65,6 +66,8 @@ export default function PredictionMarketPanel({ lang = 'it' }) {
           >
             {activeSource === 'native' ? (
               <NativePredictionMarket />
+            ) : activeSource === 'polymarket' ? (
+              <PolymarketDashboard />
             ) : (
               <ExternalMarketsFeed defaultSource={activeSource} />
             )}
