@@ -1,51 +1,9 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useQuery } from '@tanstack/react-query';
-import { useAccount } from 'wagmi';
-import { Shield, Zap } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
-import WagerCard from './WagerCard';
+import React from 'react';
+import { Shield } from 'lucide-react';
 import { useTranslation } from '../translations';
 
 export default function WageringHub({ lang = 'it' }) {
   const t = useTranslation(lang);
-  const { isConnected } = useAccount();
-  const [filter, setFilter] = useState('all');
-
-  const { data: user } = useQuery({
-    queryKey: ['current-user'],
-    queryFn: () => base44.auth.me(),
-  });
-
-  const { data: liveEvents = [] } = useQuery({
-    queryKey: ['live-events'],
-    queryFn: () => base44.entities.Event.filter({ status: 'live' }),
-    initialData: [],
-    refetchInterval: 30000,
-  });
-
-  const { data: upcomingEvents = [] } = useQuery({
-    queryKey: ['upcoming-events'],
-    queryFn: () => base44.entities.Event.filter({ status: 'upcoming' }),
-    initialData: [],
-  });
-
-  const { data: myTokens = [] } = useQuery({
-    queryKey: ['wager-tokens', user?.email],
-    queryFn: () => base44.entities.TokenOwnership.filter({ user_email: user.email }),
-    enabled: !!user?.email,
-    initialData: [],
-  });
-
-  const events = [...liveEvents, ...upcomingEvents].slice(0, 6);
-  const myAthletes = myTokens.map(t => t.athlete_name);
-
-  // Build mock match pairs from events (in real app, from TournamentMatch entity)
-  const matchPairs = events.map((event, i) => ({
-    match: { id: event.id, title: event.title },
-    athleteA: { name: 'Athlete A', discipline: event.sport, avatar: '🏆', tokenId: 1 },
-    athleteB: { name: 'Athlete B', discipline: event.sport, avatar: '⚔️', tokenId: 2 },
-  }));
 
   return (
     <div className="mb-8">
@@ -62,45 +20,15 @@ export default function WageringHub({ lang = 'it' }) {
         </div>
       </div>
 
-      {/* My tokens summary */}
-      {myAthletes.length > 0 && (
-        <div className="mb-4 px-4 py-3 border border-fire-3/15 bg-fire-3/5 flex items-center gap-3 flex-wrap">
-          <div className="font-mono text-[9px] text-fire-3/50 uppercase tracking-[2px]">{t('wag_your_athletes')}</div>
-          {myAthletes.slice(0, 5).map((name, i) => (
-            <span key={i} className="font-orbitron text-[10px] text-fire-4 border border-fire-3/20 px-2 py-0.5">{name}</span>
-          ))}
-          {myAthletes.length > 5 && (
-            <span className="font-mono text-[9px] text-white/30">+{myAthletes.length - 5} {t('wag_more')}</span>
-          )}
-        </div>
-      )}
-
-      {/* Wallet required */}
-      {!isConnected && (
-        <div className="mb-5 px-5 py-4 border border-yellow-500/25 bg-yellow-500/5 text-center">
-          <p className="font-orbitron text-sm text-yellow-400 mb-1">{t('wag_token_req')}</p>
-          <p className="font-rajdhani text-sm text-white/40">{t('wag_token_req_desc')}</p>
-        </div>
-      )}
-
-      {/* Match cards grid */}
-      {matchPairs.length === 0 ? (
-        <div className="border border-white/5 p-8 text-center">
-          <Zap size={24} className="text-fire-3/20 mx-auto mb-2" />
-          <p className="font-rajdhani text-white/25 text-sm">{t('wag_no_matches')}</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {matchPairs.map((pair, i) => (
-            <motion.div key={pair.match.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
-              <WagerCard match={pair.match} athleteA={pair.athleteA} athleteB={pair.athleteB} existingWager={null} onWagerCreated={(data) => console.log('Wager created', data)} />
-            </motion.div>
-          ))}
-        </div>
-      )}
+      {/* Coming Soon Banner */}
+      <div className="mb-6 px-5 py-5 border border-fire-3/20 bg-fire-3/5 text-center"
+        style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}>
+        <p className="font-orbitron text-sm text-fire-4 mb-1">🚧 COMING SOON</p>
+        <p className="font-rajdhani text-sm text-white/40">Il sistema P2P Wagering sarà disponibile al lancio ufficiale della piattaforma.</p>
+      </div>
 
       {/* How it works */}
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-0">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-0">
         {[
           { n: '01', title: t('wag_step1_t'), d: t('wag_step1_d') },
           { n: '02', title: t('wag_step2_t'), d: t('wag_step2_d') },
