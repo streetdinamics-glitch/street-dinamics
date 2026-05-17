@@ -1,0 +1,54 @@
+{
+  "name": "StreetCred",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "total_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Total Street Cred points"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "newcomer",
+        "follower",
+        "hype_beast",
+        "street_legend",
+        "sd_icon"
+      ],
+      "default": "newcomer"
+    },
+    "actions": {
+      "type": "object",
+      "description": "Completed actions map: { instagram: true, tiktok: true, youtube: true, kick: true, snapchat: true, share_event: number, referrals: number, attended_events: number }",
+      "default": {}
+    },
+    "unlocked_perks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of unlocked event perk IDs"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "User's unique referral code"
+    },
+    "last_synced_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "user_email",
+    "user_name"
+  ]
+}

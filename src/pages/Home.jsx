@@ -32,6 +32,7 @@ import MySubscriptionsPanel from '../components/subscriptions/MySubscriptionsPan
 import EventCountdown from '../components/subscriptions/EventCountdown';
 import SD3PillarsHub from '../components/wagering/SD3PillarsHub';
 import { CyberSpinner, CyberEmpty } from '../components/ui/GlobalFeedback';
+import StreetCredDashboard from '../components/social/StreetCredDashboard';
 
 
 export default function Home() {
@@ -47,6 +48,7 @@ export default function Home() {
   const [onboardingOpen, setOnboardingOpen] = useState(false); // kept for future use / external triggers
   const [spectatorTypeModal, setSpectatorTypeModal] = useState(null);
   const [subscriptionsOpen, setSubscriptionsOpen] = useState(false);
+  const [streetCredOpen, setStreetCredOpen] = useState(false);
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -199,6 +201,27 @@ export default function Home() {
         )}
       </section>
 
+      {/* Street Cred Section */}
+      {user && (
+        <section id="social" className="section-container">
+          <div className="text-center mb-8">
+            <p className="font-mono text-[9px] tracking-[7px] uppercase text-fire-3/40 mb-2">COMMUNITY</p>
+            <h2 className="heading-fire text-[clamp(28px,5vw,56px)] font-black leading-none mb-3">STREET CRED</h2>
+            <p className="font-rajdhani text-base text-white/40 max-w-lg mx-auto">
+              {t('social_rewards_msg')}
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <button
+              onClick={() => setStreetCredOpen(true)}
+              className="btn-fire"
+            >
+              ⚡ OPEN STREET CRED DASHBOARD
+            </button>
+          </div>
+        </section>
+      )}
+
       <FireRule />
       <SD3PillarsHub lang={lang} />
       <FireRule />
@@ -248,6 +271,11 @@ export default function Home() {
       {siteOnboarding.show && (
         <SiteOnboarding lang={lang} onComplete={siteOnboarding.complete} />
       )}
+      <AnimatePresence>
+        {streetCredOpen && user && (
+          <StreetCredDashboard lang={lang} onClose={() => setStreetCredOpen(false)} />
+        )}
+      </AnimatePresence>
       {/* My Subscriptions Panel */}
       <AnimatePresence>
         {subscriptionsOpen && user && (
