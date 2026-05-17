@@ -12,8 +12,7 @@ const LEVELS = [
     bg: 'bg-gray-400/5',
     card: 'Rising Star',
     cardColor: 'text-gray-400',
-    supply: '500 card',
-    price: '€5–€15',
+    supply: '100.000 card',
     desc: 'L\'atleta partecipa a tornei regionali certificati SD. Al completamento del torneo, viene mintata una card NFT "Rising Star" con i dati reali della performance.',
   },
   {
@@ -25,8 +24,7 @@ const LEVELS = [
     bg: 'bg-blue-400/5',
     card: 'Breakout Talent',
     cardColor: 'text-blue-400',
-    supply: '200 card',
-    price: '€20–€60',
+    supply: '10.000 card',
     desc: 'L\'atleta accede alla fase nazionale. La card si aggiorna a "Breakout Talent": supply ridotta, statistiche aggiornate, valore di mercato in crescita.',
   },
   {
@@ -38,8 +36,7 @@ const LEVELS = [
     bg: 'bg-purple-500/5',
     card: 'Elite Performer',
     cardColor: 'text-purple-400',
-    supply: '50 card',
-    price: '€100–€350',
+    supply: '1.000 card',
     desc: 'L\'atleta compete a livello continentale. Viene mintata la card "Elite Performer" in edizione limitatissima, con accesso prioritario a eventi e revenue sharing sponsorship.',
   },
   {
@@ -51,9 +48,8 @@ const LEVELS = [
     bg: 'bg-yellow-400/8',
     card: 'Living Legend',
     cardColor: 'text-yellow-400',
-    supply: '10 card',
-    price: '€500+',
-    desc: 'Solo i campioni mondiali SD ottengono la card "Living Legend". Ultra-rara, include voto di governance, royalty sui torner futuri e accesso VIP lifetime agli eventi.',
+    supply: '100 card',
+    desc: 'Solo i campioni mondiali SD ottengono la card "Living Legend". Ultra-rara, include voto di governance, royalty sui tornei futuri e accesso VIP lifetime agli eventi.',
   },
 ];
 
@@ -103,10 +99,6 @@ export default function AthleteTokenEconomy({ lang = 'it' }) {
                   <div className="flex justify-between items-center">
                     <span className="font-mono text-[8px] text-white/25">Supply</span>
                     <span className={`font-mono text-[8px] font-bold ${level.color}`}>{level.supply}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="font-mono text-[8px] text-white/25">Valore</span>
-                    <span className={`font-mono text-[8px] font-bold ${level.color}`}>{level.price}</span>
                   </div>
                 </div>
 
