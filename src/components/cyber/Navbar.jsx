@@ -66,6 +66,7 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
 
   const userNavLinks = user ? [
     { label: `💎 ${t('nav_nft_portfolio')}`, path: '/NFTDashboard' },
+    { label: `🛒 Marketplace`, path: '/marketplace' },
     { label: `⛓️ ${t('nav_web3')}`, path: '/Web3' },
   ] : [];
 

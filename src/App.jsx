@@ -26,6 +26,7 @@ import Scarsita from './pages/Scarsita';
 import DashboardFan from './pages/DashboardFan';
 import DashboardAtleta from './pages/DashboardAtleta';
 import DashboardAdmin from './pages/DashboardAdmin';
+import NFTMarketplace from './pages/NFTMarketplace';
 import { Navigate } from 'react-router-dom';
 
 const AdminGuard = ({ children }) => {
@@ -83,6 +84,7 @@ const AuthenticatedApp = () => {
       <Route path="/dashboard-fan" element={<DashboardFan />} />
       <Route path="/dashboard-atleta" element={<DashboardAtleta />} />
       <Route path="/dashboard-admin" element={<AdminGuard><DashboardAdmin /></AdminGuard>} />
+      <Route path="/marketplace" element={<NFTMarketplace />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
