@@ -5,8 +5,7 @@ import Navbar from '../components/cyber/Navbar';
 import FireRule from '../components/cyber/FireRule';
 import Footer from '../components/cyber/Footer';
 import WalletConnectButton from '../components/web3/WalletConnectButton';
-import TokenStakingDashboard from '../components/staking/TokenStakingDashboard';
-import SD3PillarsHub from '../components/wagering/SD3PillarsHub';
+import Web3ConceptExplainer from '../components/web3/Web3ConceptExplainer';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 import { base44 } from '@/api/base44Client';
@@ -29,49 +28,38 @@ export default function Web3Page() {
       <Navbar lang={lang} onLangSwitch={setLang} onScrollTo={() => {}} />
       <Web3StatusBanner isAdmin={user?.role === 'admin'} />
 
-      <div className="pt-[80px] section-container">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-10"
-        >
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-2">{t('web3_hub')}</p>
-          <h1 className="heading-fire text-[clamp(36px,6vw,72px)] leading-none font-black mb-4">
-            {t('web3_title')}
-          </h1>
-          <div className="h-[2px] bg-gradient-to-r from-fire-3 via-fire-5 to-transparent" />
-        </motion.div>
+      <div className="pt-[88px] section-container">
 
-        {/* Wallet Section */}
+        {/* ── WALLET CONNECT (minimal, top) ── */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-10 bg-gradient-to-br from-[rgba(10,4,18,0.98)] to-[rgba(4,2,8,1)] border border-cyan/20 p-8 clip-cyber"
+          className="flex items-center justify-between mb-14 flex-wrap gap-4"
         >
-          <p className="font-mono text-[9px] tracking-[3px] uppercase text-cyan/40 mb-2">{t('web3_connectivity')}</p>
-          <h2 className="font-orbitron font-black text-2xl text-cyan mb-6">{t('web3_connect_wallet')}</h2>
-          <p className="font-rajdhani text-fire-3/60 mb-6 text-lg">
-            {t('web3_connect_desc')}
-          </p>
-          <WalletConnectButton minimal={false} />
+          <div>
+            <p className="font-mono text-[10px] tracking-[6px] uppercase text-fire-3/40 mb-1">{t('web3_hub')}</p>
+            <h1 className="heading-fire text-[clamp(28px,4vw,52px)] leading-none font-black">
+              {t('web3_title')}
+            </h1>
+          </div>
+          <WalletConnectButton minimal={true} />
         </motion.div>
 
         <FireRule />
 
-        {/* 3-Pillar Wagering System */}
-        <SD3PillarsHub lang={lang} />
+        {/* ── CORE CONCEPT ── */}
+        <div className="mt-14">
+          <Web3ConceptExplainer lang={lang} />
+        </div>
 
         <FireRule />
 
-        {/* Admin: Web3 Setup Guide */}
+        {/* ── ADMIN: Setup Guide ── */}
         {user?.role === 'admin' && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="mt-10"
+            className="mt-14"
           >
             <p className="font-mono text-[9px] tracking-[3px] uppercase text-fire-3/40 mb-2">ADMIN</p>
             <h2 className="font-orbitron font-black text-2xl text-fire-4 mb-6">Setup & Configurazione Web3</h2>
@@ -79,21 +67,6 @@ export default function Web3Page() {
           </motion.div>
         )}
 
-        <FireRule />
-
-        {/* Staking Section */}
-        {user && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-10"
-          >
-            <p className="font-mono text-[9px] tracking-[3px] uppercase text-fire-3/40 mb-2">{t('web3_staking')}</p>
-            <h2 className="font-orbitron font-black text-2xl text-fire-5 mb-6">{t('web3_token_staking')}</h2>
-            <TokenStakingDashboard athleteEmail={user.email} />
-          </motion.div>
-        )}
       </div>
 
       <FireRule />
