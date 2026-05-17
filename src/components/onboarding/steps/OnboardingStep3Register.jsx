@@ -190,14 +190,17 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
     setError('');
     const fullPhone = `${form.dialCode}${form.phone.replace(/\s/g, '')}`;
     try {
-      await base44.auth.updateMe({
-        display_name: form.name.trim(),
-        role: form.role === 'athlete' ? 'athlete' : 'user',
-        phone: fullPhone,
-        athlete_profile: form.role === 'athlete' ? { discipline: form.discipline } : undefined,
-        spectator_profile: form.role === 'fan' ? { interests: [form.discipline] } : undefined,
-        onboarding_completed: true,
-      });
+      const isAuthed = await base44.auth.isAuthenticated();
+      if (isAuthed) {
+        await base44.auth.updateMe({
+          display_name: form.name.trim(),
+          role: form.role === 'athlete' ? 'athlete' : 'user',
+          phone: fullPhone,
+          athlete_profile: form.role === 'athlete' ? { discipline: form.discipline } : undefined,
+          spectator_profile: form.role === 'fan' ? { interests: [form.discipline] } : undefined,
+          onboarding_completed: true,
+        });
+      }
       setSuccess(true);
       setTimeout(() => {
         onNext({ name: form.name.trim(), phone: fullPhone, role: form.role, discipline: form.discipline });
