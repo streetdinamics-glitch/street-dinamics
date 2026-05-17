@@ -24,6 +24,7 @@ import FanStatusManager from './FanStatusManager';
 import SportCategoryManager from './SportCategoryManager';
 import Web3ConfigPanel from './Web3ConfigPanel';
 import UserManagementPanel from './UserManagementPanel';
+import PredictionLinksManager from './PredictionLinksManager';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -59,6 +60,7 @@ export default function AdminPanel({ lang, onClose }) {
   const [showFanStatusMgr, setShowFanStatusMgr] = useState(false);
   const [showSportCatMgr, setShowSportCatMgr] = useState(false);
   const [showWeb3Config, setShowWeb3Config] = useState(false);
+  const [showPredictionLinks, setShowPredictionLinks] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -333,6 +335,12 @@ export default function AdminPanel({ lang, onClose }) {
             className="btn-cyan text-[11px] py-2.5 px-5"
           >
             ⛓️ Web3 Config
+          </button>
+          <button
+            onClick={() => setShowPredictionLinks(true)}
+            className="btn-fire text-[11px] py-2.5 px-5"
+          >
+            🔮 Prediction Links
           </button>
           {events.find(e => e.status === 'live') && (
             <button
@@ -929,6 +937,21 @@ export default function AdminPanel({ lang, onClose }) {
                   CLOSE
                 </button>
                 <SportCategoryManager />
+              </div>
+            </div>
+          )}
+
+         {showPredictionLinks && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-3xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button
+                  onClick={() => setShowPredictionLinks(false)}
+                  className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3"
+                >
+                  CLOSE
+                </button>
+                <PredictionLinksManager />
               </div>
             </div>
           )}
