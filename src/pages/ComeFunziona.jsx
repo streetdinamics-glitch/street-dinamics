@@ -5,6 +5,7 @@ import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 const TABS = [
   {
@@ -205,9 +206,15 @@ const TABS = [
 
 export default function ComeFunziona() {
   const [lang, setLang] = useLang();
+  const t = useTranslation(lang);
   const [activeTab, setActiveTab] = useState('proprieta');
 
-  const active = TABS.find(t => t.id === activeTab);
+  const TABS_LABELED = TABS.map((tab, i) => ({
+    ...tab,
+    label: t(['cf_tab_property','cf_tab_royalty','cf_tab_vote','cf_tab_scarcity','cf_tab_snapshot','cf_tab_pillars','cf_tab_window'][i])
+  }));
+
+  const active = TABS_LABELED.find(tab => tab.id === activeTab);
 
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
@@ -217,13 +224,13 @@ export default function ComeFunziona() {
       <div className="pt-[80px] section-container max-w-4xl">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">COME FUNZIONA</p>
-          <h1 className="heading-fire text-[clamp(40px,8vw,80px)] font-black leading-none mb-4">LA CARD</h1>
-          <p className="font-rajdhani text-lg text-white/40 max-w-xl mx-auto">7 concetti. Leggili tutti — poi decidi se vuoi fare parte del sistema.</p>
+          <h1 className="heading-fire text-[clamp(40px,8vw,80px)] font-black leading-none mb-4">{t('cf_title')}</h1>
+          <p className="font-rajdhani text-lg text-white/40 max-w-xl mx-auto">{t('cf_subtitle')}</p>
         </motion.div>
 
         {/* Tab bar */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {TABS.map(tab => (
+          {TABS_LABELED.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -250,7 +257,7 @@ export default function ComeFunziona() {
             className="border border-fire-3/15 bg-black/40 p-6 md:p-8"
             style={{ clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))' }}
           >
-            {active?.content}
+            {TABS.find(tab => tab.id === activeTab)?.content}
           </motion.div>
         </AnimatePresence>
       </div>

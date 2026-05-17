@@ -6,6 +6,7 @@ import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 const DISCIPLINES = [
   {
@@ -176,7 +177,7 @@ const DISCIPLINES = [
   },
 ];
 
-function DisciplineCard({ d }) {
+function DisciplineCard({ d, t }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -211,7 +212,7 @@ function DisciplineCard({ d }) {
             <div className="px-4 pb-5 space-y-4 border-t border-fire-3/10">
               {/* Regole Assurde */}
               <div className="pt-4">
-                <p className="font-mono text-[10px] uppercase tracking-[3px] text-fire-3/60 mb-2">🔥 Regole Assurde SD</p>
+                <p className="font-mono text-[10px] uppercase tracking-[3px] text-fire-3/60 mb-2">{t('disc_crazy_rules')}</p>
                 <ul className="space-y-2">
                   {d.assurde.map((r, i) => (
                     <li key={i} className="flex gap-2 font-rajdhani text-sm text-white/65">
@@ -223,13 +224,13 @@ function DisciplineCard({ d }) {
 
               {/* Window Challenge */}
               <div className="p-3 border border-yellow-500/20 bg-yellow-500/5">
-                <p className="font-mono text-[10px] uppercase tracking-[2px] text-yellow-500/60 mb-1">👑 Window Challenge</p>
+                <p className="font-mono text-[10px] uppercase tracking-[2px] text-yellow-500/60 mb-1">{t('disc_window_challenge')}</p>
                 <p className="font-rajdhani text-sm text-yellow-200/70">{d.window}</p>
               </div>
 
               {/* PlayStation Corner */}
               <div className="p-3 border border-purple-500/20 bg-purple-500/5">
-                <p className="font-mono text-[10px] uppercase tracking-[2px] text-purple-400/60 mb-1">🎮 PlayStation Corner</p>
+                <p className="font-mono text-[10px] uppercase tracking-[2px] text-purple-400/60 mb-1">{t('disc_playstation')}</p>
                 <p className="font-rajdhani text-sm text-purple-200/70">{d.ps}</p>
               </div>
             </div>
@@ -242,6 +243,7 @@ function DisciplineCard({ d }) {
 
 export default function Discipline() {
   const [lang, setLang] = useLang();
+  const t = useTranslation(lang);
 
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
@@ -250,15 +252,15 @@ export default function Discipline() {
 
       <div className="pt-[80px] section-container max-w-3xl">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">IL SISTEMA</p>
-          <h1 className="heading-fire text-[clamp(40px,8vw,80px)] font-black leading-none mb-4">DISCIPLINE</h1>
-          <p className="font-rajdhani text-lg text-white/40 max-w-xl mx-auto">Regole standard + Regole Assurde SD — quelle che ci rendono unici. Clicca ogni disciplina per espandere.</p>
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">{t('disc_system')}</p>
+          <h1 className="heading-fire text-[clamp(40px,8vw,80px)] font-black leading-none mb-4">{t('disc_title')}</h1>
+          <p className="font-rajdhani text-lg text-white/40 max-w-xl mx-auto">{t('disc_subtitle')}</p>
         </motion.div>
 
         <div className="space-y-3">
           {DISCIPLINES.map((d, i) => (
             <motion.div key={d.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
-              <DisciplineCard d={d} />
+              <DisciplineCard d={d} t={t} />
             </motion.div>
           ))}
         </div>

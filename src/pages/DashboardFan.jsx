@@ -8,13 +8,14 @@ import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
+import { useTranslation } from '../components/translations';
 
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 import FanNFTCollection from '../components/fan/FanNFTCollection';
 import UGCRewardPanel from '../components/fan/UGCRewardPanel';
 
-const DASH_LABELS = {
-  it: { subtitle: 'il tuo spazio', lastEvents: 'ULTIMI EVENTI', noReg: 'Nessuna registrazione ancora.', explore: 'Esplora gli eventi →', quickAccess: 'ACCESSO RAPIDO', statRegs: 'Registrazioni', statRegsSub: 'eventi', statBets: 'Scommesse attive', statBetsWon: 'vinte', statVotes: 'Voti espressi', statCards: 'Card possedute', links: [
+const QUICK_LINKS = {
+  it: [
     { to: '/Home', emoji: '⚽', label: 'Prossimi eventi', desc: 'Registrati come atleta o spettatore' },
     { to: '/come-funziona', emoji: '🃏', label: 'Come funziona', desc: 'Capire il sistema delle card' },
     { to: '/discipline', emoji: '🏆', label: 'Discipline', desc: 'Regole e Window Challenge' },
@@ -23,8 +24,8 @@ const DASH_LABELS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'La finestra dei campioni' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Vota', desc: 'Esprimi il tuo voto sugli eventi live' },
     { to: '/UserProfile', emoji: '👤', label: 'Il mio profilo', desc: 'Badge, punti, cronologia' },
-  ]},
-  en: { subtitle: 'your space', lastEvents: 'RECENT EVENTS', noReg: 'No registrations yet.', explore: 'Explore events →', quickAccess: 'QUICK ACCESS', statRegs: 'Registrations', statRegsSub: 'events', statBets: 'Active bets', statBetsWon: 'won', statVotes: 'Votes cast', statCards: 'Cards owned', links: [
+  ],
+  en: [
     { to: '/Home', emoji: '⚽', label: 'Upcoming events', desc: 'Register as athlete or spectator' },
     { to: '/come-funziona', emoji: '🃏', label: 'How it works', desc: 'Understand the card system' },
     { to: '/discipline', emoji: '🏆', label: 'Disciplines', desc: 'Rules and Window Challenge' },
@@ -33,8 +34,8 @@ const DASH_LABELS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'The champion window' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Vote', desc: 'Vote on live events' },
     { to: '/UserProfile', emoji: '👤', label: 'My profile', desc: 'Badges, points, history' },
-  ]},
-  es: { subtitle: 'tu espacio', lastEvents: 'ÚLTIMOS EVENTOS', noReg: 'Sin registros aún.', explore: 'Explorar eventos →', quickAccess: 'ACCESO RÁPIDO', statRegs: 'Registros', statRegsSub: 'eventos', statBets: 'Apuestas activas', statBetsWon: 'ganadas', statVotes: 'Votos emitidos', statCards: 'Cards poseídas', links: [
+  ],
+  es: [
     { to: '/Home', emoji: '⚽', label: 'Próximos eventos', desc: 'Regístrate como atleta o espectador' },
     { to: '/come-funziona', emoji: '🃏', label: 'Cómo funciona', desc: 'Entiende el sistema de cards' },
     { to: '/discipline', emoji: '🏆', label: 'Disciplinas', desc: 'Reglas y Window Challenge' },
@@ -43,8 +44,8 @@ const DASH_LABELS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'La ventana del campeón' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Votar', desc: 'Vota en eventos en vivo' },
     { to: '/UserProfile', emoji: '👤', label: 'Mi perfil', desc: 'Badges, puntos, historial' },
-  ]},
-  fr: { subtitle: 'ton espace', lastEvents: 'DERNIERS ÉVÉNEMENTS', noReg: 'Aucune inscription encore.', explore: 'Explorer les événements →', quickAccess: 'ACCÈS RAPIDE', statRegs: 'Inscriptions', statRegsSub: 'événements', statBets: 'Paris actifs', statBetsWon: 'gagnés', statVotes: 'Votes exprimés', statCards: 'Cards possédées', links: [
+  ],
+  fr: [
     { to: '/Home', emoji: '⚽', label: 'Prochains événements', desc: 'Inscris-toi comme athlète ou spectateur' },
     { to: '/come-funziona', emoji: '🃏', label: 'Comment ça marche', desc: 'Comprendre le système des cards' },
     { to: '/discipline', emoji: '🏆', label: 'Disciplines', desc: 'Règles et Window Challenge' },
@@ -53,8 +54,8 @@ const DASH_LABELS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'La fenêtre des champions' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Voter', desc: 'Vote sur les événements en direct' },
     { to: '/UserProfile', emoji: '👤', label: 'Mon profil', desc: 'Badges, points, historique' },
-  ]},
-  ar: { subtitle: 'مساحتك', lastEvents: 'آخر الأحداث', noReg: 'لا تسجيلات بعد.', explore: 'استكشف الأحداث →', quickAccess: 'وصول سريع', statRegs: 'التسجيلات', statRegsSub: 'أحداث', statBets: 'الرهانات النشطة', statBetsWon: 'فازت', statVotes: 'الأصوات المُدلى', statCards: 'البطاقات المملوكة', links: [
+  ],
+  ar: [
     { to: '/Home', emoji: '⚽', label: 'الأحداث القادمة', desc: 'سجّل كرياضي أو متفرج' },
     { to: '/come-funziona', emoji: '🃏', label: 'كيف يعمل', desc: 'افهم نظام البطاقات' },
     { to: '/discipline', emoji: '🏆', label: 'التخصصات', desc: 'القواعد وتحدي النافذة' },
@@ -63,8 +64,8 @@ const DASH_LABELS = {
     { to: '/window-challenge', emoji: '👑', label: 'تحدي النافذة', desc: 'نافذة البطل' },
     { to: '/VotingHub', emoji: '🗳️', label: 'تصويت', desc: 'صوّت على الأحداث المباشرة' },
     { to: '/UserProfile', emoji: '👤', label: 'ملفي', desc: 'الشارات والنقاط والتاريخ' },
-  ]},
-  de: { subtitle: 'dein Bereich', lastEvents: 'LETZTE EVENTS', noReg: 'Noch keine Registrierungen.', explore: 'Events erkunden →', quickAccess: 'SCHNELLZUGRIFF', statRegs: 'Registrierungen', statRegsSub: 'Events', statBets: 'Aktive Wetten', statBetsWon: 'gewonnen', statVotes: 'Abgegebene Stimmen', statCards: 'Besessene Cards', links: [
+  ],
+  de: [
     { to: '/Home', emoji: '⚽', label: 'Bevorstehende Events', desc: 'Melde dich als Athlet oder Zuschauer an' },
     { to: '/come-funziona', emoji: '🃏', label: 'Wie es funktioniert', desc: 'Das Card-System verstehen' },
     { to: '/discipline', emoji: '🏆', label: 'Disziplinen', desc: 'Regeln und Window Challenge' },
@@ -73,10 +74,10 @@ const DASH_LABELS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'Das Championsfenster' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Abstimmen', desc: 'Stimme bei Live-Events ab' },
     { to: '/UserProfile', emoji: '👤', label: 'Mein Profil', desc: 'Badges, Punkte, Verlauf' },
-  ]},
+  ],
 };
 
-function StatCard({ emoji, label, value, sub, color = 'fire-3' }) {
+function StatCard({ emoji, label, value, sub }) {
   return (
     <div className="border border-fire-3/15 bg-black/40 p-4" style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
       <div className="text-2xl mb-2">{emoji}</div>
@@ -105,7 +106,8 @@ function QuickLink({ to, emoji, label, desc }) {
 
 export default function DashboardFan() {
   const [lang, setLang] = useLang();
-  const DL = DASH_LABELS[lang] || DASH_LABELS.it;
+  const t = useTranslation(lang);
+  const links = QUICK_LINKS[lang] || QUICK_LINKS.en;
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -149,30 +151,26 @@ export default function DashboardFan() {
       <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} />
 
       <div className="pt-[80px] section-container max-w-4xl">
-        {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-1">DASHBOARD</p>
-          <h1 className="heading-fire text-[clamp(32px,6vw,64px)] font-black leading-none mb-1">FAN ZONE</h1>
-          <p className="font-rajdhani text-base text-white/40">👋 <span className="text-fire-4">{user?.full_name || 'Fan'}</span> — {DL.subtitle}</p>
+          <h1 className="heading-fire text-[clamp(32px,6vw,64px)] font-black leading-none mb-1">{t('dash_fan_title')}</h1>
+          <p className="font-rajdhani text-base text-white/40">👋 <span className="text-fire-4">{user?.full_name || 'Fan'}</span> — {t('dash_fan_subtitle')}</p>
         </motion.div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <StatCard emoji="🎟️" label={DL.statRegs} value={registrations.length} sub={DL.statRegsSub} />
-          <StatCard emoji="🎲" label={DL.statBets} value={activeBets} sub={`${wonBets} ${DL.statBetsWon}`} />
-          <StatCard emoji="🗳️" label={DL.statVotes} value={votes.length} />
-          <StatCard emoji="🃏" label={DL.statCards} value={tokens.length} />
+          <StatCard emoji="🎟️" label={t('dash_stat_regs')} value={registrations.length} sub={t('dash_stat_regs_sub')} />
+          <StatCard emoji="🎲" label={t('dash_stat_bets')} value={activeBets} sub={`${wonBets} ${t('dash_stat_bets_won')}`} />
+          <StatCard emoji="🗳️" label={t('dash_stat_votes')} value={votes.length} />
+          <StatCard emoji="🃏" label={t('dash_stat_cards')} value={tokens.length} />
         </div>
 
-        {/* Live Tournament Leaderboard */}
         <LiveTournamentLeaderboard lang={lang} />
 
-        {/* Recent registrations */}
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">{DL.lastEvents}</p>
+          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">{t('dash_last_events')}</p>
           {registrations.length === 0 ? (
             <div className="border border-white/5 bg-white/2 p-6 text-center">
-              <p className="font-rajdhani text-white/30">{DL.noReg} <Link to="/Home" className="text-fire-3 hover:text-fire-4">{DL.explore}</Link></p>
+              <p className="font-rajdhani text-white/30">{t('dash_no_reg')} <Link to="/Home" className="text-fire-3 hover:text-fire-4">{t('dash_explore')}</Link></p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -193,23 +191,16 @@ export default function DashboardFan() {
           )}
         </div>
 
-
-        {/* Quick links */}
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">{DL.quickAccess}</p>
+          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">{t('dash_quick_access')}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {DL.links.map(l => <QuickLink key={l.to} to={l.to} emoji={l.emoji} label={l.label} desc={l.desc} />)}
+            {links.map(l => <QuickLink key={l.to} {...l} />)}
           </div>
         </div>
       </div>
 
-      {/* Fan NFT Vault */}
       <FanNFTCollection lang={lang} />
-
-      {/* UGC → NFT Rewards */}
-      <div id="ugc-rewards">
-        <UGCRewardPanel lang={lang} />
-      </div>
+      <div id="ugc-rewards"><UGCRewardPanel lang={lang} /></div>
 
       <FireRule />
       <Footer lang={lang} />
