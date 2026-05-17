@@ -6,6 +6,7 @@ import WalletProvider from './components/web3/WalletProvider.jsx'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import { LangProvider } from '@/lib/LangContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
@@ -92,14 +93,16 @@ function App() {
 
   return (
     <AuthProvider>
-      <WalletProvider>
-        <QueryClientProvider client={queryClientInstance}>
-          <Router>
-            <AuthenticatedApp />
-          </Router>
-          <Toaster />
-        </QueryClientProvider>
-      </WalletProvider>
+      <LangProvider>
+        <WalletProvider>
+          <QueryClientProvider client={queryClientInstance}>
+            <Router>
+              <AuthenticatedApp />
+            </Router>
+            <Toaster />
+          </QueryClientProvider>
+        </WalletProvider>
+      </LangProvider>
     </AuthProvider>
   )
 }
