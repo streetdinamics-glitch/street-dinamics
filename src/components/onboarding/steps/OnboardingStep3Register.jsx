@@ -270,13 +270,24 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         <div>
           <label className="font-mono text-[8px] uppercase tracking-[2px] text-fire-3/50 block mb-1">{L.phone}</label>
           <div className="flex gap-2">
-            <select className="cyber-input w-[90px] flex-shrink-0 text-sm" value={form.dialCode}
-              onChange={e => set('dialCode', e.target.value)}>
+            <select
+              className="cyber-input flex-shrink-0 text-sm"
+              style={{ width: '100px', minWidth: '100px', appearance: 'auto' }}
+              value={form.dialCode}
+              onChange={e => set('dialCode', e.target.value)}
+            >
               {DIAL_CODES.map(d => <option key={d.code} value={d.code}>{d.flag} {d.code}</option>)}
             </select>
-            <input className="cyber-input flex-1" type="tel" value={form.phone}
-              onChange={e => set('phone', e.target.value.replace(/[^\d\s\-]/g, ''))}
-              onBlur={() => touch('phone')} placeholder={L.phonePh} autoComplete="tel" />
+            <input
+              className="cyber-input flex-1 min-w-0"
+              type="tel"
+              inputMode="numeric"
+              value={form.phone}
+              onChange={e => set('phone', e.target.value.replace(/[^\d\s\-+]/g, ''))}
+              onBlur={() => touch('phone')}
+              placeholder={L.phonePh}
+              autoComplete="tel-national"
+            />
           </div>
           <p className="font-mono text-[8px] text-fire-3/30 mt-1">💬 {L.phoneSub}</p>
           {touched.phone && errors.phone && <p className="font-mono text-[9px] text-red-400 mt-1">⚠ {errors.phone}</p>}
