@@ -31,6 +31,7 @@ import { useSubscriptions } from '../components/subscriptions/useSubscriptions';
 import MySubscriptionsPanel from '../components/subscriptions/MySubscriptionsPanel';
 import EventCountdown from '../components/subscriptions/EventCountdown';
 import SD3PillarsHub from '../components/wagering/SD3PillarsHub';
+import { CyberSpinner, CyberEmpty } from '../components/ui/GlobalFeedback';
 
 
 export default function Home() {
@@ -163,12 +164,13 @@ export default function Home() {
         <FlowSteps lang={lang} />
 
         {eventsLoading ? (
-          <div className="text-center font-mono text-fire-3/30 text-sm tracking-[2px] py-20">{t('events_loading')}</div>
+          <CyberSpinner size="lg" text={t('events_loading')} />
         ) : events.length === 0 ? (
-          <div className="text-center py-20">
-            <span className="text-4xl block mb-3">🔥</span>
-            <p className="font-mono text-sm tracking-[2px] text-fire-3/30">{t('events_empty')}</p>
-          </div>
+          <CyberEmpty
+            icon="🔥"
+            title={t('events_empty')}
+            subtitle="Torna presto per nuovi eventi"
+          />
         ) : (
           <div className="space-y-12">
             {events.map((ev, i) => (

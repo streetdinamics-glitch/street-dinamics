@@ -11,6 +11,8 @@ import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
+import Web3StatusBanner from '../components/web3/Web3StatusBanner';
+import Web3SetupGuide from '../components/admin/Web3SetupGuide';
 
 export default function Web3Page() {
   const [lang, setLang] = useLang();
@@ -25,6 +27,7 @@ export default function Web3Page() {
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <Navbar lang={lang} onLangSwitch={setLang} onScrollTo={() => {}} />
+      <Web3StatusBanner isAdmin={user?.role === 'admin'} />
 
       <div className="pt-[80px] section-container">
         {/* Header */}
@@ -59,6 +62,22 @@ export default function Web3Page() {
 
         {/* 3-Pillar Wagering System */}
         <SD3PillarsHub lang={lang} />
+
+        <FireRule />
+
+        {/* Admin: Web3 Setup Guide */}
+        {user?.role === 'admin' && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="mt-10"
+          >
+            <p className="font-mono text-[9px] tracking-[3px] uppercase text-fire-3/40 mb-2">ADMIN</p>
+            <h2 className="font-orbitron font-black text-2xl text-fire-4 mb-6">Setup & Configurazione Web3</h2>
+            <Web3SetupGuide />
+          </motion.div>
+        )}
 
         <FireRule />
 

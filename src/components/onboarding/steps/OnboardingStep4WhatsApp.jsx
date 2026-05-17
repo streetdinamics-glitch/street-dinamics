@@ -137,6 +137,7 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
   const name = userData?.name || userData?.nome || '';
   const { role, discipline, phone, isMinor } = userData || {};
   const isAthlete = role === 'athlete';
+  const phoneMissing = !phone;
 
   const messages = isAthlete ? L.msgs_athlete(name, discipline) : L.msgs_fan(name);
   const [tick, setTick] = useState(0);
@@ -227,6 +228,14 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
         </motion.div>
       )}
 
+      {phoneMissing && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          className="w-full max-w-sm mb-4 px-4 py-3 bg-red-500/10 border border-red-500/30 text-left">
+          <p className="font-mono text-[9px] text-red-400 leading-relaxed">
+            ⚠️ Numero WhatsApp non inserito — torna allo step precedente per aggiungerlo.
+          </p>
+        </motion.div>
+      )}
       {phone && (
         <p className="font-mono text-[9px] text-white/20 mb-3">
           {L.phoneReminder} <span className="text-fire-3">{phone}</span>

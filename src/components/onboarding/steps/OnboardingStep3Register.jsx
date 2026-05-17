@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
+import { CyberAlert } from '@/components/ui/GlobalFeedback';
 
 const DISCIPLINES = [
   'Freestyle Rap', 'Beatbox', 'Beatmaking', 'Danza / Breaking',
@@ -164,6 +165,7 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const touch = (k) => setTouched(t => ({ ...t, [k]: true }));
@@ -196,7 +198,10 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         spectator_profile: form.role === 'fan' ? { interests: [form.discipline] } : undefined,
         onboarding_completed: true,
       });
-      onNext({ name: form.name.trim(), phone: fullPhone, role: form.role, discipline: form.discipline });
+      setSuccess(true);
+      setTimeout(() => {
+        onNext({ name: form.name.trim(), phone: fullPhone, role: form.role, discipline: form.discipline });
+      }, 800);
     } catch (err) {
       setError(err?.message || err?.response?.data?.detail || L.errGeneric);
     } finally {
@@ -313,12 +318,8 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
           <p className="font-mono text-[8px] text-fire-3/40 leading-relaxed">ℹ️ {L.note}</p>
         </div>
 
-        {error && (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            className="font-mono text-[10px] text-red-400 text-center bg-red-500/10 border border-red-500/20 px-3 py-2">
-            ⚠ {error}
-          </motion.p>
-        )}
+        <CyberAlert type="error" message={error} onDismiss={() => setError('')} />
+        <CyberAlert type="success" message={success ? '✓ Profilo salvato!' : ''} />
 
         <div className="pt-2 pb-8">
           <motion.button type="submit" disabled={loading}
