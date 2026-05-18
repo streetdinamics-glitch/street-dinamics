@@ -157,7 +157,7 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
   const visibleMessages = messages.slice(0, Math.min(tick + 1, messages.length));
   const allShown = visibleMessages.length >= messages.length;
   const waLink = base44.agents.getWhatsAppConnectURL('athlete_secretary');
-  const canContinue = allShown && (!isAthlete || waOpened);
+  const canContinue = allShown;
 
   const handleOpenWa = () => {
     setWaOpened(true);
@@ -289,8 +289,8 @@ export default function OnboardingStep4WhatsApp({ userData, onNext, lang = 'it' 
           {L.continue}
         </motion.button>
 
-        {/* Skip only for fans, always shown after messages load */}
-        {!isAthlete && allShown && (
+        {/* Skip for fans OR athletes who haven't opened WA yet */}
+        {allShown && (
           <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             onClick={onNext}
             className="font-mono text-[9px] text-white/30 hover:text-white/50 transition-colors underline underline-offset-2 py-1">

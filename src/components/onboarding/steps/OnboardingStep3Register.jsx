@@ -272,17 +272,17 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
         {/* WhatsApp */}
         <div>
           <label className="font-mono text-[8px] uppercase tracking-[2px] text-fire-3/50 block mb-1">{L.phone}</label>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-1.5">
             <select
-              className="cyber-input flex-shrink-0 text-sm"
-              style={{ width: '100px', minWidth: '100px', appearance: 'auto' }}
+              className="cyber-input text-sm"
+              style={{ appearance: 'auto' }}
               value={form.dialCode}
               onChange={e => set('dialCode', e.target.value)}
             >
               {DIAL_CODES.map(d => <option key={d.code} value={d.code}>{d.flag} {d.code}</option>)}
             </select>
             <input
-              className="cyber-input flex-1 min-w-0"
+              className="cyber-input w-full"
               type="tel"
               inputMode="numeric"
               value={form.phone}
