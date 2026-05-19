@@ -192,14 +192,18 @@ export default function OnboardingStep3Register({ onNext, lang = 'it' }) {
     try {
       const isAuthed = await base44.auth.isAuthenticated();
       if (isAuthed) {
-        await base44.auth.updateMe({
-          display_name: form.name.trim(),
-          role: form.role === 'athlete' ? 'athlete' : 'user',
-          phone: fullPhone,
-          athlete_profile: form.role === 'athlete' ? { discipline: form.discipline } : undefined,
-          spectator_profile: form.role === 'fan' ? { interests: [form.discipline] } : undefined,
-          onboarding_completed: true,
-        });
+        try {
+          await base44.auth.updateMe({
+            display_name: form.name.trim(),
+            role: form.role === 'athlete' ? 'athlete' : 'user',
+            phone: fullPhone,
+            athlete_profile: form.role === 'athlete' ? { discipline: form.discipline } : undefined,
+            spectator_profile: form.role === 'fan' ? { interests: [form.discipline] } : undefined,
+            onboarding_completed: true,
+          });
+        } catch (_) {
+          // Non bloccare il flusso se il salvataggio fallisce
+        }
       }
       setSuccess(true);
       setTimeout(() => {
