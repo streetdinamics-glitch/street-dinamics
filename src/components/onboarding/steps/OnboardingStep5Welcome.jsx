@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
@@ -201,7 +202,17 @@ export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it'
     if (slide > 0) { setDirection(-1); setSlide(s => s - 1); }
   };
 
-  const handleEnter = () => {
+  const handleEnter = async () => {
+    // Salva onboarding_completed sul profilo utente (se autenticato)
+    // così su qualsiasi dispositivo non viene richiesto di nuovo
+    try {
+      const isAuthed = await base44.auth.isAuthenticated();
+      if (isAuthed) {
+        await base44.auth.updateMe({ onboarding_completed: true });
+      }
+    } catch (_) {
+      // Ignora errori — il localStorage già protegge il dispositivo corrente
+    }
     onFinish?.();
     navigate(C.dashboard);
   };
