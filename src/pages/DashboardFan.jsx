@@ -13,6 +13,7 @@ import { useTranslation } from '../components/translations';
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 import FanNFTCollection from '../components/fan/FanNFTCollection';
 import UGCRewardPanel from '../components/fan/UGCRewardPanel';
+import LiveMarketsFeed from '../components/prediction/LiveMarketsFeed';
 
 const QUICK_LINKS = {
   it: [
@@ -183,6 +184,8 @@ export default function DashboardFan() {
         )}
 
         <LiveTournamentLeaderboard lang={lang} />
+
+        <LiveMarketsFeed />
 
         <div className="mb-8">
           <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">{t('dash_last_events')}</p>

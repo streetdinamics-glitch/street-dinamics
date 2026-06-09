@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Globe, BarChart2 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import LiveMarketsFeed from './LiveMarketsFeed';
 
 const PLATFORMS = [
   { id: 'polymarket', label: 'Polymarket', icon: Globe,     borderClass: 'border-purple-500/30', bgClass: 'bg-purple-500/[0.04]', activeClass: 'border-purple-400/60 bg-purple-500/10 text-purple-300', inactiveClass: 'border-white/10 text-white/30' },
@@ -51,61 +52,58 @@ function LinkCard({ link, platform }) {
 }
 
 export default function SDPredictionHub() {
-  const [activeTab, setActiveTab] = useState('polymarket');
+  const [view, setView] = useState('live'); // 'live' | 'curated'
 
-  const { data: allLinks = [], isLoading } = useQuery({
+  const { data: allLinks = [] } = useQuery({
     queryKey: ['prediction-links-public'],
     queryFn: () => base44.entities.PredictionLink.list('-created_date', 100),
     staleTime: 60_000,
   });
 
-  const activeLinks = allLinks.filter(l => l.is_active && l.platform === activeTab);
+  const activeLinks = allLinks.filter(l => l.is_active);
 
   return (
     <div>
-      {/* Platform Tabs */}
+      {/* View toggle */}
       <div className="flex gap-2 mb-5">
-        {PLATFORMS.map(({ id, label, icon: Icon, activeClass, inactiveClass }) => (
+        <button
+          onClick={() => setView('live')}
+          className={`flex items-center gap-2 font-orbitron text-[9px] tracking-[1px] uppercase px-4 py-2 border transition-all ${view === 'live' ? 'border-fire-3/60 bg-fire-3/10 text-fire-4' : 'border-white/10 text-white/30 hover:border-white/20'}`}
+          style={{ clipPath: 'polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%)' }}
+        >
+          <Globe size={11} />
+          Quote Live
+        </button>
+        {activeLinks.length > 0 && (
           <button
-            key={id}
-            onClick={() => setActiveTab(id)}
-            className={`flex items-center gap-2 font-orbitron text-[9px] tracking-[2px] uppercase px-4 py-2 border transition-all ${activeTab === id ? activeClass : inactiveClass}`}
+            onClick={() => setView('curated')}
+            className={`flex items-center gap-2 font-orbitron text-[9px] tracking-[1px] uppercase px-4 py-2 border transition-all ${view === 'curated' ? 'border-cyan-400/60 bg-cyan-400/10 text-cyan-300' : 'border-white/10 text-white/30 hover:border-white/20'}`}
             style={{ clipPath: 'polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%)' }}
           >
-            <Icon size={11} />
-            {label}
+            <BarChart2 size={11} />
+            SD Scelti ({activeLinks.length})
           </button>
-        ))}
+        )}
       </div>
 
-      {/* Content */}
-      {isLoading ? (
-        <div className="flex items-center justify-center py-12 gap-3">
-          <div className="w-4 h-4 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
-          <span className="font-mono text-[9px] text-white/30 uppercase tracking-[2px]">Caricamento...</span>
-        </div>
-      ) : activeLinks.length === 0 ? (
-        <div className="text-center py-12 border border-dashed border-white/5">
-          <Globe size={28} className="text-white/10 mx-auto mb-3" />
-          <p className="font-orbitron text-sm text-white/20">Nessun mercato disponibile</p>
-          <p className="font-mono text-[8px] text-white/15 mt-1 tracking-[1px]">
-            L'admin aggiungerà presto i link per questo evento
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {activeLinks.map(link => (
-            <LinkCard key={link.id} link={link} platform={activeTab} />
-          ))}
+      {/* Live feed */}
+      {view === 'live' && <LiveMarketsFeed />}
+
+      {/* Curated SD links */}
+      {view === 'curated' && (
+        <div>
+          <div className="space-y-3">
+            {activeLinks.map(link => (
+              <LinkCard key={link.id} link={link} platform={link.platform} />
+            ))}
+          </div>
+          <div className="mt-4 px-3 py-2 border border-white/5 bg-white/[0.01]">
+            <p className="font-mono text-[7px] text-white/15 text-center leading-relaxed">
+              Link curati da Street Dinamics · Non costituisce consulenza finanziaria · Gioca responsabilmente
+            </p>
+          </div>
         </div>
       )}
-
-      {/* Disclaimer */}
-      <div className="mt-4 px-3 py-2 border border-white/5 bg-white/[0.01]">
-        <p className="font-mono text-[7px] text-white/15 text-center leading-relaxed">
-          Link ufficiali curati da Street Dinamics · Solo mercati relativi agli eventi SD · Non costituisce consulenza finanziaria · Gioca responsabilmente
-        </p>
-      </div>
     </div>
   );
 }
