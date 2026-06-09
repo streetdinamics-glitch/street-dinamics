@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { LangProvider } from '@/lib/LangContext';
+import PageTransition from './components/cyber/PageTransition';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
@@ -63,30 +64,32 @@ const AuthenticatedApp = () => {
 
   // Render the main app
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/Home" replace />} />
-      <Route path="/Home" element={<Home />} />
-      <Route path="/Admin" element={<AdminGuard><Admin /></AdminGuard>} />
-      <Route path="/CreateEvent" element={<CreateEvent />} />
-      <Route path="/AthleteProfile" element={<AthleteProfile />} />
-      <Route path="/AthleteProfilePage/:athleteEmail" element={<AthleteProfilePage />} />
-      <Route path="/Analytics" element={<Analytics />} />
-      <Route path="/NFTDashboard" element={<NFTDashboard />} />
-      <Route path="/UserProfile" element={<UserProfile />} />
-      <Route path="/VotingHub" element={<VotingHub />} />
-      <Route path="/EnhancedUserProfile" element={<Navigate to="/UserProfile" replace />} />
-      <Route path="/Web3" element={<Web3Page />} />
-      <Route path="/come-funziona" element={<ComeFunziona />} />
-      <Route path="/discipline" element={<Discipline />} />
-      <Route path="/formato-evento" element={<FormatoEvento />} />
-      <Route path="/window-challenge" element={<WindowChallengePage />} />
-      <Route path="/scarsita" element={<Scarsita />} />
-      <Route path="/dashboard-fan" element={<DashboardFan />} />
-      <Route path="/dashboard-atleta" element={<DashboardAtleta />} />
-      <Route path="/dashboard-admin" element={<AdminGuard><DashboardAdmin /></AdminGuard>} />
-      <Route path="/marketplace" element={<NFTMarketplace />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <PageTransition>
+      <Routes>
+        <Route path="/" element={<Navigate to="/Home" replace />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Admin" element={<AdminGuard><Admin /></AdminGuard>} />
+        <Route path="/CreateEvent" element={<CreateEvent />} />
+        <Route path="/AthleteProfile" element={<AthleteProfile />} />
+        <Route path="/AthleteProfilePage/:athleteEmail" element={<AthleteProfilePage />} />
+        <Route path="/Analytics" element={<Analytics />} />
+        <Route path="/NFTDashboard" element={<NFTDashboard />} />
+        <Route path="/UserProfile" element={<UserProfile />} />
+        <Route path="/VotingHub" element={<VotingHub />} />
+        <Route path="/EnhancedUserProfile" element={<Navigate to="/UserProfile" replace />} />
+        <Route path="/Web3" element={<Web3Page />} />
+        <Route path="/come-funziona" element={<ComeFunziona />} />
+        <Route path="/discipline" element={<Discipline />} />
+        <Route path="/formato-evento" element={<FormatoEvento />} />
+        <Route path="/window-challenge" element={<WindowChallengePage />} />
+        <Route path="/scarsita" element={<Scarsita />} />
+        <Route path="/dashboard-fan" element={<DashboardFan />} />
+        <Route path="/dashboard-atleta" element={<DashboardAtleta />} />
+        <Route path="/dashboard-admin" element={<AdminGuard><DashboardAdmin /></AdminGuard>} />
+        <Route path="/marketplace" element={<NFTMarketplace />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </PageTransition>
   );
 };
 
