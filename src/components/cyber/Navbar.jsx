@@ -10,6 +10,7 @@ import WalletConnectButton from '../web3/WalletConnectButton';
 import WatchlistPanel from '../watchlist/WatchlistPanel';
 import NotificationDashboard from '../notifications/NotificationDashboard';
 import { Bell } from 'lucide-react';
+import { useXPNotifications } from '../notifications/useXPNotifications';
 
 const SD_LOGO = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b2e24ee21bc949528cccdd/5d1be983b_photo_2026-03-11_15-56-46.jpg";
 
@@ -36,6 +37,9 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   });
 
   const unreadCount = notifications.filter(n => !n.is_read).length;
+
+  // Real-time XP / tier-up toast notifications
+  useXPNotifications(user?.email);
 
   useEffect(() => {
     const interval = setInterval(() => {

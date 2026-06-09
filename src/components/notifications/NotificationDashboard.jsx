@@ -7,11 +7,11 @@ import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
 
 const NOTIFICATION_TYPES = {
-  event: { icon: Calendar, color: 'text-cyan', bg: 'bg-cyan/10', border: 'border-cyan/30', label: 'Event' },
-  milestone: { icon: Trophy, color: 'text-fire-4', bg: 'bg-fire-3/10', border: 'border-fire-3/30', label: 'Milestone' },
-  voting: { icon: TrendingUp, color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30', label: 'Voting' },
-  deal: { icon: DollarSign, color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/30', label: 'Deal' },
-  reward: { icon: Gift, color: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', label: 'Reward' },
+  event:     { icon: Calendar,    color: 'text-cyan-400',    bg: 'bg-cyan-400/10',    border: 'border-cyan-400/30',    label: 'Evento' },
+  milestone: { icon: Trophy,      color: 'text-fire-4',      bg: 'bg-fire-3/10',      border: 'border-fire-3/30',      label: 'Tier Up' },
+  voting:    { icon: TrendingUp,  color: 'text-purple-400',  bg: 'bg-purple-500/10',  border: 'border-purple-500/30',  label: 'Voto' },
+  deal:      { icon: DollarSign,  color: 'text-green-400',   bg: 'bg-green-500/10',   border: 'border-green-500/30',   label: 'Deal' },
+  reward:    { icon: Zap,         color: 'text-fire-5',      bg: 'bg-fire-5/10',      border: 'border-fire-5/30',      label: 'XP' },
 };
 
 export default function NotificationDashboard({ onClose }) {

@@ -95,14 +95,33 @@ Deno.serve(async (req) => {
       timestamp: new Date().toISOString(),
     });
 
-    // Notify tier upgrade
+    // Notify XP earned (solo guadagni, non spese)
+    if (xp_amount > 0) {
+      await base44.asServiceRole.entities.Notification.create({
+        user_email,
+        type: 'reward',
+        title: `⚡ +${xp_amount} XP guadagnati!`,
+        message: `${reason || 'Attività completata'} — Totale: ${newXP.toLocaleString()} XP`,
+        action_url: '/dashboard-fan',
+        created_at: new Date().toISOString(),
+      });
+    }
+
+    // Notify tier upgrade (con benefici sbloccati)
     if (tierChanged) {
       const tierLabel = newTierInfo.tier.replace(/_/g, ' ').toUpperCase();
+      const TIER_PERKS = {
+        enthusiast:   'Hai sbloccato: Redeem XP → EUR (1% cashback) + Badge profilo',
+        superfan:     'Hai sbloccato: Merch SD gratuito + Cashback 1.5% + Early access eventi',
+        legend:       'Hai sbloccato: VIP Pass evento annuale + Cashback 2% + Early access NFT drops',
+        hall_of_fame: 'Hai sbloccato: Accesso backstage + Cashback 3% + Card 1-di-1 + Governance voting',
+      };
+      const perksText = TIER_PERKS[newTierInfo.tier] || 'Nuovi premi sbloccati!';
       await base44.asServiceRole.entities.Notification.create({
         user_email,
         type: 'milestone',
         title: `🏆 Tier Up: ${tierLabel}!`,
-        message: `Hai raggiunto il livello ${tierLabel} con ${newXP.toLocaleString()} XP! Nuovi premi sbloccati.`,
+        message: `${perksText} — XP totali: ${newXP.toLocaleString()}`,
         action_url: '/dashboard-fan',
         created_at: new Date().toISOString(),
       });
