@@ -1,18 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
-import { useTranslation } from '../components/translations';
 
-const TIERS_BASE = [
-  { name: 'Common', levelKey: '🏙️', count: 100000, label: '100.000', price: '~1€', dropKey: 'scar_tier_common', color: '#888888', barH: 100, invest10: '10€', multKey: 'scar_mult_regional', mult: 1, multColor: 'text-gray-400' },
-  { name: 'Uncommon', levelKey: '🇮🇹', count: 10000, label: '10.000', price: '~8€', dropKey: 'scar_tier_uncommon', color: '#22c55e', barH: 20, invest10: '80€', multKey: 'scar_mult_national', mult: 8, multColor: 'text-green-400' },
-  { name: 'Rare', levelKey: '🌍', count: 1000, label: '1.000', price: '~100€', dropKey: 'scar_tier_rare', color: '#3b82f6', barH: 6, invest10: '1.000€', multKey: 'scar_mult_continental', mult: 100, multColor: 'text-blue-400' },
-  { name: 'Legendary', levelKey: '🌐', count: 100, label: '100', price: '~1.200€', dropKey: 'scar_tier_legendary', color: '#eab308', barH: 1.5, invest10: '12.000€', multKey: 'scar_mult_international', mult: 1200, multColor: 'text-yellow-400' },
+const TIERS = [
+  { name: 'Common',    level: '🏙️ Regionale',     label: '100.000', price: 1,    mult: 1,    drop: '—',              color: '#888888', colorClass: 'text-gray-400',   barH: 100 },
+  { name: 'Uncommon',  level: '🇮🇹 Nazionale',     label: '10.000',  price: 8,    mult: 8,    drop: '🥉 Bronze Clip', color: '#22c55e', colorClass: 'text-green-400',  barH: 20  },
+  { name: 'Rare',      level: '🌍 Continentale',   label: '1.000',   price: 100,  mult: 100,  drop: '🥈 Silver Clip', color: '#3b82f6', colorClass: 'text-blue-400',   barH: 6   },
+  { name: 'Legendary', level: '🌐 Internazionale', label: '100',     price: 1200, mult: 1200, drop: '⭐ Legendary Art',color: '#eab308', colorClass: 'text-yellow-400', barH: 1.5 },
 ];
+
+const PRICE_LABELS = ['€1', '~€8', '~€100', '~€1.200'];
+const INVEST_10 = ['€10', '€80', '€1.000', '€12.000'];
+
+const SNAPSHOT_STEPS = ['⚔️ TORNEO IN CORSO', '🏆 VITTORIA FINALE', '📸 SNAPSHOT ON-CHAIN', '🎁 DROP AUTOMATICO'];
 
 function AnimatedBar({ pct, color, delay }) {
   const [h, setH] = useState(0);
@@ -22,33 +26,27 @@ function AnimatedBar({ pct, color, delay }) {
   }, [pct, delay]);
   return (
     <div className="flex flex-col items-center justify-end" style={{ height: 200 }}>
-      <div
-        className="w-full transition-all duration-1000 ease-out rounded-t"
-        style={{ height: `${h}%`, backgroundColor: color, minHeight: 3 }}
-      />
+      <div className="w-full transition-all duration-1000 ease-out" style={{ height: `${h}%`, backgroundColor: color, minHeight: 3 }} />
     </div>
   );
 }
 
-const SNAPSHOT_STEP_KEYS = ['scar_step1', 'scar_step2', 'scar_step3', 'scar_step4'];
-const SNAPSHOT_ICONS = ['⚔️', '🏆', '📸', '🎁'];
-
 export default function Scarsita() {
   const [lang, setLang] = useLang();
-  const t = useTranslation(lang);
   const [cards, setCards] = useState(10);
+  const [selectedTier, setSelectedTier] = useState(3);
   const [snapshotStep, setSnapshotStep] = useState(0);
   const intervalRef = useRef(null);
-  const tiers = TIERS_BASE.map(tier => ({ ...tier, level: `${tier.levelKey} ${t(tier.multKey)}`, drop: t(tier.dropKey) }));
-  const multipliers = TIERS_BASE.map(tier => ({ label: t(tier.multKey), mult: tier.mult, color: tier.multColor }));
-  const snapshotSteps = SNAPSHOT_STEP_KEYS.map((key, i) => ({ icon: SNAPSHOT_ICONS[i], label: t(key) }));
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setSnapshotStep(s => (s + 1) % (snapshotSteps.length + 1));
-    }, 1200);
+    intervalRef.current = setInterval(() => setSnapshotStep(s => (s + 1) % (SNAPSHOT_STEPS.length + 1)), 1200);
     return () => clearInterval(intervalRef.current);
   }, []);
+
+  const tier = TIERS[selectedTier];
+  const invested = cards * tier.price;
+  const bestCase = cards * tier.mult;
+  const profit = bestCase - invested;
 
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
@@ -56,107 +54,226 @@ export default function Scarsita() {
       <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} />
 
       <div className="pt-[80px] section-container max-w-4xl">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">{t('scar_system')}</p>
-          <h1 className="heading-fire text-[clamp(36px,7vw,72px)] font-black leading-none mb-4 whitespace-pre-line">{t('scar_title')}</h1>
-          <p className="font-rajdhani text-lg text-white/40 max-w-xl mx-auto">{t('scar_subtitle')}</p>
+
+        {/* ─── HEADER ─── */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">// IL SISTEMA //</p>
+          <h1 className="heading-fire text-[clamp(36px,7vw,72px)] font-black leading-none mb-6">
+            LA MATEMATICA<br />DELLA SCARSITÀ
+          </h1>
+          <p className="font-rajdhani text-xl text-white/40 max-w-md mx-auto leading-relaxed">
+            1 card. Infiniti scenari.<br />
+            <span className="text-fire-3/70">Solo uno vince davvero.</span>
+          </p>
         </motion.div>
 
-        {/* Scarcity bars */}
-        <div className="mb-12">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-6">{t('scar_viz')}</p>
+        {/* ─── BARS ─── */}
+        <div className="mb-16">
+          <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/30 mb-8">// OFFERTA TOTALE — PROPORZIONALE REALE //</p>
           <div className="grid grid-cols-4 gap-4">
-            {tiers.map((tier, i) => (
-              <div key={tier.name} className="flex flex-col items-center">
-                <AnimatedBar pct={tier.barH} color={tier.color} delay={i * 200} />
+            {TIERS.map((t, i) => (
+              <div key={t.name} className="flex flex-col items-center">
+                <AnimatedBar pct={t.barH} color={t.color} delay={i * 200} />
                 <div className="mt-3 text-center">
-                  <div className="font-orbitron font-bold text-sm" style={{ color: tier.color }}>{tier.name}</div>
-                  <div className="font-mono text-[10px] text-white/40">{tier.label}</div>
-                  <div className="font-mono text-[11px] text-white/60 mt-1">{tier.price}</div>
+                  <div className="font-orbitron font-black text-sm" style={{ color: t.color }}>{t.name}</div>
+                  <div className="font-mono text-[10px] text-white/25">{t.label}</div>
+                  <div className="font-mono text-sm text-white/60 mt-1 font-bold">{PRICE_LABELS[i]}</div>
                 </div>
               </div>
             ))}
           </div>
-          <p className="font-mono text-[10px] text-white/20 text-center mt-4">{t('scar_bars_note')}</p>
+          <div className="mt-8 flex items-center gap-3">
+            <div className="h-px flex-1 bg-white/5" />
+            <p className="font-mono text-[9px] text-white/15 uppercase tracking-[2px] text-center">
+              ogni livello → ×10 meno card → ×10 più raro → ×10 più prezioso
+            </p>
+            <div className="h-px flex-1 bg-white/5" />
+          </div>
         </div>
 
-        {/* Full table */}
-        <div className="mb-12 overflow-x-auto">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">{t('scar_table')}</p>
+        {/* ─── TABLE ─── */}
+        <div className="mb-16 overflow-x-auto">
+          <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/30 mb-4">// TABELLA COMPLETA //</p>
           <table className="w-full border-collapse">
             <thead>
-              <tr className="border-b border-fire-3/20">
-                {[t('scar_col_level'), t('scar_col_cards'), t('scar_col_price'), t('scar_col_drop'), t('scar_col_invest')].map(h => (
-                  <th key={h} className="py-2 px-3 text-left font-mono text-[10px] uppercase tracking-[1px] text-fire-3/50">{h}</th>
+              <tr className="border-b-2 border-fire-3/20">
+                {['Livello', 'Card Totali', 'Prezzo', 'NFT Drop', '10 Card al lancio'].map(h => (
+                  <th key={h} className="py-3 px-3 text-left font-mono text-[9px] uppercase tracking-[2px] text-fire-3/40">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {tiers.map((tier, i) => (
-                <tr key={tier.name} className={`border-b border-white/5 ${i % 2 === 0 ? 'bg-white/2' : ''}`}>
-                  <td className="py-3 px-3 font-rajdhani text-white/60">{tier.level}</td>
-                  <td className="py-3 px-3 font-orbitron text-sm font-bold" style={{ color: tier.color }}>{tier.label} {tier.name}</td>
-                  <td className="py-3 px-3 font-mono text-sm text-white/70">{tier.price}</td>
-                  <td className="py-3 px-3 font-rajdhani text-sm text-white/60">{tier.drop}</td>
-                  <td className="py-3 px-3 font-orbitron text-sm text-fire-3">{tier.invest10}</td>
+              {TIERS.map((t, i) => (
+                <tr key={t.name} className="border-b border-white/5 hover:bg-white/[0.015] transition-all">
+                  <td className="py-4 px-3 font-rajdhani text-white/40">{t.level}</td>
+                  <td className="py-4 px-3 font-orbitron text-sm font-black" style={{ color: t.color }}>{t.label}</td>
+                  <td className="py-4 px-3 font-mono text-sm text-white/60">{PRICE_LABELS[i]}</td>
+                  <td className="py-4 px-3 font-rajdhani text-sm text-white/50">{t.drop}</td>
+                  <td className="py-4 px-3 font-orbitron text-sm font-black text-fire-3">{INVEST_10[i]}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        {/* Simulator */}
-        <div className="mb-12 border border-fire-3/20 bg-fire-3/5 p-6" style={{ clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))' }}>
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-2">{t('scar_simulator')}</p>
-          <div className="flex items-center justify-between mb-1">
-            <span className="font-rajdhani text-white/60">{t('scar_how_many')}</span>
-            <span className="font-orbitron font-bold text-2xl text-fire-3">{cards}</span>
+        {/* ─── SIMULATOR ─── */}
+        <div className="mb-16">
+          <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/30 mb-6">// SIMULATORE SCENARI //</p>
+
+          {/* Tier buttons */}
+          <div className="grid grid-cols-4 gap-2 mb-6">
+            {TIERS.map((t, i) => (
+              <button
+                key={t.name}
+                onClick={() => setSelectedTier(i)}
+                className={`py-2 px-1 border transition-all font-orbitron text-[9px] font-bold uppercase tracking-[1px] ${
+                  selectedTier === i
+                    ? 'bg-fire-3/10 text-fire-4'
+                    : 'border-white/8 text-white/20 hover:border-white/20'
+                }`}
+                style={{
+                  clipPath: 'polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%)',
+                  borderColor: selectedTier === i ? t.color : undefined,
+                  color: selectedTier === i ? t.color : undefined,
+                }}
+              >
+                {t.name}
+              </button>
+            ))}
           </div>
-          <input
-            type="range" min={1} max={200} value={cards}
-            onChange={e => setCards(Number(e.target.value))}
-            className="w-full mb-6 accent-orange-500"
-          />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {multipliers.map(m => {
-              const value = cards * m.mult;
-              const profit = value - cards;
+
+          {/* Slider */}
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-mono text-[10px] uppercase tracking-[2px] text-white/30">Card acquistate al lancio</span>
+            <span className="font-orbitron font-black text-3xl text-fire-3">{cards}</span>
+          </div>
+          <input type="range" min={1} max={200} value={cards} onChange={e => setCards(Number(e.target.value))}
+            className="w-full mb-8 accent-orange-500" />
+
+          {/* DUAL SCENARIO */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+            {/* BEST CASE */}
+            <motion.div
+              key={`best-${selectedTier}-${cards}`}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative border border-green-500/30 bg-green-500/[0.04] p-6 overflow-hidden"
+              style={{ clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))' }}
+            >
+              <div className="absolute top-3 right-3 font-mono text-[8px] tracking-[3px] text-green-500/30 uppercase">BEST CASE</div>
+              <p className="font-mono text-[9px] uppercase tracking-[2px] text-green-400/50 mb-1">Atleta vince → {tier.level}</p>
+              <p className="font-mono text-[9px] text-white/15 mb-5">{cards} card × ×{tier.mult.toLocaleString()} moltiplicatore</p>
+              <div className="font-orbitron font-black leading-none mb-2" style={{ fontSize: 'clamp(36px, 5vw, 52px)', color: '#4ade80' }}>
+                €{bestCase.toLocaleString()}
+              </div>
+              <div className="font-mono text-sm text-green-400/50">
+                +€{profit.toLocaleString()} profitto netto
+              </div>
+              <div className="mt-5 pt-4 border-t border-green-500/15 grid grid-cols-2 gap-2">
+                <div>
+                  <p className="font-mono text-[8px] text-white/15">Investito</p>
+                  <p className="font-mono text-xs text-white/40">€{invested.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="font-mono text-[8px] text-white/15">Moltiplicatore</p>
+                  <p className="font-mono text-xs text-green-400/50">×{tier.mult.toLocaleString()}</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* WORST CASE */}
+            <motion.div
+              key={`worst-${selectedTier}-${cards}`}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative border border-red-500/30 bg-red-500/[0.04] p-6 overflow-hidden"
+              style={{ clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))' }}
+            >
+              <div className="absolute top-3 right-3 font-mono text-[8px] tracking-[3px] text-red-500/30 uppercase">WORST CASE</div>
+              <p className="font-mono text-[9px] uppercase tracking-[2px] text-red-400/50 mb-1">Vendi prima della vittoria</p>
+              <p className="font-mono text-[9px] text-white/15 mb-5">Drop ricevuto: <span className="text-red-400 font-bold">ZERO</span></p>
+              <div className="font-orbitron font-black leading-none mb-2" style={{ fontSize: 'clamp(36px, 5vw, 52px)', color: '#f87171' }}>
+                €0
+              </div>
+              <div className="font-mono text-sm text-red-400/50">
+                Drop perso. Per sempre.
+              </div>
+              <div className="mt-5 pt-4 border-t border-red-500/15 grid grid-cols-2 gap-2">
+                <div>
+                  <p className="font-mono text-[8px] text-white/15">La card</p>
+                  <p className="font-mono text-xs text-white/40">Vendibile sul mercato</p>
+                </div>
+                <div>
+                  <p className="font-mono text-[8px] text-white/15">Il drop storico</p>
+                  <p className="font-mono text-xs text-red-400/50 font-bold">Irrecuperabile</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Commitment row */}
+          <div className="border border-white/8 bg-white/[0.015] p-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+              <div>
+                <p className="font-mono text-[8px] uppercase tracking-[3px] text-white/20 mb-1">HOLDING MINIMO</p>
+                <p className="font-orbitron font-bold text-sm text-white/50">5–10 anni</p>
+              </div>
+              <div className="sm:border-x border-white/8">
+                <p className="font-mono text-[8px] uppercase tracking-[3px] text-white/20 mb-1">TIMELINE CIRCUITO</p>
+                <p className="font-orbitron font-bold text-sm text-white/50">Regionale → Internazionale</p>
+              </div>
+              <div>
+                <p className="font-mono text-[8px] uppercase tracking-[3px] text-white/20 mb-1">GARANZIA PROFITTO</p>
+                <p className="font-orbitron font-bold text-sm text-fire-3">Zero. Dipende dall'atleta.</p>
+              </div>
+            </div>
+          </div>
+          <p className="font-mono text-[8px] text-white/10 mt-3 text-center">
+            Simulatore basato sul sistema reale: 100k → 10k → 1k → 100 card · Nessuna garanzia di profitto · Gioca responsabilmente
+          </p>
+        </div>
+
+        {/* ─── SNAPSHOT ─── */}
+        <div className="mb-10">
+          <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/30 mb-6">// SNAPSHOT — ZERO AZIONI RICHIESTE //</p>
+          <div className="grid grid-cols-4 gap-3 mb-8">
+            {SNAPSHOT_STEPS.map((s, i) => {
+              const [icon, ...labelParts] = s.split(' ');
               return (
-                <div key={m.label} className="p-3 border border-white/10 bg-black/40">
-                  <div className={`font-orbitron font-bold text-sm ${m.color} mb-1`}>{m.label}</div>
-                  <div className="font-mono text-lg font-bold text-white">€{value.toLocaleString()}</div>
-                  {profit > 0 && (
-                    <div className="font-mono text-[10px] text-green-400">+€{profit.toLocaleString()} {t('scar_profit')}</div>
-                  )}
-                  <div className="font-mono text-[9px] text-white/30 mt-1">×{m.mult}</div>
+                <div key={i}
+                  className={`p-4 border text-center transition-all duration-500 ${
+                    snapshotStep > i
+                      ? 'border-fire-3/60 bg-fire-3/10 scale-[1.04]'
+                      : 'border-white/8 bg-white/[0.015]'
+                  }`}
+                  style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}
+                >
+                  <div className="text-2xl mb-2">{icon}</div>
+                  <div className={`font-mono text-[8px] uppercase tracking-[1px] transition-colors leading-tight ${snapshotStep > i ? 'text-fire-3' : 'text-white/20'}`}>
+                    {labelParts.join(' ')}
+                  </div>
                 </div>
               );
             })}
           </div>
-          <p className="font-mono text-[9px] text-white/20 mt-4">{t('scar_note')}</p>
-        </div>
 
-        {/* Snapshot animation */}
-        <div className="mb-10">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-5">{t('scar_snapshot')}</p>
-          <div className="grid grid-cols-4 gap-3 mb-6">
-            {snapshotSteps.map((s, i) => (
-              <div key={i} className={`p-4 border text-center transition-all duration-500 ${
-                snapshotStep > i
-                  ? 'border-fire-3/60 bg-fire-3/15 scale-105'
-                  : 'border-white/10 bg-white/3'
-              }`}>
-                <div className="text-2xl mb-2">{s.icon}</div>
-                <div className={`font-mono text-[10px] uppercase tracking-[1px] transition-colors ${snapshotStep > i ? 'text-fire-3' : 'text-white/30'}`}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="p-5 border border-yellow-500/30 bg-yellow-500/5">
-            <p className="font-rajdhani text-base text-yellow-200" dangerouslySetInnerHTML={{ __html: t('scar_story') }} />
+          {/* Story */}
+          <div className="border-l-2 border-fire-3/30 pl-6 py-3">
+            <p className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/30 mb-4">// SCENARIO REALE //</p>
+            <p className="font-rajdhani text-lg text-white/60 leading-relaxed">
+              Marco compra <span className="text-fire-4 font-bold">10 card a €1</span>.
+              Le tiene. Non guarda il prezzo.
+              L'atleta vince il circuito <span className="text-fire-5 font-bold">Internazionale</span>.
+              Marco riceve automaticamente{' '}
+              <span className="text-yellow-400 font-bold text-xl">10 Legendary Card</span>.
+            </p>
+            <p className="font-mono text-sm text-white/20 mt-4">
+              Senza fare nulla. Il sistema lavora per chi rimane.
+            </p>
           </div>
         </div>
+
       </div>
 
       <FireRule />

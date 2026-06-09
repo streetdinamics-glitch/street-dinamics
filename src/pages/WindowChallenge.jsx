@@ -7,14 +7,14 @@ import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 
 const STEPS = [
-  { n: '1', icon: '🏆', label: 'Prerequisito', color: 'border-fire-3/40 bg-fire-3/5',
-    desc: 'Vinci il torneo. Non esiste altra strada. Nessuna scorciatoia, nessuna eccezione.' },
-  { n: '2', icon: '📢', label: 'Dichiarazione', color: 'border-yellow-500/40 bg-yellow-500/5',
-    desc: 'Dopo la vittoria, dichiari pubblicamente la sfida sui social e sull\'app SD. È ufficiale da quel momento.' },
-  { n: '3', icon: '⚔️', label: 'Elimina i contendenti', color: 'border-purple-500/40 bg-purple-500/5',
-    desc: 'Batti tutti gli altri vincitori in coda, in ordine di ranking. Ogni vittoria = evento SD separato con contenuto e spike delle card.' },
-  { n: '4', icon: '👑', label: 'La sfida al campione', color: 'border-cyan-500/40 bg-cyan-500/5',
-    desc: 'Solo ora accedi al campione in carica. Trasmesso live. Picco massimo del mercato card.' },
+  { n: '01', icon: '⚔️', label: 'PREREQUISITO', color: 'border-fire-3/40 bg-fire-3/[0.04]',
+    desc: 'Vinci il torneo. Nessuna altra porta esiste. Nessuna scorciatoia. Nessuna eccezione.' },
+  { n: '02', icon: '📢', label: 'DICHIARAZIONE PUBBLICA', color: 'border-yellow-500/40 bg-yellow-500/[0.04]',
+    desc: 'Dichiari la sfida. Pubblicamente. Tutti sanno il tuo nome da quel momento in poi.' },
+  { n: '03', icon: '🔥', label: 'ELIMINA UNO A UNO', color: 'border-purple-500/40 bg-purple-500/[0.04]',
+    desc: 'Batti ogni vincitore in coda — in ordine di ranking. Nessuno saltato. Ogni vittoria è un evento. Le card salgono.' },
+  { n: '04', icon: '👑', label: 'IL TRONO', color: 'border-cyan-500/40 bg-cyan-500/[0.04]',
+    desc: 'Solo ora il Campione ti fronteggia. Trasmesso mondiale. Picco massimo del mercato. Se vinci: sei Leggenda.' },
 ];
 
 const CARD_IMPACTS = [
@@ -36,16 +36,17 @@ export default function WindowChallenge() {
       <div className="pt-[80px] section-container max-w-4xl">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">IL SISTEMA</p>
-          <h1 className="heading-fire text-[clamp(36px,7vw,72px)] font-black leading-none mb-4">WINDOW<br />CHALLENGE</h1>
-          <p className="font-rajdhani text-lg text-white/40 max-w-2xl mx-auto">
-            La finestra si apre SOLO dopo aver vinto un torneo ufficiale SD. Non prima. Mai.
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">// LA STRADA VERSO IL TRONO //</p>
+          <h1 className="heading-fire text-[clamp(36px,7vw,72px)] font-black leading-none mb-6">WINDOW<br />CHALLENGE</h1>
+          <p className="font-rajdhani text-xl text-white/40 max-w-xl mx-auto leading-relaxed">
+            La finestra si apre <span className="text-fire-3 font-bold">solo dopo aver vinto</span>.<br />
+            Non prima. <span className="text-white/20">Mai.</span>
           </p>
         </motion.div>
 
         {/* Flow */}
         <div className="mb-12">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-5">COME FUNZIONA — 4 PASSI</p>
+          <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/30 mb-5">// PERCORSO — 4 STADI OBBLIGATORI //</p>
           <div className="relative">
             {/* Connector line */}
             <div className="absolute left-[19px] top-10 bottom-10 w-[1px] bg-gradient-to-b from-fire-3/30 via-fire-3/10 to-fire-3/30 hidden md:block" />
@@ -114,7 +115,7 @@ export default function WindowChallenge() {
 
         {/* Card impact */}
         <div className="mb-10">
-          <p className="font-mono text-[10px] tracking-[5px] uppercase text-fire-3/40 mb-4">IMPATTO SULLE CARD</p>
+          <p className="font-mono text-[9px] tracking-[5px] uppercase text-fire-3/30 mb-4">// IMPATTO SULLE CARD //</p>
           <div className="border border-fire-3/15 overflow-hidden">
             {CARD_IMPACTS.map((c, i) => (
               <div key={i} className={`flex items-center justify-between px-4 py-3 ${i % 2 === 0 ? 'bg-white/2' : ''} border-b border-white/5 last:border-b-0`}>
@@ -132,8 +133,10 @@ export default function WindowChallenge() {
         <div className="p-5 border border-yellow-500/30 bg-yellow-500/5 text-center">
           <div className="text-4xl mb-2">⭐</div>
           <h3 className="font-orbitron font-bold text-xl text-yellow-400 mb-2">STATUS LEGGENDA</h3>
-          <p className="font-rajdhani text-base text-yellow-200/60">
-            3 Window Challenge vinte consecutive → card speciale emessa. Immutabile. Per sempre.
+          <p className="font-rajdhani text-lg text-yellow-200/60 leading-relaxed">
+            3 Window Challenge vinte consecutive.<br />
+            <span className="text-yellow-300 font-bold">Card speciale emessa. Immutabile. Per sempre.</span><br />
+            <span className="text-white/20 text-sm">Solo 3 persone in ogni disciplina possono raggiungerlo.</span>
           </p>
         </div>
       </div>

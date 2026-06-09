@@ -225,7 +225,7 @@ export default function ComeFunziona() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">COME FUNZIONA</p>
           <h1 className="heading-fire text-[clamp(40px,8vw,80px)] font-black leading-none mb-4">{t('cf_title')}</h1>
-          <p className="font-rajdhani text-lg text-white/40 max-w-xl mx-auto">{t('cf_subtitle')}</p>
+          <p className="font-rajdhani text-xl text-white/40 max-w-lg mx-auto">Il Patto. Leggilo tutto.<br /><span className="text-fire-3/50 text-base">Poi decidi se fare parte del sistema.</span></p>
         </motion.div>
 
         {/* Tab bar */}
