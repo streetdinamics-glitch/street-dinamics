@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -43,7 +43,8 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
     queryKey: ['live-events'],
     queryFn: () => base44.entities.Event.filter({ status: 'live' }),
     initialData: [],
-    refetchInterval: 20000,
+    refetchInterval: 30000,
+    staleTime: 20000,
   });
 
   const liveEvent = events[0];
@@ -53,7 +54,8 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
     queryFn: () => base44.entities.Tournament.filter({ event_id: liveEvent.id }),
     enabled: !!liveEvent,
     initialData: [],
-    refetchInterval: 15000,
+    refetchInterval: 25000,
+    staleTime: 15000,
   });
 
   const tournament = tournaments[0];
@@ -63,11 +65,12 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
     queryFn: () => base44.entities.TournamentMatch.filter({ tournament_id: tournament.id }),
     enabled: !!tournament,
     initialData: [],
-    refetchInterval: 10000,
+    refetchInterval: 15000,
+    staleTime: 10000,
   });
 
-  const leaderboard = buildLeaderboard(matches);
-  const leaderboardKey = JSON.stringify(leaderboard.map(p => p.email + p.pts));
+  const leaderboard = useMemo(() => buildLeaderboard(matches), [matches]);
+  const leaderboardKey = useMemo(() => leaderboard.map(p => p.email + p.pts).join(','), [leaderboard]);
 
   // Snapshot the board before each update so we can detect rank changes.
   // prevBoard===null means first load — no animation yet.
@@ -129,11 +132,11 @@ export default function LiveTournamentLeaderboard({ lang = 'it' }) {
               return (
                 <motion.div
                   key={p.email}
-                  layout
-                  initial={{ opacity: 0, x: -20 }}
+                  layout="position"
+                  initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: idx * 0.04 }}
+                  exit={{ opacity: 0, x: 16 }}
+                  transition={{ duration: 0.25, delay: idx * 0.03 }}
                   className={`flex items-center gap-3 px-4 py-3 border transition-all ${
                     idx === 0 ? 'border-yellow-500/40 bg-yellow-500/5 shadow-[0_0_16px_rgba(255,204,0,0.08)]' :
                     idx === 1 ? 'border-gray-400/30 bg-gray-500/5' :

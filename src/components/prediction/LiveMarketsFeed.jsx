@@ -117,7 +117,8 @@ export default function LiveMarketsFeed() {
     queryKey: ['live-markets', activeTab, debouncedSearch],
     queryFn: () => base44.functions.invoke(activePlatform.fn, { search: debouncedSearch, limit: 12 })
       .then(r => r.data),
-    staleTime: 2 * 60 * 1000, // 2 min cache
+    staleTime: 2 * 60 * 1000,
+    placeholderData: (prev) => prev, // keeps old data visible during refetch
     retry: 1,
   });
 
