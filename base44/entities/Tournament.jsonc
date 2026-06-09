@@ -1,0 +1,64 @@
+{
+  "name": "Tournament",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated event ID"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "single_elimination",
+        "double_elimination",
+        "round_robin"
+      ],
+      "default": "single_elimination",
+      "description": "Tournament format"
+    },
+    "current_round": {
+      "type": "number",
+      "default": 1,
+      "description": "Current active round number"
+    },
+    "total_rounds": {
+      "type": "number",
+      "description": "Total number of rounds"
+    },
+    "bracket_data": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Tournament bracket structure with matches"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "upcoming",
+        "in_progress",
+        "completed"
+      ],
+      "default": "upcoming"
+    },
+    "snapshot_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether NFT Clip snapshot has been executed after tournament end"
+    },
+    "snapshot_executed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when snapshot was executed and NFT Clips distributed"
+    },
+    "tokens_minted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether Athlete Tokens have been minted for this tournament"
+    }
+  },
+  "required": [
+    "event_id",
+    "format"
+  ]
+}

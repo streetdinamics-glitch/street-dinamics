@@ -1,0 +1,28 @@
+{
+  "name": "PerformanceVote",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event ID reference"
+    },
+    "nominee_id": {
+      "type": "string",
+      "description": "Performance nominee ID"
+    },
+    "voter_email": {
+      "type": "string",
+      "description": "Email of the voter"
+    },
+    "voted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the vote was cast"
+    }
+  },
+  "required": [
+    "event_id",
+    "nominee_id",
+    "voter_email"
+  ]
+}

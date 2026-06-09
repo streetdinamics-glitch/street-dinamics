@@ -1,0 +1,42 @@
+{
+  "name": "Subscription",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Subscriber email"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "athlete",
+        "sport"
+      ],
+      "description": "What is being followed"
+    },
+    "value": {
+      "type": "string",
+      "description": "Athlete email or sport name"
+    },
+    "label": {
+      "type": "string",
+      "description": "Display label (athlete name or sport)"
+    },
+    "browser_alerts": {
+      "type": "boolean",
+      "default": true,
+      "description": "Send browser push notifications"
+    },
+    "in_app_alerts": {
+      "type": "boolean",
+      "default": true,
+      "description": "Send in-app notifications"
+    }
+  },
+  "required": [
+    "user_email",
+    "type",
+    "value",
+    "label"
+  ]
+}

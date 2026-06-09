@@ -1,0 +1,89 @@
+{
+  "name": "NFTCollectionCard",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email reference"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "card_number": {
+      "type": "number",
+      "description": "Unique card number in collection"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "rising_star",
+        "breakout_talent",
+        "elite_performer",
+        "living_legend"
+      ],
+      "description": "Card rarity level"
+    },
+    "event_moment": {
+      "type": "string",
+      "description": "Historic moment captured (e.g., 'Championship Winning Goal')"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Event where moment occurred"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Card image URL"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Moment video URL"
+    },
+    "mint_price": {
+      "type": "number",
+      "description": "Original mint price in EUR"
+    },
+    "current_floor_price": {
+      "type": "number",
+      "description": "Current lowest market price"
+    },
+    "total_supply": {
+      "type": "number",
+      "description": "Total cards minted"
+    },
+    "minted_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Cards minted so far"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Card attributes (performance stats, achievements)"
+    },
+    "drop_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the drop goes live"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "upcoming",
+        "live",
+        "sold_out",
+        "closed"
+      ],
+      "default": "upcoming"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "athlete_name",
+    "card_number",
+    "rarity",
+    "event_moment",
+    "mint_price",
+    "total_supply"
+  ]
+}

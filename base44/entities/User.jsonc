@@ -1,0 +1,152 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "athlete",
+        "spectator",
+        "user"
+      ],
+      "default": "user",
+      "description": "User role in the platform"
+    },
+    "user_type": {
+      "type": "string",
+      "enum": [
+        "athlete",
+        "spectator"
+      ],
+      "description": "Primary user type classification"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of birth for age verification"
+    },
+    "age_at_registration": {
+      "type": "number",
+      "description": "Age when account was created"
+    },
+    "is_minor": {
+      "type": "boolean",
+      "description": "Whether user was under 18 at registration"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country of residence"
+    },
+    "city": {
+      "type": "string",
+      "description": "City of residence"
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "Profile photo URL"
+    },
+    "nickname": {
+      "type": "string",
+      "description": "Display nickname"
+    },
+    "bio": {
+      "type": "string",
+      "description": "User biography"
+    },
+    "onboarding_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether onboarding flow is complete"
+    },
+    "athlete_profile": {
+      "type": "object",
+      "description": "Athlete-specific data (sports, achievements, verification status)"
+    },
+    "spectator_profile": {
+      "type": "object",
+      "description": "Spectator-specific data (favorite sports, favorite athletes)"
+    },
+    "preferences": {
+      "type": "object",
+      "description": "User preferences (language, notifications)"
+    },
+    "gdpr_consents": {
+      "type": "object",
+      "description": "Granular GDPR consent tracking"
+    },
+    "marketing_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consent to marketing communications"
+    },
+    "image_rights_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consent to image capture and usage"
+    },
+    "tokenization_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consent to token/NFT creation"
+    },
+    "cross_border_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consent to international data transfers"
+    },
+    "gdpr_consent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When GDPR consents were last updated"
+    },
+    "terms_version": {
+      "type": "string",
+      "description": "Version of terms accepted (e.g., v1.2)"
+    },
+    "terms_accepted_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When terms were accepted"
+    },
+    "wallet_address": {
+      "type": "string",
+      "description": "Connected blockchain wallet address"
+    },
+    "kyc_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "KYC verification status (required for token purchases 18+)"
+    },
+    "kyc_verification_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When KYC was completed"
+    },
+    "account_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "banned",
+        "pending_verification"
+      ],
+      "default": "active",
+      "description": "Account status"
+    },
+    "suspension_reason": {
+      "type": "string",
+      "description": "Reason for suspension/ban if applicable"
+    },
+    "last_active": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last activity timestamp"
+    }
+  },
+  "required": []
+}

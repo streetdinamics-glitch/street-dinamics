@@ -1,0 +1,59 @@
+{
+  "name": "AthleteStats",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email reference"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "sport": {
+      "type": "string",
+      "description": "Sport discipline"
+    },
+    "events_participated": {
+      "type": "number",
+      "default": 0
+    },
+    "wins": {
+      "type": "number",
+      "default": 0
+    },
+    "podium_finishes": {
+      "type": "number",
+      "default": 0
+    },
+    "total_earnings": {
+      "type": "number",
+      "default": 0,
+      "description": "Total prize earnings in USD"
+    },
+    "fan_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of token holders"
+    },
+    "social_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Combined social media following"
+    },
+    "performance_rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Overall performance rating 0-100"
+    },
+    "season": {
+      "type": "string",
+      "description": "Season/year"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "athlete_name",
+    "sport"
+  ]
+}

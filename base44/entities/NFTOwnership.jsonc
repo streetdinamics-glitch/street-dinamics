@@ -1,0 +1,71 @@
+{
+  "name": "NFTOwnership",
+  "type": "object",
+  "properties": {
+    "nft_id": {
+      "type": "string",
+      "description": "NFT Collection Card ID"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name (snapshot at mint time)"
+    },
+    "card_number": {
+      "type": "number",
+      "description": "Card number"
+    },
+    "serial_number": {
+      "type": "number",
+      "description": "Serial number of this specific card (e.g., #5 of 100)"
+    },
+    "rarity": {
+      "type": "string",
+      "description": "Card rarity"
+    },
+    "purchase_price": {
+      "type": "number",
+      "description": "Purchase price paid in EUR"
+    },
+    "purchase_type": {
+      "type": "string",
+      "enum": [
+        "mint",
+        "secondary"
+      ],
+      "description": "Primary mint or secondary market"
+    },
+    "buyer_email": {
+      "type": "string",
+      "description": "Buyer email address (for audit trail)"
+    },
+    "minted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When minted/purchased (immutable timestamp)"
+    },
+    "transaction_hash": {
+      "type": "string",
+      "description": "Optional blockchain tx hash if minted on-chain"
+    },
+    "listed_for_sale": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is currently listed on marketplace"
+    },
+    "listing_price": {
+      "type": "number",
+      "description": "Price if listed for sale"
+    }
+  },
+  "required": [
+    "nft_id",
+    "athlete_name",
+    "card_number",
+    "serial_number",
+    "rarity",
+    "purchase_price",
+    "purchase_type",
+    "buyer_email",
+    "minted_at"
+  ]
+}

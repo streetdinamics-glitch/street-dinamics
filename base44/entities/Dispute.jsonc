@@ -1,0 +1,163 @@
+{
+  "name": "Dispute",
+  "type": "object",
+  "properties": {
+    "escrow_id": {
+      "type": "string",
+      "description": "Associated EscrowAccount ID"
+    },
+    "deal_id": {
+      "type": "string",
+      "description": "Associated Deal ID (sponsorship or marketplace)"
+    },
+    "transaction_id": {
+      "type": "string",
+      "description": "Transaction ID for marketplace disputes"
+    },
+    "dispute_type": {
+      "type": "string",
+      "enum": [
+        "sponsorship",
+        "marketplace"
+      ],
+      "description": "Type of dispute"
+    },
+    "initiator_email": {
+      "type": "string",
+      "description": "Email of party who opened the dispute"
+    },
+    "initiator_role": {
+      "type": "string",
+      "enum": [
+        "brand",
+        "athlete",
+        "buyer",
+        "seller"
+      ],
+      "description": "Role of the initiator"
+    },
+    "respondent_email": {
+      "type": "string",
+      "description": "Email of the responding party"
+    },
+    "respondent_role": {
+      "type": "string",
+      "enum": [
+        "brand",
+        "athlete",
+        "buyer",
+        "seller"
+      ],
+      "description": "Role of respondent"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "incomplete_deliverables",
+        "poor_quality",
+        "missed_deadline",
+        "non_delivery",
+        "item_not_as_described",
+        "damaged_goods",
+        "unauthorized_charges",
+        "other"
+      ],
+      "description": "Reason for dispute"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the dispute"
+    },
+    "amount_disputed": {
+      "type": "number",
+      "description": "Amount in dispute (EUR)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "opened",
+        "under_review",
+        "awaiting_evidence",
+        "mediating",
+        "resolved",
+        "appealed",
+        "closed"
+      ],
+      "default": "opened",
+      "description": "Dispute status"
+    },
+    "resolution": {
+      "type": "string",
+      "enum": [
+        "full_refund_buyer",
+        "full_payment_seller",
+        "partial_refund",
+        "split_50_50",
+        "custom_split",
+        "rejected"
+      ],
+      "description": "Resolution outcome"
+    },
+    "resolution_amount": {
+      "type": "number",
+      "description": "Amount awarded in resolution"
+    },
+    "resolution_notes": {
+      "type": "string",
+      "description": "Mediator notes on resolution"
+    },
+    "assigned_mediator": {
+      "type": "string",
+      "description": "Admin/organizer assigned to mediate"
+    },
+    "evidence_initiator": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Evidence submitted by initiator (files, messages, etc.)"
+    },
+    "evidence_respondent": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Evidence submitted by respondent"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When dispute was opened"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When dispute was resolved"
+    },
+    "appeal_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of appeals filed"
+    },
+    "deadline": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Response deadline for respondent"
+    }
+  },
+  "required": [
+    "escrow_id",
+    "initiator_email",
+    "initiator_role",
+    "respondent_email",
+    "respondent_role",
+    "reason",
+    "description",
+    "amount_disputed"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "TokenOwnership",
+  "type": "object",
+  "properties": {
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "token_tier": {
+      "type": "string",
+      "description": "Token tier"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "rising_star",
+        "breakout_talent",
+        "elite_performer",
+        "living_legend"
+      ],
+      "description": "Token rarity level"
+    },
+    "purchase_price": {
+      "type": "number",
+      "description": "Purchase price in EUR"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Purchase date"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1,
+      "description": "Number of tokens owned"
+    }
+  },
+  "required": [
+    "athlete_name",
+    "token_tier",
+    "purchase_price",
+    "purchase_date"
+  ]
+}

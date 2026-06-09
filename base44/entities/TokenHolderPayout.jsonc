@@ -1,0 +1,47 @@
+{
+  "name": "TokenHolderPayout",
+  "type": "object",
+  "properties": {
+    "distribution_id": {
+      "type": "string",
+      "description": "RoyaltyDistribution ID reference"
+    },
+    "holder_email": {
+      "type": "string",
+      "description": "Token holder email"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "tokens_held": {
+      "type": "number",
+      "description": "Number of tokens held at distribution"
+    },
+    "payout_amount": {
+      "type": "number",
+      "description": "EUR payout for this holder"
+    },
+    "payout_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "paid_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payout was completed"
+    }
+  },
+  "required": [
+    "distribution_id",
+    "holder_email",
+    "athlete_name",
+    "tokens_held",
+    "payout_amount"
+  ]
+}

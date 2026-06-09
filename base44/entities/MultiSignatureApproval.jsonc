@@ -1,0 +1,98 @@
+{
+  "name": "MultiSignatureApproval",
+  "type": "object",
+  "properties": {
+    "milestone_id": {
+      "type": "string",
+      "description": "Associated MilestonePaymentRequest ID"
+    },
+    "escrow_id": {
+      "type": "string",
+      "description": "Associated EscrowAccount ID"
+    },
+    "deal_id": {
+      "type": "string",
+      "description": "Associated SponsorshipDeal ID"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "brand_email": {
+      "type": "string",
+      "description": "Brand email"
+    },
+    "milestone_amount": {
+      "type": "number",
+      "description": "Amount requiring signature (EUR)"
+    },
+    "athlete_signature": {
+      "type": "object",
+      "description": "Athlete digital signature data"
+    },
+    "athlete_signed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When athlete signed"
+    },
+    "brand_signature": {
+      "type": "object",
+      "description": "Brand digital signature data"
+    },
+    "brand_signed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When brand signed"
+    },
+    "multi_sig_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Both signatures present and verified"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When both signatures were confirmed"
+    },
+    "proof_of_work_url": {
+      "type": "string",
+      "description": "URL to submitted proof of work"
+    },
+    "smart_contract_hash": {
+      "type": "string",
+      "description": "Smart contract transaction hash for escrow lock"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_signatures",
+        "athlete_signed",
+        "brand_signed",
+        "both_signed",
+        "verified",
+        "released"
+      ],
+      "default": "pending_signatures",
+      "description": "Multi-sig approval status"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When signature request was created"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Signature request expiration (30 days)"
+    }
+  },
+  "required": [
+    "milestone_id",
+    "escrow_id",
+    "deal_id",
+    "athlete_email",
+    "brand_email",
+    "milestone_amount",
+    "proof_of_work_url"
+  ]
+}

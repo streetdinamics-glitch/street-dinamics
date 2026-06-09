@@ -1,0 +1,65 @@
+{
+  "name": "EventScore",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event ID reference"
+    },
+    "tournament_id": {
+      "type": "string",
+      "description": "Tournament ID reference (if applicable)"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "score": {
+      "type": "number",
+      "description": "Performance score points"
+    },
+    "performance_metrics": {
+      "type": "object",
+      "description": "Breakdown of scoring components (difficulty, execution, style, etc.)"
+    },
+    "round": {
+      "type": "number",
+      "description": "Which round/heat this score is from"
+    },
+    "submitted_by": {
+      "type": "string",
+      "description": "Organizer email who submitted the score"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When score was submitted"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Organizer notes/comments about performance"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "confirmed",
+        "disputed"
+      ],
+      "default": "submitted",
+      "description": "Score validation status"
+    }
+  },
+  "required": [
+    "event_id",
+    "athlete_email",
+    "athlete_name",
+    "score",
+    "performance_metrics",
+    "submitted_by"
+  ]
+}

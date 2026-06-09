@@ -1,0 +1,54 @@
+{
+  "name": "TokenBalance",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email - unique per user"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "total_tokens": {
+      "type": "number",
+      "default": 0,
+      "description": "Current token balance"
+    },
+    "earned_from_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Tokens earned from fan points"
+    },
+    "earned_from_bets": {
+      "type": "number",
+      "default": 0,
+      "description": "Tokens won from betting"
+    },
+    "earned_from_ownership": {
+      "type": "number",
+      "default": 0,
+      "description": "Tokens from asset ownership"
+    },
+    "spent_on_rewards": {
+      "type": "number",
+      "default": 0,
+      "description": "Tokens spent in reward store"
+    },
+    "spent_on_bets": {
+      "type": "number",
+      "default": 0,
+      "description": "Tokens wagered in betting"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last balance update"
+    }
+  },
+  "required": [
+    "user_email",
+    "user_name",
+    "total_tokens"
+  ]
+}

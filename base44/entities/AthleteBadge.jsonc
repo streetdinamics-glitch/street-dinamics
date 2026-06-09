@@ -1,0 +1,61 @@
+{
+  "name": "AthleteBadge",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email reference"
+    },
+    "badge_type": {
+      "type": "string",
+      "enum": [
+        "rookie",
+        "veteran",
+        "champion",
+        "legend",
+        "first_event",
+        "five_events",
+        "ten_events",
+        "podium_finisher",
+        "winner",
+        "crowd_favorite",
+        "rising_star",
+        "consistent_performer"
+      ],
+      "description": "Type of achievement badge"
+    },
+    "earned_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date badge was earned"
+    },
+    "badge_name": {
+      "type": "string",
+      "description": "Display name of the badge"
+    },
+    "badge_description": {
+      "type": "string",
+      "description": "What this badge represents"
+    },
+    "badge_icon": {
+      "type": "string",
+      "description": "Icon or emoji for the badge"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "common",
+        "rare",
+        "epic",
+        "legendary"
+      ],
+      "default": "common",
+      "description": "Badge rarity level"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "badge_type",
+    "badge_name"
+  ]
+}

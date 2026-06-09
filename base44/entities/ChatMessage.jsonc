@@ -1,0 +1,67 @@
+{
+  "name": "ChatMessage",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated event ID"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Message sender email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Sender display name"
+    },
+    "user_role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "athlete",
+        "fan"
+      ],
+      "description": "Sender role for styling/moderation"
+    },
+    "message": {
+      "type": "string",
+      "description": "Chat message content"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "announcement",
+        "answer",
+        "update"
+      ],
+      "default": "regular",
+      "description": "Message category for highlighting"
+    },
+    "is_pinned": {
+      "type": "boolean",
+      "default": false,
+      "description": "Admin-pinned important message"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Soft-delete for moderation"
+    },
+    "parent_message_id": {
+      "type": "string",
+      "description": "ID of message being replied to"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "user_email",
+    "user_name",
+    "user_role",
+    "message"
+  ]
+}

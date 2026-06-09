@@ -1,0 +1,55 @@
+{
+  "name": "TokenTransaction",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email"
+    },
+    "transaction_type": {
+      "type": "string",
+      "enum": [
+        "earn",
+        "spend",
+        "bet_placed",
+        "bet_won",
+        "bet_lost",
+        "reward_redeemed",
+        "points_converted"
+      ],
+      "description": "Type of transaction"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Token amount (positive for earn, negative for spend)"
+    },
+    "balance_after": {
+      "type": "number",
+      "description": "Token balance after transaction"
+    },
+    "description": {
+      "type": "string",
+      "description": "Transaction description"
+    },
+    "related_entity_id": {
+      "type": "string",
+      "description": "Related entity ID (bet, reward, etc)"
+    },
+    "related_entity_type": {
+      "type": "string",
+      "description": "Related entity type"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Transaction timestamp"
+    }
+  },
+  "required": [
+    "user_email",
+    "transaction_type",
+    "amount",
+    "balance_after",
+    "timestamp"
+  ]
+}

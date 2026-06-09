@@ -21,7 +21,7 @@ export default function SD3PillarsHub({ lang = 'it' }) {
   const [active, setActive] = useState('wager');
 
   const PILLARS = [
-    { id: 'wager',      num: t('wag_p1_label'), label: t('wag_p1_title'), sublabel: t('wag_p1_sub'), icon: Shield,   accentClass: 'border-fire-3/60 text-fire-4',    activeBg: 'bg-fire-3/8' },
+    { id: 'wager',      num: t('wag_p1_label'), label: 'XP ECONOMY',     sublabel: 'Guadagna · Scala · Ottieni premi reali', icon: Shield,   accentClass: 'border-fire-3/60 text-fire-4',    activeBg: 'bg-fire-3/8' },
     { id: 'prediction', num: t('wag_p2_label'), label: t('wag_p2_title'), sublabel: t('wag_p2_sub'), icon: BarChart2, accentClass: 'border-cyan-400/60 text-cyan-400', activeBg: 'bg-cyan-400/8' },
     { id: 'economy',    num: t('wag_p3_label'), label: t('wag_p3_title'), sublabel: t('wag_p3_sub'), icon: Layers,   accentClass: 'border-purple-400/60 text-purple-400', activeBg: 'bg-purple-400/8' },
   ];

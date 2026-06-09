@@ -1,0 +1,70 @@
+{
+  "name": "NFTClip",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete this clip belongs to"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete display name"
+    },
+    "tournament_id": {
+      "type": "string",
+      "description": "Tournament that generated this clip"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL to the clip video (IPFS or cloud storage)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Clip title, e.g. 'Victory Moment \u2014 Elite Round 3'"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the captured moment"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold",
+        "legendary"
+      ],
+      "description": "Clip rarity based on the card tier held during tournament"
+    },
+    "recipient_email": {
+      "type": "string",
+      "description": "Fan who received this clip (held the card during tournament)"
+    },
+    "card_id_linked": {
+      "type": "string",
+      "description": "ID of the AthleteToken card that earned this clip"
+    },
+    "moment_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the captured moment occurred"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Clip duration in seconds"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this NFT Clip was minted/distributed"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "athlete_name",
+    "tournament_id",
+    "recipient_email",
+    "title",
+    "rarity"
+  ]
+}

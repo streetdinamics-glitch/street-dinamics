@@ -1,0 +1,89 @@
+{
+  "name": "Payout",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "escrow_id": {
+      "type": "string",
+      "description": "Associated EscrowAccount ID"
+    },
+    "deal_id": {
+      "type": "string",
+      "description": "Associated SponsorshipDeal ID"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Payout amount in EUR or crypto equivalent"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "EUR",
+        "BTC",
+        "ETH",
+        "USDC"
+      ],
+      "default": "EUR",
+      "description": "Payout currency"
+    },
+    "payout_method": {
+      "type": "string",
+      "enum": [
+        "braintree",
+        "crypto_wallet"
+      ],
+      "description": "Payment method type"
+    },
+    "bank_account_id": {
+      "type": "string",
+      "description": "Braintree payment method token (if Braintree)"
+    },
+    "crypto_wallet_address": {
+      "type": "string",
+      "description": "Crypto wallet address (if crypto)"
+    },
+    "transaction_id": {
+      "type": "string",
+      "description": "Payment processor transaction ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending",
+      "description": "Payout status"
+    },
+    "initiated_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payout was initiated"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payout was completed"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error details if payout failed"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional payout info (gas fees, exchange rates, etc.)"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "amount",
+    "currency",
+    "payout_method",
+    "status"
+  ]
+}

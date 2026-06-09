@@ -1,0 +1,135 @@
+{
+  "name": "SponsorshipDeal",
+  "type": "object",
+  "properties": {
+    "brand_email": {
+      "type": "string",
+      "description": "Brand/company email"
+    },
+    "brand_name": {
+      "type": "string",
+      "description": "Company name"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "campaign_title": {
+      "type": "string",
+      "description": "Campaign name/title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Campaign details and requirements"
+    },
+    "budget": {
+      "type": "number",
+      "description": "Total campaign budget in EUR"
+    },
+    "currency": {
+      "type": "string",
+      "default": "EUR",
+      "description": "Payment currency"
+    },
+    "duration_days": {
+      "type": "number",
+      "description": "Campaign duration in days"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Campaign start date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Campaign end date"
+    },
+    "deliverables": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "List of required deliverables (posts, videos, appearances, etc.)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "in_progress",
+        "completed",
+        "disputed"
+      ],
+      "default": "proposed",
+      "description": "Deal status"
+    },
+    "athlete_response": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected",
+        "counter_offered"
+      ],
+      "default": "pending",
+      "description": "Athlete's response to proposal"
+    },
+    "counter_offer_amount": {
+      "type": "number",
+      "description": "Athlete's counter-offer budget (if applicable)"
+    },
+    "negotiation_notes": {
+      "type": "string",
+      "description": "Notes during negotiation"
+    },
+    "payment_terms": {
+      "type": "string",
+      "enum": [
+        "upfront",
+        "milestone",
+        "on_completion"
+      ],
+      "default": "milestone",
+      "description": "Payment schedule type"
+    },
+    "escrow_id": {
+      "type": "string",
+      "description": "Associated EscrowAccount ID"
+    },
+    "documents_url": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Contract/agreement URLs"
+    },
+    "dispute_reason": {
+      "type": "string",
+      "description": "Reason if deal is disputed"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When campaign was completed"
+    }
+  },
+  "required": [
+    "brand_email",
+    "brand_name",
+    "athlete_email",
+    "athlete_name",
+    "campaign_title",
+    "description",
+    "budget",
+    "duration_days",
+    "start_date",
+    "end_date",
+    "deliverables"
+  ]
+}

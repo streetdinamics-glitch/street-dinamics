@@ -263,7 +263,7 @@ export const it = {
   wag_disclaimer: 'Nessuna valuta reale. Nessun conto gestito da terzi. Operato da Entretain Holding FZE — IFZA, Dubai, UAE.',
   wag_p1_label: 'I', wag_p1_title: 'SFIDE TRA FAN', wag_p1_sub: 'Solo per chi possiede una Card',
   wag_p1_desc: 'Possiedi la Card → sfidi un altro fan → la Card migliore vince il pot',
-  wag_p2_label: 'II', wag_p2_title: 'MERCATO PREVISIONI', wag_p2_sub: 'SD Nativo + Polymarket + Kalshi',
+  wag_p2_label: 'II', wag_p2_title: 'MERCATO PREVISIONI', wag_p2_sub: 'Polymarket + Kalshi',
   wag_p2_desc: 'Prevedi i risultati degli eventi e guadagna se hai ragione',
   wag_p3_label: 'III', wag_p3_title: 'ECONOMIA DELLE CARD', wag_p3_sub: '4 livelli di rarità',
   wag_p3_desc: 'Ogni Card dà diritti diversi: royalty, voto, accesso alle sfide',

@@ -1,0 +1,63 @@
+{
+  "name": "Watchlist",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email address"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "nft_drop",
+        "athlete",
+        "token"
+      ],
+      "description": "Type of asset being watched"
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "ID of the watched asset"
+    },
+    "asset_name": {
+      "type": "string",
+      "description": "Display name of the asset"
+    },
+    "baseline_price": {
+      "type": "number",
+      "default": 0,
+      "description": "Price at time of adding to watchlist"
+    },
+    "current_price": {
+      "type": "number",
+      "default": 0,
+      "description": "Latest known price"
+    },
+    "price_change_percent": {
+      "type": "number",
+      "default": 0,
+      "description": "Percentage change from baseline"
+    },
+    "notify_price_drop": {
+      "type": "boolean",
+      "default": true,
+      "description": "Alert when price changes significantly"
+    },
+    "notify_new_listings": {
+      "type": "boolean",
+      "default": true,
+      "description": "Alert on new secondary market listings"
+    },
+    "added_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When item was added to watchlist"
+    }
+  },
+  "required": [
+    "user_email",
+    "asset_type",
+    "asset_id",
+    "asset_name"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "SportCategory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Official discipline name (e.g. Skateboarding, Breakdancing)"
+    },
+    "emoji": {
+      "type": "string",
+      "description": "Emoji icon for display"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the discipline"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this category is active and available for events"
+    },
+    "min_age": {
+      "type": "number",
+      "default": 13,
+      "description": "Minimum participant age"
+    },
+    "max_age": {
+      "type": "number",
+      "default": 30,
+      "description": "Maximum participant age"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "FanPoints",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated event ID"
+    },
+    "fan_email": {
+      "type": "string",
+      "description": "Fan email address"
+    },
+    "fan_name": {
+      "type": "string",
+      "description": "Fan display name"
+    },
+    "chat_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Points earned from live chat participation"
+    },
+    "vote_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Points earned from voting on polls"
+    },
+    "prediction_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Points from correct match outcome predictions"
+    },
+    "total_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Total accumulated points"
+    },
+    "messages_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of chat messages posted"
+    },
+    "votes_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of votes cast"
+    },
+    "correct_predictions": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of correct predictions"
+    },
+    "rank": {
+      "type": "number",
+      "description": "Current leaderboard rank for this event"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time points were updated"
+    }
+  },
+  "required": [
+    "event_id",
+    "fan_email",
+    "fan_name"
+  ]
+}

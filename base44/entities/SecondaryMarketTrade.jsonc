@@ -1,0 +1,67 @@
+{
+  "name": "SecondaryMarketTrade",
+  "type": "object",
+  "properties": {
+    "listing_id": {
+      "type": "string",
+      "description": "Listing ID reference"
+    },
+    "asset_type": {
+      "type": "string",
+      "description": "Token or NFT"
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Asset ID"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "seller_email": {
+      "type": "string",
+      "description": "Seller email"
+    },
+    "buyer_email": {
+      "type": "string",
+      "description": "Buyer email"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity traded"
+    },
+    "price_per_unit": {
+      "type": "number",
+      "description": "Price per unit"
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Total transaction amount"
+    },
+    "platform_fee": {
+      "type": "number",
+      "description": "Platform fee (5%)"
+    },
+    "seller_receives": {
+      "type": "number",
+      "description": "Amount seller receives after fee"
+    },
+    "traded_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "listing_id",
+    "asset_type",
+    "asset_id",
+    "athlete_name",
+    "seller_email",
+    "buyer_email",
+    "quantity",
+    "price_per_unit",
+    "total_amount",
+    "platform_fee",
+    "seller_receives"
+  ]
+}

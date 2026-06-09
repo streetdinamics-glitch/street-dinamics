@@ -1,0 +1,46 @@
+{
+  "name": "PerformanceNominee",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event ID reference"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "discipline": {
+      "type": "string",
+      "description": "Sport discipline"
+    },
+    "performance_description": {
+      "type": "string",
+      "description": "Description of the performance"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Link to performance video"
+    },
+    "vote_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Total votes received"
+    },
+    "nominated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the nomination was created"
+    }
+  },
+  "required": [
+    "event_id",
+    "athlete_email",
+    "athlete_name",
+    "discipline"
+  ]
+}

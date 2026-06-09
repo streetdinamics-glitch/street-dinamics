@@ -1,0 +1,66 @@
+{
+  "name": "Event",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Event title"
+    },
+    "sport": {
+      "type": "string",
+      "description": "Sport discipline"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Event date"
+    },
+    "location": {
+      "type": "string",
+      "description": "Event location"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description"
+    },
+    "max_spots": {
+      "type": "number",
+      "description": "Maximum participant spots"
+    },
+    "filled_spots": {
+      "type": "number",
+      "description": "Currently filled spots"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "upcoming",
+        "live",
+        "ended"
+      ],
+      "default": "upcoming"
+    },
+    "kick_live_url": {
+      "type": "string"
+    },
+    "youtube_live_url": {
+      "type": "string"
+    },
+    "kick_vod_url": {
+      "type": "string"
+    },
+    "youtube_vod_url": {
+      "type": "string"
+    },
+    "whatsapp_channel_link": {
+      "type": "string",
+      "description": "WhatsApp channel link for approved athletes"
+    }
+  },
+  "required": [
+    "title",
+    "sport",
+    "date",
+    "location"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "TournamentSnapshot",
+  "type": "object",
+  "properties": {
+    "tournament_id": {
+      "type": "string",
+      "description": "Tournament that was snapshotted"
+    },
+    "snapshot_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When snapshot was taken"
+    },
+    "total_cardholders": {
+      "type": "number",
+      "default": 0,
+      "description": "Total unique cardholders at snapshot time"
+    },
+    "nft_clips_minted": {
+      "type": "number",
+      "default": 0,
+      "description": "Total NFT Clips minted and distributed"
+    },
+    "distribution_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether all clips have been distributed"
+    },
+    "athletes_processed": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of athletes processed in snapshot"
+    },
+    "snapshot_data": {
+      "type": "object",
+      "description": "Raw snapshot data (holder list per athlete token)"
+    }
+  },
+  "required": [
+    "tournament_id",
+    "snapshot_date"
+  ]
+}

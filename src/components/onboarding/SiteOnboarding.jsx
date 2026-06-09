@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { base44 } from '@/api/base44Client';
 import { AnimatePresence, motion } from 'framer-motion';
 import OnboardingStep1Splash from './steps/OnboardingStep1Splash.jsx';
 import OnboardingStep2Social from './steps/OnboardingStep2Social.jsx';
@@ -14,18 +15,27 @@ export function useSiteOnboarding(userAlreadyDone = false) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    // Se il DB dice che è completato → non mostrare mai più (cross-device)
     if (userAlreadyDone) {
       localStorage.setItem(STORAGE_KEY, 'true');
       setShow(false);
       return;
     }
+    // Fallback locale per utenti non ancora loggati
     const done = localStorage.getItem(STORAGE_KEY);
     if (!done) setShow(true);
   }, [userAlreadyDone]);
 
-  const complete = () => {
+  const complete = async () => {
     localStorage.setItem(STORAGE_KEY, 'true');
     setShow(false);
+    // Salva sul DB così non viene richiesto su altri device
+    try {
+      const isAuthed = await base44.auth.isAuthenticated();
+      if (isAuthed) {
+        await base44.auth.updateMe({ onboarding_completed: true });
+      }
+    } catch (_) {}
   };
 
   return { show, complete };

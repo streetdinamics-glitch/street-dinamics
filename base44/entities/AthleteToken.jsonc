@@ -1,0 +1,127 @@
+{
+  "name": "AthleteToken",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email reference"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete full name"
+    },
+    "sport": {
+      "type": "string",
+      "description": "Primary sport discipline"
+    },
+    "token_tier": {
+      "type": "string",
+      "enum": [
+        "rising_star",
+        "breakout_talent",
+        "elite_performer",
+        "living_legend"
+      ],
+      "description": "Token rarity tier"
+    },
+    "card_number": {
+      "type": "number",
+      "description": "Unique card number in collection"
+    },
+    "event_moment": {
+      "type": "string",
+      "description": "Signature moment or achievement captured (e.g., 'Championship Victory')"
+    },
+    "total_supply": {
+      "type": "number",
+      "description": "Total tokens minted for this tier"
+    },
+    "available_supply": {
+      "type": "number",
+      "description": "Tokens still available for purchase"
+    },
+    "base_price": {
+      "type": "number",
+      "description": "Base price in EUR"
+    },
+    "current_price": {
+      "type": "number",
+      "description": "Current market price in EUR"
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "Athlete profile image"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Token card image URL"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short athlete bio"
+    },
+    "achievements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key achievements and awards"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Token attributes (performance stats, achievements)"
+    },
+    "token_benefits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Benefits for token holders"
+    },
+    "revenue_share_percentage": {
+      "type": "number",
+      "description": "Percentage of athlete sponsorships shared with token holders"
+    },
+    "voting_power": {
+      "type": "number",
+      "description": "Governance voting power per token"
+    },
+    "mint_price": {
+      "type": "number",
+      "description": "Original mint price in EUR"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "sold_out",
+        "coming_soon"
+      ],
+      "default": "active",
+      "description": "Token status"
+    },
+    "tournament_id": {
+      "type": "string",
+      "description": "Tournament ID this card was minted for (links card to tournament lifecycle)"
+    },
+    "snapshot_included": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this card was included in the NFT Clip snapshot"
+    },
+    "holders_at_snapshot": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of unique holders at snapshot time"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "athlete_name",
+    "sport",
+    "token_tier",
+    "card_number",
+    "total_supply",
+    "base_price"
+  ]
+}

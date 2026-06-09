@@ -1,0 +1,58 @@
+{
+  "name": "AthletePerformanceScore",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email reference"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Event reference for this score"
+    },
+    "technical_progression": {
+      "type": "number",
+      "description": "Improvement % from baseline - 25% weight"
+    },
+    "engagement_generated": {
+      "type": "number",
+      "description": "Social interactions from performances - 20% weight"
+    },
+    "consistency": {
+      "type": "number",
+      "description": "High-level performances count - 15% weight"
+    },
+    "external_recognition": {
+      "type": "number",
+      "description": "Awards, scouting, collaborations - 15% weight"
+    },
+    "fanbase_growth": {
+      "type": "number",
+      "description": "New followers monthly - 15% weight"
+    },
+    "behavior_leadership": {
+      "type": "number",
+      "description": "Staff evaluation based on public criteria - 10% weight"
+    },
+    "total_score": {
+      "type": "number",
+      "description": "Weighted total score (0-100)"
+    },
+    "score_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When score was calculated"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "event_id",
+    "technical_progression",
+    "engagement_generated",
+    "consistency",
+    "external_recognition",
+    "fanbase_growth",
+    "behavior_leadership",
+    "total_score"
+  ]
+}

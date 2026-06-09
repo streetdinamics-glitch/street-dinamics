@@ -1,0 +1,33 @@
+{
+  "name": "MatchupVote",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event ID reference"
+    },
+    "matchup_id": {
+      "type": "string",
+      "description": "Matchup ID reference"
+    },
+    "voter_email": {
+      "type": "string",
+      "description": "Email of the voter"
+    },
+    "voted_athlete": {
+      "type": "string",
+      "description": "Email of the athlete voted for"
+    },
+    "voted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the vote was cast"
+    }
+  },
+  "required": [
+    "event_id",
+    "matchup_id",
+    "voter_email",
+    "voted_athlete"
+  ]
+}

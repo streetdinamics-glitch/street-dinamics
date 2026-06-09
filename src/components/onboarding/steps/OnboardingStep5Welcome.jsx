@@ -203,16 +203,20 @@ export default function OnboardingStep5Welcome({ userData, onFinish, lang = 'it'
   };
 
   const handleEnter = async () => {
-    // Salva onboarding_completed sul profilo utente (se autenticato)
-    // così su qualsiasi dispositivo non viene richiesto di nuovo
+    // Salva onboarding_completed sul DB (cross-device) + localStorage (fallback)
     try {
       const isAuthed = await base44.auth.isAuthenticated();
       if (isAuthed) {
         await base44.auth.updateMe({ onboarding_completed: true });
+        // Award XP per aver completato l'onboarding
+        await base44.functions.invoke('awardXP', {
+          user_email: (await base44.auth.me())?.email,
+          xp_amount: 50,
+          reason: 'Onboarding completato',
+        });
       }
-    } catch (_) {
-      // Ignora errori — il localStorage già protegge il dispositivo corrente
-    }
+    } catch (_) {}
+    localStorage.setItem('sd_onboarding_complete', 'true');
     onFinish?.();
     navigate(C.dashboard);
   };

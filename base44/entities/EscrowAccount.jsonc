@@ -1,0 +1,98 @@
+{
+  "name": "EscrowAccount",
+  "type": "object",
+  "properties": {
+    "deal_id": {
+      "type": "string",
+      "description": "Associated SponsorshipDeal ID"
+    },
+    "brand_email": {
+      "type": "string",
+      "description": "Brand/company email"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Total escrow amount in EUR"
+    },
+    "held_amount": {
+      "type": "number",
+      "description": "Amount currently held in escrow"
+    },
+    "released_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount released to athlete"
+    },
+    "refunded_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount refunded to brand"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "created",
+        "funded",
+        "in_progress",
+        "release_pending",
+        "released",
+        "disputed",
+        "closed"
+      ],
+      "default": "created",
+      "description": "Escrow status"
+    },
+    "milestones": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Payment milestones with deliverables and amounts"
+    },
+    "fund_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When funds were deposited"
+    },
+    "stripe_connected_account": {
+      "type": "string",
+      "description": "Stripe account ID for athlete payouts"
+    },
+    "payment_method_id": {
+      "type": "string",
+      "description": "Stripe payment method for brand funds"
+    },
+    "dispute_status": {
+      "type": "string",
+      "enum": [
+        "none",
+        "raised",
+        "under_review",
+        "resolved"
+      ],
+      "default": "none",
+      "description": "Dispute status if applicable"
+    },
+    "dispute_reason": {
+      "type": "string",
+      "description": "Reason for dispute"
+    },
+    "dispute_resolution": {
+      "type": "string",
+      "description": "How dispute was resolved"
+    }
+  },
+  "required": [
+    "deal_id",
+    "brand_email",
+    "athlete_email",
+    "total_amount",
+    "held_amount",
+    "status",
+    "milestones"
+  ]
+}

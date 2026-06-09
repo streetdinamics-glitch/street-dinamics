@@ -1,0 +1,67 @@
+{
+  "name": "Bet",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event being wagered on"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "team_a",
+        "team_b",
+        "draw"
+      ],
+      "description": "Predicted outcome"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Tokens wagered"
+    },
+    "odds": {
+      "type": "number",
+      "description": "Odds at time of bet"
+    },
+    "potential_winnings": {
+      "type": "number",
+      "description": "Potential payout if bet wins"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "settled"
+      ],
+      "default": "active",
+      "description": "Bet status"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "won",
+        "lost",
+        "pending"
+      ],
+      "default": "pending",
+      "description": "Outcome of settled bet"
+    },
+    "placed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When bet was placed"
+    },
+    "settled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When bet was settled"
+    }
+  },
+  "required": [
+    "event_id",
+    "outcome",
+    "amount",
+    "odds",
+    "status"
+  ]
+}

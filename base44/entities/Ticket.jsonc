@@ -1,0 +1,100 @@
+{
+  "name": "Ticket",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated Event ID"
+    },
+    "buyer_email": {
+      "type": "string",
+      "description": "Ticket buyer email"
+    },
+    "buyer_name": {
+      "type": "string",
+      "description": "Ticket buyer name"
+    },
+    "ticket_type": {
+      "type": "string",
+      "enum": [
+        "general",
+        "vip",
+        "premium",
+        "early_bird"
+      ],
+      "default": "general",
+      "description": "Ticket category/tier"
+    },
+    "price": {
+      "type": "number",
+      "description": "Ticket price in EUR"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1,
+      "description": "Number of tickets in this order"
+    },
+    "ticket_code": {
+      "type": "string",
+      "description": "Unique ticket code for validation"
+    },
+    "qr_code_url": {
+      "type": "string",
+      "description": "URL to the generated QR code image"
+    },
+    "qr_code_data": {
+      "type": "string",
+      "description": "Raw QR code data string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "used",
+        "refunded",
+        "cancelled"
+      ],
+      "default": "active",
+      "description": "Ticket status"
+    },
+    "entry_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When ticket was used for entry"
+    },
+    "scanner_email": {
+      "type": "string",
+      "description": "Email of organizer who scanned the ticket"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When ticket was purchased"
+    },
+    "transaction_id": {
+      "type": "string",
+      "description": "Payment transaction ID"
+    },
+    "seat_number": {
+      "type": "string",
+      "description": "Assigned seat or zone (if applicable)"
+    },
+    "entry_gate": {
+      "type": "string",
+      "description": "Which gate/entrance was used for entry"
+    },
+    "additional_info": {
+      "type": "object",
+      "description": "Any additional data (accessibility info, dietary requirements, etc.)"
+    }
+  },
+  "required": [
+    "event_id",
+    "buyer_email",
+    "buyer_name",
+    "ticket_type",
+    "price",
+    "ticket_code",
+    "qr_code_data"
+  ]
+}

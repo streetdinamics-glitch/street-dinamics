@@ -1,0 +1,95 @@
+{
+  "name": "AchievementClaim",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User claiming the achievement"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "achievement_id": {
+      "type": "string",
+      "description": "Achievement being claimed"
+    },
+    "achievement_name": {
+      "type": "string",
+      "description": "Achievement display name"
+    },
+    "proof_description": {
+      "type": "string",
+      "description": "User's explanation of achievement completion"
+    },
+    "proof_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Uploaded proof files (screenshots, videos, etc.)"
+    },
+    "supporting_data": {
+      "type": "object",
+      "description": "System data supporting the claim (stats, timestamps, etc.)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Claim status"
+    },
+    "ai_review": {
+      "type": "object",
+      "description": "AI-generated review analysis"
+    },
+    "ai_recommendation": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "reject",
+        "needs_human_review"
+      ],
+      "description": "AI recommendation"
+    },
+    "ai_confidence_score": {
+      "type": "number",
+      "description": "AI confidence in recommendation (0-100)"
+    },
+    "admin_reviewer": {
+      "type": "string",
+      "description": "Admin who reviewed the claim"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Admin review notes"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When claim was reviewed"
+    },
+    "rejection_reason": {
+      "type": "string",
+      "description": "Reason for rejection if applicable"
+    },
+    "claimed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When claim was submitted"
+    }
+  },
+  "required": [
+    "user_email",
+    "user_name",
+    "achievement_id",
+    "achievement_name",
+    "proof_description",
+    "status"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "name": "RewardItem",
+  "type": "object",
+  "properties": {
+    "item_name": {
+      "type": "string",
+      "description": "Name of the reward item"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the reward"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "badge",
+        "event_pass",
+        "merchandise",
+        "nft",
+        "vip_access",
+        "exclusive_content"
+      ],
+      "description": "Reward category"
+    },
+    "token_cost": {
+      "type": "number",
+      "description": "Cost in tokens to redeem"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Image for the reward item"
+    },
+    "stock_quantity": {
+      "type": "number",
+      "description": "Available quantity (-1 for unlimited)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether item is available for purchase"
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "rising_star",
+        "breakout_talent",
+        "elite_performer",
+        "living_legend"
+      ],
+      "default": "rising_star",
+      "description": "Item rarity tier"
+    },
+    "benefits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of benefits this item provides"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this reward expires (optional)"
+    }
+  },
+  "required": [
+    "item_name",
+    "description",
+    "category",
+    "token_cost",
+    "stock_quantity"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "RoyaltyDistribution",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email reference"
+    },
+    "distribution_type": {
+      "type": "string",
+      "enum": [
+        "sponsorship",
+        "event_prize",
+        "content_licensing",
+        "merchandise"
+      ],
+      "description": "Revenue source type"
+    },
+    "total_revenue": {
+      "type": "number",
+      "description": "Total revenue amount in EUR"
+    },
+    "athlete_share": {
+      "type": "number",
+      "description": "Amount for athlete (70%)"
+    },
+    "token_holders_pool": {
+      "type": "number",
+      "description": "Amount for token holders (20%)"
+    },
+    "platform_fee": {
+      "type": "number",
+      "description": "Platform commission (10%)"
+    },
+    "distribution_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When distribution occurred"
+    },
+    "total_tokens_outstanding": {
+      "type": "number",
+      "description": "Total tokens at time of distribution"
+    },
+    "per_token_payout": {
+      "type": "number",
+      "description": "EUR per token held"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed"
+      ],
+      "default": "pending"
+    },
+    "source_description": {
+      "type": "string",
+      "description": "Details of revenue source"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "distribution_type",
+    "total_revenue",
+    "athlete_share",
+    "token_holders_pool",
+    "platform_fee"
+  ]
+}

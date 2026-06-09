@@ -1,0 +1,67 @@
+{
+  "name": "UserInventory",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email address"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "item_id": {
+      "type": "string",
+      "description": "Reference to RewardItem"
+    },
+    "item_name": {
+      "type": "string",
+      "description": "Item name snapshot"
+    },
+    "item_category": {
+      "type": "string",
+      "description": "Item category snapshot"
+    },
+    "item_image_url": {
+      "type": "string",
+      "description": "Item image snapshot"
+    },
+    "redemption_code": {
+      "type": "string",
+      "description": "Unique redemption code for this item"
+    },
+    "tokens_spent": {
+      "type": "number",
+      "description": "Tokens spent on this item"
+    },
+    "redeemed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When item was redeemed"
+    },
+    "is_used": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether item has been used/claimed"
+    },
+    "used_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When item was used"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this item expires"
+    }
+  },
+  "required": [
+    "user_email",
+    "user_name",
+    "item_id",
+    "item_name",
+    "item_category",
+    "tokens_spent",
+    "redeemed_at"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "name": "TournamentParticipant",
+  "type": "object",
+  "properties": {
+    "tournament_id": {
+      "type": "string",
+      "description": "Tournament ID reference"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Event ID reference"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Participant email"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Participant display name"
+    },
+    "discipline": {
+      "type": "string",
+      "description": "Selected sport discipline"
+    },
+    "experience_level": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced",
+        "professional"
+      ],
+      "description": "Skill level"
+    },
+    "team_name": {
+      "type": "string",
+      "description": "Team name if applicable"
+    },
+    "emergency_contact": {
+      "type": "string",
+      "description": "Emergency contact person name"
+    },
+    "emergency_phone": {
+      "type": "string",
+      "description": "Emergency contact phone number"
+    },
+    "medical_conditions": {
+      "type": "string",
+      "description": "Medical info or special requirements"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "registered",
+        "confirmed",
+        "checked_in",
+        "eliminated",
+        "withdrawn"
+      ],
+      "default": "registered",
+      "description": "Participation status (minors start as pending)"
+    },
+    "registration_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the participant registered"
+    },
+    "seed_number": {
+      "type": "number",
+      "description": "Seeding position in tournament"
+    },
+    "age_at_registration": {
+      "type": "number",
+      "description": "Age when registered"
+    },
+    "is_minor": {
+      "type": "boolean",
+      "description": "Whether participant was under 18"
+    },
+    "terms_accepted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Tournament terms accepted"
+    },
+    "terms_version": {
+      "type": "string",
+      "description": "Version of terms accepted"
+    },
+    "terms_accepted_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When terms were accepted"
+    },
+    "parental_consent_verified": {
+      "type": "boolean",
+      "description": "For minors - parental consent verification status"
+    },
+    "parental_consent_data": {
+      "type": "object",
+      "description": "Parent information and consent details"
+    }
+  },
+  "required": [
+    "tournament_id",
+    "event_id",
+    "user_email",
+    "user_name",
+    "discipline",
+    "experience_level",
+    "emergency_contact",
+    "emergency_phone",
+    "age_at_registration",
+    "is_minor",
+    "terms_accepted"
+  ]
+}

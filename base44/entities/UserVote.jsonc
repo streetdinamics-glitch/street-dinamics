@@ -1,0 +1,27 @@
+{
+  "name": "UserVote",
+  "type": "object",
+  "properties": {
+    "vote_id": {
+      "type": "string",
+      "description": "Reference to EventVote"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "User who voted"
+    },
+    "choice_index": {
+      "type": "number",
+      "description": "Index of selected choice"
+    },
+    "voted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "vote_id",
+    "user_email",
+    "choice_index"
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "name": "Registration",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event ID"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "athlete",
+        "spectator"
+      ],
+      "description": "Registration type"
+    },
+    "attendance_mode": {
+      "type": "string",
+      "enum": [
+        "in-person",
+        "online"
+      ],
+      "description": "Attendance mode for spectators"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "description": "For age verification and minor protection"
+    },
+    "age_at_registration": {
+      "type": "number",
+      "description": "Calculated age at time of registration"
+    },
+    "is_minor": {
+      "type": "boolean",
+      "description": "Whether participant was under 18 at registration"
+    },
+    "sport": {
+      "type": "string"
+    },
+    "id_document": {
+      "type": "string",
+      "description": "Uploaded ID document URL"
+    },
+    "contract_accepted": {
+      "type": "boolean",
+      "default": false
+    },
+    "contract_version": {
+      "type": "string",
+      "description": "Version of legal agreement accepted (e.g., v1.2)"
+    },
+    "signature_url": {
+      "type": "string",
+      "description": "Participant digital signature image"
+    },
+    "gdpr_consents": {
+      "type": "object",
+      "description": "Granular GDPR consent tracking"
+    },
+    "marketing_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Opted in to marketing emails"
+    },
+    "image_rights_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consented to image capture and usage"
+    },
+    "tokenization_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consented to token/NFT creation"
+    },
+    "cross_border_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consented to international data transfers"
+    },
+    "gdpr_consent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When GDPR consents were provided"
+    },
+    "parental_consent": {
+      "type": "object",
+      "description": "Parent/guardian consent data for minors (includes parent signature, ID, relationship)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Minors start as pending until admin verification"
+    },
+    "ticket_code": {
+      "type": "string"
+    },
+    "seat_zone": {
+      "type": "string"
+    },
+    "checked_in": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether attendee has checked in at venue"
+    },
+    "check_in_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of check-in"
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "IP address at registration (for fraud detection)"
+    },
+    "consent_revoked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether consent has been withdrawn"
+    },
+    "consent_revoked_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When consent was revoked"
+    },
+    "referral_source": {
+      "type": "string",
+      "enum": [
+        "organic",
+        "social_media",
+        "paid_ads",
+        "email",
+        "referral",
+        "direct",
+        "event_page",
+        "other"
+      ],
+      "default": "direct",
+      "description": "Marketing channel or referral source"
+    },
+    "referral_source_detail": {
+      "type": "string",
+      "description": "Additional detail about source (e.g., specific social platform, ad campaign name)"
+    },
+    "utm_source": {
+      "type": "string",
+      "description": "UTM source parameter from URL"
+    },
+    "utm_medium": {
+      "type": "string",
+      "description": "UTM medium parameter from URL"
+    },
+    "utm_campaign": {
+      "type": "string",
+      "description": "UTM campaign parameter from URL"
+    }
+  },
+  "required": [
+    "event_id",
+    "type",
+    "first_name",
+    "last_name",
+    "email",
+    "date_of_birth",
+    "age_at_registration",
+    "is_minor",
+    "contract_version",
+    "gdpr_consent_date"
+  ]
+}

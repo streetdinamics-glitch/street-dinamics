@@ -1,0 +1,120 @@
+{
+  "name": "FanStatus",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User email address"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "User display name"
+    },
+    "current_tier": {
+      "type": "string",
+      "enum": [
+        "rookie",
+        "enthusiast",
+        "superfan",
+        "legend",
+        "hall_of_fame"
+      ],
+      "default": "rookie",
+      "description": "Current fan status tier"
+    },
+    "total_xp": {
+      "type": "number",
+      "default": 0,
+      "description": "Total XP points accumulated (unica currency)"
+    },
+    "wagering_xp": {
+      "type": "number",
+      "default": 0,
+      "description": "XP earned through fan challenges/wagering"
+    },
+    "cashback_rate": {
+      "type": "number",
+      "default": 0,
+      "description": "Current cashback rate for XP redemption (0.01 = 1%)"
+    },
+    "xp_redeemed_total": {
+      "type": "number",
+      "default": 0,
+      "description": "Lifetime XP redeemed to EUR"
+    },
+    "last_xp_earned_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When last XP was earned"
+    },
+    "total_tokens_spent": {
+      "type": "number",
+      "default": 0,
+      "description": "Lifetime tokens spent"
+    },
+    "total_tokens_earned": {
+      "type": "number",
+      "default": 0,
+      "description": "Lifetime tokens earned"
+    },
+    "current_multiplier": {
+      "type": "number",
+      "default": 1.0,
+      "description": "Current earnings multiplier"
+    },
+    "rarity_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Score based on collection rarity"
+    },
+    "nfts_owned": {
+      "type": "number",
+      "default": 0,
+      "description": "Total NFTs owned"
+    },
+    "tokens_owned": {
+      "type": "number",
+      "default": 0,
+      "description": "Total athlete tokens owned"
+    },
+    "rewards_redeemed": {
+      "type": "number",
+      "default": 0,
+      "description": "Total rewards redeemed"
+    },
+    "early_access_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Early access to new drops"
+    },
+    "tier_unlocked_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When current tier was achieved"
+    },
+    "next_tier_progress": {
+      "type": "number",
+      "default": 0,
+      "description": "Progress to next tier (0-100)"
+    },
+    "perks_unlocked": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of unlocked perks"
+    },
+    "tier_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "History of tier changes"
+    }
+  },
+  "required": [
+    "user_email",
+    "user_name",
+    "current_tier"
+  ]
+}

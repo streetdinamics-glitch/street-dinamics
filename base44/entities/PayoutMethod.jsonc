@@ -1,0 +1,79 @@
+{
+  "name": "PayoutMethod",
+  "type": "object",
+  "properties": {
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "method_type": {
+      "type": "string",
+      "enum": [
+        "braintree",
+        "crypto_wallet"
+      ],
+      "description": "Payment method type"
+    },
+    "is_primary": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is the default payout method"
+    },
+    "bank_account_last_four": {
+      "type": "string",
+      "description": "Last 4 digits of bank account (for Braintree)"
+    },
+    "bank_account_holder": {
+      "type": "string",
+      "description": "Bank account holder name"
+    },
+    "bank_name": {
+      "type": "string",
+      "description": "Bank name (for Braintree)"
+    },
+    "braintree_token": {
+      "type": "string",
+      "description": "Braintree payment method token (encrypted)"
+    },
+    "crypto_wallet_address": {
+      "type": "string",
+      "description": "Crypto wallet address"
+    },
+    "crypto_type": {
+      "type": "string",
+      "enum": [
+        "BTC",
+        "ETH",
+        "USDC"
+      ],
+      "description": "Type of cryptocurrency"
+    },
+    "wallet_label": {
+      "type": "string",
+      "description": "User-friendly wallet label"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether wallet/account is verified"
+    },
+    "verification_token": {
+      "type": "string",
+      "description": "Token used for verification process"
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When method was added"
+    },
+    "last_used": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time used for payout"
+    }
+  },
+  "required": [
+    "athlete_email",
+    "method_type"
+  ]
+}

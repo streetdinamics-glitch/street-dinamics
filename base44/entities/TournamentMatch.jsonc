@@ -1,0 +1,60 @@
+{
+  "name": "TournamentMatch",
+  "type": "object",
+  "properties": {
+    "tournament_id": {
+      "type": "string",
+      "description": "Tournament ID"
+    },
+    "round_number": {
+      "type": "number",
+      "description": "Round number (1 = first round, etc.)"
+    },
+    "match_number": {
+      "type": "number",
+      "description": "Match position in round"
+    },
+    "participant1_email": {
+      "type": "string",
+      "description": "First participant email"
+    },
+    "participant1_name": {
+      "type": "string",
+      "description": "Display name (team or nickname)"
+    },
+    "participant2_email": {
+      "type": "string",
+      "description": "Second participant email"
+    },
+    "participant2_name": {
+      "type": "string",
+      "description": "Display name (team or nickname)"
+    },
+    "winner_email": {
+      "type": "string",
+      "description": "Winner email (null if not played)"
+    },
+    "winner_name": {
+      "type": "string",
+      "description": "Winner display name"
+    },
+    "score": {
+      "type": "string",
+      "description": "Match score (e.g., '3-1')"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "tournament_id",
+    "round_number",
+    "match_number"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "SecondaryMarketListing",
+  "type": "object",
+  "properties": {
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "token",
+        "nft"
+      ],
+      "description": "Type of asset listed"
+    },
+    "asset_id": {
+      "type": "string",
+      "description": "Token or NFT ID"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "seller_email": {
+      "type": "string",
+      "description": "Seller email"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity listed (for tokens)"
+    },
+    "listing_price": {
+      "type": "number",
+      "description": "Price per unit in EUR"
+    },
+    "total_value": {
+      "type": "number",
+      "description": "Total listing value"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "sold",
+        "cancelled",
+        "expired"
+      ],
+      "default": "active"
+    },
+    "listed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Listing expiration (optional)"
+    }
+  },
+  "required": [
+    "asset_type",
+    "asset_id",
+    "athlete_name",
+    "seller_email",
+    "quantity",
+    "listing_price",
+    "total_value"
+  ]
+}

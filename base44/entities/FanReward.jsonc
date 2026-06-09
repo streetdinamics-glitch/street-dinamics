@@ -1,0 +1,71 @@
+{
+  "name": "FanReward",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated event ID"
+    },
+    "fan_email": {
+      "type": "string",
+      "description": "Fan email address"
+    },
+    "fan_name": {
+      "type": "string",
+      "description": "Fan display name"
+    },
+    "reward_type": {
+      "type": "string",
+      "enum": [
+        "digital_badge",
+        "exclusive_content",
+        "nft_collectible",
+        "merchandise_voucher",
+        "vip_access"
+      ],
+      "description": "Type of reward earned"
+    },
+    "reward_name": {
+      "type": "string",
+      "description": "Name of the specific reward"
+    },
+    "reward_description": {
+      "type": "string",
+      "description": "Description of what the reward grants"
+    },
+    "points_required": {
+      "type": "number",
+      "description": "Points threshold needed to earn this reward"
+    },
+    "reward_image_url": {
+      "type": "string",
+      "description": "URL to reward image or badge"
+    },
+    "earned_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the reward was earned"
+    },
+    "redeemed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether reward has been redeemed"
+    },
+    "redeemed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When reward was redeemed"
+    },
+    "redemption_code": {
+      "type": "string",
+      "description": "Unique code for reward redemption"
+    }
+  },
+  "required": [
+    "event_id",
+    "fan_email",
+    "fan_name",
+    "reward_type",
+    "reward_name"
+  ]
+}

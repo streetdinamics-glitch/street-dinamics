@@ -1,0 +1,107 @@
+{
+  "name": "Invoice",
+  "type": "object",
+  "properties": {
+    "payout_id": {
+      "type": "string",
+      "description": "Associated Payout ID"
+    },
+    "milestone_id": {
+      "type": "string",
+      "description": "Associated MilestonePaymentRequest ID"
+    },
+    "deal_id": {
+      "type": "string",
+      "description": "Associated SponsorshipDeal ID"
+    },
+    "escrow_id": {
+      "type": "string",
+      "description": "Associated EscrowAccount ID"
+    },
+    "invoice_number": {
+      "type": "string",
+      "description": "Unique invoice number (e.g., INV-2026-001)"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "athlete_name": {
+      "type": "string",
+      "description": "Athlete name"
+    },
+    "brand_email": {
+      "type": "string",
+      "description": "Brand email"
+    },
+    "brand_name": {
+      "type": "string",
+      "description": "Brand name"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Payment amount (EUR)"
+    },
+    "milestone_title": {
+      "type": "string",
+      "description": "Milestone title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Invoice description/items"
+    },
+    "issued_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When invoice was generated"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Payment due date"
+    },
+    "paid_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payment was completed"
+    },
+    "bank_account_last_four": {
+      "type": "string",
+      "description": "Last 4 digits of receiving bank account"
+    },
+    "transaction_hash": {
+      "type": "string",
+      "description": "Smart contract transaction hash or payment reference"
+    },
+    "pdf_url": {
+      "type": "string",
+      "description": "URL to generated PDF invoice"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "generated",
+        "sent",
+        "paid",
+        "archived"
+      ],
+      "default": "generated",
+      "description": "Invoice status"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional invoice notes"
+    }
+  },
+  "required": [
+    "payout_id",
+    "invoice_number",
+    "athlete_email",
+    "athlete_name",
+    "brand_email",
+    "brand_name",
+    "amount",
+    "milestone_title"
+  ]
+}

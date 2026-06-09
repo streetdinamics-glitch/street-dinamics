@@ -1,0 +1,70 @@
+{
+  "name": "EventMatchup",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event ID reference"
+    },
+    "matchup_title": {
+      "type": "string",
+      "description": "Title of the matchup (e.g., 'Semi-Final 1')"
+    },
+    "athlete1_email": {
+      "type": "string",
+      "description": "First athlete email"
+    },
+    "athlete1_name": {
+      "type": "string",
+      "description": "First athlete name"
+    },
+    "athlete1_discipline": {
+      "type": "string",
+      "description": "First athlete discipline"
+    },
+    "athlete1_votes": {
+      "type": "number",
+      "default": 0,
+      "description": "Vote count for athlete 1"
+    },
+    "athlete2_email": {
+      "type": "string",
+      "description": "Second athlete email"
+    },
+    "athlete2_name": {
+      "type": "string",
+      "description": "Second athlete name"
+    },
+    "athlete2_discipline": {
+      "type": "string",
+      "description": "Second athlete discipline"
+    },
+    "athlete2_votes": {
+      "type": "number",
+      "default": 0,
+      "description": "Vote count for athlete 2"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "upcoming",
+        "live",
+        "completed"
+      ],
+      "default": "upcoming",
+      "description": "Matchup status"
+    },
+    "scheduled_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the matchup is scheduled"
+    }
+  },
+  "required": [
+    "event_id",
+    "athlete1_email",
+    "athlete1_name",
+    "athlete2_email",
+    "athlete2_name"
+  ]
+}

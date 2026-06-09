@@ -1,0 +1,67 @@
+{
+  "name": "Conversation",
+  "type": "object",
+  "properties": {
+    "deal_id": {
+      "type": "string",
+      "description": "Associated SponsorshipDeal ID"
+    },
+    "brand_email": {
+      "type": "string",
+      "description": "Brand email"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Conversation subject/topic"
+    },
+    "last_message": {
+      "type": "string",
+      "description": "Preview of last message"
+    },
+    "last_message_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of last message"
+    },
+    "unread_count_brand": {
+      "type": "number",
+      "default": 0,
+      "description": "Unread message count for brand"
+    },
+    "unread_count_athlete": {
+      "type": "number",
+      "default": 0,
+      "description": "Unread message count for athlete"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "archived",
+        "closed"
+      ],
+      "default": "active",
+      "description": "Conversation status"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When conversation started"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When conversation was resolved"
+    }
+  },
+  "required": [
+    "deal_id",
+    "brand_email",
+    "athlete_email",
+    "subject"
+  ]
+}

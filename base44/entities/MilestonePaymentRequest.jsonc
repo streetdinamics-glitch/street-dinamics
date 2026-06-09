@@ -1,0 +1,100 @@
+{
+  "name": "MilestonePaymentRequest",
+  "type": "object",
+  "properties": {
+    "escrow_id": {
+      "type": "string",
+      "description": "Associated EscrowAccount ID"
+    },
+    "deal_id": {
+      "type": "string",
+      "description": "Associated SponsorshipDeal ID"
+    },
+    "milestone_index": {
+      "type": "number",
+      "description": "Index of milestone in the deal"
+    },
+    "milestone_title": {
+      "type": "string",
+      "description": "Milestone title/description"
+    },
+    "milestone_amount": {
+      "type": "number",
+      "description": "Payment amount for this milestone (EUR)"
+    },
+    "athlete_email": {
+      "type": "string",
+      "description": "Athlete email"
+    },
+    "brand_email": {
+      "type": "string",
+      "description": "Brand email"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "submitted",
+        "under_review",
+        "approved",
+        "rejected",
+        "paid"
+      ],
+      "default": "not_started",
+      "description": "Milestone status"
+    },
+    "proof_of_completion": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Files/links proving task completion"
+    },
+    "completion_notes": {
+      "type": "string",
+      "description": "Athlete notes on completion"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When milestone was submitted for approval"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When brand reviewed the submission"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When milestone was approved"
+    },
+    "rejection_reason": {
+      "type": "string",
+      "description": "Reason for rejection if applicable"
+    },
+    "brand_notes": {
+      "type": "string",
+      "description": "Brand notes on the submission"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Target completion date"
+    },
+    "payout_id": {
+      "type": "string",
+      "description": "Associated Payout ID when approved"
+    }
+  },
+  "required": [
+    "escrow_id",
+    "deal_id",
+    "milestone_index",
+    "milestone_title",
+    "milestone_amount",
+    "athlete_email",
+    "brand_email"
+  ]
+}

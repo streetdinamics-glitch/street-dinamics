@@ -1,0 +1,84 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "Parent Conversation ID"
+    },
+    "sender_email": {
+      "type": "string",
+      "description": "Sender email address"
+    },
+    "sender_name": {
+      "type": "string",
+      "description": "Sender display name"
+    },
+    "sender_type": {
+      "type": "string",
+      "enum": [
+        "brand",
+        "athlete"
+      ],
+      "description": "Type of sender"
+    },
+    "content": {
+      "type": "string",
+      "description": "Message text content"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "term_proposal",
+        "deliverable_update",
+        "logistics_note"
+      ],
+      "default": "text",
+      "description": "Type of message for context"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "File attachments (contracts, documents, etc.)"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional data based on message type (term changes, deliverable status, etc.)"
+    },
+    "read_by_brand": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether brand has read this message"
+    },
+    "read_by_athlete": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether athlete has read this message"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was read"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was sent"
+    },
+    "edited_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was last edited"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "sender_email",
+    "sender_name",
+    "sender_type",
+    "content"
+  ]
+}

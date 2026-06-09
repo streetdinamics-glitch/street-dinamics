@@ -1,0 +1,45 @@
+{
+  "name": "EventVote",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Associated event ID"
+    },
+    "question": {
+      "type": "string",
+      "description": "Voting question"
+    },
+    "choices": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Array of choice objects with label and vote count"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "live",
+        "closed"
+      ],
+      "default": "draft",
+      "description": "Voting status"
+    },
+    "total_votes": {
+      "type": "number",
+      "default": 0,
+      "description": "Total number of votes cast"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "question",
+    "choices"
+  ]
+}
