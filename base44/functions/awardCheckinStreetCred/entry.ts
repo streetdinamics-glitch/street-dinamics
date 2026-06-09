@@ -62,6 +62,13 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Sync to unified XP system
+    await base44.asServiceRole.functions.invoke('awardXP', {
+      user_email: userEmail,
+      xp_amount: 100,
+      reason: 'Check-in live all\'evento',
+    });
+
     return Response.json({ success: true, user: userEmail, points_awarded: 150 });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

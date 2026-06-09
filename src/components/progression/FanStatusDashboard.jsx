@@ -131,13 +131,12 @@ export default function FanStatusDashboard({ lang = 'en' }) {
   const nextTier = tierList[currentTierIndex + 1];
   const nextTierConfig = nextTier ? TIER_CONFIG[nextTier] : null;
 
+  const totalXP = fanStatus?.total_xp || 0;
+
   const progress = useMemo(() => {
     if (!nextTierConfig) return 100;
-    const spent = fanStatus?.total_tokens_spent || 0;
-    const current = tierConfig.requirement;
-    const next = nextTierConfig.requirement;
-    return Math.min(((spent - current) / (next - current)) * 100, 100);
-  }, [fanStatus, tierConfig, nextTierConfig]);
+    return fanStatus?.next_tier_progress || 0;
+  }, [fanStatus, nextTierConfig]);
 
   const TierIcon = tierConfig.icon;
 
@@ -190,8 +189,8 @@ export default function FanStatusDashboard({ lang = 'en' }) {
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
-              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_tokens_spent')}</div>
-              <div className="font-orbitron font-bold text-fire-5">{(fanStatus?.total_tokens_spent || 0).toLocaleString()}</div>
+              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">XP TOTALI</div>
+              <div className="font-orbitron font-bold text-fire-5">{totalXP.toLocaleString()}</div>
             </div>
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
               <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_rarity_score')}</div>
@@ -212,7 +211,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-xs text-fire-3/60">{t('fsd_progress_to')} {nextTierConfig.name}</span>
-                <span className="font-mono text-xs text-fire-4">{progress.toFixed(0)}%</span>
+                <span className="font-mono text-xs text-fire-4">{Math.round(progress)}%</span>
               </div>
               <div className="h-3 bg-black/40 border border-fire-3/20 overflow-hidden mb-2">
                 <motion.div
@@ -223,7 +222,9 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                 />
               </div>
               <div className="font-mono text-xs text-fire-3/40">
-                {nextTierConfig.requirement - (fanStatus?.total_tokens_spent || 0)} {t('fsd_tokens_until')} {nextTierConfig.name}
+                {nextTierConfig.requirement - totalXP > 0
+                  ? `${(nextTierConfig.requirement - totalXP).toLocaleString()} XP al livello ${nextTierConfig.name}`
+                  : `✓ Soglia ${nextTierConfig.name} raggiunta`}
               </div>
             </div>
           )}
@@ -291,10 +292,10 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                 </div>
 
                 <div className="mb-3">
-                  <div className="font-mono text-[9px] text-fire-3/60 mb-2">{t('fsd_requirement')}</div>
-                  <div className="font-rajdhani text-sm text-fire-4">
-                    {config.requirement === 0 ? t('fsd_starting_tier') : `${config.requirement.toLocaleString()} ${t('fsd_tokens_spent_req')}`}
-                  </div>
+                <div className="font-mono text-[9px] text-fire-3/60 mb-2">{t('fsd_requirement')}</div>
+                <div className="font-rajdhani text-sm text-fire-4">
+                  {config.requirement === 0 ? t('fsd_starting_tier') : `${config.requirement.toLocaleString()} XP`}
+                </div>
                 </div>
 
                 <div>
