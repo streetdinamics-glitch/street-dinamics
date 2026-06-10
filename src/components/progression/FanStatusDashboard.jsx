@@ -6,8 +6,8 @@ import { Trophy, TrendingUp, Zap, Crown, Star, Gift, Clock, Sparkles } from 'luc
 import { useTranslation } from '../translations';
 
 const TIER_CONFIG = {
-  rookie: {
-    name: 'Rookie',
+  newcomer: {
+    name: 'Newcomer',
     icon: Star,
     color: 'from-slate-500 to-slate-700',
     border: 'border-slate-500/40',
@@ -17,49 +17,49 @@ const TIER_CONFIG = {
     requirement: 0,
     perks: ['Accesso ai drop pubblici', 'Guadagna NFT Rising Star via UGC', 'Mercato secondario NFT']
   },
-  enthusiast: {
-    name: 'Enthusiast',
+  follower: {
+    name: 'Follower',
     icon: Zap,
     color: 'from-blue-500 to-purple-600',
     border: 'border-purple-500/40',
     accent: 'text-purple-400',
     glow: 'rgba(147, 51, 234, 0.4)',
     multiplier: 1.25,
-    requirement: 1000,
-    perks: ['1.25x moltiplicatore guadagni', 'NFT Breakout Talent via UGC', '10% sconto reward store', 'Early access drop (-12h)']
+    requirement: 500,
+    perks: ['1.25x moltiplicatore Street Cred', 'NFT Breakout Talent via UGC', '10% cashback reward store', 'Early access drop (-12h)']
   },
-  superfan: {
-    name: 'Superfan',
+  hype_beast: {
+    name: 'Hype Beast',
     icon: TrendingUp,
     color: 'from-cyan-500 to-cyan-700',
     border: 'border-cyan/40',
     accent: 'text-cyan',
     glow: 'rgba(0, 255, 238, 0.5)',
     multiplier: 1.5,
-    requirement: 5000,
-    perks: ['1.5x moltiplicatore guadagni', 'NFT Elite Performer via UGC', '20% sconto reward store', 'Early access drop (-24h)', 'Badge esclusivo profilo']
+    requirement: 2000,
+    perks: ['1.5x moltiplicatore Street Cred', 'NFT Elite Performer via UGC', '2% cashback acquisti', 'Early access drop (-24h)', 'Badge esclusivo profilo']
   },
-  legend: {
-    name: 'Legend',
+  street_legend: {
+    name: 'Street Legend',
     icon: Trophy,
     color: 'from-orange-500 to-red-600',
     border: 'border-fire-3/40',
     accent: 'text-fire-4',
     glow: 'rgba(255, 100, 0, 0.6)',
     multiplier: 2.0,
-    requirement: 15000,
-    perks: ['2x moltiplicatore guadagni', 'NFT Living Legend via UGC', '30% sconto reward store', 'Early access drop (-48h)', 'Accesso eventi VIP', 'Royalty 0.5% sulle rivendite tue NFT']
+    requirement: 5000,
+    perks: ['2x moltiplicatore Street Cred', 'NFT Living Legend via UGC', '3% cashback acquisti', 'Early access drop (-48h)', 'Accesso eventi VIP', 'Royalty 0.5% sulle rivendite NFT']
   },
-  hall_of_fame: {
-    name: 'Hall of Fame',
+  sd_icon: {
+    name: 'SD Icon',
     icon: Crown,
     color: 'from-yellow-400 via-yellow-500 to-orange-600',
     border: 'border-yellow-500/50',
     accent: 'text-yellow-400',
     glow: 'rgba(255, 215, 0, 0.7)',
-    multiplier: 3.0,
-    requirement: 50000,
-    perks: ['3x moltiplicatore guadagni', 'NFT Living Legend garantite ogni stagione', '50% sconto reward store', 'Early access (-72h) + drop esclusivi', 'VIP + Meet & Greet atleti', 'Governance voting rights', 'Royalty 1% su tutte le rivendite']
+    multiplier: 2.0,
+    requirement: 15000,
+    perks: ['2x moltiplicatore Street Cred', 'NFT Living Legend ogni stagione', '5% cashback su tutto', 'Early access (-72h) + drop esclusivi', 'VIP + Meet & Greet atleti', 'Governance voting rights', 'Royalty 1% su tutte le rivendite']
   }
 };
 
@@ -71,22 +71,21 @@ export default function FanStatusDashboard({ lang = 'en' }) {
   });
 
   const { data: fanStatus } = useQuery({
-    queryKey: ['fan-status', user?.email],
+    queryKey: ['street-cred', user?.email],
     queryFn: async () => {
-      const status = await base44.entities.FanStatus.filter({ user_email: user.email });
-      if (status.length === 0) {
-        return await base44.entities.FanStatus.create({
+      const records = await base44.entities.StreetCred.filter({ user_email: user.email });
+      if (records.length === 0) {
+        return await base44.entities.StreetCred.create({
           user_email: user.email,
           user_name: user.full_name,
-          current_tier: 'rookie',
-          total_tokens_spent: 0,
-          total_tokens_earned: 0,
+          total_points: 0,
+          level: 'newcomer',
+          cashback_rate: 0,
           current_multiplier: 1.0,
-          rarity_score: 0,
           early_access_enabled: false,
         });
       }
-      return status[0];
+      return records[0];
     },
     enabled: !!user,
   });
@@ -124,18 +123,18 @@ export default function FanStatusDashboard({ lang = 'en' }) {
     return nftScore + tokenScore;
   }, [nftOwnership, tokenOwnership]);
 
-  const currentTier = fanStatus?.current_tier || 'rookie';
-  const tierConfig = TIER_CONFIG[currentTier];
+  const currentTier = fanStatus?.level || 'newcomer';
+  const tierConfig = TIER_CONFIG[currentTier] || TIER_CONFIG['newcomer'];
   const tierList = Object.keys(TIER_CONFIG);
   const currentTierIndex = tierList.indexOf(currentTier);
   const nextTier = tierList[currentTierIndex + 1];
   const nextTierConfig = nextTier ? TIER_CONFIG[nextTier] : null;
 
-  const totalXP = fanStatus?.total_xp || 0;
+  const totalSC = fanStatus?.total_points || 0;
 
   const progress = useMemo(() => {
     if (!nextTierConfig) return 100;
-    return fanStatus?.next_tier_progress || 0;
+    return fanStatus?.next_level_progress || 0;
   }, [fanStatus, nextTierConfig]);
 
   const TierIcon = tierConfig.icon;
@@ -189,8 +188,8 @@ export default function FanStatusDashboard({ lang = 'en' }) {
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
-              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">XP TOTALI</div>
-              <div className="font-orbitron font-bold text-fire-5">{totalXP.toLocaleString()}</div>
+              <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">STREET CRED</div>
+              <div className="font-orbitron font-bold text-fire-5">{totalSC.toLocaleString()} SC</div>
             </div>
             <div className="bg-fire-3/10 border border-fire-3/20 p-3">
               <div className="font-mono text-[8px] tracking-[1px] uppercase text-fire-3/60 mb-1">{t('fsd_rarity_score')}</div>
@@ -222,8 +221,8 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                 />
               </div>
               <div className="font-mono text-xs text-fire-3/40">
-                {nextTierConfig.requirement - totalXP > 0
-                  ? `${(nextTierConfig.requirement - totalXP).toLocaleString()} XP al livello ${nextTierConfig.name}`
+                {nextTierConfig.requirement - totalSC > 0
+                  ? `${(nextTierConfig.requirement - totalSC).toLocaleString()} SC al livello ${nextTierConfig.name}`
                   : `✓ Soglia ${nextTierConfig.name} raggiunta`}
               </div>
             </div>
@@ -294,7 +293,7 @@ export default function FanStatusDashboard({ lang = 'en' }) {
                 <div className="mb-3">
                 <div className="font-mono text-[9px] text-fire-3/60 mb-2">{t('fsd_requirement')}</div>
                 <div className="font-rajdhani text-sm text-fire-4">
-                  {config.requirement === 0 ? t('fsd_starting_tier') : `${config.requirement.toLocaleString()} XP`}
+                  {config.requirement === 0 ? t('fsd_starting_tier') : `${config.requirement.toLocaleString()} SC`}
                 </div>
                 </div>
 

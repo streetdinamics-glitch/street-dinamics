@@ -1,7 +1,7 @@
 /**
- * useXPNotifications
+ * useStreetCredNotifications
  * Subscribes to Notification entity in real-time and shows toast popups
- * whenever a new XP reward or tier-up notification arrives for the current user.
+ * whenever a new Street Cred reward or level-up notification arrives for the current user.
  */
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';

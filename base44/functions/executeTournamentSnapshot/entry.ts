@@ -97,12 +97,12 @@ Deno.serve(async (req) => {
 
           clipsCreated.push(clip.id);
 
-          // Award XP for holding card through tournament
+          // Award Street Cred for holding card through tournament
           try {
-            await base44.functions.invoke('awardXP', {
+            await base44.asServiceRole.functions.invoke('syncStreetCred', {
               user_email: owner.buyer_email,
-              xp_amount: 200,
-              reason: `NFT Clip ricevuto — torneo ${tournament.id}`,
+              action: 'nft_purchase',
+              value: 1,
             });
           } catch (_) {}
 

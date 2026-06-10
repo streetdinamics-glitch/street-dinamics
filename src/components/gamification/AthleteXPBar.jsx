@@ -1,25 +1,23 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// XP thresholds per level
+// Street Cred thresholds (aligned with StreetCred entity levels)
 const LEVELS = [
-  { level: 1, label: 'ROOKIE',       minXP: 0,    color: '#888', glow: 'rgba(136,136,136,0.4)' },
-  { level: 2, label: 'CONTENDER',    minXP: 100,  color: '#00ffee', glow: 'rgba(0,255,238,0.4)' },
-  { level: 3, label: 'COMPETITOR',   minXP: 300,  color: '#00cc88', glow: 'rgba(0,204,136,0.4)' },
-  { level: 4, label: 'PRO',          minXP: 600,  color: '#ff9900', glow: 'rgba(255,153,0,0.5)' },
-  { level: 5, label: 'ELITE',        minXP: 1000, color: '#ff6600', glow: 'rgba(255,102,0,0.6)' },
-  { level: 6, label: 'LEGEND',       minXP: 1800, color: '#ff1a00', glow: 'rgba(255,26,0,0.6)' },
-  { level: 7, label: 'HALL OF FAME', minXP: 3000, color: '#ffcc00', glow: 'rgba(255,204,0,0.8)' },
+  { level: 1, label: 'NEWCOMER',     minSC: 0,     color: '#888',    glow: 'rgba(136,136,136,0.4)' },
+  { level: 2, label: 'FOLLOWER',     minSC: 500,   color: '#00ffee', glow: 'rgba(0,255,238,0.4)' },
+  { level: 3, label: 'HYPE BEAST',   minSC: 2000,  color: '#00cc88', glow: 'rgba(0,204,136,0.4)' },
+  { level: 4, label: 'STREET LEGEND',minSC: 5000,  color: '#ff9900', glow: 'rgba(255,153,0,0.5)' },
+  { level: 5, label: 'SD ICON',      minSC: 15000, color: '#ffcc00', glow: 'rgba(255,204,0,0.8)' },
 ];
 
-function calcXP({ wins = 0, events = 0, badges = 0, tokens = 0 }) {
+function calcSC({ wins = 0, events = 0, badges = 0, tokens = 0 }) {
   return wins * 80 + events * 20 + badges * 30 + tokens * 15;
 }
 
-function getCurrentLevel(xp) {
+function getCurrentLevel(sc) {
   let current = LEVELS[0];
   for (const lvl of LEVELS) {
-    if (xp >= lvl.minXP) current = lvl;
+    if (sc >= lvl.minSC) current = lvl;
     else break;
   }
   return current;
@@ -29,15 +27,15 @@ function getNextLevel(currentLevel) {
   return LEVELS.find(l => l.level === currentLevel.level + 1) || null;
 }
 
-export default function AthleteXPBar({ stats, badges = [], tokens = [] }) {
-  const wins = stats?.wins || 0;
+export default function AthleteStreetCredBar({ stats, badges = [], tokens = [] }) {
+  const wins   = stats?.wins || 0;
   const events = stats?.events_participated || 0;
-  const xp = calcXP({ wins, events, badges: badges.length, tokens: tokens.length });
-  const current = getCurrentLevel(xp);
-  const next = getNextLevel(current);
+  const sc     = calcSC({ wins, events, badges: badges.length, tokens: tokens.length });
+  const current = getCurrentLevel(sc);
+  const next    = getNextLevel(current);
 
   const progress = next
-    ? Math.min(100, Math.round(((xp - current.minXP) / (next.minXP - current.minXP)) * 100))
+    ? Math.min(100, Math.round(((sc - current.minSC) / (next.minSC - current.minSC)) * 100))
     : 100;
 
   return (
@@ -54,7 +52,7 @@ export default function AthleteXPBar({ stats, badges = [], tokens = [] }) {
             LVL {current.level} — {current.label}
           </p>
           <p className="font-orbitron font-black text-2xl" style={{ color: current.color, textShadow: `0 0 20px ${current.glow}` }}>
-            {xp.toLocaleString()} XP
+            {sc.toLocaleString()} SC
           </p>
         </div>
         <div className="text-right">
@@ -62,7 +60,7 @@ export default function AthleteXPBar({ stats, badges = [], tokens = [] }) {
             <>
               <p className="font-mono text-[9px] text-white/20">NEXT LEVEL</p>
               <p className="font-orbitron text-sm" style={{ color: next.color }}>{next.label}</p>
-              <p className="font-mono text-[9px] text-white/30">{next.minXP - xp} XP remaining</p>
+              <p className="font-mono text-[9px] text-white/30">{next.minSC - sc} SC mancanti</p>
             </>
           ) : (
             <p className="font-orbitron text-sm text-yellow-400">MAX LEVEL 🏆</p>
@@ -70,7 +68,7 @@ export default function AthleteXPBar({ stats, badges = [], tokens = [] }) {
         </div>
       </div>
 
-      {/* XP Bar */}
+      {/* Street Cred Bar */}
       <div className="h-3 bg-white/5 w-full overflow-hidden relative" style={{ clipPath: 'polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%)' }}>
         <motion.div
           initial={{ width: 0 }}
@@ -81,18 +79,18 @@ export default function AthleteXPBar({ stats, badges = [], tokens = [] }) {
         />
       </div>
       <div className="flex justify-between mt-1">
-        <span className="font-mono text-[8px] text-white/20">{current.minXP} XP</span>
+        <span className="font-mono text-[8px] text-white/20">{current.minSC} SC</span>
         <span className="font-mono text-[8px] text-white/20">{progress}%</span>
-        {next && <span className="font-mono text-[8px] text-white/20">{next.minXP} XP</span>}
+        {next && <span className="font-mono text-[8px] text-white/20">{next.minSC} SC</span>}
       </div>
 
-      {/* XP Breakdown */}
+      {/* SC Breakdown */}
       <div className="flex gap-4 mt-4 flex-wrap">
         {[
-          { label: 'Victories', val: wins, mult: 80, emoji: '⚔️' },
-          { label: 'Events',    val: events, mult: 20, emoji: '📅' },
-          { label: 'Badges',    val: badges.length, mult: 30, emoji: '🎖️' },
-          { label: 'Cards',     val: tokens.length, mult: 15, emoji: '🃏' },
+          { label: 'Vittorie',  val: wins,           mult: 80, emoji: '⚔️' },
+          { label: 'Eventi',    val: events,          mult: 20, emoji: '📅' },
+          { label: 'Badge',     val: badges.length,  mult: 30, emoji: '🎖️' },
+          { label: 'Card',      val: tokens.length,  mult: 15, emoji: '🃏' },
         ].map(item => (
           <div key={item.label} className="flex items-center gap-1.5">
             <span className="text-sm">{item.emoji}</span>

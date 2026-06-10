@@ -122,13 +122,13 @@ export default function DashboardFan() {
     initialData: [],
   });
 
-  const { data: fanStatuses = [] } = useQuery({
-    queryKey: ['fan-status-dash', user?.email],
-    queryFn: () => base44.entities.FanStatus.filter({ user_email: user.email }),
+  const { data: streetCredList = [] } = useQuery({
+    queryKey: ['street-cred-dash', user?.email],
+    queryFn: () => base44.entities.StreetCred.filter({ user_email: user.email }),
     enabled: !!user,
     initialData: [],
   });
-  const fanStatus = fanStatuses[0];
+  const fanStatus = streetCredList[0];
 
   const { data: votes = [] } = useQuery({
     queryKey: ['fan-votes', user?.email],
@@ -144,9 +144,9 @@ export default function DashboardFan() {
     initialData: [],
   });
 
-  const totalXP = fanStatus?.total_xp || 0;
-  const currentTier = fanStatus?.current_tier || 'rookie';
-  const xpProgress = fanStatus?.next_tier_progress || 0;
+  const totalSC    = fanStatus?.total_points || 0;
+  const currentTier = fanStatus?.level || 'newcomer';
+  const scProgress  = fanStatus?.next_level_progress || 0;
 
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
@@ -162,7 +162,7 @@ export default function DashboardFan() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           <StatCard emoji="🎟️" label={t('dash_stat_regs')} value={registrations.length} sub={t('dash_stat_regs_sub')} />
-          <StatCard emoji="⚡" label="XP Totali" value={totalXP.toLocaleString()} sub={currentTier.replace(/_/g, ' ')} />
+          <StatCard emoji="🔥" label="Street Cred" value={totalSC.toLocaleString()} sub={currentTier.replace(/_/g, ' ')} />
           <StatCard emoji="🗳️" label={t('dash_stat_votes')} value={votes.length} />
           <StatCard emoji="🃏" label={t('dash_stat_cards')} value={tokens.length} />
         </div>
@@ -172,14 +172,14 @@ export default function DashboardFan() {
           <div className="mb-6 p-4 border border-fire-3/15 bg-black/40"
             style={{ clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))' }}>
             <div className="flex justify-between items-center mb-2">
-              <span className="font-mono text-[8px] uppercase tracking-[2px] text-fire-3/50">Progressione XP</span>
-              <span className="font-orbitron text-sm font-bold text-fire-5">{totalXP.toLocaleString()} XP</span>
+              <span className="font-mono text-[8px] uppercase tracking-[2px] text-fire-3/50">Progressione Street Cred</span>
+              <span className="font-orbitron text-sm font-bold text-fire-5">{totalSC.toLocaleString()} SC</span>
             </div>
             <div className="h-2 bg-white/5 rounded-full overflow-hidden">
               <div className="h-full bg-gradient-to-r from-fire-3 to-fire-5 rounded-full transition-all duration-700"
-                style={{ width: `${xpProgress}%` }} />
+                style={{ width: `${scProgress}%` }} />
             </div>
-            <p className="font-mono text-[8px] text-white/20 mt-1">{xpProgress}% verso il prossimo livello</p>
+            <p className="font-mono text-[8px] text-white/20 mt-1">{scProgress}% verso il prossimo livello</p>
           </div>
         )}
 
