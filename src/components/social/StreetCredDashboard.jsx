@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { X, Instagram, Youtube, Share2, Users, Star, Zap, Crown, Shield, Trophy, Copy, Check, ChevronRight, ListChecks } from 'lucide-react';
-import EarnChecklist from '../gamification/EarnChecklist';
+import { X, Instagram, Youtube, Share2, Users, Star, Zap, Crown, Shield, Trophy, Copy, Check, ChevronRight } from 'lucide-react';
 
 const SOCIALS = [
   { key: 'instagram', label: 'Instagram', icon: Instagram, color: 'text-pink-400', border: 'border-pink-400/30', bg: 'bg-pink-400/8', pts: 100, url: 'https://instagram.com/streetdinamics' },
@@ -258,15 +257,6 @@ export default function StreetCredDashboard({ onClose, lang = 'it' }) {
               </div>
             </div>
           )}
-
-          {/* Earn Checklist */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <ListChecks size={13} className="text-purple-400" />
-              <p className="font-mono text-[9px] uppercase tracking-[3px] text-purple-400/50">COME GUADAGNARE</p>
-            </div>
-            <EarnChecklist compact />
-          </div>
 
           {/* All levels overview */}
           <div>
