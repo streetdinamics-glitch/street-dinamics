@@ -13,11 +13,11 @@ const SOCIALS = [
 ];
 
 const LEVELS = [
-  { id: 'newcomer',     label: 'Newcomer',      min: 0,    icon: '🌱', color: 'text-gray-400',   bar: 'bg-gray-400' },
-  { id: 'follower',     label: 'Follower',       min: 100,  icon: '👁️', color: 'text-blue-400',   bar: 'bg-blue-400' },
-  { id: 'hype_beast',   label: 'Hype Beast',     min: 500,  icon: '🔥', color: 'text-orange-400', bar: 'bg-orange-400' },
-  { id: 'street_legend',label: 'Street Legend',  min: 1000, icon: '⚡', color: 'text-purple-400', bar: 'bg-purple-400' },
-  { id: 'sd_icon',      label: 'SD Icon',        min: 2000, icon: '👑', color: 'text-yellow-400', bar: 'bg-yellow-400' },
+  { id: 'newcomer',      label: 'Newcomer',      min: 0,     icon: '🌱', color: 'text-gray-400',   bar: 'bg-gray-400' },
+  { id: 'follower',      label: 'Follower',       min: 500,   icon: '👁️', color: 'text-blue-400',   bar: 'bg-blue-400' },
+  { id: 'hype_beast',    label: 'Hype Beast',     min: 2000,  icon: '🔥', color: 'text-orange-400', bar: 'bg-orange-400' },
+  { id: 'street_legend', label: 'Street Legend',  min: 5000,  icon: '⚡', color: 'text-purple-400', bar: 'bg-purple-400' },
+  { id: 'sd_icon',       label: 'SD Icon',        min: 15000, icon: '👑', color: 'text-yellow-400', bar: 'bg-yellow-400' },
 ];
 
 const PERKS_MAP = {

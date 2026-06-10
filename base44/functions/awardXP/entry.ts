@@ -12,7 +12,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 const LEVEL_THRESHOLDS = [
-  { level: 'sd_icon',       min: 10000, cashback: 0.03, multiplier: 2.0, perks: ['backstage_access', 'cashback_3pct', '1of1_card', 'governance_voting', 'early_access', 'free_merch', 'vip_pass', 'badge_sd_icon'] },
+  { level: 'sd_icon',       min: 15000, cashback: 0.05, multiplier: 2.0, perks: ['backstage_access', 'cashback_3pct', '1of1_card', 'governance_voting', 'early_access', 'free_merch', 'vip_pass', 'badge_sd_icon'] },
   { level: 'street_legend', min: 5000,  cashback: 0.02, multiplier: 1.5, perks: ['vip_pass', 'cashback_2pct', 'early_access', 'free_merch', 'badge_street_legend'] },
   { level: 'hype_beast',    min: 2000,  cashback: 0.015,multiplier: 1.25,perks: ['early_access', 'cashback_1_5pct', 'free_drink', 'badge_hype_beast'] },
   { level: 'follower',      min: 500,   cashback: 0.01, multiplier: 1.1, perks: ['cashback_1pct', 'raffle_entry', 'badge_follower'] },

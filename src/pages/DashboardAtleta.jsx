@@ -9,7 +9,7 @@ import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
-import AthleteXPBar from '../components/gamification/AthleteXPBar';
+import AthleteStreetCredBar from '../components/gamification/AthleteXPBar';
 import LiveTournamentLeaderboard from '../components/gamification/LiveTournamentLeaderboard';
 import PushPermissionBanner from '../components/notifications/PushPermissionBanner';
 import { usePushNotifications } from '../components/notifications/usePushNotifications';
@@ -154,7 +154,7 @@ export default function DashboardAtleta() {
           <p className="font-rajdhani text-base text-white/40"><span className="text-cyan-400 font-bold">{user?.full_name || 'Atleta'}</span> — {t('dash_athlete_subtitle')}</p>
         </motion.div>
 
-        <AthleteXPBar stats={latestStats} badges={badges} tokens={tokens} />
+        <AthleteStreetCredBar stats={latestStats} badges={badges} tokens={tokens} />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           <StatCard emoji="⚔️" label={t('dash_stat_events')} value={latestStats?.events_participated || registrations.length} />

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import AdminPanel from '../components/admin/AdminPanel';
 
 export default function Admin() {
@@ -28,7 +27,7 @@ export default function Admin() {
           <div className="font-orbitron font-bold text-xl text-fire-3 mb-2">ACCESS DENIED</div>
           <div className="font-mono text-sm text-fire-3/40 mb-6">Admin privileges required</div>
           <button
-            onClick={() => navigate(createPageUrl('Home'))}
+            onClick={() => navigate('/Home')}
             className="btn-fire text-[11px] py-3 px-6"
           >
             ← Go Home
@@ -40,7 +39,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-cyber-void">
-      <AdminPanel lang={lang} onClose={() => navigate(createPageUrl('Home'))} />
+      <AdminPanel lang={lang} onClose={() => navigate('/Home')} />
     </div>
   );
 }
