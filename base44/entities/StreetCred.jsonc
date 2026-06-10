@@ -13,7 +13,7 @@
     "total_points": {
       "type": "number",
       "default": 0,
-      "description": "Total Street Cred points"
+      "description": "Total Street Cred points (unica valuta di progressione)"
     },
     "level": {
       "type": "string",
@@ -24,27 +24,66 @@
         "street_legend",
         "sd_icon"
       ],
-      "default": "newcomer"
+      "default": "newcomer",
+      "description": "Livello corrente basato sui punti totali"
     },
-    "actions": {
-      "type": "object",
-      "description": "Completed actions map: { instagram: true, tiktok: true, youtube: true, kick: true, snapchat: true, share_event: number, referrals: number, attended_events: number }",
-      "default": {}
+    "cashback_rate": {
+      "type": "number",
+      "default": 0,
+      "description": "Cashback rate attuale (0.01 = 1%)"
+    },
+    "next_level_progress": {
+      "type": "number",
+      "default": 0,
+      "description": "Progressione al prossimo livello (0-100)"
+    },
+    "level_unlocked_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Quando \u00e8 stato sbloccato il livello corrente"
+    },
+    "last_points_earned_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Quando sono stati guadagnati punti l'ultima volta"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Codice referral unico dell'utente"
     },
     "unlocked_perks": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of unlocked event perk IDs"
+      "description": "Lista perk sbloccati"
     },
-    "referral_code": {
-      "type": "string",
-      "description": "User's unique referral code"
+    "early_access_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Accesso anticipato a nuovi drop"
     },
-    "last_synced_at": {
-      "type": "string",
-      "format": "date-time"
+    "current_multiplier": {
+      "type": "number",
+      "default": 1.0,
+      "description": "Moltiplicatore attuale guadagno punti"
+    },
+    "actions_online": {
+      "type": "object",
+      "default": {},
+      "description": "Azioni digitali completate: { follow_instagram, follow_tiktok, follow_youtube, follow_kick, follow_snapchat, ugc_submissions: number, votes_cast: number, marketplace_trades: number, nfts_owned: number, tokens_owned: number, referrals: number, daily_streak: number, event_registrations: number, prediction_bets: number }"
+    },
+    "actions_offline": {
+      "type": "object",
+      "default": {},
+      "description": "Azioni fisiche completate: { events_attended: number, side_events_attended: number, merch_purchases: number, checkins: number }"
+    },
+    "level_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Storico dei cambi di livello"
     }
   },
   "required": [
