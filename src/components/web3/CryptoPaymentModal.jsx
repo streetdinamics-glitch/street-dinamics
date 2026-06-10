@@ -60,6 +60,8 @@ export default function CryptoPaymentModal({ nftCard, token, onClose, onSuccess 
   const [txHash, setTxHash]            = useState(null);
   const [dbSynced, setDbSynced]        = useState(false);
   const [quantity, setQuantity]        = useState(1);
+  const [liveRate, setLiveRate]        = useState(null); // EUR price of selected native coin
+  const [loadingRate, setLoadingRate]  = useState(false);
 
   const { address, isConnected } = useAccount();
   const chainId                  = useChainId();
@@ -144,7 +146,7 @@ export default function CryptoPaymentModal({ nftCard, token, onClose, onSuccess 
     }
   };
 
-  const handleSelectToken = (tok) => {
+  const handleSelectToken = async (tok) => {
     setSelectedToken(tok);
     const chainMatch = SUPPORTED_CHAINS.find(c => {
       if (tok.addresses?.native) return tok.chains?.includes(c.chain.id);
@@ -152,6 +154,39 @@ export default function CryptoPaymentModal({ nftCard, token, onClose, onSuccess 
     });
     setSelectedChain(chainMatch || SUPPORTED_CHAINS[0]);
     setStep(STEPS.confirm);
+    // Fetch live rate for native coins
+    if (tok.addresses?.native) {
+      setLoadingRate(true);
+      const coinIds = { 'ETH': 'ethereum', 'MATIC/POL': 'matic-network', 'BNB': 'binancecoin', 'AVAX': 'avalanche-2' };
+      const coinId = coinIds[tok.symbol] || 'ethereum';
+      try {
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=eur`);
+        const data = await res.json();
+        setLiveRate(data[coinId]?.eur || null);
+      } catch { setLiveRate(null); }
+      setLoadingRate(false);
+    } else {
+      setLiveRate(null);
+    }
+  };
+
+  // Fetch live EUR → native coin price via CoinGecko (free, no API key)
+  const getNativeCoinAmount = async (eurAmount, nativeSymbol) => {
+    const coinIds = { 'ETH': 'ethereum', 'MATIC/POL': 'matic-network', 'BNB': 'binancecoin', 'AVAX': 'avalanche-2' };
+    const coinId = coinIds[nativeSymbol] || 'ethereum';
+    try {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=eur`
+      );
+      const data = await res.json();
+      const priceEUR = data[coinId]?.eur;
+      if (!priceEUR || priceEUR <= 0) throw new Error('Price unavailable');
+      return eurAmount / priceEUR; // e.g. €25 / 3000 EUR/ETH = 0.00833 ETH
+    } catch {
+      // Fallback: conservative estimate — better to overpay slightly than underpay
+      const fallbacks = { 'ethereum': 3000, 'matic-network': 0.8, 'binancecoin': 500, 'avalanche-2': 35 };
+      return eurAmount / (fallbacks[coinId] || 3000);
+    }
   };
 
   const handlePay = async () => {
@@ -165,16 +200,16 @@ export default function CryptoPaymentModal({ nftCard, token, onClose, onSuccess 
     }
 
     if (!PLATFORM_WALLET || PLATFORM_WALLET === '0x0000000000000000000000000000000000000000') {
-      toast.error('Wallet piattaforma non configurato. Imposta VITE_PLATFORM_WALLET.');
+      toast.error('Wallet piattaforma non configurato. Contatta il supporto.');
       return;
     }
 
     try {
       if (isNative) {
-        // Send native coin (ETH, MATIC, BNB, AVAX…)
-        // In production: usa un oracle per convertire EUR → native amount
-        // Qui usiamo un placeholder amount — in produzione connetti Chainlink price feed
-        const amountInWei = parseEther('0.01'); // placeholder
+        // Convert EUR amount to native coin using live price
+        toast.info('Recupero prezzo live…', { duration: 2000 });
+        const nativeAmount = await getNativeCoinAmount(totalEUR, selectedToken.symbol);
+        const amountInWei = parseEther(nativeAmount.toFixed(18));
         sendTransaction(
           { to: PLATFORM_WALLET, value: amountInWei },
           {
@@ -182,8 +217,13 @@ export default function CryptoPaymentModal({ nftCard, token, onClose, onSuccess 
           }
         );
       } else if (tokenAddress) {
-        // ERC-20 transfer
-        const amount = parseUnits(String(totalEUR), selectedToken.decimals);
+        // ERC-20 stablecoin/token transfer
+        // For stablecoins pegged to USD: multiply EUR amount by USD/EUR rate (~1.08)
+        // For non-stable ERC-20: user pays face EUR value in token units
+        const eurToUsd = 1.08; // approximate EUR→USD for USDC/USDT
+        const isUsdStable = ['usdc', 'usdt', 'dai'].includes(selectedToken.id);
+        const transferAmount = isUsdStable ? totalEUR * eurToUsd : totalEUR;
+        const amount = parseUnits(transferAmount.toFixed(selectedToken.decimals), selectedToken.decimals);
         writeContract(
           {
             address: tokenAddress,
@@ -356,9 +396,29 @@ export default function CryptoPaymentModal({ nftCard, token, onClose, onSuccess 
                   <span className="opacity-40">IMPORTO EUR</span>
                   <span style={{ color: tierColor }}>€{totalEUR.toFixed(2)}</span>
                 </div>
+                {/* Show exact crypto amount for native coins */}
+                {isNative && (
+                  <div className="flex justify-between font-mono text-[10px]">
+                    <span className="opacity-40">IMPORTO {selectedToken.symbol}</span>
+                    <span style={{ color: tierColor }}>
+                      {loadingRate ? '…' : liveRate
+                        ? `${(totalEUR / liveRate).toFixed(6)} ${selectedToken.symbol}`
+                        : `~${(totalEUR / 3000).toFixed(6)} ${selectedToken.symbol}`}
+                    </span>
+                  </div>
+                )}
+                {/* For USD stables: show USD equivalent */}
+                {!isNative && ['usdc','usdt','dai'].includes(selectedToken?.id) && (
+                  <div className="flex justify-between font-mono text-[10px]">
+                    <span className="opacity-40">IMPORTO {selectedToken.symbol}</span>
+                    <span style={{ color: tierColor }}>{(totalEUR * 1.08).toFixed(2)} {selectedToken.symbol}</span>
+                  </div>
+                )}
                 <div className="h-px" style={{ background: `${tierColor}22` }} />
                 <p className="font-mono text-[9px] text-yellow-400/60">
-                  ⚠ Il tasso di cambio viene applicato al momento della transazione tramite oracle on-chain.
+                  {isNative
+                    ? '⚠ Tasso live CoinGecko — prezzo finale calcolato al momento del pagamento.'
+                    : '⚠ Stablecoin: 1 EUR ≈ 1.08 USD. Importo preciso mostrato sopra.'}
                 </p>
               </div>
 

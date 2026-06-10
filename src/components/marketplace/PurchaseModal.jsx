@@ -1,224 +1,246 @@
+/**
+ * PurchaseModal — Acquisto primario di AthleteToken dallo store.
+ * Usa l'utente loggato (no form email/nome manuale).
+ * Offre scelta tra Fiat e Crypto.
+ */
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, CreditCard, Wallet, ShoppingCart } from 'lucide-react';
+import { X, CreditCard, Wallet, ShoppingCart, CheckCircle, Loader2, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import CryptoPaymentModal from '../web3/CryptoPaymentModal';
+
+const TIER_COLORS = {
+  rising_star:     '#94a3b8',
+  breakout_talent: '#a855f7',
+  elite_performer: '#00ffee',
+  living_legend:   '#fbbf24',
+};
 
 export default function PurchaseModal({ token, onClose, onSuccess }) {
-  const [quantity, setQuantity] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState('card');
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [buyerName, setBuyerName] = useState('');
   const queryClient = useQueryClient();
+  const [paymentMethod, setPaymentMethod] = useState(null); // null | 'fiat' | 'crypto'
+  const [quantity, setQuantity] = useState(1);
+  const [done, setDone] = useState(false);
 
-  const totalPrice = (token.current_price || token.base_price) * quantity;
-  const maxQuantity = Math.min(token.available_supply, 10);
+  const { data: user } = useQuery({ queryKey: ['current-user'], queryFn: () => base44.auth.me() });
 
-  const purchaseMutation = useMutation({
-    mutationFn: async (data) => {
-      // Create transaction record
-      const transaction = await base44.entities.TokenTransaction.create({
+  const price = token.current_price || token.base_price || 0;
+  const totalPrice = price * quantity;
+  const maxQuantity = Math.min(token.available_supply || 1, 10);
+  const tierColor = TIER_COLORS[token.token_tier] || '#ff6600';
+
+  const fiatMutation = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error('Utente non autenticato');
+
+      await base44.entities.TokenTransaction.create({
         token_id: token.id,
-        buyer_email: data.email,
+        buyer_email: user.email,
         seller_email: 'platform@streetdinamics.ae',
         transaction_type: 'primary_sale',
-        quantity: data.quantity,
-        price_per_token: token.current_price || token.base_price,
+        quantity,
+        price_per_token: price,
         total_amount: totalPrice,
         payment_status: 'completed',
-        payment_method: paymentMethod,
+        payment_method: 'fiat_eur',
+        timestamp: new Date().toISOString(),
       });
 
-      // Create ownership record with rarity
       await base44.entities.TokenOwnership.create({
         athlete_name: token.athlete_name,
         token_tier: token.token_tier,
         rarity: token.token_tier,
-        purchase_price: token.current_price || token.base_price,
+        purchase_price: price,
         purchase_date: new Date().toISOString().split('T')[0],
+        user_email: user.email,
+        quantity,
       });
 
-      // Update token availability
       await base44.entities.AthleteToken.update(token.id, {
-        available_supply: token.available_supply - data.quantity,
-        status: token.available_supply - data.quantity === 0 ? 'sold_out' : 'active',
+        available_supply: Math.max(0, token.available_supply - quantity),
+        status: token.available_supply - quantity <= 0 ? 'sold_out' : 'active',
       });
 
-      // Update athlete fan count
-      const athleteStats = await base44.entities.AthleteStats.filter({ athlete_email: token.athlete_email });
-      if (athleteStats.length > 0) {
-        await base44.entities.AthleteStats.update(athleteStats[0].id, {
-          fan_count: (athleteStats[0].fan_count || 0) + 1,
+      const stats = await base44.entities.AthleteStats.filter({ athlete_email: token.athlete_email });
+      if (stats[0]) {
+        await base44.entities.AthleteStats.update(stats[0].id, {
+          fan_count: (stats[0].fan_count || 0) + quantity,
         });
       }
 
-      return transaction;
+      // Street Cred
+      base44.functions.invoke('syncStreetCred', {
+        user_email: user.email,
+        action: 'tokens_owned',
+        value: quantity,
+      }).catch(() => {});
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tokens'] });
+      queryClient.invalidateQueries({ queryKey: ['fan-tokens'] });
+      queryClient.invalidateQueries({ queryKey: ['my-tokens-mp'] });
+      setDone(true);
+      setTimeout(() => onSuccess?.(), 2000);
+    },
+    onError: (e) => toast.error(e.message || 'Errore durante l\'acquisto'),
   });
 
-  const handlePurchase = () => {
-    if (!buyerEmail || !buyerName) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    purchaseMutation.mutate(
-      { email: buyerEmail, name: buyerName, quantity },
-      {
-        onSuccess: async (data) => {
+  if (paymentMethod === 'crypto') {
+    return (
+      <CryptoPaymentModal
+        token={token}
+        onClose={onClose}
+        onSuccess={(data) => {
           queryClient.invalidateQueries({ queryKey: ['tokens'] });
-          queryClient.invalidateQueries({ queryKey: ['my-tokens'] });
-          queryClient.invalidateQueries({ queryKey: ['fan-status'] });
-          
-          // Update fan status after purchase
-          if (buyerEmail) {
-            base44.functions.invoke('updateFanStatus', { userEmail: buyerEmail }).catch(err =>
-              console.error('Failed to update fan status:', err)
-            );
-          }
-          
+          queryClient.invalidateQueries({ queryKey: ['fan-tokens'] });
           onSuccess?.(data);
-        },
-      }
+          onClose();
+        }}
+      />
     );
-  };
+  }
 
   return (
     <div className="fixed inset-0 z-[500] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 30 }}
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 30 }}
-        className="relative w-full max-w-[550px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-6 md:p-8"
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        className="relative w-full max-w-[520px] bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] clip-cyber p-6 md:p-8"
+        style={{ border: `1px solid ${tierColor}33` }}
       >
-        <div className="absolute top-0 left-0 right-0 fire-line" />
-        <div className="absolute top-0 right-0 w-[22px] h-[22px] bg-gradient-to-bl from-fire-5 to-fire-2" style={{ clipPath: 'polygon(100% 0,100% 100%,0 0)' }} />
+        <div className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{ background: `linear-gradient(90deg, transparent, ${tierColor}, transparent)` }} />
 
-        <button onClick={onClose} className="absolute top-3 right-4 font-mono text-xs tracking-[2px] text-fire-3/30 hover:text-fire-3 cursor-pointer bg-transparent border-none">
+        <button onClick={onClose} className="absolute top-3 right-4 text-white/20 hover:text-white/60 transition-colors">
           <X size={18} />
         </button>
 
-        <h2 className="text-fire-gradient font-orbitron font-black text-2xl tracking-[2px] mb-1 uppercase">Purchase Token</h2>
-        <p className="font-mono text-[11px] tracking-[4px] uppercase text-fire-3/30 mb-6">{token.athlete_name} — {token.token_tier}</p>
-
-        {/* Token preview */}
-        <div className="bg-fire-3/5 border border-fire-3/10 p-4 mb-5 flex items-center gap-4">
-          <img
-            src={token.avatar_url || 'https://via.placeholder.com/80'}
-            alt={token.athlete_name}
-            className="w-20 h-20 object-cover rounded"
-          />
-          <div>
-            <div className="font-orbitron font-bold text-lg text-fire-5">{token.athlete_name}</div>
-            <div className="font-mono text-[10px] text-fire-3/40 tracking-[1px] uppercase">{token.sport} • {token.token_tier}</div>
-            <div className="font-orbitron font-bold text-sm text-fire-4 mt-1">€{token.current_price || token.base_price} per token</div>
+        {done ? (
+          <div className="text-center py-8">
+            <CheckCircle size={56} className="mx-auto mb-4 text-green-400" />
+            <h3 className="font-orbitron font-bold text-xl text-green-400 mb-2">Acquisto Completato!</h3>
+            <p className="font-mono text-sm text-white/40">
+              La card di {token.athlete_name} è nel tuo vault
+            </p>
           </div>
-        </div>
+        ) : (
+          <>
+            <h2 className="font-orbitron font-black text-xl tracking-[2px] mb-0.5 uppercase" style={{ color: tierColor }}>
+              Acquista Card
+            </h2>
+            <p className="font-mono text-[10px] tracking-[3px] uppercase text-white/30 mb-5">
+              {token.athlete_name} · {token.token_tier?.replace(/_/g, ' ')}
+            </p>
 
-        {/* Buyer info */}
-        <div className="mb-4">
-          <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Your Name</label>
-          <input
-            type="text"
-            value={buyerName}
-            onChange={(e) => setBuyerName(e.target.value)}
-            className="cyber-input"
-            placeholder="John Doe"
-          />
-        </div>
+            {/* Token preview */}
+            <div className="flex items-center gap-4 p-3 mb-5 border"
+              style={{ background: `${tierColor}08`, borderColor: `${tierColor}22` }}>
+              {token.avatar_url ? (
+                <img src={token.avatar_url} alt={token.athlete_name} className="w-14 h-14 object-cover" />
+              ) : (
+                <div className="w-14 h-14 flex items-center justify-center text-3xl"
+                  style={{ background: `${tierColor}15` }}>🃏</div>
+              )}
+              <div className="flex-1">
+                <div className="font-orbitron font-bold text-base" style={{ color: tierColor }}>
+                  {token.athlete_name}
+                </div>
+                <div className="font-mono text-[9px] text-white/35 uppercase tracking-[1px]">
+                  {token.sport} · {token.token_tier?.replace(/_/g, ' ')}
+                </div>
+                <div className="font-mono text-[10px] mt-1" style={{ color: tierColor }}>
+                  €{price.toFixed(2)} / card
+                </div>
+              </div>
+              {/* Quantity */}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                  className="w-7 h-7 border border-white/10 text-white/60 hover:border-white/30 font-bold flex items-center justify-center">−</button>
+                <span className="font-orbitron font-bold min-w-[24px] text-center" style={{ color: tierColor }}>{quantity}</span>
+                <button onClick={() => setQuantity(q => Math.min(maxQuantity, q + 1))}
+                  className="w-7 h-7 border border-white/10 text-white/60 hover:border-white/30 font-bold flex items-center justify-center">+</button>
+              </div>
+            </div>
 
-        <div className="mb-4">
-          <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-1">Your Email</label>
-          <input
-            type="email"
-            value={buyerEmail}
-            onChange={(e) => setBuyerEmail(e.target.value)}
-            className="cyber-input"
-            placeholder="you@example.com"
-          />
-        </div>
+            {/* Totale */}
+            <div className="border border-white/8 bg-black/30 p-4 mb-5 flex items-center justify-between">
+              <span className="font-mono text-[10px] text-white/40">TOTALE ({quantity}x)</span>
+              <span className="font-orbitron font-black text-xl" style={{ color: tierColor }}>€{totalPrice.toFixed(2)}</span>
+            </div>
 
-        {/* Quantity selector */}
-        <div className="mb-4">
-          <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-2">Quantity</label>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="btn-ghost text-[12px] py-2 px-4"
-            >
-              −
-            </button>
-            <div className="font-orbitron font-bold text-xl text-fire-5 min-w-[60px] text-center">{quantity}</div>
-            <button
-              onClick={() => setQuantity(Math.min(maxQuantity, quantity + 1))}
-              className="btn-ghost text-[12px] py-2 px-4"
-            >
-              +
-            </button>
-            <span className="font-mono text-[10px] text-fire-3/30 ml-auto">Max: {maxQuantity}</span>
-          </div>
-        </div>
+            {/* Payment method choice */}
+            {!paymentMethod && (
+              <div className="space-y-3">
+                <p className="font-mono text-[10px] tracking-[2px] uppercase text-white/30 mb-2">Metodo di pagamento</p>
 
-        {/* Payment method */}
-        <div className="mb-5">
-          <label className="font-mono text-[11px] tracking-[2px] uppercase text-fire-3/30 block mb-2">Payment Method</label>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => setPaymentMethod('card')}
-              className={`flex items-center gap-2 justify-center py-2.5 px-3 border font-mono text-[10px] tracking-[1px] transition-all ${
-                paymentMethod === 'card'
-                  ? 'border-fire-3 bg-fire-3/10 text-fire-4'
-                  : 'border-fire-3/20 text-fire-3/40 hover:border-fire-3/40'
-              }`}
-            >
-              <CreditCard size={14} />
-              Fiat (EUR)
-            </button>
-            <button
-              onClick={() => setPaymentMethod('crypto')}
-              className={`flex items-center gap-2 justify-center py-2.5 px-3 border font-mono text-[10px] tracking-[1px] transition-all ${
-                paymentMethod === 'crypto'
-                  ? 'border-cyan bg-cyan/10 text-cyan'
-                  : 'border-fire-3/20 text-fire-3/40 hover:border-fire-3/40'
-              }`}
-            >
-              <Wallet size={14} />
-              Web3 NFT
-            </button>
-          </div>
-        </div>
+                <button
+                  onClick={() => setPaymentMethod('fiat')}
+                  className="w-full flex items-center gap-4 p-4 border border-fire-3/20 bg-fire-3/5 hover:border-fire-3/50 hover:bg-fire-3/10 transition-all text-left"
+                  style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}
+                >
+                  <CreditCard size={22} className="text-fire-4 flex-shrink-0" />
+                  <div>
+                    <div className="font-orbitron font-bold text-sm text-fire-5">Carta / Fiat EUR</div>
+                    <div className="font-mono text-[9px] text-white/30">Pagamento diretto · Immediato</div>
+                  </div>
+                  <ArrowRight size={14} className="ml-auto text-fire-3/40" />
+                </button>
 
-        {/* Total */}
-        <div className="bg-gradient-to-r from-fire-3/10 to-fire-3/5 border border-fire-3/20 p-4 mb-5">
-          <div className="flex items-center justify-between mb-1">
-            <span className="font-mono text-[10px] text-fire-3/40 tracking-[1px]">SUBTOTAL</span>
-            <span className="font-rajdhani text-sm text-fire-4">€{totalPrice.toFixed(2)}</span>
-          </div>
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-mono text-[10px] text-fire-3/40 tracking-[1px]">FEES</span>
-            <span className="font-rajdhani text-sm text-fire-4">€0.00</span>
-          </div>
-          <div className="h-[1px] bg-fire-3/20 mb-2" />
-          <div className="flex items-center justify-between">
-            <span className="font-orbitron text-sm font-bold text-fire-5 tracking-[1px]">TOTAL</span>
-            <span className="font-orbitron text-xl font-black text-fire-5">€{totalPrice.toFixed(2)}</span>
-          </div>
-        </div>
+                <button
+                  onClick={() => setPaymentMethod('crypto')}
+                  className="w-full flex items-center gap-4 p-4 border border-cyan/20 bg-cyan/5 hover:border-cyan/50 hover:bg-cyan/10 transition-all text-left"
+                  style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}
+                >
+                  <Wallet size={22} className="text-cyan flex-shrink-0" />
+                  <div>
+                    <div className="font-orbitron font-bold text-sm text-cyan">Crypto / Web3</div>
+                    <div className="font-mono text-[9px] text-white/30">USDC, USDT, EURe, ETH, MATIC e altri</div>
+                  </div>
+                  <ArrowRight size={14} className="ml-auto text-cyan/40" />
+                </button>
 
-        {/* Action buttons */}
-        <div className="flex gap-3">
-          <button onClick={onClose} className="btn-ghost py-3 px-5 text-[11px]">
-            Cancel
-          </button>
-          <button
-            onClick={handlePurchase}
-            disabled={purchaseMutation.isPending || !buyerEmail || !buyerName}
-            className="btn-fire flex-1 text-[11px] py-3 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            <ShoppingCart size={14} />
-            {purchaseMutation.isPending ? 'Processing...' : 'Complete Purchase'}
-          </button>
-        </div>
+                <button onClick={onClose} className="w-full btn-ghost py-2.5 text-[11px] mt-1">
+                  Annulla
+                </button>
+              </div>
+            )}
+
+            {/* Fiat confirm */}
+            {paymentMethod === 'fiat' && (
+              <div className="space-y-4">
+                <div className="p-4 border border-fire-4/20 bg-fire-4/5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CreditCard size={14} className="text-fire-4" />
+                    <span className="font-orbitron text-sm text-fire-4">Pagamento Fiat EUR</span>
+                  </div>
+                  <p className="font-mono text-[10px] text-white/30">
+                    Account: <span className="text-fire-5">{user?.email || '—'}</span>
+                  </p>
+                  <p className="font-orbitron font-black text-2xl mt-2 text-fire-5">€{totalPrice.toFixed(2)}</p>
+                </div>
+                <div className="flex gap-3">
+                  <button onClick={() => setPaymentMethod(null)} className="btn-ghost py-3 px-4 text-[11px]">
+                    ← Indietro
+                  </button>
+                  <button
+                    onClick={() => fiatMutation.mutate()}
+                    disabled={fiatMutation.isPending}
+                    className="btn-fire flex-1 py-3 text-[11px] flex items-center justify-center gap-2 disabled:opacity-30"
+                  >
+                    {fiatMutation.isPending ? (
+                      <><Loader2 size={14} className="animate-spin" /> Elaborazione...</>
+                    ) : (
+                      <><ShoppingCart size={14} /> Conferma €{totalPrice.toFixed(2)}</>
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </motion.div>
     </div>
   );

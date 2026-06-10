@@ -8,6 +8,7 @@ import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import { useLang } from '../components/useLang';
+import CheckoutModal from '../components/marketplace/CheckoutModal';
 
 const RARITY_CONFIG = {
   rising_star:     { label: 'Rising Star',     color: 'text-gray-400',   border: 'border-gray-400/30',   bg: 'bg-gray-400/8',   icon: Star },
@@ -113,6 +114,7 @@ export default function NFTMarketplace() {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [listingPrice, setListingPrice] = useState('');
   const [listingQty, setListingQty] = useState(1);
+  const [checkoutListing, setCheckoutListing] = useState(null);
 
   const { data: user } = useQuery({ queryKey: ['current-user'], queryFn: () => base44.auth.me() });
 
@@ -183,33 +185,11 @@ export default function NFTMarketplace() {
     },
   });
 
-  const buyMutation = useMutation({
-    mutationFn: async (listing) => {
-      if (listing.seller_email === user?.email) throw new Error('Non puoi acquistare la tua stessa listing');
-      const platformFee = listing.total_value * 0.05;
-      const sellerReceives = listing.total_value - platformFee;
-      await base44.entities.SecondaryMarketTrade.create({
-        listing_id: listing.id,
-        asset_type: listing.asset_type,
-        asset_id: listing.asset_id,
-        athlete_name: listing.athlete_name,
-        seller_email: listing.seller_email,
-        buyer_email: user.email,
-        quantity: listing.quantity,
-        price_per_unit: listing.listing_price,
-        total_amount: listing.total_value,
-        platform_fee: platformFee,
-        seller_receives: sellerReceives,
-        traded_at: new Date().toISOString(),
-      });
-      await base44.entities.SecondaryMarketListing.update(listing.id, { status: 'sold' });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['marketplace-listings'] });
-      toast.success('Acquisto completato!');
-    },
-    onError: (e) => toast.error(e.message || 'Errore durante l\'acquisto'),
-  });
+  const handleBuy = (listing) => {
+    if (!user) { toast.error('Devi essere loggato per acquistare'); return; }
+    if (listing.seller_email === user?.email) { toast.error('Non puoi acquistare la tua stessa card'); return; }
+    setCheckoutListing(listing);
+  };
 
   return (
     <div className="min-h-screen bg-cyber-void text-[var(--text-main)]">
@@ -329,12 +309,12 @@ export default function NFTMarketplace() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filtered.map((listing, idx) => (
+            {filtered.map((listing) => (
               <ListingCard
                 key={listing.id}
                 listing={listing}
-                onBuy={() => buyMutation.mutate(listing)}
-                isBuying={buyMutation.isPending}
+                onBuy={() => handleBuy(listing)}
+                isBuying={false}
                 currentUserEmail={user?.email}
               />
             ))}
@@ -454,6 +434,19 @@ export default function NFTMarketplace() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Checkout Modal */}
+      {checkoutListing && (
+        <CheckoutModal
+          listing={checkoutListing}
+          onClose={() => setCheckoutListing(null)}
+          onSuccess={() => {
+            setCheckoutListing(null);
+            queryClient.invalidateQueries({ queryKey: ['marketplace-listings'] });
+            toast.success('Acquisto completato!');
+          }}
+        />
+      )}
 
       <Footer lang={lang} />
     </div>
