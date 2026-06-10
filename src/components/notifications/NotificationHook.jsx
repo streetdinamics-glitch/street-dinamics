@@ -98,20 +98,20 @@ export function useNotifications() {
           }
         });
 
-        // Subscribe to fan status tier changes
-        const unsubFanStatus = base44.entities.FanStatus?.subscribe?.((event) => {
+        // Subscribe to Street Cred level changes
+        const unsubFanStatus = base44.entities.StreetCred?.subscribe?.((event) => {
           try {
             if (event.type === 'update' && event.data.user_email === user.email) {
-              const oldTier = event.old_data?.current_tier;
-              const newTier = event.data.current_tier;
-              if (oldTier && newTier && oldTier !== newTier) {
-                toast.success(`🎉 Tier Unlocked: ${newTier.toUpperCase().replace(/_/g, ' ')}`, {
-                  description: `${event.data.current_multiplier}x earnings multiplier activated!`,
+              const oldLevel = event.old_data?.level;
+              const newLevel = event.data.level;
+              if (oldLevel && newLevel && oldLevel !== newLevel) {
+                toast.success(`🏆 LEVEL UP: ${newLevel.toUpperCase().replace(/_/g, ' ')}`, {
+                  description: `${event.data.current_multiplier}x Street Cred multiplier attivato!`,
                 });
               }
             }
           } catch (err) {
-            console.error('Fan status subscription error:', err);
+            console.error('StreetCred subscription error:', err);
           }
         });
 

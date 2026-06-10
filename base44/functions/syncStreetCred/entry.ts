@@ -59,7 +59,7 @@ const OFFLINE_POINTS = {
 
 function getLevel(points) {
   const LEVELS = [
-    { level: 'sd_icon',       min: 10000, cashback: 0.03, multiplier: 2.0,  perks: ['backstage_access', 'cashback_3pct', '1of1_card', 'governance_voting', 'early_access', 'free_merch', 'vip_pass'] },
+    { level: 'sd_icon',       min: 15000, cashback: 0.05, multiplier: 2.0,  perks: ['backstage_access', 'cashback_5pct', '1of1_card', 'governance_voting', 'early_access', 'free_merch', 'vip_pass'] },
     { level: 'street_legend', min: 5000,  cashback: 0.02, multiplier: 1.5,  perks: ['vip_pass', 'cashback_2pct', 'early_access', 'free_merch'] },
     { level: 'hype_beast',    min: 2000,  cashback: 0.015,multiplier: 1.25, perks: ['early_access', 'cashback_1_5pct', 'free_drink'] },
     { level: 'follower',      min: 500,   cashback: 0.01, multiplier: 1.1,  perks: ['cashback_1pct', 'raffle_entry'] },
@@ -72,8 +72,8 @@ function getLevel(points) {
 }
 
 function calcProgress(points, levelName) {
-  const NEXT = { newcomer: 500, follower: 2000, hype_beast: 5000, street_legend: 10000 };
-  const STARTS = { newcomer: 0, follower: 500, hype_beast: 2000, street_legend: 5000, sd_icon: 10000 };
+  const NEXT = { newcomer: 500, follower: 2000, hype_beast: 5000, street_legend: 15000 };
+  const STARTS = { newcomer: 0, follower: 500, hype_beast: 2000, street_legend: 5000, sd_icon: 15000 };
   const next = NEXT[levelName];
   if (!next) return 100;
   const start = STARTS[levelName] || 0;
@@ -218,7 +218,7 @@ Deno.serve(async (req) => {
         follower:      '1% cashback + Badge Follower + Accesso raffle',
         hype_beast:    '1.5% cashback + Early access eventi + Free drink in arena',
         street_legend: '2% cashback + VIP Pass annuale + Merch SD gratuito',
-        sd_icon:       '3% cashback + Accesso backstage + Card 1-of-1 + Governance voting',
+        sd_icon:       '5% cashback + Accesso backstage + Card 1-of-1 + Governance voting',
       };
       await base44.asServiceRole.entities.Notification.create({
         user_email,

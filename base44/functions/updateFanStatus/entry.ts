@@ -1,20 +1,9 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
-
-const TIER_REQUIREMENTS = {
-  rookie: 0,
-  enthusiast: 1000,
-  superfan: 5000,
-  legend: 15000,
-  hall_of_fame: 50000,
-};
-
-const TIER_MULTIPLIERS = {
-  rookie: 1.0,
-  enthusiast: 1.25,
-  superfan: 1.5,
-  legend: 2.0,
-  hall_of_fame: 3.0,
-};
+/**
+ * updateFanStatus — ora delegato a StreetCred (sistema unificato).
+ * Ricalcola il livello dell'utente in base ai punti accumulati.
+ * Mantenuto per compatibilità con FanStatusManager e altre chiamate esistenti.
+ */
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 Deno.serve(async (req) => {
   try {
@@ -25,128 +14,52 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Missing userEmail' }, { status: 400 });
     }
 
-    // Get current fan status
-    const fanStatusRecords = await base44.asServiceRole.entities.FanStatus.filter({ user_email: userEmail });
-    let fanStatus = fanStatusRecords[0];
+    // Delega a syncStreetCred per il ricalcolo
+    // Non passa action — syncStreetCred senza action ritorna semplicemente lo stato corrente
+    // Usiamo awardXP con 0 punti per forzare il ricalcolo del livello
+    const existing = await base44.asServiceRole.entities.StreetCred.filter({ user_email: userEmail });
 
-    if (!fanStatus) {
-      return Response.json({ error: 'Fan status not found' }, { status: 404 });
+    if (!existing[0]) {
+      return Response.json({ error: 'StreetCred record not found for user' }, { status: 404 });
     }
 
-    // Get token transactions to calculate total spent
-    const transactions = await base44.asServiceRole.entities.TokenTransaction.filter({ user_email: userEmail });
-    const totalSpent = transactions
-      .filter(t => t.transaction_type === 'spend' || t.transaction_type === 'reward_redeemed')
-      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+    const record = existing[0];
+    const points = record.total_points || 0;
 
-    const totalEarned = transactions
-      .filter(t => t.transaction_type === 'earn' || t.transaction_type === 'bet_won' || t.transaction_type === 'points_converted')
-      .reduce((sum, t) => sum + t.amount, 0);
+    // Calcola livello corretto in base ai punti
+    const LEVELS = [
+      { level: 'sd_icon',       min: 15000, cashback: 0.05, multiplier: 2.0 },
+      { level: 'street_legend', min: 5000,  cashback: 0.02, multiplier: 1.5 },
+      { level: 'hype_beast',    min: 2000,  cashback: 0.015,multiplier: 1.25 },
+      { level: 'follower',      min: 500,   cashback: 0.01, multiplier: 1.1 },
+      { level: 'newcomer',      min: 0,     cashback: 0,    multiplier: 1.0 },
+    ];
+    const lvl = LEVELS.find(l => points >= l.min) || LEVELS[LEVELS.length - 1];
 
-    // Calculate rarity score
-    const nfts = await base44.asServiceRole.entities.NFTOwnership.filter({ buyer_email: userEmail });
-    const tokens = await base44.asServiceRole.entities.TokenOwnership.filter({ created_by: userEmail });
-    
-    const rarityPoints = {
-      rising_star: 1,
-      breakout_talent: 5,
-      elite_performer: 15,
-      living_legend: 50,
-    };
+    const NEXT = { newcomer: 500, follower: 2000, hype_beast: 5000, street_legend: 15000 };
+    const STARTS = { newcomer: 0, follower: 500, hype_beast: 2000, street_legend: 5000, sd_icon: 15000 };
+    const nextMin = NEXT[lvl.level];
+    const progress = nextMin
+      ? Math.min(100, Math.round(((points - (STARTS[lvl.level] || 0)) / (nextMin - (STARTS[lvl.level] || 0))) * 100))
+      : 100;
 
-    const rarityScore = [
-      ...nfts.map(n => rarityPoints[n.rarity || 'rising_star'] || 0),
-      ...tokens.map(t => rarityPoints[t.token_tier || t.rarity || 'rising_star'] || 0)
-    ].reduce((sum, score) => sum + score, 0);
-
-    // Determine new tier
-    let newTier = 'rookie';
-    for (const [tier, requirement] of Object.entries(TIER_REQUIREMENTS).reverse()) {
-      if (totalSpent >= requirement) {
-        newTier = tier;
-        break;
-      }
-    }
-
-    const tierChanged = newTier !== fanStatus.current_tier;
-    const tierHistory = fanStatus.tier_history || [];
-    
-    if (tierChanged) {
-      tierHistory.push({
-        tier: newTier,
-        achieved_at: new Date().toISOString(),
-        tokens_spent: totalSpent,
-        rarity_score: rarityScore,
-      });
-    }
-
-    // Calculate next tier progress
-    const tierList = Object.keys(TIER_REQUIREMENTS);
-    const currentTierIndex = tierList.indexOf(newTier);
-    const nextTier = tierList[currentTierIndex + 1];
-    let nextTierProgress = 100;
-
-    if (nextTier) {
-      const currentReq = TIER_REQUIREMENTS[newTier];
-      const nextReq = TIER_REQUIREMENTS[nextTier];
-      nextTierProgress = Math.min(((totalSpent - currentReq) / (nextReq - currentReq)) * 100, 100);
-    }
-
-    // Determine perks
-    const perks = [];
-    if (newTier === 'enthusiast' || currentTierIndex >= tierList.indexOf('enthusiast')) {
-      perks.push('10% reward discount', 'priority_support');
-    }
-    if (newTier === 'superfan' || currentTierIndex >= tierList.indexOf('superfan')) {
-      perks.push('20% reward discount', 'early_access_24h', 'exclusive_badge');
-    }
-    if (newTier === 'legend' || currentTierIndex >= tierList.indexOf('legend')) {
-      perks.push('30% reward discount', 'early_access_48h', 'vip_events', 'custom_badge');
-    }
-    if (newTier === 'hall_of_fame') {
-      perks.push('50% reward discount', 'early_access_72h', 'vip_events_plus', 'lifetime_nfts', 'governance_voting');
-    }
-
-    const earlyAccessEnabled = ['superfan', 'legend', 'hall_of_fame'].includes(newTier);
-
-    // Update fan status
-    const updatedStatus = await base44.asServiceRole.entities.FanStatus.update(fanStatus.id, {
-      current_tier: newTier,
-      total_tokens_spent: totalSpent,
-      total_tokens_earned: totalEarned,
-      current_multiplier: TIER_MULTIPLIERS[newTier],
-      rarity_score: rarityScore,
-      nfts_owned: nfts.length,
-      tokens_owned: tokens.length,
-      early_access_enabled: earlyAccessEnabled,
-      next_tier_progress: nextTierProgress,
-      perks_unlocked: perks,
-      tier_history: tierHistory,
-      tier_unlocked_at: tierChanged ? new Date().toISOString() : fanStatus.tier_unlocked_at,
+    await base44.asServiceRole.entities.StreetCred.update(record.id, {
+      level: lvl.level,
+      cashback_rate: lvl.cashback,
+      current_multiplier: lvl.multiplier,
+      next_level_progress: progress,
+      early_access_enabled: ['street_legend', 'sd_icon', 'hype_beast'].includes(lvl.level),
     });
 
-    // Send notification if tier changed
-    if (tierChanged) {
-      await base44.asServiceRole.entities.Notification.create({
-        user_email: userEmail,
-        type: 'reward',
-        title: `🎉 Tier Unlocked: ${newTier.toUpperCase()}`,
-        message: `Congratulations! You've reached ${newTier} tier with ${TIER_MULTIPLIERS[newTier]}x earnings multiplier!`,
-        related_entity_id: updatedStatus.id,
-        related_entity_type: 'FanStatus',
-        is_read: false,
-        created_at: new Date().toISOString(),
-      });
-    }
-
-    return Response.json({ 
+    return Response.json({
       success: true,
-      fanStatus: updatedStatus,
-      tierChanged,
-      message: tierChanged ? `Congratulations! You've reached ${newTier} tier!` : 'Fan status updated',
+      user_email: userEmail,
+      level: lvl.level,
+      total_points: points,
+      progress,
+      cashback_rate: lvl.cashback,
     });
   } catch (error) {
-    console.error('Error updating fan status:', error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
