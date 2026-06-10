@@ -25,6 +25,7 @@ const QUICK_LINKS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'La finestra dei campioni' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Vota', desc: 'Esprimi il tuo voto sugli eventi live' },
     { to: '/UserProfile', emoji: '👤', label: 'Il mio profilo', desc: 'Badge, punti, cronologia' },
+    { to: '/street-cred', emoji: '⚡', label: 'Street Cred Guide', desc: 'Come scalare i livelli' },
   ],
   en: [
     { to: '/Home', emoji: '⚽', label: 'Upcoming events', desc: 'Register as athlete or spectator' },
@@ -35,6 +36,7 @@ const QUICK_LINKS = {
     { to: '/window-challenge', emoji: '👑', label: 'Window Challenge', desc: 'The champion window' },
     { to: '/VotingHub', emoji: '🗳️', label: 'Vote', desc: 'Vote on live events' },
     { to: '/UserProfile', emoji: '👤', label: 'My profile', desc: 'Badges, points, history' },
+    { to: '/street-cred', emoji: '⚡', label: 'Street Cred Guide', desc: 'How to level up' },
   ],
   es: [
     { to: '/Home', emoji: '⚽', label: 'Próximos eventos', desc: 'Regístrate como atleta o espectador' },

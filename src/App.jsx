@@ -28,6 +28,7 @@ import DashboardFan from './pages/DashboardFan';
 import DashboardAtleta from './pages/DashboardAtleta';
 import DashboardAdmin from './pages/DashboardAdmin';
 import NFTMarketplace from './pages/NFTMarketplace';
+import StreetCredGuide from './pages/StreetCredGuide';
 import { Navigate } from 'react-router-dom';
 
 const AdminGuard = ({ children }) => {
@@ -87,6 +88,7 @@ const AuthenticatedApp = () => {
         <Route path="/dashboard-atleta" element={<DashboardAtleta />} />
         <Route path="/dashboard-admin" element={<AdminGuard><DashboardAdmin /></AdminGuard>} />
         <Route path="/marketplace" element={<NFTMarketplace />} />
+        <Route path="/street-cred" element={<StreetCredGuide />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </PageTransition>
