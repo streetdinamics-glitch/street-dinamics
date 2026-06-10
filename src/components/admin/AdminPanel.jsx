@@ -25,6 +25,11 @@ import SportCategoryManager from './SportCategoryManager';
 import Web3ConfigPanel from './Web3ConfigPanel';
 import UserManagementPanel from './UserManagementPanel';
 import PredictionLinksManager from './PredictionLinksManager';
+import StreetCredManager from './StreetCredManager';
+import NFTClipTrigger from './NFTClipTrigger';
+import BroadcastNotificationPanel from './BroadcastNotificationPanel';
+import AthleteTokenMinter from './AthleteTokenMinter';
+import DisputeResolutionPanel from './DisputeResolutionPanel';
 
 export default function AdminPanel({ lang, onClose }) {
   const t = useTranslation(lang);
@@ -61,6 +66,11 @@ export default function AdminPanel({ lang, onClose }) {
   const [showSportCatMgr, setShowSportCatMgr] = useState(false);
   const [showWeb3Config, setShowWeb3Config] = useState(false);
   const [showPredictionLinks, setShowPredictionLinks] = useState(false);
+  const [showStreetCredMgr, setShowStreetCredMgr] = useState(false);
+  const [showNFTClipTrigger, setShowNFTClipTrigger] = useState(false);
+  const [showBroadcast, setShowBroadcast] = useState(false);
+  const [showTokenMinter, setShowTokenMinter] = useState(false);
+  const [showDisputeMgr, setShowDisputeMgr] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ['admin-events'],
@@ -341,6 +351,36 @@ export default function AdminPanel({ lang, onClose }) {
             className="btn-fire text-[11px] py-2.5 px-5"
           >
             🔮 Prediction Links
+          </button>
+          <button
+            onClick={() => setShowStreetCredMgr(true)}
+            className="btn-fire text-[11px] py-2.5 px-5"
+          >
+            ⭐ Street Cred Manager
+          </button>
+          <button
+            onClick={() => setShowNFTClipTrigger(true)}
+            className="btn-cyan text-[11px] py-2.5 px-5"
+          >
+            🎬 NFT Clip Trigger
+          </button>
+          <button
+            onClick={() => setShowBroadcast(true)}
+            className="btn-ghost text-[11px] py-2.5 px-5"
+          >
+            📢 Broadcast
+          </button>
+          <button
+            onClick={() => setShowTokenMinter(true)}
+            className="btn-cyan text-[11px] py-2.5 px-5"
+          >
+            🃏 Token Minter
+          </button>
+          <button
+            onClick={() => setShowDisputeMgr(true)}
+            className="btn-ghost text-[11px] py-2.5 px-5"
+          >
+            ⚖️ Dispute Resolution
           </button>
           {events.find(e => e.status === 'live') && (
             <button
@@ -967,6 +1007,52 @@ export default function AdminPanel({ lang, onClose }) {
                   CLOSE
                 </button>
                 <Web3ConfigPanel />
+              </div>
+            </div>
+          )}
+
+         {showStreetCredMgr && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-5xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button onClick={() => setShowStreetCredMgr(false)} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3">CLOSE</button>
+                <StreetCredManager />
+              </div>
+            </div>
+          )}
+         {showNFTClipTrigger && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-4xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-purple-500/25 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500/60 to-transparent" />
+                <button onClick={() => setShowNFTClipTrigger(false)} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-purple-400/40 hover:text-purple-400">CLOSE</button>
+                <NFTClipTrigger />
+              </div>
+            </div>
+          )}
+         {showBroadcast && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-5xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button onClick={() => setShowBroadcast(false)} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3">CLOSE</button>
+                <BroadcastNotificationPanel />
+              </div>
+            </div>
+          )}
+         {showTokenMinter && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-5xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-cyan/25 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
+                <button onClick={() => setShowTokenMinter(false)} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-cyan/40 hover:text-cyan">CLOSE</button>
+                <AthleteTokenMinter />
+              </div>
+            </div>
+          )}
+         {showDisputeMgr && (
+            <div className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-xl flex items-start justify-center overflow-y-auto p-4">
+              <div className="relative w-full max-w-5xl bg-gradient-to-br from-[rgba(10,4,18,0.99)] to-[rgba(4,2,8,1)] border border-fire-3/20 clip-cyber p-8 my-8">
+                <div className="absolute top-0 left-0 right-0 fire-line" />
+                <button onClick={() => setShowDisputeMgr(false)} className="absolute top-3 right-4 font-mono text-[10px] tracking-[2px] text-fire-3/30 hover:text-fire-3">CLOSE</button>
+                <DisputeResolutionPanel />
               </div>
             </div>
           )}
