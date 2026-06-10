@@ -4,6 +4,7 @@ import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
+import PageNav from '../components/cyber/PageNav';
 import { useLang } from '../components/useLang';
 
 const STEPS = [
@@ -141,7 +142,7 @@ export default function WindowChallenge() {
         </div>
       </div>
 
-      <FireRule />
+      <PageNav currentPath="/window-challenge" />
       <Footer lang={lang} />
     </div>
   );

@@ -4,6 +4,7 @@ import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
+import PageNav from '../components/cyber/PageNav';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 
@@ -259,7 +260,7 @@ export default function ComeFunziona() {
         </AnimatePresence>
       </div>
 
-      <FireRule />
+      <PageNav currentPath="/come-funziona" />
       <Footer lang={lang} />
     </div>
   );

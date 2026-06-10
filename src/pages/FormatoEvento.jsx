@@ -4,6 +4,7 @@ import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
+import PageNav from '../components/cyber/PageNav';
 import { useLang } from '../components/useLang';
 
 const DAYS = [
@@ -151,7 +152,7 @@ export default function FormatoEvento() {
         </div>
       </div>
 
-      <FireRule />
+      <PageNav currentPath="/formato-evento" />
       <Footer lang={lang} />
     </div>);
 

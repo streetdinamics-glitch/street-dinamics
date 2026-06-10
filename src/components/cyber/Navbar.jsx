@@ -55,11 +55,11 @@ export default function Navbar({ onScrollTo, lang, onLangSwitch, onProfileClick 
   ];
 
   const infoLinks = [
-    { label: '🃏 ' + (t('nav_how_it_works') || 'Come Funziona'), path: '/come-funziona' },
-    { label: '🏆 ' + (t('nav_disciplines') || 'Discipline'), path: '/discipline' },
-    { label: '📋 ' + (t('nav_event_format') || 'Formato Evento'), path: '/formato-evento' },
-    { label: '👑 ' + (t('nav_window_challenge') || 'Window Challenge'), path: '/window-challenge' },
-    { label: '📊 ' + (t('nav_scarcity') || 'Scarsità & Investimento'), path: '/scarsita' },
+    { label: '01 · 🃏 IL PATTO', path: '/come-funziona' },
+    { label: '02 · ⚔️ LE DISCIPLINE', path: '/discipline' },
+    { label: '03 · 🗓️ IL FORMATO', path: '/formato-evento' },
+    { label: '04 · 👑 WINDOW CHALLENGE', path: '/window-challenge' },
+    { label: '05 · 📊 LA MATEMATICA', path: '/scarsita' },
   ];
   
   const navLinks = user?.role === 'athlete' || user?.role === 'admin' ? [
