@@ -208,7 +208,7 @@ export default function Home() {
             <p className="font-mono text-[9px] tracking-[7px] uppercase text-fire-3/40 mb-2">COMMUNITY</p>
             <h2 className="heading-fire text-[clamp(28px,5vw,56px)] font-black leading-none mb-3">STREET CRED</h2>
             <p className="font-rajdhani text-base text-white/40 max-w-lg mx-auto">
-              {t('social_rewards_msg')}
+              Ogni azione lascia un segno. <span className="text-fire-3/60">Alcuni diventano leggenda.</span>
             </p>
           </div>
           <div className="flex justify-center">

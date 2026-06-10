@@ -40,7 +40,7 @@ export default function WindowChallenge() {
           <h1 className="heading-fire text-[clamp(36px,7vw,72px)] font-black leading-none mb-6">WINDOW<br />CHALLENGE</h1>
           <p className="font-rajdhani text-xl text-white/40 max-w-xl mx-auto leading-relaxed">
             La finestra si apre <span className="text-fire-3 font-bold">solo dopo aver vinto</span>.<br />
-            Non prima. <span className="text-white/20">Mai.</span>
+            <span className="text-white/20">Mai prima.</span>
           </p>
         </motion.div>
 
@@ -79,14 +79,14 @@ export default function WindowChallenge() {
         {/* Two columns: sfidante + campione rules */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           <div className="border border-fire-3/20 bg-fire-3/5 p-5" style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px))' }}>
-            <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4">⚔️ Regole — Sfidante</h3>
+            <h3 className="font-orbitron font-bold text-lg text-fire-4 mb-4">⚔️ Sfidante</h3>
             <ul className="space-y-2">
               {[
-                'Prerequisito: vittoria in torneo ufficiale SD — sempre, senza eccezioni',
-                'La finestra dura fino al ciclo di eventi successivo — poi decade',
-                'Se decade: bisogna rivincere un torneo per riaprirla',
-                'Non si salta nessun contendente — ordine di ranking rispettato',
-                'Ogni vittoria sui contendenti genera card update e contenuto autonomo',
+                'Prerequisito: vittoria in torneo ufficiale SD',
+                'La finestra dura fino al ciclo successivo — poi decade',
+                'Per riaprirla: rivinci un torneo',
+                'Ordine di ranking rispettato. Nessun salto.',
+                'Ogni vittoria sui contendenti: card update automatico',
               ].map((r, i) => (
                 <li key={i} className="flex gap-2 font-rajdhani text-sm text-white/60">
                   <span className="text-fire-3 flex-shrink-0">•</span>{r}
@@ -96,14 +96,14 @@ export default function WindowChallenge() {
           </div>
 
           <div className="border border-cyan-500/20 bg-cyan-500/5 p-5" style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px))' }}>
-            <h3 className="font-orbitron font-bold text-lg text-cyan-400 mb-4">👑 Regole — Campione</h3>
+            <h3 className="font-orbitron font-bold text-lg text-cyan-400 mb-4">👑 Campione</h3>
             <ul className="space-y-2">
               {[
-                'Continua a partecipare ai tornei ordinari — il titolo si difende anche lì',
-                'Può rifiutare la sfida una sola volta — alla seconda perde il titolo automaticamente',
-                'Diritto di risposta pubblica entro 7 giorni dalla dichiarazione',
-                'Perdere in torneo ordinario NON fa perdere il titolo',
-                '3 Window Challenge vinte consecutive → status "Leggenda" → card speciale emessa',
+                'Partecipa ai tornei ordinari — il titolo si difende sempre',
+                'Può rifiutare la sfida una sola volta. Alla seconda: titolo perso.',
+                'Risposta pubblica entro 7 giorni dalla dichiarazione',
+                'Perdere in torneo ordinario non scalfisce il titolo',
+                '3 vittorie consecutive → status Leggenda → card speciale emessa',
               ].map((r, i) => (
                 <li key={i} className="flex gap-2 font-rajdhani text-sm text-white/60">
                   <span className="text-cyan-400 flex-shrink-0">•</span>{r}
@@ -134,9 +134,9 @@ export default function WindowChallenge() {
           <div className="text-4xl mb-2">⭐</div>
           <h3 className="font-orbitron font-bold text-xl text-yellow-400 mb-2">STATUS LEGGENDA</h3>
           <p className="font-rajdhani text-lg text-yellow-200/60 leading-relaxed">
-            3 Window Challenge vinte consecutive.<br />
-            <span className="text-yellow-300 font-bold">Card speciale emessa. Immutabile. Per sempre.</span><br />
-            <span className="text-white/20 text-sm">Solo 3 persone in ogni disciplina possono raggiungerlo.</span>
+            3 vittorie consecutive.<br />
+            <span className="text-yellow-300 font-bold">Card speciale. Immutabile.</span><br />
+            <span className="text-white/20 text-sm">Solo 3 per disciplina. In tutto il mondo.</span>
           </p>
         </div>
       </div>

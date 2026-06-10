@@ -255,8 +255,8 @@ export default function Discipline() {
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">{t('disc_system')}</p>
           <h1 className="heading-fire text-[clamp(40px,8vw,80px)] font-black leading-none mb-4">{t('disc_title')}</h1>
           <p className="font-rajdhani text-xl text-white/40 max-w-lg mx-auto">
-            Regole standard. <span className="text-fire-3/60">Poi le Regole Assurde SD.</span><br />
-            <span className="text-sm text-white/20">Quelle che rendono ogni momento irripetibile.</span>
+            Regole standard. <span className="text-fire-3/60">Poi le Regole Assurde.</span><br />
+            <span className="text-sm text-white/20">Ogni momento — irripetibile.</span>
           </p>
         </motion.div>
 

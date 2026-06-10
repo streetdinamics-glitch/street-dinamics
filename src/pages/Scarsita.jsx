@@ -62,8 +62,8 @@ export default function Scarsita() {
             LA MATEMATICA<br />DELLA SCARSITÀ
           </h1>
           <p className="font-rajdhani text-xl text-white/40 max-w-md mx-auto leading-relaxed">
-            1 card. Infiniti scenari.<br />
-            <span className="text-fire-3/70">Solo uno vince davvero.</span>
+            1 card. Due destini.<br />
+            <span className="text-fire-3/70">Solo uno conta.</span>
           </p>
         </motion.div>
 
@@ -260,16 +260,13 @@ export default function Scarsita() {
 
           {/* Story */}
           <div className="border-l-2 border-fire-3/30 pl-6 py-3">
-            <p className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/30 mb-4">// SCENARIO REALE //</p>
+            <p className="font-mono text-[9px] uppercase tracking-[3px] text-fire-3/30 mb-4">// SCENARIO //</p>
             <p className="font-rajdhani text-lg text-white/60 leading-relaxed">
-              Marco compra <span className="text-fire-4 font-bold">10 card a €1</span>.
-              Le tiene. Non guarda il prezzo.
-              L'atleta vince il circuito <span className="text-fire-5 font-bold">Internazionale</span>.
-              Marco riceve automaticamente{' '}
-              <span className="text-yellow-400 font-bold text-xl">10 Legendary Card</span>.
+              10 card a €1. Tenute. L'atleta vince l'<span className="text-fire-5 font-bold">Internazionale</span>.<br />
+              <span className="text-yellow-400 font-bold text-xl">10 Legendary Card ricevute. Automaticamente.</span>
             </p>
             <p className="font-mono text-sm text-white/20 mt-4">
-              Senza fare nulla. Il sistema lavora per chi rimane.
+              Il sistema premia chi rimane.
             </p>
           </div>
         </div>

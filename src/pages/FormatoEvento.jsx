@@ -10,48 +10,48 @@ const DAYS = [
 {
   day: 'Giorno 1', emoji: '⚽', theme: 'BATTAGLIA DI SQUADRA',
   disciplines: 'Calcio · Basket · Pallavolo',
-  desc: '3v3 calcio · 3v3 streetball · volley. Tattica collettiva. Un\'unica identità. Tre tornei paralleli — un solo risultato.',
-  ps: 'FIFA / NBA 2K / Spike Volleyball — stessa disciplina, versione digitale',
+  desc: '3v3. Tattica collettiva. Un\'identità. Tre tornei — un esito.',
+  ps: 'FIFA / NBA 2K / Spike Volleyball',
   color: 'border-blue-500/30 bg-blue-500/5',
   accent: 'text-blue-400'
 },
 {
   day: 'Giorno 2', emoji: '🎤', theme: 'STRADA PURA',
   disciplines: 'Freestyle Rap · Beatbox · Beatmaking · Breaking',
-  desc: 'Strada pura. Battle 1v1. Nessuna tattica — solo istinto. Chi ha il flow vince. Chi lo perde, sparisce.',
-  ps: 'Games relativi al ritmo e alla musica — stessa energia, versione digitale',
+  desc: 'Battle 1v1. Nessuna tattica — solo istinto. Chi ha il flow vince.',
+  ps: 'Beat Saber · Beat Snap · Just Dance',
   color: 'border-purple-500/30 bg-purple-500/5',
   accent: 'text-purple-400'
 },
 {
   day: 'Giorno 3', emoji: '🛹', theme: 'ASFALTO IN FIAMME',
   disciplines: 'Skate · Moto Stunt · Drifting · BMX',
-  desc: 'Asfalto. Velocità. Stile in movimento. Il giorno che diventa contenuto da solo — nessuna regia necessaria.',
-  ps: 'Tony Hawk, Gran Turismo, Moto GP — stessa adrenalina, schermo diverso',
+  desc: 'Velocità. Stile. Rischio. Il giorno che diventa contenuto da solo.',
+  ps: 'Tony Hawk · Gran Turismo · MotoGP',
   color: 'border-orange-500/30 bg-orange-500/5',
   accent: 'text-orange-400'
 },
 {
   day: 'Giorno 4', emoji: '💪', theme: 'CORPO & FERRO',
-  disciplines: 'Powerlifting · MMA/Kickboxing · Taekwondo · Kendo · Street Workout',
-  desc: 'Corpo contro corpo. Nessun alibi. Categorie di peso, protezioni, regole adattate — ma l\'esito è sempre lo stesso.',
-  ps: 'UFC 5, Mortal Kombat, Street Fighter — stessa logica di eliminazione',
+  disciplines: 'Powerlifting · MMA · Kendo · Street Workout',
+  desc: 'Corpo contro corpo. Nessun alibi. L\'esito è sempre lo stesso.',
+  ps: 'UFC 5 · Mortal Kombat · Street Fighter',
   color: 'border-red-500/30 bg-red-500/5',
   accent: 'text-red-400'
 },
 {
   day: 'Giorno 5', emoji: '🎾', theme: 'IL DUELLO',
   disciplines: 'Tennis · Ping Pong · Biliardo · Freccette · Badminton',
-  desc: '1 contro 1. Uno strumento. Un avversario. Nessun alibi. La forma più pura di confronto che esista.',
-  ps: 'Tennis World Tour, Wii Sports, Snooker Elite — 1v1 digitale',
+  desc: '1 contro 1. Uno strumento. Nessun alibi.',
+  ps: 'Tennis World Tour · Wii Sports · Snooker Elite',
   color: 'border-cyan-500/30 bg-cyan-500/5',
   accent: 'text-cyan-400'
 },
 {
   day: 'Giorno 6', emoji: '🎙️', theme: 'LEGGENDA',
-  disciplines: 'SD Talks — I 5 campioni mangiano insieme',
-  desc: 'Cena. Registrazione live. Nessuna scaletta. I 5 vincitori parlano liberamente — telecamera fissa, nessun filtro. YouTube + Spotify entro 48h. Gli holder della card dell\'atleta vedono il link 24h prima del mondo.',
-  ps: '🏆 Card oro speciale — emessa solo per il Podcast Day',
+  disciplines: 'SD Talks — I 5 campioni',
+  desc: 'Cena. Registrazione live. Nessuna scaletta. Telecamera fissa, nessun filtro. YouTube + Spotify entro 48h. Gli holder vedono il link 24h prima del mondo.',
+  ps: '🏆 Card oro speciale — solo per il Podcast Day',
   color: 'border-yellow-500/30 bg-yellow-500/5',
   accent: 'text-yellow-400',
   special: true
@@ -72,8 +72,8 @@ export default function FormatoEvento() {
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-3">// CIRCUITO PRINCIPALE //</p>
           <h1 className="heading-fire text-[clamp(36px,7vw,72px)] font-black leading-none mb-4">5 GIORNI.<br />5 ENERGIE.<br />1 ESITO.</h1>
           <p className="font-rajdhani text-xl text-white/40 max-w-xl mx-auto">
-            Non logistica. <span className="text-fire-3/60">Natura.</span><br />
-            Chi condivide la stessa tribù, lo stesso linguaggio — sta nello stesso giorno.
+            Non logistica. <span className="text-fire-3/60">Tribù.</span><br />
+            Stessa energia, stesso giorno.
           </p>
         </motion.div>
 
@@ -139,10 +139,9 @@ export default function FormatoEvento() {
           <p className="font-mono text-[9px] text-purple-400/30 uppercase tracking-[2px] mb-3">Stessa logica. Schermo diverso.</p>
           <div className="space-y-2">
             {[
-            'Tornei gaming sulla disciplina del giorno — eliminazione diretta, 16 partecipanti',
-            'Le card degli atleti gaming seguono le stesse regole degli atleti fisici',
-            'Il vincitore gaming riceve menzione nel recap live e nella card update di giornata',
-            'L\'angolo è aperto al pubblico — nessuna prenotazione. Entra e gioca.'].
+            'Torneo sulla disciplina del giorno — eliminazione diretta, 16 posti',
+            'Card gaming: stesse regole degli atleti fisici',
+            'Nessuna prenotazione. Entra e gioca.'].
             map((item, i) =>
             <div key={i} className="flex gap-2 font-rajdhani text-sm text-white/60">
                 <span className="text-purple-400">→</span>{item}
