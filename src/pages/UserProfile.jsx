@@ -18,6 +18,7 @@ import FireRule from '../components/cyber/FireRule';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
+import BackBar from '../components/cyber/BackBar';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
 
@@ -83,10 +84,11 @@ export default function UserProfile() {
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <Navbar lang={lang} onLangSwitch={setLang} onScrollTo={() => {}} />
+      <div className="pt-[80px]"><BackBar label="Profilo" /></div>
 
       {/* Profile header with quick stats */}
       {user && (
-        <div className="pt-[80px] px-6">
+        <div className="pt-0 px-6">
           <div className="max-w-6xl mx-auto pt-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}

@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
+import BackBar from '../components/cyber/BackBar';
 import { useLang } from '../components/useLang';
 
 const RARITY_CONFIG = {
@@ -215,8 +216,9 @@ export default function NFTMarketplace() {
     <div className="min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <Navbar lang={lang} />
+      <div className="pt-[80px]"><BackBar label="Marketplace" /></div>
 
-      <div className="relative z-10 pt-[88px] max-w-[1400px] mx-auto px-4 md:px-8 pb-24">
+      <div className="relative z-10 pt-6 max-w-[1400px] mx-auto px-4 md:px-8 pb-24">
 
         {/* Header */}
         <div className="mb-8 mt-4">

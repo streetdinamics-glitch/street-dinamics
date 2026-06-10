@@ -4,7 +4,7 @@ import NFTWatchlistSidebar from '../components/nft/NFTWatchlistSidebar';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { TrendingUp, DollarSign, Zap, ArrowUpRight, ArrowDownLeft, ArrowLeft } from 'lucide-react';
+import { TrendingUp, DollarSign, Zap, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import NFTPriceChart from '../components/nft/NFTPriceChart';
 import NFTRarityBreakdown from '../components/nft/NFTRarityBreakdown';
 import NFTPortfolioGrowthChart from '../components/nft/NFTPortfolioGrowthChart';
@@ -13,6 +13,7 @@ import { useTranslation } from '../components/translations';
 import Navbar from '../components/cyber/Navbar';
 import Footer from '../components/cyber/Footer';
 import CyberOverlays from '../components/cyber/CyberOverlays';
+import BackBar from '../components/cyber/BackBar';
 
 export default function NFTDashboard() {
   const [sortBy, setSortBy] = useState('value');
@@ -94,17 +95,15 @@ export default function NFTDashboard() {
     <div className="min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} />
+      <div className="pt-[80px]"><BackBar label="NFT Wallet" /></div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-4 pt-[88px] pb-12">
-        {/* Back + Header */}
+      <div className="relative z-10 max-w-[1400px] mx-auto px-4 pt-6 pb-12">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[2px] text-fire-3/50 hover:text-fire-3 transition-colors mb-4">
-            <ArrowLeft size={14} /> Indietro
-          </button>
           <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-2">{t('nft_dashboard_portfolio')}</p>
           <h1 className="heading-fire text-[clamp(36px,6vw,72px)] leading-none font-black mb-4">
             {t('nft_dashboard_title')}

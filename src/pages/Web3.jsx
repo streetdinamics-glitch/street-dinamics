@@ -4,6 +4,7 @@ import CyberOverlays from '../components/cyber/CyberOverlays';
 import Navbar from '../components/cyber/Navbar';
 import FireRule from '../components/cyber/FireRule';
 import Footer from '../components/cyber/Footer';
+import BackBar from '../components/cyber/BackBar';
 import WalletConnectButton from '../components/web3/WalletConnectButton';
 import Web3ConceptExplainer from '../components/web3/Web3ConceptExplainer';
 import { useLang } from '../components/useLang';
@@ -26,9 +27,10 @@ export default function Web3Page() {
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
       <Navbar lang={lang} onLangSwitch={setLang} onScrollTo={() => {}} />
+      <div className="pt-[80px]"><BackBar label="Web3" /></div>
       <Web3StatusBanner isAdmin={user?.role === 'admin'} />
 
-      <div className="pt-[88px] section-container">
+      <div className="pt-4 section-container">
 
         {/* ── WALLET CONNECT (minimal, top) ── */}
         <motion.div
