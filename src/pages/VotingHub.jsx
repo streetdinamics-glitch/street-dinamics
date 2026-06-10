@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 import VotingCampaignManager from '../components/voting/VotingCampaignManager';
 import TokenBasedVotingInterface from '../components/voting/TokenBasedVotingInterface';
 import VotingLeaderboard from '../components/voting/VotingLeaderboard';
 import { useLang } from '../components/useLang';
 import { useTranslation } from '../components/translations';
+import Navbar from '../components/cyber/Navbar';
+import Footer from '../components/cyber/Footer';
+import CyberOverlays from '../components/cyber/CyberOverlays';
 
 export default function VotingHub() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [activeTab, setActiveTab] = useState('vote');
   const [lang, setLang] = useLang();
   const t = useTranslation(lang);
+  const navigate = useNavigate();
 
   // Fetch current user
   const { data: user } = useQuery({
@@ -37,8 +43,13 @@ export default function VotingHub() {
 
   if (!selectedEvent) {
     return (
-      <div className="min-h-screen bg-cyber-void p-6">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen bg-cyber-void">
+        <CyberOverlays />
+        <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} />
+        <div className="max-w-6xl mx-auto px-4 pt-[88px] pb-12">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[2px] text-fire-3/50 hover:text-fire-3 transition-colors mb-6">
+            <ArrowLeft size={14} /> Indietro
+          </button>
           <h1 className="font-orbitron font-black text-3xl text-fire-5 mb-8">{t('voting_hub_title')}</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -66,21 +77,24 @@ export default function VotingHub() {
               ))
             )}
           </div>
+          <Footer lang={lang} />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-cyber-void p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-cyber-void">
+      <CyberOverlays />
+      <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} />
+      <div className="max-w-6xl mx-auto px-4 pt-[88px] pb-12">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => setSelectedEvent(null)}
-            className="font-mono text-xs text-fire-3/60 hover:text-fire-3 mb-4"
+            className="flex items-center gap-2 font-mono text-xs text-fire-3/60 hover:text-fire-3 mb-4"
           >
-            {t('voting_back')}
+            <ArrowLeft size={14} /> {t('voting_back')}
           </button>
           <h1 className="font-orbitron font-black text-3xl text-fire-5 mb-2">{selectedEvent.title}</h1>
           <p className="font-mono text-sm text-fire-3/60">{selectedEvent.sport} • {selectedEvent.location}</p>
@@ -149,6 +163,7 @@ export default function VotingHub() {
           <VotingCampaignManager eventId={selectedEvent.id} />
         )}
       </div>
+      <Footer lang={lang} />
     </div>
   );
 }

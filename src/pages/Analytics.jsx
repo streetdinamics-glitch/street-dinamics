@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { BarChart3, Vote, DollarSign } from 'lucide-react';
+import { BarChart3, Vote, DollarSign, ArrowLeft } from 'lucide-react';
 import CyberOverlays from '../components/cyber/CyberOverlays';
-import ParticleField from '../components/cyber/ParticleField';
 import Navbar from '../components/cyber/Navbar';
+import Footer from '../components/cyber/Footer';
 import FireRule from '../components/cyber/FireRule';
 import EngagementAnalyticsDashboard from '../components/analytics/EngagementAnalyticsDashboard';
 import VotingAnalyticsDashboard from '../components/analytics/VotingAnalyticsDashboard';
@@ -17,6 +18,7 @@ export default function Analytics() {
   const [activeTab, setActiveTab] = useState('engagement');
   const [lang, setLang] = useLang();
   const t = useTranslation(lang);
+  const navigate = useNavigate();
 
   const { data: user } = useQuery({
     queryKey: ['current-user'],
@@ -28,10 +30,12 @@ export default function Analytics() {
   return (
     <div className="relative min-h-screen bg-cyber-void text-[var(--text-main)]">
       <CyberOverlays />
-      <ParticleField />
-      <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} onWatchlistClick={() => {}} />
+      <Navbar onScrollTo={() => {}} lang={lang} onLangSwitch={setLang} onProfileClick={() => {}} />
 
-      <div className="section-container pt-32">
+      <div className="section-container pt-[88px]">
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[2px] text-fire-3/50 hover:text-fire-3 transition-colors mb-6">
+          <ArrowLeft size={14} /> Indietro
+        </button>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -83,6 +87,7 @@ export default function Analytics() {
           {activeTab === 'betting' && <BettingAnalyticsDashboard isAdmin={isAdmin} />}
         </div>
       </div>
+      <Footer lang={lang} />
     </div>
   );
 }
