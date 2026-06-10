@@ -32,8 +32,9 @@ const ERC20_TRANSFER_ABI = [
   },
 ];
 
-// Platform receiving wallet (multi-sig safe recommended in production)
-const PLATFORM_WALLET = import.meta.env.VITE_PLATFORM_WALLET || '0x0000000000000000000000000000000000000000';
+// Platform receiving wallet — imposta qui l'indirizzo del wallet della piattaforma
+// TODO: sostituire con l'indirizzo reale prima del go-live
+const PLATFORM_WALLET = '0x0000000000000000000000000000000000000000';
 
 const STEPS = { select: 'select', confirm: 'confirm', pending: 'pending', confirming: 'confirming', success: 'success', error: 'error' };
 
