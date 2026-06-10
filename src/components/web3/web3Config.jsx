@@ -1,12 +1,12 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { polygon, polygonAmoy } from 'wagmi/chains';
+import { polygon, polygonAmoy, mainnet, bsc, arbitrum, optimism, base, avalanche } from 'wagmi/chains';
 
-// Street Dinamics uses Polygon for low-cost NFT minting
-// polygonAmoy = testnet for dev/staging
+// Street Dinamics — multi-chain support
+// Supporta: Polygon, Ethereum, BNB Chain, Arbitrum, Optimism, Base, Avalanche
 export const web3Config = getDefaultConfig({
   appName: 'Street Dinamics',
   projectId: '2f05ae7f1116030fde2d36508f472bfb', // WalletConnect Cloud
-  chains: [polygon, polygonAmoy],
+  chains: [polygon, mainnet, bsc, arbitrum, optimism, base, avalanche, polygonAmoy],
   ssr: false,
 });
 

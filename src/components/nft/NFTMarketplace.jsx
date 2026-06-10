@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import CryptoPaymentModal from '../web3/CryptoPaymentModal';
 
 // Unified tier config for both NFT and Token cards
 const TIER_CONFIG = {
@@ -28,6 +29,7 @@ export default function NFTMarketplace({ lang = 'en' }) {
     availability: 'all',
   });
   const [selectedNFT, setSelectedNFT] = useState(null);
+  const [purchasingCard, setPurchasingCard] = useState(null);
 
   const { data: nftCards = [] } = useQuery({
     queryKey: ['nft-cards'],
@@ -109,27 +111,10 @@ export default function NFTMarketplace({ lang = 'en' }) {
   });
 
   const handleMint = async (card) => {
-    try {
-      const user = await base44.auth.me();
-
-      // Client-side validation
-      if (card.status !== 'live') {
-        toast.error('This drop is not live yet');
-        return;
-      }
-      if (card.minted_count >= card.total_supply) {
-        toast.error('Sold out!');
-        return;
-      }
-      if (card.mint_price <= 0) {
-        toast.error('Invalid mint price');
-        return;
-      }
-
-      mintNFTMutation.mutate({ nftId: card.id, cardData: card });
-    } catch (err) {
-      toast.error('Failed to initiate mint');
-    }
+    if (card.status !== 'live') { toast.error('This drop is not live yet'); return; }
+    if (card.minted_count >= card.total_supply) { toast.error('Sold out!'); return; }
+    // Open crypto payment modal instead of direct mint
+    setPurchasingCard(card);
   };
 
 
@@ -320,14 +305,13 @@ export default function NFTMarketplace({ lang = 'en' }) {
                       </div>
                     </div>
                   ) : (
-                    <button
-                      onClick={() => handleMint(card)}
-                      disabled={mintNFTMutation.isPending}
-                      className="btn-fire w-full text-xs flex items-center justify-center gap-2"
-                    >
-                      <ShoppingCart size={14} />
-                      {mintNFTMutation.isPending ? t('nft_minting') : t('nft_mint_now')}
-                    </button>
+                   <button
+                     onClick={() => handleMint(card)}
+                     className="btn-fire w-full text-xs flex items-center justify-center gap-2"
+                   >
+                     <ShoppingCart size={14} />
+                     {t('nft_mint_now')}
+                   </button>
                   )}
                 </div>
 
@@ -346,6 +330,20 @@ export default function NFTMarketplace({ lang = 'en' }) {
       {/* Analytics Modal */}
       {selectedNFT && (
         <NFTAnalyticsModal nft={selectedNFT} onClose={() => setSelectedNFT(null)} />
+      )}
+
+      {/* Crypto Payment Modal */}
+      {purchasingCard && (
+        <CryptoPaymentModal
+          nftCard={purchasingCard}
+          onClose={() => setPurchasingCard(null)}
+          onSuccess={() => {
+            setPurchasingCard(null);
+            queryClient.invalidateQueries({ queryKey: ['nft-cards'] });
+            queryClient.invalidateQueries({ queryKey: ['my-nfts'] });
+            toast.success('NFT acquistato con successo!');
+          }}
+        />
       )}
 
       {/* My Collection Preview */}
