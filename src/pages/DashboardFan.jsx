@@ -155,9 +155,9 @@ export default function DashboardFan() {
 
       <div className="pt-[80px] section-container max-w-4xl">
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-1">DASHBOARD</p>
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-fire-3/40 mb-1">// POSIZIONE NEL SISTEMA //</p>
           <h1 className="heading-fire text-[clamp(32px,6vw,64px)] font-black leading-none mb-1">{t('dash_fan_title')}</h1>
-          <p className="font-rajdhani text-base text-white/40">👋 <span className="text-fire-4">{user?.full_name || 'Fan'}</span> — {t('dash_fan_subtitle')}</p>
+          <p className="font-rajdhani text-base text-white/40"><span className="text-fire-4 font-bold">{user?.full_name || 'Fan'}</span> — {t('dash_fan_subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">

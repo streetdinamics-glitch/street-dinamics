@@ -37,10 +37,14 @@ export default function Web3Page() {
           className="flex items-center justify-between mb-14 flex-wrap gap-4"
         >
           <div>
-            <p className="font-mono text-[10px] tracking-[6px] uppercase text-fire-3/40 mb-1">{t('web3_hub')}</p>
+            <p className="font-mono text-[10px] tracking-[6px] uppercase text-fire-3/40 mb-1">// INFRASTRUTTURA //</p>
             <h1 className="heading-fire text-[clamp(28px,4vw,52px)] leading-none font-black">
               {t('web3_title')}
             </h1>
+            <p className="font-rajdhani text-sm text-white/25 mt-2 max-w-xs">
+              Blockchain. Smart contract. Zero intermediari.<br />
+              <span className="text-fire-3/40">Il sistema gira da solo.</span>
+            </p>
           </div>
           <WalletConnectButton minimal={true} />
         </motion.div>

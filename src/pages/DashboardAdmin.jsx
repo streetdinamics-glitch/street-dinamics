@@ -103,9 +103,9 @@ export default function DashboardAdmin() {
 
       <div className="pt-[80px] section-container max-w-5xl">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-green-500/40 mb-1">DASHBOARD</p>
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-green-500/40 mb-1">// CONTROLLO SISTEMA //</p>
           <h1 className="font-orbitron font-black text-[clamp(32px,6vw,64px)] leading-none mb-1 text-green-400">ADMIN</h1>
-          <p className="font-rajdhani text-base text-white/40">{t('dash_admin_subtitle')} — <span className="text-green-400">{user?.full_name}</span></p>
+          <p className="font-rajdhani text-base text-white/40">{t('dash_admin_subtitle')} — <span className="text-green-400 font-bold">{user?.full_name}</span></p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">

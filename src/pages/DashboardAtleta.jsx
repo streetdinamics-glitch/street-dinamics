@@ -147,11 +147,11 @@ export default function DashboardAtleta() {
 
       <div className="pt-[80px] section-container max-w-4xl">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <p className="font-mono text-[10px] tracking-[7px] uppercase text-cyan-400/40 mb-1">DASHBOARD</p>
+          <p className="font-mono text-[10px] tracking-[7px] uppercase text-cyan-400/40 mb-1">// STATO ATLETA //</p>
           <h1 className="font-orbitron font-black text-[clamp(32px,6vw,64px)] leading-none mb-1" style={{ background: 'linear-gradient(135deg, #00ffee, #0099ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             {t('dash_athlete_title')}
           </h1>
-          <p className="font-rajdhani text-base text-white/40">👋 <span className="text-cyan-400">{user?.full_name || 'Atleta'}</span> — {t('dash_athlete_subtitle')}</p>
+          <p className="font-rajdhani text-base text-white/40"><span className="text-cyan-400 font-bold">{user?.full_name || 'Atleta'}</span> — {t('dash_athlete_subtitle')}</p>
         </motion.div>
 
         <AthleteXPBar stats={latestStats} badges={badges} tokens={tokens} />

@@ -17,15 +17,18 @@ const TABS = [
         <ul className="space-y-3">
           {[
             'NFT su blockchain Polygon — immutabile, non falsificabile',
-            'Numero di serie: #001 vale più di #500 — la scarsità è reale',
-            'Si può tenere, vendere, regalare in qualsiasi momento',
-            'Fee SD: 2.5% sulla transazione — nient\'altro',
+            '#001 vale più di #500 — la scarsità è strutturale, non artificiale',
+            'Tienila, vendila, regalala. Zero permessi richiesti.',
+            'Fee SD: 2.5% sulle transazioni — nient\'altro. Mai.',
           ].map((item, i) => (
             <li key={i} className="flex gap-3 font-rajdhani text-lg text-white/70">
-              <span className="text-fire-3 font-bold mt-0.5">→</span>{item}
+              <span className="text-fire-3 font-bold mt-0.5 flex-shrink-0">→</span>{item}
             </li>
           ))}
         </ul>
+        <div className="mt-4 p-3 border border-fire-3/20 bg-fire-3/5 font-mono text-xs text-fire-3/60">
+          // Il sistema non può revocarla. Nessuno può. È tua.
+        </div>
       </div>
     ),
   },
@@ -34,10 +37,11 @@ const TABS = [
     label: '💰 Royalty',
     content: (
       <div className="space-y-6">
-        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Guadagni senza fare nulla.</h3>
+        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Guadagni mentre dormi.</h3>
         <div className="p-4 bg-fire-3/10 border border-fire-3/30 font-mono text-sm text-fire-5">
-          Sponsor paga 1.000€ → atleta prende 500€ → 500€ divisi tra gli holder<br />
-          10 card su 100 holder = <span className="text-fire-3 font-bold">50€ automatici</span>
+          Sponsor paga €1.000 → atleta €500 → €500 divisi tra holder<br />
+          10 card su 100 = <span className="text-fire-3 font-bold text-lg">+€50 automatici</span><br />
+          <span className="text-white/30 text-xs">Senza muovere un dito. Il contratto lavora per te.</span>
         </div>
         <div className="space-y-3">
           {[
@@ -62,8 +66,8 @@ const TABS = [
     label: '🗳️ Sovereignty',
     content: (
       <div className="space-y-4">
-        <h3 className="font-orbitron font-bold text-2xl text-fire-4">La community decide. Davvero.</h3>
-        <p className="font-rajdhani text-lg text-white/60">Dopo ogni vittoria la community vota quale momento diventa la clip ufficiale certificata.</p>
+        <h3 className="font-orbitron font-bold text-2xl text-fire-4">La community decide. Non l'organizzazione.</h3>
+        <p className="font-rajdhani text-base text-white/50">Dopo ogni vittoria, gli holder votano quale momento diventa la clip certificata. Più card hai, più pesa il tuo voto.</p>
         <div className="grid grid-cols-2 gap-3">
           {[
             { tier: 'Common', votes: '1 voto' },
@@ -93,8 +97,8 @@ const TABS = [
     label: '📊 Scarsità',
     content: (
       <div className="space-y-6">
-        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Meno card = più valore.</h3>
-        <p className="font-rajdhani text-white/50">Lo smart contract non può emettere più card di quelle dichiarate — tecnicamente impossibile.</p>
+        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Meno card = più valore. Sempre.</h3>
+        <p className="font-rajdhani text-white/50">Lo smart contract non può emettere più card di quelle dichiarate. <span className="text-fire-3">Tecnicamente impossibile.</span> Non è una promessa — è codice.</p>
         <div className="space-y-3">
           {[
             { level: '🏙️ Regionale', name: 'Common', count: '100.000', price: '~1€', color: 'border-gray-500/40 bg-gray-500/5' },
@@ -119,8 +123,8 @@ const TABS = [
     label: '📸 Snapshot',
     content: (
       <div className="space-y-6">
-        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Il momento della vittoria è tutto.</h3>
-        <p className="font-rajdhani text-lg text-white/60">Nel momento esatto della vittoria finale, lo smart contract fotografa tutti gli holder attivi. Chi è dentro riceve il drop. Chi vende anche solo un secondo prima: nessun drop. Per sempre.</p>
+        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Un secondo fa la differenza.</h3>
+        <p className="font-rajdhani text-base text-white/50">Nel momento esatto della vittoria, il contratto fotografa chi tiene la card. Chi è dentro: riceve il drop. Chi ha venduto anche solo un secondo prima: <span className="text-red-400 font-bold">nessun drop. Per sempre.</span></p>
         <div className="space-y-4">
           {[
             { icon: '⚔️', label: 'Torneo in corso' },
@@ -136,8 +140,10 @@ const TABS = [
           ))}
         </div>
         <div className="p-4 bg-yellow-500/10 border border-yellow-500/30">
-          <p className="font-rajdhani text-base text-yellow-200">
-            <strong>Storia di Marco:</strong> compra 10 card a 1€ → le tiene → atleta vince internazionale → riceve automaticamente 10 Legendary Card
+          <p className="font-rajdhani text-base text-yellow-200/70">
+            Marco compra <span className="text-fire-4 font-bold">10 card a €1</span>. Le tiene. Non le tocca.<br />
+            L'atleta vince l'Internazionale.<br />
+            <span className="text-yellow-300 font-bold text-lg">Marco riceve 10 Legendary Card. Automaticamente. Senza fare nulla.</span>
           </p>
         </div>
       </div>
@@ -148,8 +154,8 @@ const TABS = [
     label: '⚖️ 6 Pilastri',
     content: (
       <div className="space-y-4">
-        <h3 className="font-orbitron font-bold text-2xl text-fire-4">I 3 giudici sono persone del pubblico.</h3>
-        <p className="font-rajdhani text-white/50 text-sm">Nessun esperto tecnico. Guardano, sentono, giudicano quello che vedono.</p>
+        <h3 className="font-orbitron font-bold text-2xl text-fire-4">3 persone del pubblico. Zero esperti.</h3>
+        <p className="font-rajdhani text-white/50 text-sm">Guardano. Sentono. Giudicano quello che vedono. Nessuna competenza tecnica richiesta — solo percezione reale.</p>
         <div className="space-y-3">
           {[
             { e: '📈', label: 'Sta migliorando?', pct: '25%', desc: 'Rispetto all\'ultima volta, è cresciuto?' },
@@ -179,7 +185,7 @@ const TABS = [
     label: '👑 Window Challenge',
     content: (
       <div className="space-y-4">
-        <h3 className="font-orbitron font-bold text-2xl text-fire-4">La finestra si apre solo dopo aver vinto.</h3>
+        <h3 className="font-orbitron font-bold text-2xl text-fire-4">Vinci il torneo. Solo allora la porta si apre.</h3>
         <div className="space-y-3">
           {[
             { step: '1', icon: '🏆', label: 'Prerequisito', desc: 'Vinci un torneo ufficiale SD. Non esiste altra strada.' },
