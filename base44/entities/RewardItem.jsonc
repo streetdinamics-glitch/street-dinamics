@@ -2,13 +2,21 @@
   "name": "RewardItem",
   "type": "object",
   "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome del traguardo / item premio"
+    },
     "item_name": {
       "type": "string",
-      "description": "Name of the reward item"
+      "description": "Alias legacy per name"
     },
     "description": {
       "type": "string",
-      "description": "Detailed description of the reward"
+      "description": "Descrizione del traguardo"
+    },
+    "item_type": {
+      "type": "string",
+      "description": "Tipo premio: street_cred_points, nft_card, token_drop, badge, cashback_boost, early_access, custom"
     },
     "category": {
       "type": "string",
@@ -18,26 +26,63 @@
         "merchandise",
         "nft",
         "vip_access",
-        "exclusive_content"
+        "exclusive_content",
+        "milestone"
       ],
-      "description": "Reward category"
+      "description": "Categoria reward"
+    },
+    "milestone_target": {
+      "type": "string",
+      "enum": [
+        "fan",
+        "athlete"
+      ],
+      "description": "A chi \u00e8 destinato il traguardo"
+    },
+    "milestone_trigger_type": {
+      "type": "string",
+      "description": "Tipo di condizione: sc_level, sc_points, nfts_owned, tokens_owned, referrals, events_attended, athlete_wins, athlete_events, podium_finishes, performance_score, manual"
+    },
+    "milestone_trigger_value": {
+      "type": "string",
+      "description": "Valore soglia della condizione"
+    },
+    "reward_value": {
+      "type": "string",
+      "description": "Valore del premio (es. numero punti, tipo badge, descrizione NFT)"
+    },
+    "reward_note": {
+      "type": "string",
+      "description": "Note interne dello staff"
+    },
+    "is_repeatable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Se il traguardo pu\u00f2 essere raggiunto pi\u00f9 volte"
     },
     "token_cost": {
       "type": "number",
-      "description": "Cost in tokens to redeem"
+      "default": 0,
+      "description": "Costo in token per riscattare (legacy store)"
+    },
+    "points_cost": {
+      "type": "number",
+      "default": 0,
+      "description": "Costo in Street Cred points (se acquistabile)"
     },
     "image_url": {
       "type": "string",
-      "description": "Image for the reward item"
+      "description": "Immagine del premio"
     },
     "stock_quantity": {
       "type": "number",
-      "description": "Available quantity (-1 for unlimited)"
+      "default": -1,
+      "description": "Quantit\u00e0 disponibile (-1 = illimitata)"
     },
     "is_active": {
       "type": "boolean",
       "default": true,
-      "description": "Whether item is available for purchase"
+      "description": "Se il traguardo \u00e8 attivo"
     },
     "rarity": {
       "type": "string",
@@ -48,26 +93,22 @@
         "living_legend"
       ],
       "default": "rising_star",
-      "description": "Item rarity tier"
+      "description": "Rarit\u00e0 dell'item"
     },
     "benefits": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of benefits this item provides"
+      "description": "Benefici che l'item fornisce"
     },
     "expiry_date": {
       "type": "string",
       "format": "date-time",
-      "description": "When this reward expires (optional)"
+      "description": "Scadenza del traguardo (opzionale)"
     }
   },
   "required": [
-    "item_name",
-    "description",
-    "category",
-    "token_cost",
-    "stock_quantity"
+    "name"
   ]
 }
