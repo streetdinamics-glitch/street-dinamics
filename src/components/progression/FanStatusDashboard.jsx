@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Trophy, TrendingUp, Zap, Crown, Star, Gift, Clock, Sparkles } from 'lucide-react';
+import { Trophy, TrendingUp, Zap, Crown, Star, Gift, Clock, Sparkles, ListChecks } from 'lucide-react';
 import { useTranslation } from '../translations';
+import EarnChecklist from '../gamification/EarnChecklist';
 
 const TIER_CONFIG = {
   rookie: {
@@ -251,6 +252,15 @@ export default function FanStatusDashboard({ lang = 'en' }) {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* Earn Checklist */}
+      <div className="max-w-4xl mx-auto mb-12">
+        <h3 className="font-orbitron font-bold text-2xl text-fire-5 mb-6 flex items-center gap-2">
+          <ListChecks size={24} className="text-purple-400" />
+          Come guadagnare XP &amp; Street Cred
+        </h3>
+        <EarnChecklist />
       </div>
 
       {/* All Tiers Overview */}
